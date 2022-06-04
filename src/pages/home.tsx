@@ -1,7 +1,7 @@
 import { trpc } from '../utils/trpc';
 
 function Home() {
-  const members = trpc.useQuery(['get-members']).data;
+  const members = trpc.useQuery(['family.get-family', {uid: 1}]).data;
   console.log(members);
 
   return <></>;
