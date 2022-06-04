@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import Home from './home';
 
 const Index: NextPage = () => {
   return (
@@ -10,7 +11,7 @@ const Index: NextPage = () => {
       </Head>
 
       <main>
-      
+        <Home/> 
       </main>
 
     </div>
