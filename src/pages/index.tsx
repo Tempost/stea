@@ -11,7 +11,7 @@ const Index: NextPage = () => {
       </Head>
 
       <main>
-        <Home/> 
+        <Home />
       </main>
 
     </div>

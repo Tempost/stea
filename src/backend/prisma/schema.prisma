@@ -9,6 +9,17 @@ datasource db {
   referentialIntegrity = "prisma"
 }
 
+generator zod {
+  provider                 = "zod-prisma"
+  output                   = "./zod"
+  relationModel            = true
+  modelCase                = "PascalCase"
+  modelSuffix              = "Model"
+  useDecimalJs             = true
+  imports                  = null
+  prismaJsonNullability    = true
+}
+
 model Member {
   uid            Int            @id @default(autoincrement())
   createdAt      DateTime       @default(now())
