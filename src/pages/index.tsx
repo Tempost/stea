@@ -1,21 +1,22 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Home from './home';
-
-const Index: NextPage = () => {
+function Index(): ReactElement {
   return (
     <div>
-      <Head>
-        <title>Stea</title>
-        <meta name="description" content="STEA dressage" />
-      </Head>
-
       <main>
-        <Home />
+        Main
       </main>
-
     </div>
   )
+}
+
+import type { ReactElement } from 'react';
+import Layout from '@/components/layout';
+
+Index.getLayout = function getLayout(page: ReactElement) {
+  return (
+    <Layout>
+      {page}
+    </Layout>
+  );
 }
 
 export default Index
