@@ -1,10 +1,11 @@
 import { withTRPC } from "@trpc/next";
 import { AppRouter } from "@/backend/router";
+import { ChakraProvider } from "@chakra-ui/react";
 
-import '@/styles/globals.css';
+import '../styles/globals.css';
 
 import type { ReactElement, ReactNode } from 'react'
-import type { NextPage } from 'next'
+import type { NextComponentType, NextPage } from 'next'
 import type { AppProps } from 'next/app'
 
 type NextPageWithLayout = NextPage & {
@@ -19,7 +20,11 @@ type AppPropsWithLayout = AppProps & {
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page)
 
-  return getLayout(<Component {...pageProps} />)
+  return getLayout(
+    <ChakraProvider>
+      <Component {...pageProps} />
+    </ChakraProvider>
+  )
 }
 
 
@@ -45,4 +50,4 @@ export default withTRPC<AppRouter>({
    * @link https://trpc.io/docs/ssr
    */
   ssr: true,
-})(MyApp);
+})(MyApp as NextComponentType);
