@@ -1,7 +1,7 @@
 function Footer() {
   return (
     <>
-      Dukie
+      Footer
     </>
   );
 }

@@ -18,11 +18,12 @@ type AppPropsWithLayout = AppProps & {
 
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
-  const getLayout = Component.getLayout ?? ((page) => page)
+  const getLayout = Component.getLayout || ((page) => page)
+  console.log(getLayout)
 
-  return getLayout(
+  return ( 
     <ChakraProvider>
-      <Component {...pageProps} />
+      {getLayout(<Component {...pageProps} />)}
     </ChakraProvider>
   )
 }

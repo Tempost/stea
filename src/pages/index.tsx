@@ -2,7 +2,7 @@ function Index(): ReactElement {
   return (
     <div>
       <main>
-        Main
+        Content
       </main>
     </div>
   )
