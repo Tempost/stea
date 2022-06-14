@@ -2,22 +2,22 @@ import NavLinkMenu from './navlinkmenu';
 
 interface Menu {
   href?: string;
-  navText: string,
-  render?: ({ href, navText }: Menu) => JSX.Element;
+  name: string,
+  render?: ({ href, name: navText }: Menu) => JSX.Element;
 };
 
 export const menuItems: Menu[] = [
   {
     href: '/',
-    navText: 'Home',
+    name: 'Home',
   },
   {
     href: '/members-horses',
-    navText: 'Members & Horses',
+    name: 'Members & Horses',
   },
   {
-    navText: 'Points',
-    render: ({ navText }) =>
+    name: 'Points',
+    render: ({ name: navText }) =>
       <NavLinkMenu
         name={navText}
         routes={
@@ -35,22 +35,22 @@ export const menuItems: Menu[] = [
       />
   },
   {
-    href: '/join',
-    navText: 'Join',
-  },
-  {
-    navText: 'Member Info',
-    render: ({ navText }) =>
+    name: 'Join',
+    render: ({ name: navText }) =>
       <NavLinkMenu
         name={navText}
         routes={
           [
             {
-              href: '/memberbenefits',
-              text: 'Benifits'
+              href: '/join',
+              text: 'Apply for STEA Membership',
             },
             {
-              href: '/memberbenefits/scholarship',
+              href: '/join/benefits',
+              text: 'Member Benifits'
+            },
+            {
+              href: '/join/scholarship',
               text: 'STEA Scholarship'
             }
           ]
@@ -59,10 +59,10 @@ export const menuItems: Menu[] = [
   },
   {
     href: '/calender',
-    navText: 'Calender',
+    name: 'Calender',
   },
   {
     href: '/contactus',
-    navText: 'Contact Us',
+    name: 'Contact Us',
   },
 ];

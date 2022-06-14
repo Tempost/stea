@@ -6,16 +6,6 @@ import Footer from "./footer";
 function Layout({ children }: any) {
   return (
     <>
-      <Head>
-        <title>Stea</title>
-        <meta
-          name="description"
-          content="STEA dressage"
-          charSet="UTF-8"
-          lang="en"
-        />
-      </Head>
-
       <Header />
       <main>
         {children}

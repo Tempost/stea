@@ -29,21 +29,19 @@ interface NavLinkMenuProps {
 
 function MenuListWrapper({ routes }: WrapperProps) {
   return (
-    <Portal>
-      <MenuList>
-        {
-          routes.map(({href, text}) => (
-            <MenuItem key={href}>
-              <LinkWrapper href={href ? href : ''}>
-                <Text m={1} fontSize='16px'>
-                  {text}
-                </Text>
-              </LinkWrapper>
-            </MenuItem>
-          ))
-        }
-      </MenuList>
-    </Portal>
+    <MenuList>
+      {
+        routes.map(({ href, text }) => (
+          <MenuItem key={href}>
+            <LinkWrapper href={href ? href : ''}>
+              <Text color='white' m={1} fontSize='16px'>
+                {text}
+              </Text>
+            </LinkWrapper>
+          </MenuItem>
+        ))
+      }
+    </MenuList>
   );
 }
 
@@ -53,11 +51,14 @@ export default function NavLinkMenu({ name, routes }: NavLinkMenuProps) {
       <MenuButton
         as={Heading}
         fontSize='18px'
-        className='ransition-colors text-gray-400 hover:text-gray-600'>
+        cursor='pointer'
+      >
         {name}
         <ChevronDownIcon />
       </MenuButton>
-      <MenuListWrapper routes={routes} />
+      <Portal>
+        <MenuListWrapper routes={routes} />
+      </Portal>
     </Menu>
   );
 }
