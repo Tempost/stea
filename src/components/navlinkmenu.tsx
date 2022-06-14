@@ -1,66 +1,63 @@
 import {
+  Heading,
   Text,
   Menu,
   MenuButton,
-  useDisclosure,
   Portal,
   MenuList,
   MenuItem,
 } from '@chakra-ui/react';
 
-import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
+import { ChevronDownIcon } from '@chakra-ui/icons';
 
 import LinkWrapper from './linkwrapper';
 
 interface WrapperProps {
-  href?: string;
-  onOpen?: () => void;
-  onClose?: () => void;
-  menuItem: string;
+  routes: {
+    href: string,
+    text: string
+  }[]
 }
 
 interface NavLinkMenuProps {
   name: string,
-  menuText: string,
-  href?: string
+  routes: {
+    href: string,
+    text: string
+  }[]
 }
 
-function MenuListWrapper({ href, onOpen, onClose, menuItem: navText }: WrapperProps) {
+function MenuListWrapper({ routes }: WrapperProps) {
   return (
     <Portal>
-      <MenuList >
-        <MenuItem onMouseEnter={onOpen} onMouseLeave={onClose}>
-          <LinkWrapper href={href ? href : ''}>
-            <Text m={1} fontSize='16px' className=''>
-              {navText}
-            </Text>
-          </LinkWrapper>
-        </MenuItem>
+      <MenuList>
+        {
+          routes.map(({href, text}) => (
+            <MenuItem key={href}>
+              <LinkWrapper href={href ? href : ''}>
+                <Text m={1} fontSize='16px'>
+                  {text}
+                </Text>
+              </LinkWrapper>
+            </MenuItem>
+          ))
+        }
       </MenuList>
     </Portal>
   );
 }
 
-export default function NavLinkMenu({ name, menuText, href }: NavLinkMenuProps) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
+export default function NavLinkMenu({ name, routes }: NavLinkMenuProps) {
   return (
-    <Menu isOpen={isOpen} isLazy>
+    <Menu isLazy>
       <MenuButton
-        onMouseEnter={onOpen}
-        onMouseLeave={onClose}
-      >
-        <Text className={`transition-colors text-gray-400 ${isOpen ? 'text-black' : ''}`}>
-          {name}
-          {isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
-        </Text>
-        <MenuListWrapper
-          href={href}
-          menuItem={menuText}
-          onOpen={onOpen}
-          onClose={onClose}
-        />
+        as={Heading}
+        fontSize='18px'
+        className='ransition-colors text-gray-400 hover:text-gray-600'>
+        {name}
+        <ChevronDownIcon />
       </MenuButton>
+      <MenuListWrapper routes={routes} />
     </Menu>
   );
 }

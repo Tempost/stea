@@ -1,7 +1,7 @@
 import NavLinkMenu from './navlinkmenu';
 
 interface Menu {
-  href: string;
+  href?: string;
   navText: string,
   render?: ({ href, navText }: Menu) => JSX.Element;
 };
@@ -16,13 +16,22 @@ export const menuItems: Menu[] = [
     navText: 'Members & Horses',
   },
   {
-    href: '/points',
     navText: 'Points',
     render: ({ navText }) =>
       <NavLinkMenu
-        href='/points/guidelines'
         name={navText}
-        menuText='Point Guidelines'
+        routes={
+          [
+            {
+              href: '/scores',
+              text: 'Scores'
+            },
+            {
+              href: '/scores/guidelines',
+              text: 'Guidelines'
+            }
+          ]
+        }
       />
   },
   {
@@ -30,13 +39,22 @@ export const menuItems: Menu[] = [
     navText: 'Join',
   },
   {
-    href: '/memberbenefits',
-    navText: 'Member Benefits',
+    navText: 'Member Info',
     render: ({ navText }) =>
       <NavLinkMenu
-        href='/memberbenefits/scholarship'
         name={navText}
-        menuText='STEA Scholarship'
+        routes={
+          [
+            {
+              href: '/memberbenefits',
+              text: 'Benifits'
+            },
+            {
+              href: '/memberbenefits/scholarship',
+              text: 'STEA Scholarship'
+            }
+          ]
+        }
       />
   },
   {

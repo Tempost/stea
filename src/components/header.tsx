@@ -5,33 +5,36 @@ import { menuItems } from './menuitems';
 
 function Header() {
   return (
-    <div className='flex bg-blue-50 justify-between'>
-      <span className='flex flex-col text-center'>
-        <Heading m='auto' mb={0} as='h1' fontSize='50px'>
-          STEA
-        </Heading>
+    <div className='bg-blue-50'>
+      <div className='flex justify-between ml-5 mr-5'>
+        <span className='flex flex-col text-center'>
+          <Heading m='auto' mb={0} as='h1' fontSize='50px'>
+            STEA
+          </Heading>
 
-        <Text>
-          South Texas Eventing Association
-        </Text>
-      </span>
+          <Text>
+            South Texas Eventing Association
+          </Text>
+        </span>
 
-      <div className='flex justify-between self-center'>
-        {
-          menuItems.map(({ href, navText, render: render }) => (
-            <LinkWrapper key={navText} href={href}>
-              <Heading  className='' m={5} as='h4' fontSize='18px'>
+        <div className='flex justify-between self-center'>
+          {
+            menuItems.map(({ href, navText, render }) => (
+            <div className='m-2'>
+              <LinkWrapper key={navText} href={href}>
                 {
                   render ?
                     render({ href, navText }) :
-                    <Text className='transition-colors text-gray-400 hover:text-black'>
+
+                    <Heading as='h4' fontSize='18px' className='transition-colors text-gray-400 hover:text-gray-600'>
                       {navText}
-                    </Text>
+                    </Heading>
                 }
-              </Heading>
-            </LinkWrapper>
-          ))
-        }
+              </LinkWrapper>
+            </div>
+            ))
+          }
+        </div>
       </div>
     </div>
   );
