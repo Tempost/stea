@@ -2,28 +2,21 @@ import { withTRPC } from "@trpc/next";
 import { AppRouter } from "@/backend/router";
 import { ChakraProvider, ColorModeProvider } from "@chakra-ui/react";
 
-import '../styles/globals.css';
-import theme from './theme';
-
-import type { ReactElement, ReactNode } from 'react'
-import type { NextComponentType, NextPage } from 'next'
+import type { NextComponentType } from 'next'
 import type { AppProps } from 'next/app'
 
-type NextPageWithLayout = NextPage & {
-  getLayout?: (page: ReactElement) => ReactNode
-}
+import '../styles/globals.css';
+import theme from '@/theme';
+import Layout from '@/components/layout';
 
-type AppPropsWithLayout = AppProps & {
-  Component: NextPageWithLayout
-}
-
-function MyApp({ Component, pageProps }: AppPropsWithLayout) {
-  const getLayout = Component.getLayout || ((page) => page)
+function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <ChakraProvider theme={theme}>
       <ColorModeProvider>
-        {getLayout(<Component {...pageProps} />)}
+        <Layout>
+        <Component {...pageProps} />
+        </Layout>
       </ColorModeProvider>
     </ChakraProvider>
   )

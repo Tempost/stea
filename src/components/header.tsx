@@ -1,65 +1,64 @@
-import { Heading, Box, Flex, HStack, Image, StackDivider, Center } from '@chakra-ui/react';
+import { Heading, Box, Flex, HStack, Image, StackDivider } from '@chakra-ui/react';
 
 import LinkWrapper from './linkwrapper';
 import { menuItems } from './menuitems';
 
 const Divider = (
-  <StackDivider borderColor='gray.400' maxHeight='25px' minHeight='1.5vmax' alignSelf='center' />
+  <StackDivider borderColor='whiteAlpha.700' maxHeight='25px' minHeight='1.5vmax' alignSelf='center' />
 );
 
 function Header() {
   return (
-    <Center>
-      <Box bg='blue.700' color='whiteAlpha.700'>
-        <Flex justifyContent='space-between' ml={3}>
-          <Flex alignItems='center'>
-            <Image
-              src='logo-nobackground-200.png'
-              alt='STEA Logo'
-              boxSize='100px'
-              objectFit='scale-down'
-            />
+    <Flex
+      justifyContent='space-between'
+      as='header'
+      bg='blue.700'
+      color='whiteAlpha.700'
+    >
+      <Flex alignItems='center'>
+        <Image
+          src='logo-nobackground-200.png'
+          alt='STEA Logo'
+          boxSize='7.5rem'
+          objectFit='scale-down'
+          padding='1'
+        />
 
 
-            <Flex direction='column' alignItems='center'>
-              <p>South Texas</p>
-              <p>Eventing Association</p>
-            </Flex>
-          </Flex>
-
-          <HStack
-            spacing='1px'
-            divider={Divider}
-          >
-            {
-              menuItems.map(({ href, name: navText, render }) => (
-                <Box
-                  m={2}
-                  key={navText}
-                  color='whiteAlpha.700'
-                  _hover={{ color: 'maroon' }}
-                  transition='color'
-                >
-                  {
-                    render ?
-                      render({ href, name: navText }) :
-
-                      <LinkWrapper href={href}>
-                        <Heading
-                          as='h4'
-                          fontSize='18px'
-                        >
-                          {navText}
-                        </Heading>
-                      </LinkWrapper>
-                  }
-                </Box>
-              ))
-            }
-          </HStack>
+        <Flex direction='column' textAlign='center' m={1}>
+          <Heading as='h2' fontSize='20px'>South Texas<br />Eventing Association</Heading>
         </Flex>
-      </Box>
-    </Center>
+      </Flex>
+
+      <HStack
+        spacing='0px'
+        divider={Divider}
+      >
+        {
+          menuItems.map(({ href, name, render }) => (
+            <Box
+              m={2}
+              key={name}
+              _hover={{ color: 'whiteAlpha.900' }}
+            >
+              {
+                render ?
+                  render({ href, name }) :
+
+                  <LinkWrapper href={href}>
+                    <Heading
+                      as='h2'
+                      fontSize='15px'
+                    >
+                      {name}
+                    </Heading>
+                  </LinkWrapper>
+              }
+            </Box>
+          ))
+        }
+      </HStack>
+    </Flex>
   );
 }
 

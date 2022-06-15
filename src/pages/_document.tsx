@@ -1,10 +1,9 @@
 import { ColorModeScript } from '@chakra-ui/react';
 import { Html, Main, Head, NextScript } from 'next/document';
 
-import theme from './theme';
+import theme from '@/theme';
 
 export default function MyDocument() {
-  console.log("Theme config: ", theme.config)
   return (
     <Html lang='en'>
       <title>Stea</title>

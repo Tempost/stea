@@ -12,19 +12,18 @@ import { ChevronDownIcon } from '@chakra-ui/icons';
 
 import LinkWrapper from './linkwrapper';
 
+interface Router {
+    href: string;
+    text: string;
+}
+
 interface WrapperProps {
-  routes: {
-    href: string,
-    text: string
-  }[]
+  routes: Router[];
 }
 
 interface NavLinkMenuProps {
-  name: string,
-  routes: {
-    href: string,
-    text: string
-  }[]
+  name: string;
+  routes: Router[];
 }
 
 function MenuListWrapper({ routes }: WrapperProps) {
@@ -34,7 +33,7 @@ function MenuListWrapper({ routes }: WrapperProps) {
         routes.map(({ href, text }) => (
           <MenuItem key={href}>
             <LinkWrapper href={href ? href : ''}>
-              <Text color='white' m={1} fontSize='16px'>
+              <Text color='white' m={1} fontSize='15px'>
                 {text}
               </Text>
             </LinkWrapper>
@@ -50,8 +49,8 @@ export default function NavLinkMenu({ name, routes }: NavLinkMenuProps) {
     <Menu isLazy>
       <MenuButton
         as={Heading}
-        fontSize='18px'
         cursor='pointer'
+        fontSize='15px'
       >
         {name}
         <ChevronDownIcon />

@@ -1,18 +1,14 @@
-import Head from 'next/head'
-
 import Header from "./header";
 import Footer from "./footer";
 
-function Layout({ children }: any) {
+export default function Layout({ children }: any) {
   return (
     <>
       <Header />
-      <main>
+      <main id='content'>
         {children}
       </main>
       <Footer />
     </>
   );
 }
-
-export default Layout;
