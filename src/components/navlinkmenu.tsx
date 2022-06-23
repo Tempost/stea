@@ -1,24 +1,8 @@
-import {
-  Heading,
-  Text,
-  Menu,
-  MenuButton,
-  Portal,
-  MenuList,
-  MenuItem,
-} from '@chakra-ui/react';
-
-import { ChevronDownIcon } from '@chakra-ui/icons';
-
 import LinkWrapper from './linkwrapper';
 
 interface Router {
-    href: string;
-    text: string;
-}
-
-interface WrapperProps {
-  routes: Router[];
+  href: string;
+  text: string;
 }
 
 interface NavLinkMenuProps {
@@ -26,38 +10,25 @@ interface NavLinkMenuProps {
   routes: Router[];
 }
 
-function MenuListWrapper({ routes }: WrapperProps) {
-  return (
-    <MenuList>
-      {
-        routes.map(({ href, text }) => (
-          <MenuItem key={href}>
-            <LinkWrapper href={href ? href : ''}>
-              <Text color='white' m={1} fontSize='15px'>
-                {text}
-              </Text>
-            </LinkWrapper>
-          </MenuItem>
-        ))
-      }
-    </MenuList>
-  );
-}
-
 export default function NavLinkMenu({ name, routes }: NavLinkMenuProps) {
   return (
-    <Menu isLazy>
-      <MenuButton
-        as={Heading}
-        cursor='pointer'
-        fontSize='15px'
-      >
+    <div className='dropdown dropdown-hover'>
+      <h2 tabIndex={0} className='text-xl cursor-pointer'>
         {name}
-        <ChevronDownIcon />
-      </MenuButton>
-      <Portal>
-        <MenuListWrapper routes={routes} />
-      </Portal>
-    </Menu>
+      </h2>
+      <ul className='dropdown-content menu p-2 shadow bg-neutral-content w-52 text-neutral-focus rounded-lg'>
+        {
+          routes.map(({ href, text }) => (
+            <li key={href}>
+              <LinkWrapper href={href ? href : ''}>
+                <span className='m-1 text-sm'>
+                  {text}
+                </span>
+              </LinkWrapper>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
   );
 }

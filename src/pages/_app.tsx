@@ -1,24 +1,32 @@
+import Head from 'next/head';
 import { withTRPC } from "@trpc/next";
 import { AppRouter } from "@/backend/router";
-import { ChakraProvider, ColorModeProvider } from "@chakra-ui/react";
 
 import type { NextComponentType } from 'next'
 import type { AppProps } from 'next/app'
 
 import '../styles/globals.css';
-import theme from '@/theme';
 import Layout from '@/components/layout';
 
 function MyApp({ Component, pageProps }: AppProps) {
 
   return (
-    <ChakraProvider theme={theme}>
-      <ColorModeProvider>
-        <Layout>
+    <>
+      <Head>
+        <title>STEA</title>
+        <meta
+          property='og:title'
+          name="description"
+          content="STEA dressage"
+          charSet="UTF-8"
+          lang="en"
+        />
+        <meta name="viewport" content="viewport-fit=cover" />
+      </Head>
+      <Layout>
         <Component {...pageProps} />
-        </Layout>
-      </ColorModeProvider>
-    </ChakraProvider>
+      </Layout>
+    </>
   )
 }
 
@@ -26,9 +34,9 @@ function MyApp({ Component, pageProps }: AppProps) {
 export default withTRPC<AppRouter>({
   config({ ctx }) {
     /**
-     * If you want to use SSR, you need to use the server's full URL
-     * @link https://trpc.io/docs/ssr
-     */
+        * If you want to use SSR, you need to use the server's full URL
+        * @link https://trpc.io/docs/ssr
+        */
     const url = process.env.VERCEL_URL
       ? `https://${process.env.VERCEL_URL}/api/trpc`
       : 'http://localhost:3000/api/trpc';

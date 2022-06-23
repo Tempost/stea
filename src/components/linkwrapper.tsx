@@ -1,5 +1,4 @@
 import NextLink from 'next/link';
-import { Link } from '@chakra-ui/react';
 import _ from 'lodash';
 
 interface WrapperProps {
@@ -10,9 +9,9 @@ interface WrapperProps {
 function LinkWrapper({ href, children }: WrapperProps) {
   return (
     <NextLink href={href ? href : ''}>
-      <Link>
+      <a>
         {children}
-      </Link>
+      </a>
     </NextLink>
   );
 }

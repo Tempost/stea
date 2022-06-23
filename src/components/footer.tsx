@@ -1,10 +1,8 @@
-import { Center } from "@chakra-ui/react";
-
 function Footer() {
   return (
-    <Center as='footer' bg='blue.700' color='whiteAlpha.700'>
-      Footer
-    </Center>
+    <footer className='footer p-4 bg-neutral text-neutral-content'>
+      <h1 className='text-3xl'> Footer </h1>
+    </footer>
   );
 }
 

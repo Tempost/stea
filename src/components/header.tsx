@@ -1,64 +1,40 @@
-import { Heading, Box, Flex, HStack, Image, StackDivider } from '@chakra-ui/react';
-
 import LinkWrapper from './linkwrapper';
 import { menuItems } from './menuitems';
 
-const Divider = (
-  <StackDivider borderColor='whiteAlpha.700' maxHeight='25px' minHeight='1.5vmax' alignSelf='center' />
-);
-
 function Header() {
   return (
-    <Flex
-      justifyContent='space-between'
-      as='header'
-      bg='blue.700'
-      color='whiteAlpha.700'
+    <header className='grid grid-cols-2 bg-neutral text-neutral-content'
     >
-      <Flex alignItems='center'>
-        <Image
-          src='logo-nobackground-200.png'
-          alt='STEA Logo'
-          boxSize='7.5rem'
-          objectFit='scale-down'
-          padding='1'
-        />
+      <img
+        src='logo-nobackground-200.png'
+        alt='STEA Logo'
+      />
 
+      <div className='flex flex-col justify-between items-end'>
+        <h1 className='text-2xl'>
+          South Texas
+          Eventing Association
+        </h1>
 
-        <Flex direction='column' textAlign='center' m={1}>
-          <Heading as='h2' fontSize='20px'>South Texas<br />Eventing Association</Heading>
-        </Flex>
-      </Flex>
-
-      <HStack
-        spacing='0px'
-        divider={Divider}
-      >
-        {
-          menuItems.map(({ href, name, render }) => (
-            <Box
-              m={2}
-              key={name}
-              _hover={{ color: 'whiteAlpha.900' }}
-            >
-              {
-                render ?
-                  render({ href, name }) :
-
-                  <LinkWrapper href={href}>
-                    <Heading
-                      as='h2'
-                      fontSize='15px'
-                    >
-                      {name}
-                    </Heading>
-                  </LinkWrapper>
-              }
-            </Box>
-          ))
-        }
-      </HStack>
-    </Flex>
+        <div className='grid grid-flow-col gap-2'>
+          {
+            menuItems.map(({ href, name, render }) => (
+              <div className='hover:text-black' key={name} >
+                {
+                  render ?
+                    render({ href, name }) :
+                    <LinkWrapper href={href}>
+                      <h2 className='text-xl'>
+                        {name}
+                      </h2>
+                    </LinkWrapper>
+                }
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </header>
   );
 }
 
