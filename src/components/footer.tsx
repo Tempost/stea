@@ -1,6 +1,9 @@
 function Footer() {
   return (
-    <footer className='footer p-4 bg-neutral text-neutral-content'>
+    <footer
+      className='footer p-4 bg-neutral text-neutral-content z-[-1]
+                 shadow-[0_-4px_20px_0_rgba(0,0,0,0.3)] relative bottom-0'
+    >
       <h1 className='text-3xl'> Footer </h1>
     </footer>
   );

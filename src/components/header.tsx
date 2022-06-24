@@ -3,7 +3,9 @@ import { menuItems } from './menuitems';
 
 function Header() {
   return (
-    <header className='grid grid-cols-2 bg-neutral text-neutral-content'
+    <header
+      className='grid grid-flow-col bg-neutral text-neutral-content
+                 shadow-[0_4px_20px_0_rgba(0,0,0,0.3)] sticky top-0 p-1'
     >
       <img
         src='logo-nobackground-200.png'
@@ -11,12 +13,7 @@ function Header() {
       />
 
       <div className='flex flex-col justify-between items-end'>
-        <h1 className='text-2xl'>
-          South Texas
-          Eventing Association
-        </h1>
-
-        <div className='grid grid-flow-col gap-2'>
+        <div className='grid grid-flow-col gap-5'>
           {
             menuItems.map(({ href, name, render }) => (
               <div className='hover:text-black' key={name} >
@@ -33,6 +30,11 @@ function Header() {
             ))
           }
         </div>
+
+        <h1 className='text-2xl'>
+          South Texas
+          Eventing Association
+        </h1>
       </div>
     </header>
   );
