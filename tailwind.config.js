@@ -4,7 +4,11 @@ module.exports = {
     "./src/components/**/*.{ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'home-hero': "url('/STEA_photos/A99I3830-(ZF-5269-01547-1-001).jpg')",
+      }
+    },
   },
   plugins: [require('daisyui')],
   daisyui: {

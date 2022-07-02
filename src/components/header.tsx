@@ -4,14 +4,10 @@ import { menuItems } from './menuitems';
 function Header() {
   return (
     <header
-      className='grid grid-flow-col bg-neutral text-neutral-content
-                 shadow-[0_4px_20px_0_rgba(0,0,0,0.3)] sticky top-0 p-1'
+      className='grid grid-flow-col text-neutral-content h-full w-full z-10
+      max-h-20 md:max-h-14 sm:max-h-fit fixed p-1 bg-gradient-to-b from-neutral
+      to-neutral/[0.9] transition-all'
     >
-      <img
-        src='logo-nobackground-200.png'
-        alt='STEA Logo'
-      />
-
       <div className='flex flex-col justify-between items-end'>
         <div className='grid grid-flow-col gap-5'>
           {
@@ -30,11 +26,6 @@ function Header() {
             ))
           }
         </div>
-
-        <h1 className='text-2xl'>
-          South Texas
-          Eventing Association
-        </h1>
       </div>
     </header>
   );
