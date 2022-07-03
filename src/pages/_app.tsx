@@ -1,12 +1,17 @@
 import Head from 'next/head';
 import { withTRPC } from "@trpc/next";
 import { AppRouter } from "@/backend/router";
+import { StateMachineProvider, createStore } from 'little-state-machine';
+import formState from '@/utils/formstates';
+// import { DevTool } from 'little-state-machine-devtools';
 
 import type { NextComponentType } from 'next'
 import type { AppProps } from 'next/app'
 
 import '../styles/globals.css';
 import Layout from '@/components/layout';
+
+createStore(formState);
 
 function MyApp({ Component, pageProps }: AppProps) {
 
@@ -23,9 +28,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
         <meta name="viewport" content="viewport-fit=cover" />
       </Head>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <StateMachineProvider>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </StateMachineProvider>
     </>
   )
 }

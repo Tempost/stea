@@ -1,10 +1,11 @@
 import * as z from "zod"
+import * as imports from "../null"
 import { CompleteMember, RelatedMemberModel, CompleteHorse, RelatedHorseModel } from "./index"
 
 export const TotalRankingModel = z.object({
   uid: z.number().int(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  createdAt: z.date().nullish(),
+  updatedAt: z.date().nullish(),
   level: z.string(),
   division: z.string(),
   totalPoints: z.number(),

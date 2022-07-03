@@ -1,5 +1,7 @@
 export * from "./member"
+export * from "./corporatemember"
 export * from "./familymember"
 export * from "./horse"
+export * from "./ridercombo"
 export * from "./totalranking"
 export * from "./show"

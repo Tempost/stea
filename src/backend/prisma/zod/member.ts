@@ -1,10 +1,11 @@
 import * as z from "zod"
-import { CompleteFamilyMember, RelatedFamilyMemberModel, CompleteHorse, RelatedHorseModel, CompleteTotalRanking, RelatedTotalRankingModel, CompleteShow, RelatedShowModel } from "./index"
+import * as imports from "../null"
+import { CompleteFamilyMember, RelatedFamilyMemberModel, CompleteHorse, RelatedHorseModel, CompleteTotalRanking, RelatedTotalRankingModel, CompleteShow, RelatedShowModel, CompleteRiderCombo, RelatedRiderComboModel } from "./index"
 
 export const MemberModel = z.object({
   uid: z.number().int(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  createdAt: z.date().nullish(),
+  updatedAt: z.date().nullish(),
   name: z.string(),
   memberType: z.string(),
   memberStatus: z.string(),
@@ -15,6 +16,7 @@ export const MemberModel = z.object({
   state: z.string(),
   zip: z.number().int(),
   phone: z.string(),
+  email: z.string().nullish(),
   previousMember: z.boolean(),
   riderLevel: z.string(),
   confirmed: z.boolean(),
@@ -25,6 +27,7 @@ export interface CompleteMember extends z.infer<typeof MemberModel> {
   horses: CompleteHorse[]
   ranking?: CompleteTotalRanking | null
   shows: CompleteShow[]
+  RiderCombo: CompleteRiderCombo[]
 }
 
 /**
@@ -37,4 +40,5 @@ export const RelatedMemberModel: z.ZodSchema<CompleteMember> = z.lazy(() => Memb
   horses: RelatedHorseModel.array(),
   ranking: RelatedTotalRankingModel.nullish(),
   shows: RelatedShowModel.array(),
+  RiderCombo: RelatedRiderComboModel.array(),
 }))

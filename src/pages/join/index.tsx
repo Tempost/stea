@@ -1,9 +1,13 @@
 import { MouseEvent, useState } from 'react';
+import { useStateMachine } from 'little-state-machine';
 
 import SteaJoinForm from '@/components/steajoinform';
 
 function SteaJoin() {
   const [choice, setChoice] = useState('');
+
+  const { state, actions } = useStateMachine();
+  console.log(state, actions);
 
   function onButtonClick(event: MouseEvent<HTMLButtonElement>) {
     event.stopPropagation();
@@ -12,9 +16,6 @@ function SteaJoin() {
 
   function FormTrack() {
     switch (choice) {
-      case 'mail':
-        return (<></>);
-
       case 'online':
         return (<SteaJoinForm />);
 

@@ -1,6 +1,6 @@
 import { FamilyMember, Member } from '@prisma/client';
 import { MockContext, Context, createMockContext } from './context'
-import { createFamilyMember, createMember, fetchMember} from './db'
+import { createFamilyMember, createMember, fetchMember } from './db'
 
 let mockCtx: MockContext
 let ctx: Context
@@ -28,6 +28,7 @@ test('Create member', async () => {
     rankingId: null,
     createdAt: date,
     updatedAt: date,
+    email: null
   }
 
   mockCtx.prisma.member.create.mockResolvedValue(member);
@@ -69,6 +70,7 @@ test('fetch member by family', async () => {
     rankingId: null,
     createdAt: date,
     updatedAt: date,
+    email: null
   }
   mockCtx.prisma.member.findFirst.mockResolvedValue(member);
 

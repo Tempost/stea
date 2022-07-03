@@ -1,10 +1,11 @@
 import * as z from "zod"
+import * as imports from "../null"
 import { CompleteMember, RelatedMemberModel } from "./index"
 
 export const ShowModel = z.object({
   uid: z.number().int(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  createdAt: z.date().nullish(),
+  updatedAt: z.date().nullish(),
   showName: z.string(),
   showType: z.string(),
 })
