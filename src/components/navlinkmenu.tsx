@@ -23,7 +23,7 @@ export default function NavLinkMenu({ name, routes }: NavLinkMenuProps) {
         {name}
         <span className=''>{ChevDown}</span>
       </h2>
-      <ul className='dropdown-content menu p-2 shadow bg-neutral-content w-52 text-neutral-focus rounded-lg'>
+      <ul className='dropdown-content menu p-2 shadow bg-primary-content w-52 text-neutral-focus rounded-md'>
         {
           routes.map(({ href, text }) => (
             <li key={href}>
