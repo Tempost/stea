@@ -2,8 +2,16 @@ import * as trpc from "@trpc/server";
 import { z } from "zod";
 import { prisma } from "@/backend/prisma";
 import { PrismaClient } from "@prisma/client";
+import { transformer } from '@/utils/trpc';
 
-import { MemberModel, FamilyMemberModel, HorseModel, ShowModel, TotalRankingModel } from "@/backend/prisma/zod";
+import {
+  MemberModel,
+  FamilyMemberModel,
+  HorseModel,
+  ShowModel,
+  TotalRankingModel
+} from "@/backend/prisma/zod";
+
 
 type Context = {
   prisma: PrismaClient
@@ -123,7 +131,7 @@ const show = createRouter()
   });
 // .mutation("add-show");
 
-export const appRouter = createRouter()
+export const appRouter = createRouter().transformer(transformer)
   .merge('member.', member)
   .merge('horse.', horse)
   .merge('ranking.', ranking)

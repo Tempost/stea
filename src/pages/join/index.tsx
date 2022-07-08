@@ -1,14 +1,12 @@
-import { GlobalState, useStateMachine } from 'little-state-machine';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 function SteaJoin() {
-  const { state, actions } = useStateMachine();
   
-  const { register, handleSubmit } = useForm<GlobalState>({
+  const { register, handleSubmit } = useForm({
     reValidateMode: 'onSubmit',
     shouldFocusError: true,
-    resolver: zodResolver(schema)
+    // resolver: zodResolver(schema)
   });
 
   return (

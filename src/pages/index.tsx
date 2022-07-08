@@ -1,6 +1,26 @@
-import Link from "next/link";
+import Link from 'next/link';
+import { Member } from "@prisma/client";
 
-function Index() {
+import {
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from '@tanstack/react-table'
+import { NextPageContext } from 'next';
+
+
+const cols: ColumnDef<Member>[] = [
+  {
+    header: '2022 Year End Placings.',
+    columns: [
+
+    ]
+  }
+];
+
+function Home(props: any) {
+  console.log(props);
   return (
     <>
       <section>
@@ -134,4 +154,5 @@ function Index() {
   )
 }
 
-export default Index
+
+export default Home;

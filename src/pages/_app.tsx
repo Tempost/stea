@@ -1,17 +1,13 @@
 import Head from 'next/head';
 import { withTRPC } from "@trpc/next";
 import { AppRouter } from "@/backend/router";
-import { StateMachineProvider, createStore } from 'little-state-machine';
-import formState from '@/utils/formstates';
-// import { DevTool } from 'little-state-machine-devtools';
 
 import type { NextComponentType } from 'next'
 import type { AppProps } from 'next/app'
 
 import '../styles/globals.css';
 import Layout from '@/components/layout';
-
-createStore(formState);
+import { transformer } from '@/utils/trpc';
 
 function MyApp({ Component, pageProps }: AppProps) {
 
@@ -28,11 +24,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
         <meta name="viewport" content="viewport-fit=cover" />
       </Head>
-      <StateMachineProvider>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </StateMachineProvider>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </>
   )
 }
@@ -40,20 +34,38 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 export default withTRPC<AppRouter>({
   config({ ctx }) {
+    if (typeof window !== 'undefined') {
+      // during client requests
+      return {
+        transformer: transformer, // optional - adds superjson serialization
+        url: '/api/trpc',
+      };
+    }
+
     /**
         * If you want to use SSR, you need to use the server's full URL
         * @link https://trpc.io/docs/ssr
         */
+    const ONE_DAY_SECONDS = 60 * 60 * 24;
+    ctx?.res?.setHeader(
+      'Cache-Control',
+      `s-maxage=1, stale-while-revalidate=${ONE_DAY_SECONDS}`,
+    );
+
     const url = process.env.VERCEL_URL
       ? `https://${process.env.VERCEL_URL}/api/trpc`
       : 'http://localhost:3000/api/trpc';
 
     return {
+      transformer: transformer,
       url,
+      headers: {
+        'x-ssr': '1',
+      },
       /**
        * @link https://react-query.tanstack.com/reference/QueryClient
        */
-      // queryClientConfig: { defaultOptions: { queries: { staleTime: 60 } } },
+      queryClientConfig: { defaultOptions: { queries: { staleTime: ONE_DAY_SECONDS } } },
     };
   },
   /**
