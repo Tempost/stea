@@ -7,7 +7,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { NextPageContext } from 'next';
+import { trpc } from '@/utils/trpc';
 
 
 const cols: ColumnDef<Member>[] = [
@@ -19,8 +19,13 @@ const cols: ColumnDef<Member>[] = [
   }
 ];
 
-function Home(props: any) {
-  console.log(props);
+function Home() {
+  const { data, isFetching } = trpc.useQuery(['shows.get-shows']);
+
+  if (!isFetching) {
+    console.log(data)
+  }
+
   return (
     <>
       <section>
@@ -46,7 +51,7 @@ function Home(props: any) {
           <thead>
             <tr>
               <th></th>
-              <th>Rider Division</th>
+              <th>Division</th>
               <th>Member</th>
               <th>Horse</th>
               <th>Total Points</th>

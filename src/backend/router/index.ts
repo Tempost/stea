@@ -1,7 +1,6 @@
-import * as trpc from "@trpc/server";
-import { z } from "zod";
-import { prisma } from "@/backend/prisma";
-import { PrismaClient } from "@prisma/client";
+import * as trpc from '@trpc/server';
+import { z } from 'zod';
+import { prisma, Context } from '@/backend/prisma';
 import { transformer } from '@/utils/trpc';
 
 import {
@@ -10,31 +9,35 @@ import {
   HorseModel,
   ShowModel,
   TotalRankingModel
-} from "@/backend/prisma/zod";
+} from '@/backend/prisma/zod';
+import { Member } from '@prisma/client';
 
-
-type Context = {
-  prisma: PrismaClient
-}
 
 const createRouter = () => {
   return trpc.router<Context>();
 }
 
 const member = createRouter()
-  .query("get-members", {
+  .query('get-members', {
     async resolve() {
-      const members = await prisma.member.findMany()
+      const member = await prisma.member.findMany()
         .then(members => {
           return members
         })
         .catch(err => {
           console.log(err);
         });
-      return members;
+    return member as Member[]
     }
   })
-  .mutation("add-member", {
+  .query('eoy-placings', {
+    async resolve() {
+      // Need member, horse and placing info
+      // Generate placing? or create new table with Placing Enums
+      // and store placing in ranking table
+    }
+  })
+  .mutation('add-member', {
     input: z
       .object({
         name: z.string(),
@@ -60,37 +63,48 @@ const member = createRouter()
   });
 
 const horse = createRouter()
-  .query("get-horses", {
+  .query('get-horses', {
     async resolve() {
-      const horses = await prisma.horse.findMany()
+      return await prisma.horse.findMany()
         .then(horses => {
           return horses
         })
         .catch(err => {
           console.log(err);
         });
-      return horses;
     }
   });
-// .mutation("add-horse");
+// .mutation('add-horse');
+
+const riderCombo = createRouter()
+  .query('get-combos', {
+    async resolve() {
+      return await prisma.riderCombo.findMany()
+        .then(combos => {
+          return combos
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  });
 
 const ranking = createRouter()
-  .query("get-ranking", {
+  .query('get-ranking', {
     async resolve() {
-      const ranking = await prisma.totalRanking.findMany()
+      return await prisma.totalRanking.findMany()
         .then(ranking => {
           return ranking
         })
         .catch(err => {
           console.log(err);
         });
-      return ranking;
     }
   });
-// .mutation("update-ranking");
+// .mutation('update-ranking');
 
 const family = createRouter()
-  .query("get-family", {
+  .query('get-family', {
     input: z
       .object({
         uid: z.number(),
@@ -98,7 +112,7 @@ const family = createRouter()
       .nullish(),
 
     async resolve({ input }) {
-      const family = await prisma.familyMember.findMany({
+      return await prisma.familyMember.findMany({
         where: {
           memberId: {
             equals: input?.uid,
@@ -111,31 +125,30 @@ const family = createRouter()
         .catch(err => {
           console.log(err);
         });
-      return family;
     }
   });
-// .mutation("update-family");
+// .mutation('update-family');
 
 const show = createRouter()
-  .query("get-shows", {
+  .query('get-shows', {
     async resolve() {
-      const shows = await prisma.show.findMany()
+      return await prisma.show.findMany()
         .then(shows => {
           return shows
         })
         .catch(err => {
           console.log(err);
         });
-      return shows;
     }
   });
-// .mutation("add-show");
+// .mutation('add-show');
 
 export const appRouter = createRouter().transformer(transformer)
   .merge('member.', member)
   .merge('horse.', horse)
+  .merge('riderCombo.', riderCombo)
   .merge('ranking.', ranking)
   .merge('family.', family)
-  .merge('shows', show);
+  .merge('shows.', show);
 
 export type AppRouter = typeof appRouter;

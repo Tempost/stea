@@ -1,4 +1,6 @@
 import Head from 'next/head';
+import { httpBatchLink } from '@trpc/client/links/httpBatchLink';
+import { loggerLink } from '@trpc/client/links/loggerLink';
 import { withTRPC } from "@trpc/next";
 import { AppRouter } from "@/backend/router";
 
@@ -37,7 +39,7 @@ export default withTRPC<AppRouter>({
     if (typeof window !== 'undefined') {
       // during client requests
       return {
-        transformer: transformer, // optional - adds superjson serialization
+        transformer, // optional - adds superjson serialization
         url: '/api/trpc',
       };
     }
@@ -57,7 +59,7 @@ export default withTRPC<AppRouter>({
       : 'http://localhost:3000/api/trpc';
 
     return {
-      transformer: transformer,
+      transformer,
       url,
       headers: {
         'x-ssr': '1',
@@ -66,10 +68,32 @@ export default withTRPC<AppRouter>({
        * @link https://react-query.tanstack.com/reference/QueryClient
        */
       queryClientConfig: { defaultOptions: { queries: { staleTime: ONE_DAY_SECONDS } } },
+      links: [
+        loggerLink({
+          enabled: (opts) =>
+            process.env.NODE_ENV === 'development' ||
+            (opts.direction === 'down' && opts.result instanceof Error),
+        }),
+        httpBatchLink({
+          url: `${url}/api/trpc`,
+        }),
+      ],
     };
   },
   /**
    * @link https://trpc.io/docs/ssr
    */
   ssr: true,
+  responseMeta({ clientErrors }) {
+    if (clientErrors.length) {
+      // propagate http first error from API calls
+      return {
+        status: clientErrors[0].data?.httpStatus ?? 500,
+      };
+    }
+
+    // for app caching with SSR see https://trpc.io/docs/caching
+
+    return {};
+  }
 })(MyApp as NextComponentType);
