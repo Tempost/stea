@@ -9,7 +9,7 @@ export const FamilyMemberModel = z.object({
   name: z.string(),
   email: z.string().nullish(),
   riderLevel: z.string(),
-  memberId: z.string(),
+  memberUid: z.string(),
 })
 
 export interface CompleteFamilyMember extends z.infer<typeof FamilyMemberModel> {

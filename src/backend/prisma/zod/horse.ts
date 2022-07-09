@@ -10,8 +10,8 @@ export const HorseModel = z.object({
   horseAKA: z.string().nullish(),
   registrationDate: z.date().nullish(),
   regType: z.string(),
-  corpId: z.string().nullish(),
-  rankingId: z.string().nullish(),
+  corpUid: z.string().nullish(),
+  rankingUid: z.string().nullish(),
 })
 
 export interface CompleteHorse extends z.infer<typeof HorseModel> {

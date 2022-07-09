@@ -1,5 +1,6 @@
 import * as z from "zod"
 import * as imports from "../null"
+import { CompleteMember, RelatedMemberModel } from "./index"
 
 export const PaymentMethodModel = z.object({
   uid: z.string(),
@@ -9,3 +10,16 @@ export const PaymentMethodModel = z.object({
   checkNumber: z.number().int(),
   comments: z.string(),
 })
+
+export interface CompletePaymentMethod extends z.infer<typeof PaymentMethodModel> {
+  Member?: CompleteMember | null
+}
+
+/**
+ * RelatedPaymentMethodModel contains all relations on your model in addition to the scalars
+ *
+ * NOTE: Lazy required in case of potential circular dependencies within schema
+ */
+export const RelatedPaymentMethodModel: z.ZodSchema<CompletePaymentMethod> = z.lazy(() => PaymentMethodModel.extend({
+  Member: RelatedMemberModel.nullish(),
+}))

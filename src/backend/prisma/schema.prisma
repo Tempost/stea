@@ -20,6 +20,23 @@ generator zod {
   prismaJsonNullability = true
 }
 
+enum Status {
+    Life
+    Annual
+    New
+    Renew
+}
+
+enum Type {
+    Idividual
+    Family
+}
+
+enum JRSR {
+    JR
+    SR
+}
+
 model Member {
   uid              String         @id @default(cuid())
   createdAt        DateTime?      @default(now())
