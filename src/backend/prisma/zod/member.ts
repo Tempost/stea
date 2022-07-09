@@ -1,5 +1,6 @@
 import * as z from "zod"
 import * as imports from "../null"
+import { Type, Status, JRSR } from "@prisma/client"
 import { CompleteFamilyMember, RelatedFamilyMemberModel, CompleteHorse, RelatedHorseModel, CompleteTotalRanking, RelatedTotalRankingModel, CompleteShow, RelatedShowModel, CompleteRiderCombo, RelatedRiderComboModel } from "./index"
 
 export const MemberModel = z.object({
@@ -9,8 +10,10 @@ export const MemberModel = z.object({
   firstName: z.string(),
   lastName: z.string(),
   fullName: z.string(),
-  memberType: z.string(),
-  memberStatus: z.string(),
+  memberType: z.nativeEnum(Type),
+  memberStatus: z.nativeEnum(Status),
+  JRSR: z.nativeEnum(JRSR),
+  riderLevel: z.string(),
   rankingId: z.string().nullish(),
   boardMember: z.boolean(),
   address: z.string(),
@@ -20,7 +23,6 @@ export const MemberModel = z.object({
   phone: z.string(),
   email: z.string().nullish(),
   previousMember: z.boolean(),
-  riderLevel: z.string(),
   confirmed: z.boolean(),
 })
 

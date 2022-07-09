@@ -20,6 +20,23 @@ generator zod {
     prismaJsonNullability = true
 }
 
+enum Status {
+    Life
+    Annual
+    New
+    Renew
+}
+
+enum Type {
+    Idividual
+    Family
+}
+
+enum JRSR {
+    JR
+    SR
+}
+
 model Member {
     uid            String         @id @default(cuid())
     createdAt      DateTime?      @default(now())
@@ -27,8 +44,10 @@ model Member {
     firstName      String         @db.VarChar(255)
     lastName       String         @db.VarChar(255)
     fullName       String         @db.VarChar(255)
-    memberType     String         @db.VarChar(50)
-    memberStatus   String         @db.VarChar(20)
+    memberType     Type
+    memberStatus   Status
+    JRSR           JRSR
+    riderLevel     String         @db.VarChar(25)
     family         FamilyMember[]
     horses         Horse[]
     ranking        TotalRanking?  @relation(fields: [rankingId], references: [uid])
@@ -42,7 +61,6 @@ model Member {
     phone          String         @db.VarChar(15)
     email          String?        @db.VarChar(100)
     previousMember Boolean        @default(false)
-    riderLevel     String         @db.VarChar(25)
     confirmed      Boolean        @default(false)
     RiderCombo     RiderCombo[]
 }

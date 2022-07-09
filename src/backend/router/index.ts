@@ -4,11 +4,12 @@ import { prisma, Context } from '@/backend/prisma';
 import { transformer } from '@/utils/trpc';
 
 import {
-  MemberModel,
   FamilyMemberModel,
   HorseModel,
+  MemberModel,
+  RiderComboModel,
   ShowModel,
-  TotalRankingModel
+  TotalRankingModel,
 } from '@/backend/prisma/zod';
 
 import { Member } from '@prisma/client';
@@ -28,7 +29,7 @@ const member = createRouter()
         .catch(err => {
           console.log('Backend Error:', err);
         });
-    return member as Member[]
+      return member as Member[]
     }
   })
   .query('eoy-placings', {
@@ -39,24 +40,7 @@ const member = createRouter()
     }
   })
   .mutation('add-member', {
-    input: z
-      .object({
-        firstName: z.string(),
-        lastName: z.string(),
-        fullName: z.string(),
-        memberType: z.string(),
-        memberStatus: z.string(),
-        address: z.string(),
-        city: z.string(),
-        state: z.string(),
-        zip: z.number().max(6),
-        phone: z.string(),
-        previousMember: z.boolean(),
-        riderLevel: z.string(),
-        familyMembers: z.array(FamilyMemberModel).optional(),
-        horses: z.array(HorseModel).optional(),
-      })
-      .required(),
+    input: MemberModel.required(),
     async resolve({ input }) {
       await prisma.member.create({
         data: input
@@ -76,8 +60,16 @@ const horse = createRouter()
           console.log(err);
         });
     }
+  })
+  .mutation('add-horse', {
+    input: HorseModel.required(),
+    async resolve({ input }) {
+      await prisma.horse.create({
+        data: input
+      })
+        .catch(err => console.log(err))
+    }
   });
-// .mutation('add-horse');
 
 const riderCombo = createRouter()
   .query('get-combos', {
@@ -89,6 +81,15 @@ const riderCombo = createRouter()
         .catch(err => {
           console.log(err);
         });
+    }
+  })
+  .mutation('add-Combo', {
+    input: RiderComboModel.required(),
+    async resolve({ input }) {
+      await prisma.riderCombo.create({
+        data: input
+      })
+        .catch(err => console.log(err))
     }
   });
 
@@ -103,8 +104,16 @@ const ranking = createRouter()
           console.log(err);
         });
     }
+  })
+  .mutation('add-Ranking', {
+    input: TotalRankingModel.required(),
+    async resolve({ input }) {
+      await prisma.totalRanking.create({
+        data: input
+      })
+        .catch(err => console.log(err))
+    }
   });
-// .mutation('update-ranking');
 
 const family = createRouter()
   .query('get-family', {
@@ -129,8 +138,16 @@ const family = createRouter()
           console.log(err);
         });
     }
+  })
+  .mutation('add-Family', {
+    input: FamilyMemberModel.required(),
+    async resolve({ input }) {
+      await prisma.familyMember.create({
+        data: input
+      })
+        .catch(err => console.log(err))
+    }
   });
-// .mutation('update-family');
 
 const show = createRouter()
   .query('get-shows', {
@@ -143,8 +160,16 @@ const show = createRouter()
           console.log(err);
         });
     }
+  })
+  .mutation('add-Show', {
+    input: ShowModel.required(),
+    async resolve({ input }) {
+      await prisma.show.create({
+        data: input
+      })
+        .catch(err => console.log(err))
+    }
   });
-// .mutation('add-show');
 
 export const appRouter = createRouter().transformer(transformer)
   .merge('member.', member)
