@@ -11,6 +11,7 @@ export const TotalRankingModel = z.object({
   totalPoints: z.number(),
   totalShows: z.number().int(),
   completedHT: z.boolean(),
+  multiVenue: z.boolean(),
 })
 
 export interface CompleteTotalRanking extends z.infer<typeof TotalRankingModel> {
