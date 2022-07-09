@@ -3,13 +3,15 @@ import * as imports from "../null"
 import { CompleteFamilyMember, RelatedFamilyMemberModel, CompleteHorse, RelatedHorseModel, CompleteTotalRanking, RelatedTotalRankingModel, CompleteShow, RelatedShowModel, CompleteRiderCombo, RelatedRiderComboModel } from "./index"
 
 export const MemberModel = z.object({
-  uid: z.number().int(),
+  uid: z.string(),
   createdAt: z.date().nullish(),
   updatedAt: z.date().nullish(),
-  name: z.string(),
+  firstName: z.string(),
+  lastName: z.string(),
+  fullName: z.string(),
   memberType: z.string(),
   memberStatus: z.string(),
-  rankingId: z.number().int().nullish(),
+  rankingId: z.string().nullish(),
   boardMember: z.boolean(),
   address: z.string(),
   city: z.string(),

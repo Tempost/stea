@@ -3,7 +3,6 @@ import * as imports from "../null"
 import { CompleteHorse, RelatedHorseModel } from "./index"
 
 export const corporateMemberModel = z.object({
-  uid: z.number().int(),
   name: z.string(),
   createdAt: z.date().nullish(),
   updatedAt: z.date().nullish(),

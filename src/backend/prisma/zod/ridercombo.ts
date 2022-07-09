@@ -3,11 +3,11 @@ import * as imports from "../null"
 import { CompleteMember, RelatedMemberModel, CompleteHorse, RelatedHorseModel } from "./index"
 
 export const RiderComboModel = z.object({
-  uid: z.number().int(),
+  uid: z.string(),
   createdAt: z.date().nullish(),
   updatedAt: z.date().nullish(),
-  riderId: z.number().int(),
-  horseId: z.number().int(),
+  riderId: z.string(),
+  horseId: z.string(),
 })
 
 export interface CompleteRiderCombo extends z.infer<typeof RiderComboModel> {

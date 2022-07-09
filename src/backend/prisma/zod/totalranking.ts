@@ -3,7 +3,7 @@ import * as imports from "../null"
 import { CompleteMember, RelatedMemberModel, CompleteHorse, RelatedHorseModel } from "./index"
 
 export const TotalRankingModel = z.object({
-  uid: z.number().int(),
+  uid: z.string(),
   createdAt: z.date().nullish(),
   updatedAt: z.date().nullish(),
   level: z.string(),

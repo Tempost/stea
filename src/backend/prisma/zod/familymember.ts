@@ -3,13 +3,13 @@ import * as imports from "../null"
 import { CompleteMember, RelatedMemberModel } from "./index"
 
 export const FamilyMemberModel = z.object({
-  uid: z.number().int(),
+  uid: z.string(),
   createdAt: z.date().nullish(),
   updatedAt: z.date().nullish(),
   name: z.string(),
   email: z.string().nullish(),
   riderLevel: z.string(),
-  memberId: z.number().int(),
+  memberId: z.string(),
 })
 
 export interface CompleteFamilyMember extends z.infer<typeof FamilyMemberModel> {

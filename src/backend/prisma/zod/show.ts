@@ -3,7 +3,7 @@ import * as imports from "../null"
 import { CompleteMember, RelatedMemberModel } from "./index"
 
 export const ShowModel = z.object({
-  uid: z.number().int(),
+  uid: z.string(),
   createdAt: z.date().nullish(),
   updatedAt: z.date().nullish(),
   showName: z.string(),

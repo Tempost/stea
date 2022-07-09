@@ -41,7 +41,9 @@ const member = createRouter()
   .mutation('add-member', {
     input: z
       .object({
-        name: z.string(),
+        firstName: z.string(),
+        lastName: z.string(),
+        fullName: z.string(),
         memberType: z.string(),
         memberStatus: z.string(),
         address: z.string(),
@@ -108,7 +110,7 @@ const family = createRouter()
   .query('get-family', {
     input: z
       .object({
-        uid: z.number(),
+        uid: z.string(),
       })
       .nullish(),
 
