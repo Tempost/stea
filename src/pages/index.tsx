@@ -7,7 +7,6 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { trpc } from '@/utils/trpc';
 
 
 const cols: ColumnDef<Member>[] = [
@@ -20,12 +19,6 @@ const cols: ColumnDef<Member>[] = [
 ];
 
 function Home() {
-  const { data, isFetching } = trpc.useQuery(['shows.get-shows']);
-
-  if (!isFetching) {
-    console.log(data)
-  }
-
   return (
     <>
       <section>

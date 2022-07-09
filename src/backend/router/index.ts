@@ -10,6 +10,7 @@ import {
   ShowModel,
   TotalRankingModel
 } from '@/backend/prisma/zod';
+
 import { Member } from '@prisma/client';
 
 
@@ -25,7 +26,7 @@ const member = createRouter()
           return members
         })
         .catch(err => {
-          console.log(err);
+          console.log('Backend Error:', err);
         });
     return member as Member[]
     }

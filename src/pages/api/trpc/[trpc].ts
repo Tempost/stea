@@ -11,9 +11,6 @@ export default trpcNext.createNextApiHandler({
   onError({ error }) {
     if (_.isEqual(error.code, 'INTERNAL_SERVER_ERROR'))
       console.error('Something went wrong', error);
-  },
-  batching: {
-    enabled: true
   }
 });
 

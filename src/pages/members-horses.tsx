@@ -1,12 +1,13 @@
 import { Member, Horse } from '@prisma/client';
-import { trpc } from '@/utils/trpc';
-
+import _ from 'lodash';
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table'
+
+import { trpc } from '@/utils/trpc';
 
 const memberCols: ColumnDef<Member>[] = [
   {
@@ -38,55 +39,72 @@ const horseCols: ColumnDef<Horse>[] = [
 ];
 
 function MembersAnHorses() {
-  const members = trpc.useQuery(['member.get-members']).data;
-  console.log(members)
+  const members = trpc.useQuery(['member.get-members']);
 
   const table = useReactTable({
-    data: members as Member[],
+    data: members.data as Member[],
     columns: memberCols,
     getCoreRowModel: getCoreRowModel(),
   });
 
+  const TableWithData = () => {
+    if (members.isLoading) {
+      return (
+        <>Loading...</>
+      );
+    }
+
+    if (members.isError) {
+      return (
+        <>Error...</>
+      );
+    }
+
+    return (
+      <table className='table table-compact shadow-xl'>
+        <thead>
+          {
+            table.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id}>
+                {
+                  headerGroup.headers.map(header => (
+                    <th key={header.id} colSpan={header.colSpan} className='text-center'>
+                      {
+                        header.isPlaceholder ? null :
+                          flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )
+                      }
+                    </th>
+                  ))
+                }
+              </tr>
+            ))}
+        </thead>
+        <tbody className='border'>
+          {
+            table.getRowModel().rows.map(row => (
+              <tr key={row.id} className='divide-x'>
+                {
+                  row.getVisibleCells().map(cell => (
+                    <td key={cell.id}>
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </td>
+                  ))
+                }
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    )
+  };
+
   return (
     <div className='pt-28 w-full grid place-items-center'>
       <section>
-        <table className='table table-compact shadow-xl'>
-          <thead>
-            {
-              table.getHeaderGroups().map((headerGroup) => (
-                <tr key={headerGroup.id}>
-                  {
-                    headerGroup.headers.map(header => (
-                      <th key={header.id} colSpan={header.colSpan} className='text-center'>
-                        {
-                          header.isPlaceholder ? null :
-                            flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )
-                        }
-                      </th>
-                    ))
-                  }
-                </tr>
-              ))}
-          </thead>
-          <tbody className='border'>
-            {
-              table.getRowModel().rows.map(row => (
-                <tr key={row.id} className='divide-x'>
-                  {
-                    row.getVisibleCells().map(cell => (
-                      <td key={cell.id}>
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                      </td>
-                    ))
-                  }
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
+        <TableWithData />
       </section>
     </div>
   );
