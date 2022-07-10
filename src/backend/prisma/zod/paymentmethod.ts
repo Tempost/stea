@@ -7,7 +7,7 @@ export const PaymentMethodModel = z.object({
   amountPaid: z.number().int(),
   datePaid: z.date(),
   paymentMethod: z.string(),
-  checkNumber: z.number().int(),
+  checkNumber: z.number().int().nullish(),
   comments: z.string(),
 })
 

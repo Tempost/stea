@@ -14,8 +14,8 @@ const memberCols: ColumnDef<Member>[] = [
     header: 'Members',
     columns: [
       {
-        accessorKey: 'name',
-        id: 'name',
+        accessorKey: 'fullName',
+        id: 'fullName',
         cell: info => info.getValue(),
         header: () => <span> Name </span>,
       },

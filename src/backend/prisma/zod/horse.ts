@@ -1,5 +1,6 @@
 import * as z from "zod"
 import * as imports from "../null"
+import { Type } from "@prisma/client"
 import { CompletecorporateMember, RelatedcorporateMemberModel, CompleteTotalRanking, RelatedTotalRankingModel, CompleteMember, RelatedMemberModel } from "./index"
 
 export const HorseModel = z.object({
@@ -9,7 +10,7 @@ export const HorseModel = z.object({
   horseRN: z.string(),
   horseAKA: z.string().nullish(),
   registrationDate: z.date().nullish(),
-  regType: z.string(),
+  regType: z.nativeEnum(Type),
   corpUid: z.string().nullish(),
   rankingUid: z.string().nullish(),
 })

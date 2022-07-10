@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import { Member } from "@prisma/client";
+import fill from '@/utils/fill_db';
+import { trpc } from '@/utils/trpc';
 
 import {
   ColumnDef,
@@ -19,6 +21,7 @@ const cols: ColumnDef<Member>[] = [
 ];
 
 function Home() {
+    const mutate = trpc.useMutation(['member.add-member']);
   return (
     <>
       <section>
@@ -31,7 +34,7 @@ function Home() {
               <p className='text-sm'> South Texas Eventing Association </p>
 
               <h2 className='text-3xl'> Texas's Southwest Premier Eventing Association </h2>
-              <Link href='/join'><button className='btn btn-primary w-[50%]'>Join Today!</button></Link>
+              <button onClick={() => fill(mutate)} className='btn btn-primary w-[50%]'>Join Today!</button>
             </div>
 
           </div>

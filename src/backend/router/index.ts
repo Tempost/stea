@@ -2,17 +2,18 @@ import * as trpc from '@trpc/server';
 import { z } from 'zod';
 import { prisma, Context } from '@/backend/prisma';
 import { transformer } from '@/utils/trpc';
+import cuid from 'cuid';
 
 import {
   FamilyMemberModel,
   HorseModel,
   MemberModel,
-  RiderComboModel,
+  PaymentModel,
   ShowModel,
   TotalRankingModel,
 } from '@/backend/prisma/zod';
 
-import { Member } from '@prisma/client';
+import { Member, Payment } from '@prisma/client';
 
 
 const createRouter = () => {
@@ -40,11 +41,27 @@ const member = createRouter()
     }
   })
   .mutation('add-member', {
-    input: MemberModel.required(),
+    input: z.object({
+      member: MemberModel.required(),
+      payment: PaymentModel.required(),
+      horse: HorseModel.optional(),
+      family: FamilyMemberModel.optional(),
+    }),
     async resolve({ input }) {
       await prisma.member.create({
-        data: input
+        data: {
+          ...input.member,
+          payment: {
+            create: {
+              ...input.payment,
+            },
+          }
+        },
+        select: {
+          uid: true
+        }
       })
+        .then(member => member)
         .catch(err => console.log(err))
     }
   });
@@ -71,27 +88,6 @@ const horse = createRouter()
     }
   });
 
-const riderCombo = createRouter()
-  .query('get-combos', {
-    async resolve() {
-      return await prisma.riderCombo.findMany()
-        .then(combos => {
-          return combos
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
-  })
-  .mutation('add-Combo', {
-    input: RiderComboModel.required(),
-    async resolve({ input }) {
-      await prisma.riderCombo.create({
-        data: input
-      })
-        .catch(err => console.log(err))
-    }
-  });
 
 const ranking = createRouter()
   .query('get-ranking', {
@@ -126,7 +122,7 @@ const family = createRouter()
     async resolve({ input }) {
       return await prisma.familyMember.findMany({
         where: {
-          memberId: {
+          memberUid: {
             equals: input?.uid,
           },
         },
@@ -174,7 +170,6 @@ const show = createRouter()
 export const appRouter = createRouter().transformer(transformer)
   .merge('member.', member)
   .merge('horse.', horse)
-  .merge('riderCombo.', riderCombo)
   .merge('ranking.', ranking)
   .merge('family.', family)
   .merge('shows.', show);

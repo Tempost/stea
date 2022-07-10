@@ -1,5 +1,5 @@
 export * from "./member"
-export * from "./paymentmethod"
+export * from "./payment"
 export * from "./corporatemember"
 export * from "./familymember"
 export * from "./horse"

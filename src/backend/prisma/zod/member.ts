@@ -1,6 +1,7 @@
 import * as z from "zod"
 import * as imports from "../null"
-import { CompleteFamilyMember, RelatedFamilyMemberModel, CompleteTotalRanking, RelatedTotalRankingModel, CompleteShow, RelatedShowModel, CompleteHorse, RelatedHorseModel, CompletePaymentMethod, RelatedPaymentMethodModel } from "./index"
+import { Type, Status, JRSR } from "@prisma/client"
+import { CompleteFamilyMember, RelatedFamilyMemberModel, CompleteShow, RelatedShowModel, CompleteHorse, RelatedHorseModel, CompletePayment, RelatedPaymentModel } from "./index"
 
 export const MemberModel = z.object({
   uid: z.string(),
@@ -10,8 +11,9 @@ export const MemberModel = z.object({
   lastName: z.string(),
   fullName: z.string(),
   membershipDate: z.date().nullish(),
-  memberType: z.string(),
-  memberStatus: z.string(),
+  memberType: z.nativeEnum(Type),
+  memberStatus: z.nativeEnum(Status),
+  JRSR: z.nativeEnum(JRSR),
   boardMember: z.boolean(),
   address: z.string(),
   city: z.string(),
@@ -23,17 +25,13 @@ export const MemberModel = z.object({
   previousMember: z.boolean(),
   riderLevel: z.string(),
   confirmed: z.boolean(),
-  rankingUid: z.string().nullish(),
-  horseUid: z.string().nullish(),
-  paymentMethodUid: z.string(),
 })
 
 export interface CompleteMember extends z.infer<typeof MemberModel> {
   family: CompleteFamilyMember[]
-  ranking?: CompleteTotalRanking | null
   shows: CompleteShow[]
   horses: CompleteHorse[]
-  payment: CompletePaymentMethod
+  payment?: CompletePayment | null
 }
 
 /**
@@ -43,8 +41,7 @@ export interface CompleteMember extends z.infer<typeof MemberModel> {
  */
 export const RelatedMemberModel: z.ZodSchema<CompleteMember> = z.lazy(() => MemberModel.extend({
   family: RelatedFamilyMemberModel.array(),
-  ranking: RelatedTotalRankingModel.nullish(),
   shows: RelatedShowModel.array(),
   horses: RelatedHorseModel.array(),
-  payment: RelatedPaymentMethodModel,
+  payment: RelatedPaymentModel.nullish(),
 }))
