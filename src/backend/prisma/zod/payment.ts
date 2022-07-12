@@ -4,14 +4,13 @@ import { PaymentMethod } from "@prisma/client"
 import { CompleteMember, RelatedMemberModel } from "./index"
 
 export const PaymentModel = z.object({
-  uid: z.string(),
   updatedAt: z.date().nullish(),
   amountPaid: z.number().int().nullish(),
   datePaid: z.date().nullish(),
   paymentMethod: z.nativeEnum(PaymentMethod).nullish(),
   checkNumber: z.number().int().nullish(),
   comments: z.string().nullish(),
-  memberUid: z.string(),
+  payee: z.string(),
 })
 
 export interface CompletePayment extends z.infer<typeof PaymentModel> {

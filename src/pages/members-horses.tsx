@@ -60,6 +60,12 @@ function MembersAnHorses() {
       );
     }
 
+    if (members.data === undefined) {
+      return (
+        <>Empty...</>
+      );
+    }
+
     return (
       <table className='table table-compact shadow-xl'>
         <thead>

@@ -21,7 +21,7 @@ const cols: ColumnDef<Member>[] = [
 ];
 
 function Home() {
-    const mutate = trpc.useMutation(['member.add-member']);
+
   return (
     <>
       <section>
@@ -34,7 +34,9 @@ function Home() {
               <p className='text-sm'> South Texas Eventing Association </p>
 
               <h2 className='text-3xl'> Texas's Southwest Premier Eventing Association </h2>
-              <button onClick={() => fill(mutate)} className='btn btn-primary w-[50%]'>Join Today!</button>
+              <Link href={'/join'}>
+                <button className='btn btn-primary w-[50%]'>Join Today!</button>
+              </Link>
             </div>
 
           </div>

@@ -1,5 +1,6 @@
 import * as z from "zod"
 import * as imports from "../null"
+import { JRSR } from "@prisma/client"
 import { CompleteMember, RelatedMemberModel } from "./index"
 
 export const FamilyMemberModel = z.object({
@@ -7,9 +8,10 @@ export const FamilyMemberModel = z.object({
   createdAt: z.date().nullish(),
   updatedAt: z.date().nullish(),
   name: z.string(),
+  JRSR: z.nativeEnum(JRSR),
   email: z.string().nullish(),
-  riderLevel: z.string(),
-  memberUid: z.string(),
+  memberName: z.string(),
+  notConnected: z.boolean(),
 })
 
 export interface CompleteFamilyMember extends z.infer<typeof FamilyMemberModel> {

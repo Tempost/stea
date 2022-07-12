@@ -2,7 +2,7 @@ import * as trpc from '@trpc/server';
 import { z } from 'zod';
 import { prisma, Context } from '@/backend/prisma';
 import { transformer } from '@/utils/trpc';
-import cuid from 'cuid';
+import _ from 'lodash';
 
 import {
   FamilyMemberModel,
@@ -10,11 +10,9 @@ import {
   MemberModel,
   PaymentModel,
   ShowModel,
-  TotalRankingModel,
 } from '@/backend/prisma/zod';
 
-import { Member, Payment } from '@prisma/client';
-
+import { Member } from '@prisma/client';
 
 const createRouter = () => {
   return trpc.router<Context>();
@@ -22,15 +20,29 @@ const createRouter = () => {
 
 const member = createRouter()
   .query('get-members', {
-    async resolve() {
-      const member = await prisma.member.findMany()
-        .then(members => {
-          return members
+    input: z.object({
+      memberName: z.string()
+    }).optional(),
+    async resolve({ input }) {
+      let data;
+
+      if (_.isUndefined(input)) {
+        data = await prisma.member.findMany()
+          .then(members => members)
+          .catch(err => console.log('Backend Error:', err));
+        return data as Member[]
+
+      } else {
+
+        data = await prisma.member.findFirst({
+          where: {
+            fullName: input.memberName
+          }
         })
-        .catch(err => {
-          console.log('Backend Error:', err);
-        });
-      return member as Member[]
+          .then(members => members)
+          .catch(err => console.log('Backend Error:', err));
+        return data as Member;
+      }
     }
   })
   .query('eoy-placings', {
@@ -42,12 +54,15 @@ const member = createRouter()
   })
   .mutation('add-member', {
     input: z.object({
+      // NOTE: Will throw trpc client error if UID is not omited from the validator
+      // when creating fresh members with payment info we do not need UID its auto generated
       member: MemberModel.required(),
-      payment: PaymentModel.required(),
+      payment: PaymentModel.required().omit({payee: true}),
       horse: HorseModel.optional(),
       family: FamilyMemberModel.optional(),
     }),
     async resolve({ input }) {
+      console.log(input.member, input.payment);
       await prisma.member.create({
         data: {
           ...input.member,
@@ -56,13 +71,16 @@ const member = createRouter()
               ...input.payment,
             },
           }
-        },
-        select: {
-          uid: true
         }
       })
-        .then(member => member)
-        .catch(err => console.log(err))
+        .catch(err => console.log('ERROR', err))
+    }
+  })
+  .mutation('update-member', {
+    input: z.object({
+      fullName: z.string()
+    }).required(),
+    async resolve() {
     }
   });
 
@@ -79,10 +97,18 @@ const horse = createRouter()
     }
   })
   .mutation('add-horse', {
-    input: HorseModel.required(),
+    input: z.object({
+      horse: HorseModel
+        .required(),
+        // .extend({
+        //   riders: z.array(z.string()),
+        // }),
+    }),
     async resolve({ input }) {
       await prisma.horse.create({
-        data: input
+        data: {
+          ...input.horse,
+        }
       })
         .catch(err => console.log(err))
     }
@@ -92,22 +118,10 @@ const horse = createRouter()
 const ranking = createRouter()
   .query('get-ranking', {
     async resolve() {
-      return await prisma.totalRanking.findMany()
-        .then(ranking => {
-          return ranking
-        })
-        .catch(err => {
-          console.log(err);
-        });
     }
   })
   .mutation('add-Ranking', {
-    input: TotalRankingModel.required(),
-    async resolve({ input }) {
-      await prisma.totalRanking.create({
-        data: input
-      })
-        .catch(err => console.log(err))
+    async resolve() {
     }
   });
 
@@ -115,16 +129,12 @@ const family = createRouter()
   .query('get-family', {
     input: z
       .object({
-        uid: z.string(),
-      })
-      .nullish(),
-
+        name: z.string()
+      }),
     async resolve({ input }) {
       return await prisma.familyMember.findMany({
         where: {
-          memberUid: {
-            equals: input?.uid,
-          },
+          memberName: input.name
         },
       })
         .then(record => {

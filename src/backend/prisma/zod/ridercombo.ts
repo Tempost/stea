@@ -1,18 +1,19 @@
 import * as z from "zod"
 import * as imports from "../null"
-import { CompleteMember, RelatedMemberModel, CompleteHorse, RelatedHorseModel } from "./index"
+import { CompleteMember, RelatedMemberModel, CompleteHorse, RelatedHorseModel, CompleteTotalPoints, RelatedTotalPointsModel } from "./index"
 
 export const RiderComboModel = z.object({
-  uid: z.string(),
   createdAt: z.date().nullish(),
   updatedAt: z.date().nullish(),
-  riderId: z.string(),
-  horseId: z.string(),
+  memberName: z.string(),
+  horseName: z.string(),
+  rankingUid: z.string().nullish(),
 })
 
 export interface CompleteRiderCombo extends z.infer<typeof RiderComboModel> {
-  rider: CompleteMember
+  member: CompleteMember
   horse: CompleteHorse
+  ranking?: CompleteTotalPoints | null
 }
 
 /**
@@ -21,6 +22,7 @@ export interface CompleteRiderCombo extends z.infer<typeof RiderComboModel> {
  * NOTE: Lazy required in case of potential circular dependencies within schema
  */
 export const RelatedRiderComboModel: z.ZodSchema<CompleteRiderCombo> = z.lazy(() => RiderComboModel.extend({
-  rider: RelatedMemberModel,
+  member: RelatedMemberModel,
   horse: RelatedHorseModel,
+  ranking: RelatedTotalPointsModel.nullish(),
 }))
