@@ -19,8 +19,9 @@
       "@/*": ["./src/*"]
     },
     "sourceMap": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "types": ["cypress", "@testing-library/cypress"]
   },
   "include": ["next-env.d.ts", "./src/types/*.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules", "cypress"]
+  "exclude": ["node_modules"]
 }

@@ -1,7 +1,5 @@
 import Link from 'next/link';
 import { Member } from "@prisma/client";
-import fill from '@/utils/fill_db';
-import { trpc } from '@/utils/trpc';
 
 import {
   ColumnDef,

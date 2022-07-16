@@ -2,5 +2,5 @@ module.exports = {
   clearMocks: true,
   preset: 'ts-jest',
   testEnvironment: 'node',
-  setupFilesAfterEnv: ['<rootDir>/src/tests/context.ts'],
+  setupFilesAfterEnv: ['<rootDir>/src/tests/jest/context.ts'],
 }

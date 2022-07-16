@@ -1,5 +1,4 @@
 import * as z from "zod"
-import * as imports from "../null"
 import { CompleteRiderCombo, RelatedRiderComboModel } from "./index"
 
 export const TotalPointsModel = z.object({

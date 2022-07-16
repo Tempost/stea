@@ -13,11 +13,11 @@ export async function createFamilyMember(familyMember: FamilyMember, ctx: Contex
   })
 }
 
-export async function fetchMember(memberId: number, ctx: Context) {
+export async function fetchMember(name: string, ctx: Context) {
   return await ctx.prisma.member.findFirst({
     where: {
-      uid: {
-        equals: memberId,
+      fullName: {
+        equals: name,
       },
     },
   })

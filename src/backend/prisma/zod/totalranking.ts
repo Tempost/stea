@@ -1,5 +1,4 @@
 import * as z from "zod"
-import * as imports from "../null"
 import { CompleteHorse, RelatedHorseModel } from "./index"
 
 export const TotalRankingModel = z.object({
