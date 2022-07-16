@@ -33,7 +33,7 @@ function Home() {
 
               <h2 className='text-3xl'> Texas's Southwest Premier Eventing Association </h2>
               <Link href={'/join'}>
-                <button className='btn btn-primary w-[50%]'>Join Today!</button>
+                <button data-cy='join-link-button' className='btn btn-primary w-[50%]'>Join Today!</button>
               </Link>
             </div>
 
