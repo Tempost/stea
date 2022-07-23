@@ -47,33 +47,46 @@ enum PhoneType {
     Business
 }
 
+model NonMemberHorseOwner {
+    createdAt DateTime? @default(now())
+    updatedAt DateTime? @updatedAt
+    firstName String    @db.VarChar(255)
+    lastName  String    @db.VarChar(255)
+    fullName  String    @db.VarChar(255)
+    email     String    @db.VarChar(100)
+    phone     String    @db.VarChar(15)
+    phoneType PhoneType @default(Mobile)
+    horses    Horse[]
+
+    @@id([fullName])
+}
+
 model Member {
     createdAt         DateTime?      @default(now())
     updatedAt         DateTime?      @updatedAt
     firstName         String         @db.VarChar(255)
     lastName          String         @db.VarChar(255)
     fullName          String         @db.VarChar(255)
+    boardMember       Boolean        @default(false)
+    address           String         @db.VarChar(255)
+    city              String         @db.VarChar(25)
+    state             String         @db.VarChar(25)
+    phone             String         @db.VarChar(15)
+    phoneType         PhoneType      @default(Mobile)
+    email             String         @db.VarChar(100)
+    comments          String?        @db.VarChar(4000)
+    confirmed         Boolean        @default(false)
+    currentUSEAMember Boolean        @default(false)
     membershipDate    DateTime?
     memberType        Type
     memberStatus      Status
     JRSR              JRSR
     dateOfBirth       DateTime?
-    boardMember       Boolean        @default(false)
-    address           String         @db.VarChar(255)
-    city              String         @db.VarChar(25)
-    state             String         @db.VarChar(25)
     zip               Int
-    phone             String         @db.VarChar(15)
-    phoneType         PhoneType      @default(Mobile)
-    email             String?        @db.VarChar(100)
-    comments          String?        @db.VarChar(4000)
-    confirmed         Boolean        @default(false)
-    currentUSEAMember Boolean        @default(false)
     useaMemberID      Int?
     payment           Payment?
     family            FamilyMember[]
     shows             Show[]
-    horses            Horse[]
     RiderCombo        RiderCombo[]
 
     @@id([fullName])
@@ -81,13 +94,13 @@ model Member {
 
 model Payment {
     updatedAt     DateTime?      @updatedAt
+    comments      String?        @db.VarChar(4000)
+    member        Member         @relation(fields: [payee], references: [fullName])
+    payee         String         @id
     amountPaid    Int?
     datePaid      DateTime?
     paymentMethod PaymentMethod?
     checkNumber   Int?
-    comments      String?        @db.VarChar(4000)
-    member        Member         @relation(fields: [payee], references: [fullName])
-    payee         String         @id
 }
 
 model FamilyMember {
@@ -95,25 +108,26 @@ model FamilyMember {
     createdAt    DateTime? @default(now())
     updatedAt    DateTime? @updatedAt
     name         String    @db.VarChar(255)
-    JRSR         JRSR
     email        String?   @db.VarChar(100)
     member       Member    @relation(fields: [memberName], references: [fullName], onUpdate: NoAction)
-    memberName   String
     notConnected Boolean   @default(false)
+    JRSR         JRSR
+    memberName   String
 
     @@index(memberName)
 }
 
 model Horse {
-    createdAt        DateTime?    @default(now())
-    updatedAt        DateTime?    @updatedAt
-    horseRN          String       @id @db.VarChar(255)
-    horseAKA         String?      @db.VarChar(255)
+    createdAt        DateTime?            @default(now())
+    updatedAt        DateTime?            @updatedAt
+    horseRN          String               @id @db.VarChar(255)
+    horseAKA         String?              @db.VarChar(255)
+    notConnected     Boolean              @default(false)
+    member           NonMemberHorseOwner? @relation(fields: [owner], references: [fullName])
     registrationDate DateTime?
     regType          Status
-    notConnected     Boolean      @default(false)
-    riders           Member[]
     RiderCombo       RiderCombo[]
+    owner            String?
 }
 
 model TotalPoints {
@@ -132,11 +146,11 @@ model RiderCombo {
     createdAt  DateTime?    @default(now())
     updatedAt  DateTime?    @updatedAt
     member     Member       @relation(fields: [memberName], references: [fullName])
-    memberName String
     horse      Horse        @relation(fields: [horseName], references: [horseRN])
-    horseName  String
     ranking    TotalPoints? @relation(fields: [rankingUid], references: [uid])
     rankingUid String?      @unique
+    memberName String
+    horseName  String
 
     @@id([memberName, horseName])
 }

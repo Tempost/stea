@@ -1,11 +1,7 @@
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import HorseRegistration from './horseregistration';
-import z from 'zod';
+import { useFormContext } from 'react-hook-form';
 import _ from 'lodash';
 
 import { Member } from '@prisma/client';
-import { MemberModel } from '@/backend/prisma/zod';
 import {
   Radio,
   Checkbox,
@@ -33,27 +29,16 @@ const phoneTypes = [
 type MemberWithTempBool = Member & { horseReg: boolean };
 
 function IndivdualMember() {
-  const { register, handleSubmit, formState, watch } =
-    useForm<MemberWithTempBool>({
-      reValidateMode: 'onSubmit',
-      shouldFocusError: true,
-      resolver: zodResolver(MemberModel),
-      shouldUnregister: true,
-    });
+  const { register, watch } = useFormContext<MemberWithTempBool>();
 
   const isUSEAMember = watch('currentUSEAMember', false);
   const isRegHorse = watch('horseReg', false);
 
-  if (!_.isEmpty(formState.errors)) console.log(formState.errors);
-
   return (
-    <form
-      className='form-control p-8'
-      onSubmit={handleSubmit(console.log)}
-    >
-      <h2>Indivdual Membership</h2>
+    <>
+      <h2 className='divider'>Indivdual Membership</h2>
 
-      <div className='flex gap-5 w-full'>
+      <div className='flex gap-5'>
         <TextInput
           inputMode='text'
           label='First Name*'
@@ -167,7 +152,9 @@ function IndivdualMember() {
             inputMode='text'
             className='input-sm'
             placeholder=''
-            altLabel='This will the primary method of contact, ensure it is up to date!'
+            altLabel={
+              'This will the primary method of contact, ensure it is up to date!'
+            }
             {...register('email', { required: true })}
           />
         </div>
@@ -192,17 +179,8 @@ function IndivdualMember() {
           className='checkbox checkbox-primary checkbox-sm'
           {...register('horseReg')}
         />
-
-        {isRegHorse && <HorseRegistration />}
-
-        <button
-          className='btn btn-primary'
-          type='submit'
-        >
-          Finished
-        </button>
       </div>
-    </form>
+    </>
   );
 }
 
