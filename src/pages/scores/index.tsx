@@ -1,5 +1,3 @@
-function SteaPoints() {
-
-}
+function SteaPoints() {}
 
 export default SteaPoints;

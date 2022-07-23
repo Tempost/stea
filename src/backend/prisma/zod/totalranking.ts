@@ -1,5 +1,5 @@
-import * as z from "zod"
-import { CompleteHorse, RelatedHorseModel } from "./index"
+import * as z from 'zod';
+import { CompleteHorse, RelatedHorseModel } from './index';
 
 export const TotalRankingModel = z.object({
   uid: z.string(),
@@ -11,10 +11,11 @@ export const TotalRankingModel = z.object({
   totalShows: z.number().int(),
   completedHT: z.boolean(),
   multiVenue: z.boolean(),
-})
+});
 
-export interface CompleteTotalRanking extends z.infer<typeof TotalRankingModel> {
-  horse?: CompleteHorse | null
+export interface CompleteTotalRanking
+  extends z.infer<typeof TotalRankingModel> {
+  horse?: CompleteHorse | null;
 }
 
 /**
@@ -22,6 +23,9 @@ export interface CompleteTotalRanking extends z.infer<typeof TotalRankingModel> 
  *
  * NOTE: Lazy required in case of potential circular dependencies within schema
  */
-export const RelatedTotalRankingModel: z.ZodSchema<CompleteTotalRanking> = z.lazy(() => TotalRankingModel.extend({
-  horse: RelatedHorseModel.nullish(),
-}))
+export const RelatedTotalRankingModel: z.ZodSchema<CompleteTotalRanking> =
+  z.lazy(() =>
+    TotalRankingModel.extend({
+      horse: RelatedHorseModel.nullish(),
+    })
+  );

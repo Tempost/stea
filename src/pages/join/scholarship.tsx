@@ -1,5 +1,3 @@
-function SteaScholarship() {
-
-}
+function SteaScholarship() {}
 
 export default SteaScholarship;

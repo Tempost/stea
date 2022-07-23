@@ -1,29 +1,24 @@
 import { forwardRef, useId } from 'react';
 import type { DetailedHTMLProps, InputHTMLAttributes } from 'react';
 
-interface TextInputProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
+interface TextInputProps
+  extends DetailedHTMLProps<
+    InputHTMLAttributes<HTMLInputElement>,
+    HTMLInputElement
+  > {
   label?: string;
   labelStyle?: string;
   altLabel?: string;
   inputSize?: string;
 }
 
-const TextInput = forwardRef<HTMLInputElement, TextInputProps>
-  (({
-    className,
-    label,
-    labelStyle,
-    altLabel,
-    inputSize,
-    ...props
-  },
-    ref) => {
+const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
+  ({ className, label, labelStyle, altLabel, inputSize, ...props }, ref) => {
     const id = useId();
 
     return (
       <div className={`${inputSize ? inputSize : 'w-full'}`}>
-        {
-          label !== undefined &&
+        {label !== undefined && (
           <label
             className={`label flex-col ${labelStyle}`}
             htmlFor={`text-input${id}`}
@@ -31,7 +26,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>
           >
             <span className='label-text self-start'>{label}</span>
           </label>
-        }
+        )}
 
         <input
           ref={ref}
@@ -41,8 +36,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>
           {...props}
         />
 
-        {
-          altLabel !== undefined &&
+        {altLabel !== undefined && (
           <label
             className={`label-text-alt ${labelStyle}`}
             htmlFor={`text-input${id}`}
@@ -50,11 +44,11 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>
           >
             <span className='label-text-alt'>{altLabel}</span>
           </label>
-        }
-
+        )}
       </div>
     );
-  })
+  }
+);
 
 TextInput.displayName = 'Text-Input';
 export default TextInput;

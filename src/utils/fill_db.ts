@@ -5,17 +5,14 @@ import { Type } from '@prisma/client';
 import _ from 'lodash';
 
 export default function fill(mutator: any) {
-
   // horses.forEach((horse) => {
   //   let horseDB: Prisma.HorseCreateInput;
-
   //   let arr = new Array<string>();
   //   if (horse.riders.includes(',')) {
   //     arr = horse.riders.split(',').map((rider: string) => rider.trim());
   //   } else {
   //     arr.push(horse.riders);
   //   }
-
   //   horseDB = {
   //     createdAt: new Date(),
   //     horseRN: horse.horseRN,
@@ -24,14 +21,11 @@ export default function fill(mutator: any) {
   //     regType: horse.regType as Status,
   //     notConnected: true
   //   };
-
   //   mutator.mutate({ horse: horseDB });
   // })
-
   // members.forEach((member) => {
   //   let paymentDB: Prisma.PaymentCreateWithoutMemberInput;
   //   let memberDB: Prisma.MemberCreateInput;
-
   //   memberDB = {
   //     createdAt: new Date(),
   //     updatedAt: new Date(),
@@ -53,7 +47,6 @@ export default function fill(mutator: any) {
   //     previousMember: true,
   //     confirmed: true,
   //   };
-
   //   paymentDB = {
   //     amountPaid: member.amountPaid,
   //     updatedAt: new Date(),
@@ -62,7 +55,6 @@ export default function fill(mutator: any) {
   //     checkNumber: member.checkNumber,
   //     comments: member['Additional Payment(s)'],
   //   };
-
   //   mutator.mutate({ member: memberDB, payment: paymentDB });
   // });
 }

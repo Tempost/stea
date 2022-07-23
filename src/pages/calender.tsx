@@ -1,5 +1,3 @@
-function SteaCalender() {
-
-}
+function SteaCalender() {}
 
 export default SteaCalender;

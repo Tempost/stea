@@ -11,10 +11,9 @@ export default trpcNext.createNextApiHandler({
   onError({ error }) {
     if (_.isEqual(error.code, 'INTERNAL_SERVER_ERROR'))
       console.error('Something went wrong', error);
-  }
+  },
 });
-
 
 export type inferQueryResponse<
   TRouteKey extends keyof AppRouter['_def']['queries']
-  > = inferProcedureOutput<AppRouter['_def']['queries'][TRouteKey]>;
+> = inferProcedureOutput<AppRouter['_def']['queries'][TRouteKey]>;

@@ -1,5 +1,5 @@
-import { CreateNextContextOptions } from "@trpc/server/adapters/next";
-import { inferAsyncReturnType } from "@trpc/server";
+import { CreateNextContextOptions } from '@trpc/server/adapters/next';
+import { inferAsyncReturnType } from '@trpc/server';
 
 export async function createContext(contextOptions?: CreateNextContextOptions) {
   const req = contextOptions?.req;

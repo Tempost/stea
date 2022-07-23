@@ -1,27 +1,23 @@
 import { forwardRef, useId } from 'react';
 import type { DetailedHTMLProps, InputHTMLAttributes } from 'react';
 
-interface NumericInputProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
+interface NumericInputProps
+  extends DetailedHTMLProps<
+    InputHTMLAttributes<HTMLInputElement>,
+    HTMLInputElement
+  > {
   label?: string;
   labelStyle?: string;
   inputSize?: string;
 }
 
-const NumericInput = forwardRef<HTMLInputElement, NumericInputProps>
-  (({
-    className,
-    label,
-    labelStyle,
-    inputSize,
-    ...props
-  },
-    ref) => {
+const NumericInput = forwardRef<HTMLInputElement, NumericInputProps>(
+  ({ className, label, labelStyle, inputSize, ...props }, ref) => {
     const id = useId();
 
     return (
       <div className={`${inputSize ? inputSize : 'w-full'}`}>
-        {
-          label !== undefined &&
+        {label !== undefined && (
           <label
             className={`label flex-col ${labelStyle}`}
             htmlFor={`numeric-input${id}`}
@@ -29,7 +25,7 @@ const NumericInput = forwardRef<HTMLInputElement, NumericInputProps>
           >
             <span className='label-text self-start'>{label}</span>
           </label>
-        }
+        )}
 
         <input
           ref={ref}
@@ -38,10 +34,10 @@ const NumericInput = forwardRef<HTMLInputElement, NumericInputProps>
           type='text'
           {...props}
         />
-
       </div>
     );
-  })
+  }
+);
 
 NumericInput.displayName = 'Numeric-Input';
 export default NumericInput;

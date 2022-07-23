@@ -1,5 +1,5 @@
-import * as z from "zod"
-import { CompleteMember, RelatedMemberModel } from "./index"
+import * as z from 'zod';
+import { CompleteMember, RelatedMemberModel } from './index';
 
 export const PaymentMethodModel = z.object({
   uid: z.string(),
@@ -8,10 +8,11 @@ export const PaymentMethodModel = z.object({
   paymentMethod: z.string(),
   checkNumber: z.number().int().nullish(),
   comments: z.string(),
-})
+});
 
-export interface CompletePaymentMethod extends z.infer<typeof PaymentMethodModel> {
-  Member?: CompleteMember | null
+export interface CompletePaymentMethod
+  extends z.infer<typeof PaymentMethodModel> {
+  Member?: CompleteMember | null;
 }
 
 /**
@@ -19,6 +20,9 @@ export interface CompletePaymentMethod extends z.infer<typeof PaymentMethodModel
  *
  * NOTE: Lazy required in case of potential circular dependencies within schema
  */
-export const RelatedPaymentMethodModel: z.ZodSchema<CompletePaymentMethod> = z.lazy(() => PaymentMethodModel.extend({
-  Member: RelatedMemberModel.nullish(),
-}))
+export const RelatedPaymentMethodModel: z.ZodSchema<CompletePaymentMethod> =
+  z.lazy(() =>
+    PaymentMethodModel.extend({
+      Member: RelatedMemberModel.nullish(),
+    })
+  );

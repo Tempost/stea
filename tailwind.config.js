@@ -1,16 +1,13 @@
 module.exports = {
-  content: [
-    "./src/pages/**/*.{ts,tsx}",
-    "./src/components/**/*.{ts,tsx}",
-  ],
+  content: ['./src/pages/**/*.{ts,tsx}', './src/components/**/*.{ts,tsx}'],
   theme: {
     extend: {
       backgroundImage: {
         'home-hero': "url('/STEA_photos/A99I3830-(ZF-5269-01547-1-001).jpg')",
-      }
+      },
     },
   },
-  plugins: [require('daisyui')],
+  plugins: [require('@tailwindcss/typography'), require('daisyui')],
   daisyui: {
     styled: true,
     themes: true,
@@ -18,7 +15,7 @@ module.exports = {
     utils: true,
     logs: true,
     rtl: false,
-    prefix: "",
-    darkTheme: "dark",
+    prefix: '',
+    darkTheme: 'dark',
   },
-}
+};

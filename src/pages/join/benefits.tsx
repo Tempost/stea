@@ -1,5 +1,3 @@
-function SteaBeneifits() {
-
-}
+function SteaBeneifits() {}
 
 export default SteaBeneifits;

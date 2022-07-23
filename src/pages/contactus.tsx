@@ -1,5 +1,3 @@
-function ContactUs() {
-
-}
+function ContactUs() {}
 
 export default ContactUs;

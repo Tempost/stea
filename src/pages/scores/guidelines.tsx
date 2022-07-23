@@ -1,5 +1,3 @@
-function SteaGuidelines() {
-
-}
+function SteaGuidelines() {}
 
 export default SteaGuidelines;

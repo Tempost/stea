@@ -1,42 +1,56 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import HorseRegistration from './horseregistration';
+import z from 'zod';
 import _ from 'lodash';
 
 import { Member } from '@prisma/client';
 import { MemberModel } from '@/backend/prisma/zod';
-import { Radio, Checkbox, TextInput, Select, NumericInput } from '@/components/data-entry';
+import {
+  Radio,
+  Checkbox,
+  TextInput,
+  Select,
+  NumericInput,
+} from '@/components/data-entry';
 import states from '@/utils/states.json';
 
 const phoneTypes = [
   {
-    "label": "mobile",
-    "value": "Mobile"
+    label: 'mobile',
+    value: 'Mobile',
   },
   {
-    "label": "home",
-    "value": "Home"
+    label: 'home',
+    value: 'Home',
   },
   {
-    "label": "business",
-    "value": "Business"
+    label: 'business',
+    value: 'Business',
   },
 ];
 
+type MemberWithTempBool = Member & { horseReg: boolean };
+
 function IndivdualMember() {
-  const { register, handleSubmit, formState, watch } = useForm<Member>({
-    reValidateMode: 'onSubmit',
-    shouldFocusError: true,
-    resolver: zodResolver(MemberModel),
-    shouldUnregister: true
-  });
+  const { register, handleSubmit, formState, watch } =
+    useForm<MemberWithTempBool>({
+      reValidateMode: 'onSubmit',
+      shouldFocusError: true,
+      resolver: zodResolver(MemberModel),
+      shouldUnregister: true,
+    });
 
   const isUSEAMember = watch('currentUSEAMember', false);
+  const isRegHorse = watch('horseReg', false);
 
-  if (!_.isEmpty(formState.errors))
-    console.log(formState.errors)
+  if (!_.isEmpty(formState.errors)) console.log(formState.errors);
 
   return (
-    <form className='form-control p-8' onSubmit={handleSubmit(console.log)}>
+    <form
+      className='form-control p-8'
+      onSubmit={handleSubmit(console.log)}
+    >
       <h2>Indivdual Membership</h2>
 
       <div className='flex gap-5 w-full'>
@@ -53,7 +67,6 @@ function IndivdualMember() {
           className='input-sm'
           {...register('lastName', { required: true })}
         />
-
       </div>
 
       <h3>Is applicant under 18?</h3>
@@ -80,16 +93,18 @@ function IndivdualMember() {
           {...register('currentUSEAMember')}
         />
 
-        {
-          isUSEAMember &&
+        {isUSEAMember && (
           <NumericInput
             inputMode='text'
             className='input-sm'
             placeholder='USEA Member ID'
             inputSize='w-50'
-            {...register('useaMemberID', { required: isUSEAMember, valueAsNumber: true })}
+            {...register('useaMemberID', {
+              required: isUSEAMember,
+              valueAsNumber: true,
+            })}
           />
-        }
+        )}
       </div>
 
       <h3>Address*</h3>
@@ -129,7 +144,6 @@ function IndivdualMember() {
             {...register('zip', { required: true, valueAsNumber: true })}
           />
         </div>
-
 
         <div className='flex flex-col gap-2'>
           <div className='flex gap-2'>
@@ -176,9 +190,15 @@ function IndivdualMember() {
         <Checkbox
           label='Do you plan to register your horse(s)?'
           className='checkbox checkbox-primary checkbox-sm'
+          {...register('horseReg')}
         />
 
-        <button className='btn btn-primary' type='submit'>
+        {isRegHorse && <HorseRegistration />}
+
+        <button
+          className='btn btn-primary'
+          type='submit'
+        >
           Finished
         </button>
       </div>

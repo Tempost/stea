@@ -1,4 +1,4 @@
-import IndivdualMember from "./indivdualmembership";
+import IndivdualMember from './indivdualmembership';
 
 interface FormProps {
   formType: FormType;
@@ -7,7 +7,7 @@ interface FormProps {
 function SteaJoinForm({ formType }: FormProps) {
   switch (formType) {
     case 'indivdual':
-      return <IndivdualMember />
+      return <IndivdualMember />;
     default:
       return null;
   }

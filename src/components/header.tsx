@@ -9,21 +9,20 @@ function Header() {
     >
       <div className='flex flex-col justify-between items-end'>
         <div className='grid grid-flow-col gap-5'>
-          {
-            menuItems.map(({ href, name, render }) => (
-              <div className='hover:text-primary-content/[0.7]' key={name} >
-                {
-                  render ?
-                    render({ href, name }) :
-                    <LinkWrapper href={href}>
-                      <h2 className='text-xl'>
-                        {name}
-                      </h2>
-                    </LinkWrapper>
-                }
-              </div>
-            ))
-          }
+          {menuItems.map(({ href, name, render }) => (
+            <div
+              className='hover:text-primary-content/[0.7]'
+              key={name}
+            >
+              {render ? (
+                render({ href, name })
+              ) : (
+                <LinkWrapper href={href}>
+                  <h2 className='text-xl'>{name}</h2>
+                </LinkWrapper>
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </header>

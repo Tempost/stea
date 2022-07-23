@@ -1,7 +1,11 @@
 import { forwardRef, useId } from 'react';
 import type { DetailedHTMLProps, InputHTMLAttributes } from 'react';
 
-interface RadioProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
+interface RadioProps
+  extends DetailedHTMLProps<
+    InputHTMLAttributes<HTMLInputElement>,
+    HTMLInputElement
+  > {
   label: string | JSX.Element;
 }
 
@@ -9,7 +13,10 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
   const id = useId();
   return (
     <div className='flex items-center gap-2'>
-      <label className='label' htmlFor={`radio-input${id}`}>
+      <label
+        className='label'
+        htmlFor={`radio-input${id}`}
+      >
         <span className='label-text'>{props.label}</span>
       </label>
 
@@ -22,7 +29,7 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
       />
     </div>
   );
-})
+});
 
 Radio.displayName = 'Radio';
 export default Radio;
