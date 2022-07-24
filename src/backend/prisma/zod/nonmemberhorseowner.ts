@@ -1,6 +1,6 @@
-import * as z from "zod"
-import { PhoneType } from "@prisma/client"
-import { CompleteHorse, RelatedHorseModel } from "./index"
+import * as z from 'zod';
+import { PhoneType } from '@prisma/client';
+import { CompleteHorse, RelatedHorseModel } from './index';
 
 export const NonMemberHorseOwnerModel = z.object({
   createdAt: z.date().nullish(),
@@ -11,10 +11,11 @@ export const NonMemberHorseOwnerModel = z.object({
   email: z.string(),
   phone: z.string(),
   phoneType: z.nativeEnum(PhoneType),
-})
+});
 
-export interface CompleteNonMemberHorseOwner extends z.infer<typeof NonMemberHorseOwnerModel> {
-  horses: CompleteHorse[]
+export interface CompleteNonMemberHorseOwner
+  extends z.infer<typeof NonMemberHorseOwnerModel> {
+  horses: CompleteHorse[];
 }
 
 /**
@@ -22,6 +23,9 @@ export interface CompleteNonMemberHorseOwner extends z.infer<typeof NonMemberHor
  *
  * NOTE: Lazy required in case of potential circular dependencies within schema
  */
-export const RelatedNonMemberHorseOwnerModel: z.ZodSchema<CompleteNonMemberHorseOwner> = z.lazy(() => NonMemberHorseOwnerModel.extend({
-  horses: RelatedHorseModel.array(),
-}))
+export const RelatedNonMemberHorseOwnerModel: z.ZodSchema<CompleteNonMemberHorseOwner> =
+  z.lazy(() =>
+    NonMemberHorseOwnerModel.extend({
+      horses: RelatedHorseModel.array(),
+    })
+  );
