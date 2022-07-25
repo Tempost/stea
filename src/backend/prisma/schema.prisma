@@ -110,7 +110,7 @@ model FamilyMember {
     name         String    @db.VarChar(255)
     email        String?   @db.VarChar(100)
     member       Member    @relation(fields: [memberName], references: [fullName], onUpdate: NoAction)
-    notConnected Boolean   @default(false)
+    notConnected Boolean?  @default(false)
     JRSR         JRSR
     memberName   String
 
@@ -122,8 +122,8 @@ model Horse {
     updatedAt        DateTime?            @updatedAt
     horseRN          String               @id @db.VarChar(255)
     horseAKA         String?              @db.VarChar(255)
-    notConnected     Boolean              @default(false)
-    member           NonMemberHorseOwner? @relation(fields: [owner], references: [fullName])
+    notConnected     Boolean?             @default(false)
+    ownerRec         NonMemberHorseOwner? @relation(fields: [owner], references: [fullName])
     registrationDate DateTime?
     regType          Status
     RiderCombo       RiderCombo[]

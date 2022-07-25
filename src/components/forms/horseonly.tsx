@@ -1,7 +1,7 @@
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { Radio, TextInput, Select } from '@/components/data-entry';
-import { Horse, Member } from '@prisma/client';
+import { Horse, RiderCombo } from '@prisma/client';
 
 const phoneTypes = [
   {
@@ -52,22 +52,26 @@ const TrashIcon = (
   </svg>
 );
 
-// Rider combo needs to be valid member/horse
-// Owner Information does not need to be linked to valid member
-// TODO: create new table
+type Horses = {
+  horses: Horse[]
+};
+
+type RiderCombos = {
+  riderCombos: RiderCombo[]
+};
 
 function HorseRegistration() {
-  const { register: regHorse, control: controlHorse } = useFormContext<Horse>();
-  const { register: regMember, control: controlMember } =
-    useFormContext<Member>();
+  const { register: regHorse, control: controlHorse } = useFormContext<Horses>();
+  const { register: regOwner } = useFormContext();
+  const { register: regCombo, control: controlCombo } = useFormContext();
 
   const {
     fields: horseFields,
     append: appendHorse,
     remove: removeHorse,
-  } = useFieldArray({
+  } = useFieldArray<Horses>({
     control: controlHorse,
-    name: 'horses',
+    name: 'horses'
   });
 
   const {
@@ -75,8 +79,8 @@ function HorseRegistration() {
     append: appendCombo,
     remove: removeCombo,
   } = useFieldArray({
-    control: controlMember,
-    name: 'riderCombo',
+    control: controlCombo,
+    name: 'riderCombos',
   });
 
   return (
@@ -90,12 +94,14 @@ function HorseRegistration() {
             inputMode='text'
             label='First Name*'
             className='input-sm'
+            {...regOwner('owner.firstName', { required: true })}
           />
 
           <TextInput
             inputMode='text'
             label='Last Name*'
             className='input-sm'
+            {...regOwner('owner.lastName', { required: true })}
           />
         </div>
 
@@ -104,8 +110,8 @@ function HorseRegistration() {
             label='Email'
             inputMode='text'
             className='input-sm'
-            placeholder=''
             altLabel='This will the primary method of contact, ensure it is up to date!'
+            {...regOwner('owner.email', { required: true })}
           />
 
           <div className='flex gap-2'>
@@ -113,12 +119,14 @@ function HorseRegistration() {
               label='Phone Type*'
               className='select-sm'
               options={phoneTypes}
+              {...regOwner('owner.phoneType', { required: true })}
             />
 
             <TextInput
               label='Phone Number*'
               inputMode='tel'
               className='input-sm'
+              {...regOwner('owner.phone', { required: true })}
             />
           </div>
         </div>
@@ -152,13 +160,15 @@ function HorseRegistration() {
                 <Radio
                   label='Annual'
                   className='radio radio-secondary radio-sm'
-                  {...regHorse('regType', { required: true })}
+                  value='Annual'
+                  {...regHorse(`horses.${index}.regType` as const, { required: true })}
                 />
 
                 <Radio
                   label='Life'
                   className='radio radio-secondary radio-sm'
-                  {...regHorse('regType', { required: true })}
+                  value='Life'
+                  {...regHorse(`horses.${index}.regType` as const, { required: true })}
                 />
               </div>
 
@@ -167,13 +177,14 @@ function HorseRegistration() {
                   label='Registered Name*'
                   inputMode='text'
                   className='input-sm'
-                  placeholder=''
+                  {...regHorse(`horses.${index}.horseRN` as const, { required: true })}
                 />
+
                 <TextInput
                   label='Aka Name'
                   inputMode='text'
                   className='input-sm'
-                  placeholder=''
+                  {...regHorse(`horses.${index}.horseAKA` as const, { required: true })}
                 />
               </div>
             </div>
@@ -182,7 +193,9 @@ function HorseRegistration() {
 
         <button
           className='btn btn-outline btn-xs'
-          onClick={() => appendHorse({ regTyp: 'life' })}
+          onClick={() =>
+            appendHorse({ regType: undefined, horseAKA: '', horseRN: '' })
+          }
         >
           {AddIcon} Add Horse
         </button>
@@ -219,13 +232,13 @@ function HorseRegistration() {
                   label='Rider Name*'
                   inputMode='text'
                   className='input-sm'
-                  placeholder=''
+                  {...regCombo(`riderCombos.${index}.memberName`, { required: true })}
                 />
                 <TextInput
                   label='Horse Registered Name*'
                   inputMode='text'
                   className='input-sm'
-                  placeholder=''
+                  {...regCombo(`riderCombos.${index}.horseName`, { required: true })}
                 />
               </div>
             </div>

@@ -1,6 +1,6 @@
-import * as z from 'zod';
-import { JRSR } from '@prisma/client';
-import { CompleteMember, RelatedMemberModel } from './index';
+import * as z from "zod"
+import { JRSR } from "@prisma/client"
+import { CompleteMember, RelatedMemberModel } from "./index"
 
 export const FamilyMemberModel = z.object({
   uid: z.string(),
@@ -8,14 +8,13 @@ export const FamilyMemberModel = z.object({
   updatedAt: z.date().nullish(),
   name: z.string(),
   email: z.string().nullish(),
-  notConnected: z.boolean(),
+  notConnected: z.boolean().nullish(),
   JRSR: z.nativeEnum(JRSR),
   memberName: z.string(),
-});
+})
 
-export interface CompleteFamilyMember
-  extends z.infer<typeof FamilyMemberModel> {
-  member: CompleteMember;
+export interface CompleteFamilyMember extends z.infer<typeof FamilyMemberModel> {
+  member: CompleteMember
 }
 
 /**
@@ -23,9 +22,6 @@ export interface CompleteFamilyMember
  *
  * NOTE: Lazy required in case of potential circular dependencies within schema
  */
-export const RelatedFamilyMemberModel: z.ZodSchema<CompleteFamilyMember> =
-  z.lazy(() =>
-    FamilyMemberModel.extend({
-      member: RelatedMemberModel,
-    })
-  );
+export const RelatedFamilyMemberModel: z.ZodSchema<CompleteFamilyMember> = z.lazy(() => FamilyMemberModel.extend({
+  member: RelatedMemberModel,
+}))
