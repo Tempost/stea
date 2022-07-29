@@ -35,12 +35,12 @@ function IndivdualMember() {
         return;
       case 'horse':
         // TODO: Find better way to do this
-        formValues.owner.fullName = `${formValues.firstName} ${formValues.lastName}`
+        formValues.owner.fullName = `${formValues.firstName} ${formValues.lastName}`;
 
         mutation.mutate({
           horses: formValues.horses,
           owner: formValues.owner,
-          combos: formValues.riderCombos
+          combos: formValues.riderCombos,
         });
         return;
       case 'family':
@@ -50,9 +50,9 @@ function IndivdualMember() {
     }
   }
 
-  if (!_.isUndefined(formType)) {
-    return (
-      <div className='grid place-content-center h-full bg-opacity-50'>
+  return (
+    <div className='grid place-content-center h-full bg-opacity-50'>
+      {!_.isUndefined(formType) ? (
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(handleSubmit)}>
             <div className='card w-fit bg-base-100 shadow-[0_0_10px_0_rgba(0,0,0,0.3)] p-8'>
@@ -74,63 +74,64 @@ function IndivdualMember() {
             </div>
           </form>
         </FormProvider>
-      </div>
-    );
-  }
+      ) : (
+        <div className='card w-fit bg-base-100 shadow-[0_0_10px_0_rgba(0,0,0,0.3)] p-8'>
+          <button
+            className='btn btn-primary w-full'
+            value='mail'
+          >
+            Join by Mail
+          </button>
 
-  return (
-    <div className='grid place-content-center h-full bg-opacity-50'>
-      <div className='card w-fit bg-base-100 shadow-[0_0_10px_0_rgba(0,0,0,0.3)] p-8'>
-        <button
-          className='btn btn-primary w-full'
-          value='mail'
-        >
-          Join by Mail
-        </button>
+          <h2 className='divider divider-vertical text-xl w-full self-center my-10'>
+            Or...
+          </h2>
 
-        <h2 className='divider divider-vertical text-xl w-full self-center my-10'>
-          Or...
-        </h2>
+          <h2 className='text-xl border-b-2 text-center'>Join Online Below</h2>
 
-        <h2 className='text-xl border-b-2 text-center'>Join Online Below</h2>
+          <div className='card-body'>
+            <h2>Membership Application type:</h2>
+            <Radio
+              label='Indivdual'
+              className='radio radio-primary radio-sm'
+              value='indivdual'
+              name='app-select'
+              onChange={handleRadioClick}
+            />
 
-        <div className='card-body'>
-          <h2>Membership Application type:</h2>
-          <Radio
-            label='Indivdual'
-            className='radio radio-primary radio-sm'
-            value='indivdual'
-            onChange={handleRadioClick}
-          />
+            <Radio
+              label='Family'
+              className='radio radio-primary radio-sm'
+              value='family'
+              name='app-select'
+              onChange={handleRadioClick}
+            />
 
-          <Radio
-            label='Family'
-            className='radio radio-primary radio-sm'
-            value='family'
-            onChange={handleRadioClick}
-          />
+            <Radio
+              label='Business'
+              className='radio radio-primary radio-sm'
+              value='business'
+              name='app-select'
+              onChange={handleRadioClick}
+            />
 
-          <Radio
-            label='Business'
-            className='radio radio-primary radio-sm'
-            value='business'
-            onChange={handleRadioClick}
-          />
+            <Radio
+              label='Horse'
+              className='radio radio-primary radio-sm'
+              value='horse'
+              name='app-select'
+              onChange={handleRadioClick}
+            />
+          </div>
 
-          <Radio
-            label='Horse'
-            className='radio radio-primary radio-sm'
-            value='horse'
-            onChange={handleRadioClick}
-          />
+          <button
+            className='btn btn-primary w-full'
+            onClick={() => setFormType(radioVal)}
+          >
+            Next
+          </button>
         </div>
-        <button
-          className='btn btn-primary w-full'
-          onClick={() => setFormType(radioVal)}
-        >
-          Next
-        </button>
-      </div>
+      )}
     </div>
   );
 }

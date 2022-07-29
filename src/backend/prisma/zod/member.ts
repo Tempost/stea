@@ -18,6 +18,7 @@ export const MemberModel = z.object({
   comments: z.string().nullish(),
   confirmed: z.boolean(),
   currentUSEAMember: z.boolean(),
+  businessName: z.string().nullish(),
   membershipDate: z.date().nullish(),
   memberType: z.nativeEnum(Type),
   memberStatus: z.nativeEnum(Status),

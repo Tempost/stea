@@ -53,17 +53,19 @@ const TrashIcon = (
 );
 
 type Horses = {
-  horses: Horse[]
+  horses: Horse[];
 };
 
 type RiderCombos = {
-  riderCombos: RiderCombo[]
+  riderCombos: RiderCombo[];
 };
 
-function HorseRegistration() {
-  const { register: regHorse, control: controlHorse } = useFormContext<Horses>();
-  const { register: regOwner } = useFormContext();
-  const { register: regCombo, control: controlCombo } = useFormContext();
+export function HorseCombo() {
+  const { register: regHorse, control: controlHorse } =
+    useFormContext<Horses>();
+
+  const { register: regCombo, control: controlCombo } =
+    useFormContext<RiderCombos>();
 
   const {
     fields: horseFields,
@@ -71,7 +73,7 @@ function HorseRegistration() {
     remove: removeHorse,
   } = useFieldArray<Horses>({
     control: controlHorse,
-    name: 'horses'
+    name: 'horses',
   });
 
   const {
@@ -82,6 +84,146 @@ function HorseRegistration() {
     control: controlCombo,
     name: 'riderCombos',
   });
+
+  return (
+    <>
+      <h2 className='text-sm font-bold'>
+        List the horses you are registering.
+        <br />
+        Note that the horse’s registered name MUST be used when entering a STEA
+        show.
+      </h2>
+
+      {horseFields.map((field, index) => (
+        <div
+          key={field.id}
+          className='card card-compact bg-base-200'
+        >
+          <h2 className='card-title ml-3 mt-3'>
+            Horse {index + 1}
+            <button
+              className='btn btn-link text-red-500 btn-xs'
+              onClick={() => removeHorse(index)}
+            >
+              {TrashIcon}
+            </button>
+          </h2>
+
+          <div className='card-body'>
+            <h3>Registration Type*</h3>
+
+            <div className='flex gap-5'>
+              <Radio
+                label='Annual'
+                className='radio radio-secondary radio-sm'
+                value='Annual'
+                {...regHorse(`horses.${index}.regType` as const, {
+                  required: true,
+                })}
+              />
+
+              <Radio
+                label='Life'
+                className='radio radio-secondary radio-sm'
+                value='Life'
+                {...regHorse(`horses.${index}.regType` as const, {
+                  required: true,
+                })}
+              />
+            </div>
+
+            <div className='flex flex-col gap-2'>
+              <TextInput
+                label='Registered Name*'
+                inputMode='text'
+                className='input-sm'
+                {...regHorse(`horses.${index}.horseRN` as const, {
+                  required: true,
+                })}
+              />
+
+              <TextInput
+                label='Aka Name'
+                inputMode='text'
+                className='input-sm'
+                {...regHorse(`horses.${index}.horseAKA` as const, {
+                  required: true,
+                })}
+              />
+            </div>
+          </div>
+        </div>
+      ))}
+
+      <button
+        className='btn btn-outline btn-xs'
+        onClick={() =>
+          appendHorse({ regType: undefined, horseAKA: '', horseRN: '' })
+        }
+      >
+        {AddIcon} Add Horse
+      </button>
+
+      <h2 className='text-sm font-bold'>
+        List <strong>ALL</strong> rider/horse combination(s).
+        <br />
+        The rider/horse combinations can be changed at any time during the
+        membership year.
+        <br />
+        To ensure accurate tracking of points towards year-end awards,
+        <br />
+        please list all combinations that you are aware of currently.
+      </h2>
+
+      {comboFields.map((field, index) => (
+        <div
+          key={field.id}
+          className='card card-compact bg-base-200'
+        >
+          <h2 className='card-title ml-3 mt-3'>
+            Combination {index + 1}
+            <button
+              className='btn btn-link text-red-500 btn-xs'
+              onClick={() => removeCombo(index)}
+            >
+              {TrashIcon}
+            </button>
+          </h2>
+
+          <div className='card-body'>
+            <div className='flex gap-5'>
+              <TextInput
+                label='Rider Name*'
+                inputMode='text'
+                className='input-sm'
+                {...regCombo(`riderCombos.${index}.memberName`, {
+                  required: true,
+                })}
+              />
+              <TextInput
+                label='Horse Registered Name*'
+                inputMode='text'
+                className='input-sm'
+                {...regCombo(`riderCombos.${index}.horseName`, {
+                  required: true,
+                })}
+              />
+            </div>
+          </div>
+        </div>
+      ))}
+      <button
+        className='btn btn-outline btn-xs'
+        onClick={() => appendCombo({ memberName: '', horseName: '' })}
+      >
+        {AddIcon} Add Combo
+      </button>
+    </>
+  );
+}
+
+function HorseRegistration() {
+  const { register: regOwner } = useFormContext();
 
   return (
     <>
@@ -130,128 +272,8 @@ function HorseRegistration() {
             />
           </div>
         </div>
-
-        <h2 className='text-sm font-bold'>
-          List the horses you are registering.
-          <br />
-          Note that the horse’s registered name MUST be used when entering a
-          STEA show.
-        </h2>
-
-        {horseFields.map((field, index) => (
-          <div
-            key={field.id}
-            className='card card-compact bg-base-200'
-          >
-            <h2 className='card-title ml-3 mt-3'>
-              Horse {index + 1}
-              <button
-                className='btn btn-link text-red-500 btn-xs'
-                onClick={() => removeHorse(index)}
-              >
-                {TrashIcon}
-              </button>
-            </h2>
-
-            <div className='card-body'>
-              <h3>Registration Type*</h3>
-
-              <div className='flex gap-5'>
-                <Radio
-                  label='Annual'
-                  className='radio radio-secondary radio-sm'
-                  value='Annual'
-                  {...regHorse(`horses.${index}.regType` as const, { required: true })}
-                />
-
-                <Radio
-                  label='Life'
-                  className='radio radio-secondary radio-sm'
-                  value='Life'
-                  {...regHorse(`horses.${index}.regType` as const, { required: true })}
-                />
-              </div>
-
-              <div className='flex flex-col gap-2'>
-                <TextInput
-                  label='Registered Name*'
-                  inputMode='text'
-                  className='input-sm'
-                  {...regHorse(`horses.${index}.horseRN` as const, { required: true })}
-                />
-
-                <TextInput
-                  label='Aka Name'
-                  inputMode='text'
-                  className='input-sm'
-                  {...regHorse(`horses.${index}.horseAKA` as const, { required: true })}
-                />
-              </div>
-            </div>
-          </div>
-        ))}
-
-        <button
-          className='btn btn-outline btn-xs'
-          onClick={() =>
-            appendHorse({ regType: undefined, horseAKA: '', horseRN: '' })
-          }
-        >
-          {AddIcon} Add Horse
-        </button>
-
-        <h2 className='text-sm font-bold'>
-          List <strong>ALL</strong> rider/horse combination(s).
-          <br />
-          The rider/horse combinations can be changed at any time during the
-          membership year.
-          <br />
-          To ensure accurate tracking of points towards year-end awards,
-          <br />
-          please list all combinations that you are aware of currently.
-        </h2>
-
-        {comboFields.map((field, index) => (
-          <div
-            key={field.id}
-            className='card card-compact bg-base-200'
-          >
-            <h2 className='card-title ml-3 mt-3'>
-              Combination {index + 1}
-              <button
-                className='btn btn-link text-red-500 btn-xs'
-                onClick={() => removeCombo(index)}
-              >
-                {TrashIcon}
-              </button>
-            </h2>
-
-            <div className='card-body'>
-              <div className='flex gap-5'>
-                <TextInput
-                  label='Rider Name*'
-                  inputMode='text'
-                  className='input-sm'
-                  {...regCombo(`riderCombos.${index}.memberName`, { required: true })}
-                />
-                <TextInput
-                  label='Horse Registered Name*'
-                  inputMode='text'
-                  className='input-sm'
-                  {...regCombo(`riderCombos.${index}.horseName`, { required: true })}
-                />
-              </div>
-            </div>
-          </div>
-        ))}
+        <HorseCombo />
       </div>
-
-      <button
-        className='btn btn-outline btn-xs'
-        onClick={() => appendCombo({ memberName: '', horseName: '' })}
-      >
-        {AddIcon} Add Combo
-      </button>
     </>
   );
 }

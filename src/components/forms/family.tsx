@@ -29,7 +29,7 @@ const phoneTypes = [
 
 type MemberWithTempBool = Member & { horseReg: boolean };
 
-function IndivdualRegistration() {
+function FamilyRegistration() {
   const { register, watch } = useFormContext<MemberWithTempBool>();
 
   const isUSEAMember = watch('currentUSEAMember', false);
@@ -37,7 +37,7 @@ function IndivdualRegistration() {
 
   return (
     <>
-      <h2 className='divider'>Indivdual Membership</h2>
+      <h2 className='divider'>Family Membership</h2>
 
       <div className='flex gap-5'>
         <TextInput
@@ -186,4 +186,4 @@ function IndivdualRegistration() {
   );
 }
 
-export default IndivdualRegistration;
+export default FamilyRegistration;
