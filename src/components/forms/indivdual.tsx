@@ -9,9 +9,9 @@ import {
   Select,
   NumericInput,
 } from '@/components/data-entry';
-import JRSR from './JRSR';
+import JRSR from './JRSRField';
 import states from '@/utils/states.json';
-import { HorseCombo } from './horseonly';
+import { HorseFieldArray } from './fieldarrayfields';
 
 const phoneTypes = [
   {
@@ -179,7 +179,7 @@ function IndivdualRegistration() {
           {...register('horseReg')}
         />
 
-        {isRegHorse && <HorseCombo />}
+        {isRegHorse && <HorseFieldArray />}
       </div>
     </>
   );
