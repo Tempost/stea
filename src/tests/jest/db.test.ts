@@ -1,7 +1,8 @@
-import { FamilyMember, Member, Status, Type } from '@prisma/client';
+import { Horse, Member, PhoneType, Status, Type } from '@prisma/client';
 import { MockContext, Context, createMockContext } from './context';
-import { createFamilyMember, createMember, fetchMember } from './db';
+import { createMember, createMemberWithHorses, fetchMember } from './db';
 import { expect } from '@jest/globals';
+import { CompleteMember } from '@/backend/prisma/zod';
 
 let mockCtx: MockContext;
 let ctx: Context;
@@ -23,40 +24,25 @@ test('Create member', async () => {
     state: 'TX',
     zip: 12345,
     phone: '123-123-1234',
-    previousMember: true,
     confirmed: false,
-    email: null,
+    email: '',
     membershipDate: date,
     JRSR: 'SR',
     comments: '',
     createdAt: date,
     updatedAt: date,
+    phoneType: 'Mobile',
+    currentUSEAMember: false,
+    businessName: null,
+    dateOfBirth: null,
+    useaMemberID: null,
   };
 
   mockCtx.prisma.member.create.mockResolvedValue(member);
   await expect(createMember(member, ctx)).resolves.toEqual(member);
 });
 
-test('Create family', async () => {
-  const familyMember: FamilyMember = {
-    name: 'Bob Joe',
-    email: 'email@gmail.com',
-    JRSR: 'SR',
-    notConnected: false,
-    uid: '',
-    createdAt: null,
-    updatedAt: null,
-    memberName: '',
-  };
-
-  mockCtx.prisma.familyMember.create.mockResolvedValue(familyMember);
-
-  await expect(createFamilyMember(familyMember, ctx)).resolves.toEqual(
-    familyMember
-  );
-});
-
-test('fetch member by family', async () => {
+test('Create member with horses', async () => {
   const member: Member = {
     firstName: 'Rich',
     lastName: 'Richy',
@@ -69,14 +55,64 @@ test('fetch member by family', async () => {
     state: 'TX',
     zip: 12345,
     phone: '123-123-1234',
-    previousMember: true,
     confirmed: false,
-    email: null,
+    email: '',
     membershipDate: date,
     JRSR: 'SR',
     comments: '',
     createdAt: date,
     updatedAt: date,
+    phoneType: 'Mobile' as PhoneType,
+    currentUSEAMember: false,
+    businessName: null,
+    dateOfBirth: null,
+    useaMemberID: null,
+  };
+
+  const horses: Horse[] = [
+    {
+      createdAt: date,
+      updatedAt: date,
+      horseRN: 'TacoBell',
+      horseAKA: 'bell',
+      notConnected: false,
+      memberName: 'Rich Richy',
+      registrationDate: date,
+      regType: 'Life',
+      owner: null,
+    },
+  ];
+  const input = { member, horses };
+
+  const res = createMemberWithHorses(input, ctx);
+  await expect(res).resolves.toEqual(input);
+});
+
+test('fetch member by Full name', async () => {
+  const member: Member = {
+    firstName: 'Rich',
+    lastName: 'Richy',
+    fullName: 'Rich Richy',
+    memberType: 'SR' as Type,
+    memberStatus: 'Lifetime' as Status,
+    boardMember: true,
+    address: '123 test street',
+    city: 'nice city',
+    state: 'TX',
+    zip: 12345,
+    phone: '123-123-1234',
+    confirmed: false,
+    email: '',
+    membershipDate: date,
+    JRSR: 'SR',
+    comments: '',
+    createdAt: date,
+    updatedAt: date,
+    phoneType: 'Mobile',
+    currentUSEAMember: false,
+    businessName: null,
+    dateOfBirth: null,
+    useaMemberID: null,
   };
   mockCtx.prisma.member.findFirst.mockResolvedValue(member);
 

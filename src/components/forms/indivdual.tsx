@@ -1,7 +1,7 @@
 import { useFormContext } from 'react-hook-form';
 import _ from 'lodash';
 
-import { Member } from '@prisma/client';
+import { Horse, Member, Type } from '@prisma/client';
 import {
   Radio,
   Checkbox,
@@ -9,6 +9,7 @@ import {
   Select,
   NumericInput,
 } from '@/components/data-entry';
+import JRSR from './JRSR';
 import states from '@/utils/states.json';
 import { HorseCombo } from './horseonly';
 
@@ -27,12 +28,20 @@ const phoneTypes = [
   },
 ];
 
-type MemberWithTempBool = Member & { horseReg: boolean };
+type MemberFormValues = {
+  member: Member;
+  horseReg: boolean;
+  horses: Horse[];
+};
 
 function IndivdualRegistration() {
-  const { register, watch } = useFormContext<MemberWithTempBool>();
+  const { setValue, register, watch } = useFormContext<MemberFormValues>();
+  setValue('member.memberType', 'Individual' as Type);
+  setValue('member.boardMember', false);
+  setValue('member.confirmed', false);
 
-  const isUSEAMember = watch('currentUSEAMember', false);
+  const isUSEAMember = watch('member.currentUSEAMember', false);
+  const isUnder18 = watch('member.JRSR', 'SR');
   const isRegHorse = watch('horseReg', false);
 
   return (
@@ -44,39 +53,27 @@ function IndivdualRegistration() {
           inputMode='text'
           label='First Name*'
           className='input-sm'
-          {...register('firstName', { required: true })}
+          {...register('member.firstName', { required: true })}
         />
 
         <TextInput
           inputMode='text'
           label='Last Name*'
           className='input-sm'
-          {...register('lastName', { required: true })}
+          {...register('member.lastName', { required: true })}
         />
       </div>
 
-      <h3>Is applicant under 18?</h3>
-      <div className='flex gap-2'>
-        <Radio
-          label='Yes'
-          value='JR'
-          className='radio radio-primary radio-sm'
-          {...register('JRSR', { required: true })}
-        />
-
-        <Radio
-          label='No'
-          value='SR'
-          className='radio radio-primary radio-sm'
-          {...register('JRSR', { required: true })}
-        />
-      </div>
+      <JRSR
+        register={[register('member.JRSR')]}
+        watch={isUnder18}
+      />
 
       <div className='flex gap-2'>
         <Checkbox
           label='Current USEA Member?'
           className='checkbox checkbox-primary checkbox-sm'
-          {...register('currentUSEAMember')}
+          {...register('member.currentUSEAMember')}
         />
 
         {isUSEAMember && (
@@ -85,7 +82,7 @@ function IndivdualRegistration() {
             className='input-sm'
             placeholder='USEA Member ID'
             inputSize='w-50'
-            {...register('useaMemberID', {
+            {...register('member.useaMemberID', {
               required: isUSEAMember,
               valueAsNumber: true,
             })}
@@ -99,7 +96,7 @@ function IndivdualRegistration() {
           inputMode='text'
           className='input-sm'
           placeholder='Address Line 1'
-          {...register('address', { required: true })}
+          {...register('member.address', { required: true })}
         />
 
         <TextInput
@@ -113,13 +110,13 @@ function IndivdualRegistration() {
             inputMode='text'
             className='input-sm'
             placeholder='City'
-            {...register('city', { required: true })}
+            {...register('member.city', { required: true })}
           />
 
           <Select
             className='select-sm'
             options={states}
-            {...register('state', { required: true })}
+            {...register('member.state', { required: true })}
           />
 
           <NumericInput
@@ -127,7 +124,7 @@ function IndivdualRegistration() {
             className='input-sm'
             placeholder='Zip Code'
             inputSize='w-fit'
-            {...register('zip', { required: true, valueAsNumber: true })}
+            {...register('member.zip', { required: true, valueAsNumber: true })}
           />
         </div>
 
@@ -137,14 +134,14 @@ function IndivdualRegistration() {
               label='Phone Type*'
               className='select-sm'
               options={phoneTypes}
-              {...register('phoneType', { required: true })}
+              {...register('member.phoneType', { required: true })}
             />
 
             <TextInput
               label='Phone Number*'
               inputMode='tel'
               className='input-sm'
-              {...register('phone', { required: true })}
+              {...register('member.phone', { required: true })}
             />
           </div>
 
@@ -155,7 +152,7 @@ function IndivdualRegistration() {
             altLabel={
               'This will the primary method of contact, ensure it is up to date!'
             }
-            {...register('email', { required: true })}
+            {...register('member.email', { required: true })}
           />
         </div>
 
@@ -163,14 +160,16 @@ function IndivdualRegistration() {
         <div className='flex gap-5'>
           <Radio
             label='Annual'
+            value='Annual'
             className='radio radio-primary radio-sm'
-            {...register('memberStatus', { required: true })}
+            {...register('member.memberStatus', { required: true })}
           />
 
           <Radio
             label='Life'
+            value='Life'
             className='radio radio-primary radio-sm'
-            {...register('memberStatus', { required: true })}
+            {...register('member.memberStatus', { required: true })}
           />
         </div>
 

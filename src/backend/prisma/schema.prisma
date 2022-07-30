@@ -86,9 +86,9 @@ model Member {
     zip               Int
     useaMemberID      Int?
     payment           Payment?
-    family            FamilyMember[]
     shows             Show[]
     RiderCombo        RiderCombo[]
+    Horse Horse[]
 
     @@id([fullName])
 }
@@ -104,20 +104,6 @@ model Payment {
     checkNumber   Int?
 }
 
-model FamilyMember {
-    uid          String    @id @default(cuid())
-    createdAt    DateTime? @default(now())
-    updatedAt    DateTime? @updatedAt
-    name         String    @db.VarChar(255)
-    email        String?   @db.VarChar(100)
-    member       Member    @relation(fields: [memberName], references: [fullName], onUpdate: NoAction)
-    notConnected Boolean?  @default(false)
-    JRSR         JRSR
-    memberName   String
-
-    @@index(memberName)
-}
-
 model Horse {
     createdAt        DateTime?            @default(now())
     updatedAt        DateTime?            @updatedAt
@@ -125,6 +111,8 @@ model Horse {
     horseAKA         String?              @db.VarChar(255)
     notConnected     Boolean?             @default(false)
     ownerRec         NonMemberHorseOwner? @relation(fields: [owner], references: [fullName])
+    memberOwner      Member?              @relation(fields: [memberName], references: [fullName])
+    memberName       String?
     registrationDate DateTime?
     regType          Status
     RiderCombo       RiderCombo[]

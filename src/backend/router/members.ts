@@ -3,12 +3,7 @@ import _ from 'lodash';
 
 import { createRouter } from './utils';
 import { prisma } from '@/backend/prisma';
-import {
-  HorseModel,
-  FamilyMemberModel,
-  PaymentModel,
-  MemberModel,
-} from '@/backend/prisma/zod';
+import { HorseModel, PaymentModel, MemberModel } from '@/backend/prisma/zod';
 import { Member } from '@prisma/client';
 
 export const member = createRouter()
@@ -55,14 +50,13 @@ export const member = createRouter()
       // NOTE: Will throw trpc client error if UID is not omited from the validator
       // when creating fresh members with payment info we do not need UID its auto generated
       member: MemberModel.required(),
-      payment: PaymentModel.required().omit({ payee: true }),
-      horse: HorseModel.optional(),
-      family: FamilyMemberModel.optional(),
+      payment: PaymentModel.omit({ payee: true }).optional(),
+      horses: HorseModel.array().optional(),
     }),
 
     async resolve({ input }) {
       console.log(input.member, input.payment);
-      await prisma.member
+      const member = await prisma.member
         .create({
           data: {
             ...input.member,
@@ -74,6 +68,17 @@ export const member = createRouter()
           },
         })
         .catch((err) => console.log('ERROR', err));
+
+      if (!_.isUndefined(input.horses)) {
+        for (let horse of input.horses) {
+          const horseRes = await prisma.horse.create({
+            data: {
+              ...horse,
+              memberName: input.member.fullName,
+            },
+          });
+        }
+      }
     },
   })
   .mutation('update-member', {

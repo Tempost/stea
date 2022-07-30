@@ -1,18 +1,9 @@
-import { FamilyMember, Member } from '@prisma/client';
+import { Horse, Member } from '@prisma/client';
 import { Context } from './context';
 
 export async function createMember(member: Member, ctx: Context) {
   return await ctx.prisma.member.create({
     data: member,
-  });
-}
-
-export async function createFamilyMember(
-  familyMember: FamilyMember,
-  ctx: Context
-) {
-  return await ctx.prisma.familyMember.create({
-    data: familyMember,
   });
 }
 
@@ -24,4 +15,28 @@ export async function fetchMember(name: string, ctx: Context) {
       },
     },
   });
+}
+
+export async function createMemberWithHorses(
+  input: {
+    member: Member;
+    horses: Horse[];
+  },
+  ctx: Context
+) {
+  const member = await ctx.prisma.member.create({
+    data: input.member,
+  });
+
+  let horses: Horse[] = [];
+  for (let horse of input.horses) {
+    const horseRes = await ctx.prisma.horse.create({
+      data: {
+        ...horse,
+        memberName: input.member.fullName,
+      },
+    });
+    horses.push(horseRes);
+  }
+  return { member, horses };
 }

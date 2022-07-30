@@ -62,18 +62,17 @@ export const nonMemberHorseOwner = createRouter()
         .catch((err) => console.log('Backend Error:', err));
 
       for (let combo of input.combos) {
-      console.log(combo);
         const resCombo = await prisma.riderCombo
           .create({
             data: {
               horse: {
                 connect: {
-                  horseRN: combo.horseName
-                }
+                  horseRN: combo.horseName,
+                },
               },
               member: {
                 connect: {
-                  fullName: combo.memberName
+                  fullName: combo.memberName,
                 },
               },
             },

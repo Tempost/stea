@@ -1,5 +1,4 @@
 import { transformer } from '@/utils/trpc';
-import { family } from './familymember';
 import { horse } from './horses';
 import { member } from './members';
 import { ranking } from './ranking';
@@ -13,7 +12,6 @@ export const appRouter = createRouter()
   .merge('nonMemberHorseOwner.', nonMemberHorseOwner)
   .merge('horse.', horse)
   .merge('ranking.', ranking)
-  .merge('family.', family)
   .merge('shows.', show);
 
 export type AppRouter = typeof appRouter;

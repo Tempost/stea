@@ -8,9 +8,13 @@ import { trpc } from '@/utils/trpc';
 
 // TODO: Align Radio buttons and label properly
 
-function IndivdualMember() {
+function JoinStea() {
   const [formType, setFormType] = useState<FormType>();
-  const mutation = trpc.useMutation(['nonMemberHorseOwner.add-owner-horse']);
+  const horseMutation = trpc.useMutation([
+    'nonMemberHorseOwner.add-owner-horse',
+  ]);
+
+  const memberMutation = trpc.useMutation(['member.add-member']);
 
   const methods = useForm({
     reValidateMode: 'onSubmit',
@@ -32,18 +36,21 @@ function IndivdualMember() {
     console.log(formValues);
     switch (formType) {
       case 'indivdual':
+        formValues.member.fullName = `${formValues.member.firstName} ${formValues.member.lastName}`;
+        memberMutation.mutate({
+          member: formValues.member,
+          horses: formValues.horses,
+        });
         return;
       case 'horse':
         // TODO: Find better way to do this
         formValues.owner.fullName = `${formValues.firstName} ${formValues.lastName}`;
 
-        mutation.mutate({
+        horseMutation.mutate({
           horses: formValues.horses,
           owner: formValues.owner,
           combos: formValues.riderCombos,
         });
-        return;
-      case 'family':
         return;
       case 'business':
         return;
@@ -100,14 +107,6 @@ function IndivdualMember() {
             />
 
             <Radio
-              label='Family'
-              className='radio radio-primary radio-sm'
-              value='family'
-              name='app-select'
-              onChange={handleRadioClick}
-            />
-
-            <Radio
               label='Business'
               className='radio radio-primary radio-sm'
               value='business'
@@ -136,4 +135,4 @@ function IndivdualMember() {
   );
 }
 
-export default IndivdualMember;
+export default JoinStea;

@@ -1,2 +1,2 @@
-declare type FormType = 'indivdual' | 'business' | 'horse' | 'family';
+declare type FormType = 'indivdual' | 'business' | 'horse';
 declare type Option<T> = T | null;
