@@ -41,8 +41,8 @@ export const nonMemberHorseOwner = createRouter()
   .mutation('add-owner-horse', {
     input: z.object({
       owner: NonMemberHorseOwnerModel,
-      horses: HorseModel.array(),
-      combos: RiderComboModel.array(),
+      horses: z.array(HorseModel),
+      combos: z.array(RiderComboModel).optional(),
     }),
     async resolve({ input }) {
       console.log(input.owner, input.horses, input.combos);
@@ -61,26 +61,28 @@ export const nonMemberHorseOwner = createRouter()
         .then((owners) => owners)
         .catch((err) => console.log('Backend Error:', err));
 
-      for (let combo of input.combos) {
-        const resCombo = await prisma.riderCombo
-          .create({
-            data: {
-              horse: {
-                connect: {
-                  horseRN: combo.horseName,
+      if (input.combos) {
+        for (let combo of input.combos) {
+          const resCombo = await prisma.riderCombo
+            .create({
+              data: {
+                horse: {
+                  connect: {
+                    horseRN: combo.horseName,
+                  },
+                },
+                member: {
+                  connect: {
+                    fullName: combo.memberName,
+                  },
                 },
               },
-              member: {
-                connect: {
-                  fullName: combo.memberName,
-                },
-              },
-            },
-          })
-          .then((combos) => combos)
-          .catch((err) => console.log('Backend Error:', err));
+            })
+            .then((combos) => combos)
+            .catch((err) => console.log('Backend Error:', err));
 
-        console.log(resCombo);
+          console.log(resCombo);
+        }
       }
     },
   });

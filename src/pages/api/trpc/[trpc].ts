@@ -1,6 +1,5 @@
-import { appRouter, AppRouter } from '@/backend/router';
+import { appRouter } from '@/backend/router/_app';
 import { createContext } from '@/backend/prisma';
-import { inferProcedureOutput } from '@trpc/server';
 import * as trpcNext from '@trpc/server/adapters/next';
 import _ from 'lodash';
 
@@ -13,7 +12,3 @@ export default trpcNext.createNextApiHandler({
       console.error('Something went wrong', error);
   },
 });
-
-export type inferQueryResponse<
-  TRouteKey extends keyof AppRouter['_def']['queries']
-> = inferProcedureOutput<AppRouter['_def']['queries'][TRouteKey]>;
