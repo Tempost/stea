@@ -2,16 +2,25 @@ import Head from 'next/head';
 import { httpBatchLink } from '@trpc/client/links/httpBatchLink';
 import { loggerLink } from '@trpc/client/links/loggerLink';
 import { withTRPC } from '@trpc/next';
-import { AppRouter } from '@/backend/router';
-
-import type { NextComponentType } from 'next';
-import type { AppProps } from 'next/app';
 
 import '../styles/globals.css';
-import Layout from '@/components/layout';
 import { transformer } from '@/utils/trpc';
 
-function MyApp({ Component, pageProps }: AppProps) {
+import type { AppRouter } from '@/backend/router/_app';
+import type { NextComponentType, NextPage } from 'next';
+import type { AppProps } from 'next/app';
+import type { ReactElement, ReactNode } from 'react';
+
+export type NextPageWithLayout = NextPage & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
+export type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+  const getLayout = Component.getLayout || ((page) => page);
   return (
     <>
       <Head>
@@ -28,9 +37,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           content='viewport-fit=cover'
         />
       </Head>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      {getLayout(<Component {...pageProps} />)}
     </>
   );
 }

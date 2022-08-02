@@ -49,7 +49,7 @@ export async function createContextInner(_opts: CreateContextOptions) {
  * @link https://trpc.io/docs/context
  */
 export async function createContext(
-  opts: trpcNext.CreateNextContextOptions,
+  opts: trpcNext.CreateNextContextOptions
 ): Promise<Context> {
   // for API-response caching see https://trpc.io/docs/caching
 

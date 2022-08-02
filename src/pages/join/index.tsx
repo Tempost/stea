@@ -1,6 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 import _ from 'lodash';
 
+import { PublicLayout } from '@/components/layout';
 import SteaJoinForm from '@/components/forms';
 import { Radio } from '@/components/data-entry';
 
@@ -81,5 +82,9 @@ function JoinStea() {
     </div>
   );
 }
+import { ReactElement } from 'react';
+JoinStea.getLayout = (page: ReactElement) => {
+  return <PublicLayout>{page}</PublicLayout>;
+};
 
 export default JoinStea;

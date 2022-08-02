@@ -7,6 +7,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 
+import { PublicLayout } from '@/components/layout';
 import { trpc } from '@/utils/trpc';
 
 const memberCols: ColumnDef<Member>[] = [
@@ -106,5 +107,9 @@ function MembersAnHorses() {
     </div>
   );
 }
+import { ReactElement } from 'react';
+MembersAnHorses.getLayout = (page: ReactElement) => {
+  return <PublicLayout>{page}</PublicLayout>;
+};
 
 export default MembersAnHorses;

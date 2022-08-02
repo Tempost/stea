@@ -1,6 +1,10 @@
 import { FieldValues, FormProvider } from 'react-hook-form';
 import { trpc } from '@/utils/trpc';
-import { HorseModel, NonMemberHorseOwnerModel, RiderComboModel } from '@/backend/prisma/zod';
+import {
+  HorseModel,
+  NonMemberHorseOwnerModel,
+  RiderComboModel,
+} from '@/backend/prisma/zod';
 import { z } from 'zod';
 import _ from 'lodash';
 
@@ -25,9 +29,9 @@ const phoneTypes = [
 ];
 
 const OwnerHorseFormValues = z.object({
-  owner: NonMemberHorseOwnerModel.omit({fullName: true}).required(),
+  owner: NonMemberHorseOwnerModel.omit({ fullName: true }).required(),
   horses: z.array(HorseModel),
-  combos: z.array(RiderComboModel).optional()
+  combos: z.array(RiderComboModel).optional(),
 });
 
 function HorseRegistration() {
@@ -55,7 +59,7 @@ function HorseRegistration() {
       owner: formValues.owner,
       combos: formValues.riderCombos,
     });
-    console.log(formValues)
+    console.log(formValues);
   }
 
   !_.isEmpty(errors) && console.log(errors);

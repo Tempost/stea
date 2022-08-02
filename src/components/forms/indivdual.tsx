@@ -34,7 +34,7 @@ const phoneTypes = [
 ];
 
 const MemberFormValues = z.object({
-  member: MemberModel.omit({fullName: true}),
+  member: MemberModel.omit({ fullName: true }),
   horseReg: z.boolean(),
   horses: z.array(HorseModel).optional(),
 });
@@ -49,23 +49,16 @@ function IndivdualRegistration() {
     schema: MemberFormValues,
   });
 
-  const {
-    setValue,
-    watch,
-    register,
-    handleSubmit,
-    control
-  } = methods;
+  const { setValue, watch, register, handleSubmit, control } = methods;
 
-  const formState = useFormState({control});
+  const formState = useFormState({ control });
 
   const isUSEAMember = watch('member.currentUSEAMember', false);
   const isUnder18 = watch('member.JRSR', 'SR');
   const isRegHorse = watch('horseReg', false);
 
   function onSumbit(formValues: FieldValues) {
-    formValues.member.fullName =
-      `${formValues.member.firstName} ${formValues.member.lastName}`;
+    formValues.member.fullName = `${formValues.member.firstName} ${formValues.member.lastName}`;
 
     memberMutation.mutate({
       member: formValues.member,
@@ -77,7 +70,9 @@ function IndivdualRegistration() {
   setValue('member.boardMember', false);
   setValue('member.confirmed', false);
 
-  (formState.errors && formState.isDirty) && console.log(formState.errors, formState);
+  formState.errors &&
+    formState.isDirty &&
+    console.log(formState.errors, formState);
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSumbit)}>
@@ -159,7 +154,10 @@ function IndivdualRegistration() {
               className='input-sm input-primary'
               placeholder='Zip Code'
               inputSize='w-fit'
-              {...register('member.zip', { required: true, valueAsNumber: true })}
+              {...register('member.zip', {
+                required: true,
+                valueAsNumber: true,
+              })}
             />
           </div>
 

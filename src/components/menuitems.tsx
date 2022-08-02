@@ -6,7 +6,7 @@ interface Menu {
   render?: ({ href, name: navText }: Menu) => JSX.Element;
 }
 
-export const menuItems: Menu[] = [
+export const publicMenuItems: Menu[] = [
   {
     href: '/',
     name: 'Home',
@@ -62,5 +62,20 @@ export const menuItems: Menu[] = [
   {
     href: '/contactus',
     name: 'Contact Us',
+  },
+];
+
+export const dashMenuItems: Menu[] = [
+  {
+    href: '',
+    name: 'Members',
+  },
+  {
+    href: '',
+    name: 'Shows',
+  },
+  {
+    href: '',
+    name: 'Horses',
   },
 ];

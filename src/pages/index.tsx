@@ -1,12 +1,15 @@
 import Link from 'next/link';
 import { Member } from '@prisma/client';
 
+import { PublicLayout } from '@/components/layout';
+
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
+import { ReactElement } from 'react';
 
 const cols: ColumnDef<Member>[] = [
   {
@@ -228,5 +231,9 @@ function Home() {
     </>
   );
 }
+
+Home.getLayout = (page: ReactElement) => {
+  return <PublicLayout>{page}</PublicLayout>;
+};
 
 export default Home;
