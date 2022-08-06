@@ -1,0 +1,55 @@
+import { trpc } from '@/utils/trpc';
+import { ColumnDef } from '@tanstack/react-table';
+import _ from 'lodash';
+
+import { DashboardLayout } from '@/components/layout';
+import TableWithData from '@/components/tablewithdata';
+import ConfirmPoints from '@/components/confirmpoints';
+
+import type { Show } from '@prisma/client';
+import type { ReactElement } from 'react';
+
+const pointCols: ColumnDef<Show>[] = [
+  {
+    header: 'Show entries to review',
+    columns: [
+      {
+        accessorKey: 'showName',
+        id: 'showName',
+        cell: info => info.getValue(),
+        header: 'Show',
+      },
+      {
+        accessorKey: 'uid',
+        id: 'uid',
+        cell: info => (
+          <ConfirmPoints uid={info.getValue()}/>
+        ),
+        header: '',
+      },
+    ],
+  },
+];
+
+function Points() {
+  const memberPoints = trpc.useQuery(['shows.get', { reviewed: false }]);
+
+  return (
+    <div className='pt-28 w-full grid place-items-center'>
+      {_.isEmpty(memberPoints.data) ? (
+        <>No new shows to review...</>
+      ) : (
+        <TableWithData
+          colDef={pointCols}
+          query={memberPoints}
+        />
+      )}
+    </div>
+  );
+}
+
+Points.getLayout = (page: ReactElement) => {
+  return <DashboardLayout>{page}</DashboardLayout>;
+};
+
+export default Points;

@@ -1,154 +1,154 @@
 generator client {
-    provider        = "prisma-client-js"
-    previewFeatures = ["referentialIntegrity"]
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
-    provider             = "mysql"
-    url                  = env("DATABASE_URL")
-    referentialIntegrity = "prisma"
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
 }
 
 generator zod {
-    provider              = "zod-prisma"
-    output                = "./zod"
-    relationModel         = true
-    modelCase             = "PascalCase"
-    modelSuffix           = "Model"
-    useDecimalJs          = true
-    prismaJsonNullability = true
+  provider              = "zod-prisma"
+  output                = "./zod"
+  relationModel         = true
+  modelCase             = "PascalCase"
+  modelSuffix           = "Model"
+  useDecimalJs          = true
+  prismaJsonNullability = true
 }
 
 enum Status {
-    Life
-    Annual
-    Renew
+  Life
+  Annual
+  Renew
 }
 
 enum Type {
-    Individual
-    Family
-    Business
+  Individual
+  Family
+  Business
 }
 
 enum JRSR {
-    JR
-    SR
+  JR
+  SR
 }
 
 enum PaymentMethod {
-    PayPal
-    Check
+  PayPal
+  Check
 }
 
 enum PhoneType {
-    Mobile
-    Home
-    Business
+  Mobile
+  Home
+  Business
 }
 
 model NonMemberHorseOwner {
-    createdAt DateTime? @default(now())
-    updatedAt DateTime? @updatedAt
-    firstName String    @db.VarChar(255)
-    lastName  String    @db.VarChar(255)
-    fullName  String    @db.VarChar(255)
-    email     String    @db.VarChar(100)
-    phone     String    @db.VarChar(15)
-    phoneType PhoneType @default(Mobile)
-    horses    Horse[]
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+  firstName String    @db.VarChar(255)
+  lastName  String    @db.VarChar(255)
+  fullName  String    @db.VarChar(255)
+  email     String    @db.VarChar(100)
+  phone     String    @db.VarChar(15)
+  phoneType PhoneType @default(Mobile)
+  horses    Horse[]
 
-    @@id([fullName])
+  @@id([fullName])
 }
 
 model Member {
-    createdAt         DateTime?    @default(now())
-    updatedAt         DateTime?    @updatedAt
-    firstName         String       @db.VarChar(255)
-    lastName          String       @db.VarChar(255)
-    fullName          String       @db.VarChar(255)
-    boardMember       Boolean      @default(false)
-    address           String       @db.VarChar(255)
-    city              String       @db.VarChar(25)
-    state             String       @db.VarChar(25)
-    phone             String       @db.VarChar(15)
-    phoneType         PhoneType    @default(Mobile)
-    email             String       @db.VarChar(100)
-    comments          String?      @db.VarChar(4000)
-    confirmed         Boolean      @default(false)
-    currentUSEAMember Boolean      @default(false)
-    businessName      String?      @db.VarChar(100)
-    membershipDate    DateTime?
-    memberType        Type
-    memberStatus      Status
-    JRSR              JRSR
-    dateOfBirth       DateTime?
-    zip               Int
-    useaMemberID      Int?
-    payment           Payment?
-    shows             Show[]
-    RiderCombo        RiderCombo[]
-    Horse             Horse[]
+  createdAt         DateTime?    @default(now())
+  updatedAt         DateTime?    @updatedAt
+  firstName         String       @db.VarChar(255)
+  lastName          String       @db.VarChar(255)
+  fullName          String       @db.VarChar(255)
+  boardMember       Boolean      @default(false)
+  address           String       @db.VarChar(255)
+  city              String       @db.VarChar(25)
+  state             String       @db.VarChar(25)
+  phone             String       @db.VarChar(15)
+  phoneType         PhoneType    @default(Mobile)
+  email             String       @db.VarChar(100)
+  comments          String?      @db.VarChar(4000)
+  confirmed         Boolean      @default(false)
+  currentUSEAMember Boolean      @default(false)
+  businessName      String?      @db.VarChar(100)
+  membershipDate    DateTime?
+  memberType        Type
+  memberStatus      Status
+  JRSR              JRSR
+  dateOfBirth       DateTime?
+  zip               Int
+  useaMemberID      Int?
+  payment           Payment?
+  RiderCombo        RiderCombo[]
+  Horse             Horse[]
 
-    @@id([fullName])
+  @@id([fullName])
 }
 
 model Payment {
-    updatedAt     DateTime?      @updatedAt
-    comments      String?        @db.VarChar(4000)
-    member        Member         @relation(fields: [payee], references: [fullName])
-    payee         String         @id
-    amountPaid    Int?
-    datePaid      DateTime?
-    paymentMethod PaymentMethod?
-    checkNumber   Int?
+  updatedAt     DateTime?      @updatedAt
+  comments      String?        @db.VarChar(4000)
+  member        Member         @relation(fields: [payee], references: [fullName])
+  payee         String         @id
+  amountPaid    Int?
+  datePaid      DateTime?
+  paymentMethod PaymentMethod?
+  checkNumber   Int?
 }
 
 model Horse {
-    createdAt        DateTime?            @default(now())
-    updatedAt        DateTime?            @updatedAt
-    horseRN          String               @id @db.VarChar(255)
-    horseAKA         String?              @db.VarChar(255)
-    notConnected     Boolean?             @default(false)
-    ownerRec         NonMemberHorseOwner? @relation(fields: [owner], references: [fullName])
-    memberOwner      Member?              @relation(fields: [memberName], references: [fullName])
-    memberName       String?
-    registrationDate DateTime?
-    regType          Status
-    RiderCombo       RiderCombo[]
-    owner            String?
+  createdAt        DateTime?            @default(now())
+  updatedAt        DateTime?            @updatedAt
+  horseRN          String               @id @db.VarChar(255)
+  horseAKA         String?              @db.VarChar(255)
+  notConnected     Boolean?             @default(false)
+  ownerRec         NonMemberHorseOwner? @relation(fields: [owner], references: [fullName])
+  memberOwner      Member?              @relation(fields: [memberName], references: [fullName])
+  memberName       String?
+  registrationDate DateTime?
+  regType          Status
+  RiderCombo       RiderCombo[]
+  owner            String?
 }
 
 model TotalPoints {
-    uid         String       @id @default(cuid())
-    createdAt   DateTime?    @default(now())
-    updatedAt   DateTime?    @updatedAt
-    division    String       @db.VarChar(20)
-    totalPoints Float
-    totalShows  Int
-    completedHT Boolean
-    multiVenue  Boolean
-    RiderCombo  RiderCombo[]
+  uid         String       @id @default(cuid())
+  createdAt   DateTime?    @default(now())
+  updatedAt   DateTime?    @updatedAt
+  division    String       @db.VarChar(20)
+  totalPoints Float
+  totalShows  Int
+  completedHT Boolean
+  multiVenue  Boolean
+  RiderCombo  RiderCombo[]
 }
 
 model RiderCombo {
-    createdAt  DateTime?    @default(now())
-    updatedAt  DateTime?    @updatedAt
-    member     Member       @relation(fields: [memberName], references: [fullName])
-    horse      Horse        @relation(fields: [horseName], references: [horseRN])
-    ranking    TotalPoints? @relation(fields: [rankingUid], references: [uid])
-    rankingUid String?      @unique
-    memberName String
-    horseName  String
-
-    @@id([memberName, horseName])
+  uid        String       @id @default(cuid())
+  createdAt  DateTime?    @default(now())
+  updatedAt  DateTime?    @updatedAt
+  member     Member       @relation(fields: [memberName], references: [fullName])
+  horse      Horse        @relation(fields: [horseName], references: [horseRN])
+  points     TotalPoints? @relation(fields: [pointsUid], references: [uid])
+  pointsUid  String?
+  memberName String
+  horseName  String
+  shows      Show[]
 }
 
 model Show {
-    uid       String    @id @default(cuid())
-    createdAt DateTime? @default(now())
-    updatedAt DateTime? @updatedAt
-    showName  String    @db.VarChar(150)
-    showType  String    @db.VarChar(10)
-    riders    Member[]
+  uid       String       @id @default(cuid())
+  createdAt DateTime?    @default(now())
+  updatedAt DateTime?    @updatedAt
+  showName  String       @db.VarChar(150)
+  showType  String       @db.VarChar(10)
+  reviewed  Boolean      @default(false)
+  riders    RiderCombo[]
 }

@@ -20,7 +20,7 @@ export type AppPropsWithLayout = AppProps & {
 };
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
-  const getLayout = Component.getLayout || ((page) => page);
+  const getLayout = Component.getLayout || (page => page);
   return (
     <>
       <Head>
@@ -56,10 +56,10 @@ export default withTRPC<AppRouter>({
      * If you want to use SSR, you need to use the server's full URL
      * @link https://trpc.io/docs/ssr
      */
-    const ONE_DAY_SECONDS = 60 * 60 * 24;
+    const QUART_DAY_SECONDS = 60 * 60 * 6;
     ctx?.res?.setHeader(
       'Cache-Control',
-      `s-maxage=1, stale-while-revalidate=${ONE_DAY_SECONDS}`
+      `s-maxage=1, stale-while-revalidate=${QUART_DAY_SECONDS}`
     );
 
     const url = process.env.VERCEL_URL
@@ -76,11 +76,15 @@ export default withTRPC<AppRouter>({
        * @link https://react-query.tanstack.com/reference/QueryClient
        */
       queryClientConfig: {
-        defaultOptions: { queries: { staleTime: ONE_DAY_SECONDS } },
+        defaultOptions: {
+          queries: {
+            staleTime: QUART_DAY_SECONDS,
+          },
+        },
       },
       links: [
         loggerLink({
-          enabled: (opts) =>
+          enabled: opts =>
             process.env.NODE_ENV === 'development' ||
             (opts.direction === 'down' && opts.result instanceof Error),
         }),

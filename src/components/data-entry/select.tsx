@@ -39,7 +39,7 @@ const Select = forwardRef<HTMLSelectElement, SelectInputProps>(
           className={`select select-bordered ${className}`}
           {...props}
         >
-          {options.map((item) => {
+          {options.map(item => {
             return (
               <option
                 key={item.label}

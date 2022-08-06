@@ -11,10 +11,10 @@ export const horse = createRouter()
     async resolve() {
       return await prisma.horse
         .findMany()
-        .then((horses) => {
+        .then(horses => {
           return horses;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -33,6 +33,6 @@ export const horse = createRouter()
             ...input.horse,
           },
         })
-        .catch((err) => console.log(err));
+        .catch(err => console.log(err));
     },
   });

@@ -37,7 +37,7 @@ export default function NavLinkMenu({ name, routes }: NavLinkMenuProps) {
       </h2>
       <ul className='dropdown-content menu p-2 shadow bg-primary-content w-52 text-neutral-focus rounded-md'>
         {routes.map(({ href, text }) => (
-          <li key={href}>
+          <li key={`${href}${text}`}>
             <LinkWrapper href={href ? href : ''}>
               <span className='m-1 text-sm'>{text}</span>
             </LinkWrapper>

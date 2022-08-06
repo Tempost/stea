@@ -20,8 +20,8 @@ export const member = createRouter()
       if (_.isUndefined(input)) {
         data = await prisma.member
           .findMany()
-          .then((members) => members)
-          .catch((err) => console.log('Backend Error:', err));
+          .then(members => members)
+          .catch(err => console.log('Backend Error:', err));
 
         return data as Member[];
       } else {
@@ -31,11 +31,21 @@ export const member = createRouter()
               fullName: input.memberName,
             },
           })
-          .then((members) => members)
-          .catch((err) => console.log('Backend Error:', err));
+          .then(members => members)
+          .catch(err => console.log('Backend Error:', err));
 
         return data as Member;
       }
+    },
+  })
+  .query('applicants', {
+    async resolve() {
+      const members = await prisma.member
+        .findMany({ where: { confirmed: false } })
+        .then(members => members)
+        .catch(err => console.log('Backend Error:', err));
+
+      return members as Member[];
     },
   })
   .query('eoy-placings', {
@@ -67,7 +77,7 @@ export const member = createRouter()
             },
           },
         })
-        .catch((err) => console.log('ERROR', err));
+        .catch(err => console.log('ERROR', err));
 
       if (!_.isUndefined(input.horses)) {
         for (let horse of input.horses) {
@@ -82,10 +92,18 @@ export const member = createRouter()
     },
   })
   .mutation('update-member', {
-    input: z
-      .object({
-        fullName: z.string(),
-      })
-      .required(),
-    async resolve() {},
+    input: MemberModel.deepPartial(),
+    async resolve({ input: { fullName, ...others } }) {
+      console.log(fullName, others);
+      await prisma.member
+        .update({
+          where: {
+            fullName: fullName,
+          },
+          data: {
+            ...others,
+          },
+        })
+        .catch(err => console.log('Error:', err));
+    },
   });

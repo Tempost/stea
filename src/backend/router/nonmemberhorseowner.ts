@@ -20,8 +20,8 @@ export const nonMemberHorseOwner = createRouter()
       if (_.isUndefined(input)) {
         data = await prisma.nonMemberHorseOwner
           .findMany()
-          .then((owners) => owners)
-          .catch((err) => console.log('Backend Error:', err));
+          .then(owners => owners)
+          .catch(err => console.log('Backend Error:', err));
 
         return data as NonMemberHorseOwner[];
       } else {
@@ -31,8 +31,8 @@ export const nonMemberHorseOwner = createRouter()
               fullName: input.ownerName,
             },
           })
-          .then((owners) => owners)
-          .catch((err) => console.log('Backend Error:', err));
+          .then(owners => owners)
+          .catch(err => console.log('Backend Error:', err));
 
         return data as NonMemberHorseOwner;
       }
@@ -58,8 +58,8 @@ export const nonMemberHorseOwner = createRouter()
             },
           },
         })
-        .then((owners) => owners)
-        .catch((err) => console.log('Backend Error:', err));
+        .then(owners => owners)
+        .catch(err => console.log('Backend Error:', err));
 
       if (input.combos) {
         for (let combo of input.combos) {
@@ -78,8 +78,8 @@ export const nonMemberHorseOwner = createRouter()
                 },
               },
             })
-            .then((combos) => combos)
-            .catch((err) => console.log('Backend Error:', err));
+            .then(combos => combos)
+            .catch(err => console.log('Backend Error:', err));
 
           console.log(resCombo);
         }

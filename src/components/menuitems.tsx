@@ -68,14 +68,60 @@ export const publicMenuItems: Menu[] = [
 export const dashMenuItems: Menu[] = [
   {
     href: '',
-    name: 'Members',
+    name: 'Review',
+    render: ({ name: navText }) => (
+      <NavLinkMenu
+        name={navText}
+        routes={[
+          {
+            href: '/dashboard/review/points',
+            text: 'Points',
+          },
+          {
+            href: '/dashboard/review/applications',
+            text: 'Applications',
+          },
+        ]}
+      />
+    ),
   },
   {
     href: '',
-    name: 'Shows',
+    name: 'Tables',
+    render: ({ name: navText }) => (
+      <NavLinkMenu
+        name={navText}
+        routes={[
+          {
+            href: '',
+            text: 'Members',
+          },
+          {
+            href: '',
+            text: 'Horses',
+          },
+          {
+            href: '',
+            text: 'Owners',
+          },
+          {
+            href: '',
+            text: 'Shows',
+          },
+          {
+            href: '',
+            text: 'Points',
+          },
+        ]}
+      />
+    ),
   },
   {
     href: '',
-    name: 'Horses',
+    name: 'Submit Points',
+  },
+  {
+    href: '',
+    name: 'Documents',
   },
 ];

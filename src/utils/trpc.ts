@@ -3,7 +3,7 @@ import superjson from 'superjson';
 
 import type { inferProcedureInput, inferProcedureOutput } from '@trpc/server';
 import type { NextPageContext } from 'next';
-import type { AppRouter } from '@/backend/router';
+import type { AppRouter } from '@/backend/router/_app';
 
 /**
  * Extend `NextPageContext` with meta data that can be picked up by `responseMeta()` when server-side rendering
