@@ -1,5 +1,7 @@
 import {
   ColumnDef,
+  PaginationState,
+  getPaginationRowModel,
   flexRender,
   getCoreRowModel,
   useReactTable,
@@ -9,6 +11,7 @@ import { UseQueryResult } from 'react-query';
 interface TableWithDataProps<T> {
   colDef: ColumnDef<T>[];
   query: UseQueryResult<T[] | T>;
+  paginate?: boolean;
 }
 
 function TableWithData<T>({ colDef, query }: TableWithDataProps<T>) {

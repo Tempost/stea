@@ -3,7 +3,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import _ from 'lodash';
 
 import { DashboardLayout } from '@/components/layout';
-import TableWithData from '@/components/tablewithdata';
+import { TableWithData } from '@/components/tables';
 import ConfirmPoints from '@/components/confirmpoints';
 
 import type { Show } from '@prisma/client';

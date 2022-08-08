@@ -86,35 +86,8 @@ export const dashMenuItems: Menu[] = [
     ),
   },
   {
-    href: '',
+    href: '/dashboard/tables',
     name: 'Tables',
-    render: ({ name: navText }) => (
-      <NavLinkMenu
-        name={navText}
-        routes={[
-          {
-            href: '',
-            text: 'Members',
-          },
-          {
-            href: '',
-            text: 'Horses',
-          },
-          {
-            href: '',
-            text: 'Owners',
-          },
-          {
-            href: '',
-            text: 'Shows',
-          },
-          {
-            href: '',
-            text: 'Points',
-          },
-        ]}
-      />
-    ),
   },
   {
     href: '',
