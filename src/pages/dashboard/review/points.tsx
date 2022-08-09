@@ -22,9 +22,7 @@ const pointCols: ColumnDef<Show>[] = [
       {
         accessorKey: 'uid',
         id: 'uid',
-        cell: info => (
-          <ConfirmPoints uid={info.getValue()}/>
-        ),
+        cell: info => <ConfirmPoints uid={info.getValue()} />,
         header: '',
       },
     ],

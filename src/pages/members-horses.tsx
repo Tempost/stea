@@ -7,7 +7,7 @@ import { MemberTable } from '@/components/tables';
 function MembersAnHorses() {
   return (
     <div className='pt-28 w-full grid place-items-center'>
-      <MemberTable/>
+      <MemberTable />
     </div>
   );
 }

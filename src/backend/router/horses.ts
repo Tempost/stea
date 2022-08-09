@@ -5,11 +5,12 @@ import { createRouter } from './utils';
 
 import { prisma } from '@/backend/prisma';
 import { HorseModel } from '@/backend/prisma/zod';
+import { Horse } from '@prisma/client';
 
 export const horse = createRouter()
   .query('get-horses', {
     async resolve() {
-      return await prisma.horse
+      const horses = await prisma.horse
         .findMany()
         .then(horses => {
           return horses;
@@ -17,6 +18,8 @@ export const horse = createRouter()
         .catch(err => {
           console.log(err);
         });
+
+      return horses as Horse[];
     },
   })
   .mutation('add-horse', {

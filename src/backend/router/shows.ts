@@ -7,23 +7,22 @@ export const show = createRouter()
   .query('get', {
     input: ShowModel.deepPartial(),
     async resolve({ input }) {
-
       const shows = await prisma.show
         .findMany({
           where: {
-            ...input
+            ...input,
           },
           include: {
             riders: {
               include: {
-                points: true
-              }
+                points: true,
+              },
             },
-          }
+          },
         })
         .then(shows => shows)
         .catch(err => console.log('Error:', err));
-      console.log(shows)
+      console.log(shows);
 
       return shows as Show[];
     },

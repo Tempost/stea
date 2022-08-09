@@ -1,6 +1,6 @@
 import { useFormContext } from 'react-hook-form';
 import { Member } from '@prisma/client';
-import { HorseCombo } from './horseonly';
+import HorseCombo from './horseonly';
 
 import {
   Radio,

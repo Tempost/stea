@@ -1,5 +1,11 @@
-import MemberTable from "./members";
-import TableWithData from "./tablewithdata";
+import MemberTable from './members';
+import HorseTable from './horses';
+import TableWithData from './tablewithdata';
 
-export type TableSelection = 'members' | 'horses' | 'ridercombos' | 'points' | 'owners';
-export { TableWithData, MemberTable };
+export type TableSelection =
+  | 'members'
+  | 'horses'
+  | 'ridercombos'
+  | 'points'
+  | 'owners';
+export { TableWithData, MemberTable, HorseTable };

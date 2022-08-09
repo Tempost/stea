@@ -20,8 +20,8 @@ function Tables() {
     <div className='grid place-items-center gap-10'>
       <div
         className='btn-group'
-        //@ts-ignore TODO: why is value not on target? 
-        onClick={(e) => setTable(e.target.value)}
+        //@ts-ignore TODO: why is value not on target?
+        onClick={e => setTable(e.target.value)}
       >
         <button
           className={memberSelected ? activeBtn : 'btn'}
