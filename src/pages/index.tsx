@@ -1,22 +1,8 @@
 import Link from 'next/link';
-import { Member } from '@prisma/client';
 
 import { PublicLayout } from '@/components/layout';
 
-import {
-  ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-} from '@tanstack/react-table';
 import { ReactElement } from 'react';
-
-const cols: ColumnDef<Member>[] = [
-  {
-    header: '2022 Year End Placings.',
-    columns: [],
-  },
-];
 
 function Home() {
   return (

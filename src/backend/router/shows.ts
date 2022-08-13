@@ -15,7 +15,7 @@ export const show = createRouter()
           include: {
             riders: {
               include: {
-                points: true,
+                TotalPoints: true,
               },
             },
           },

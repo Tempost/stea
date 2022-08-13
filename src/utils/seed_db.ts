@@ -5,14 +5,14 @@ import { prisma } from '../backend/prisma';
 import members from './members.json';
 import horses from './horses.json';
 
+interface Rider {
+  riders: string | string[];
+  horseRN: string;
+}
+
 async function cleanUp() {
-  prisma.member.deleteMany({}).then(() => console.log('Members cleaned'));
-
-  // await prisma.payment
-  //   .deleteMany({})
-  //   .then(() => console.log('Payments cleaned'));
-
-  prisma.horse.deleteMany({}).then(() => console.log('Horses cleaned'));
+  await prisma.horse.deleteMany({}).then(() => console.log('Horses cleaned'));
+  await prisma.member.deleteMany({}).then(() => console.log('Members cleaned'));
 }
 
 function dupes<T>(data: T) {
@@ -31,9 +31,13 @@ function dupes<T>(data: T) {
   return duplicates;
 }
 
-async function addHorses() {
+async function seedHorses() {
   console.log('Adding Horses...');
+
   const data = horses.map(horse => {
+    if (_.isEqual(horse.regType, 'Annual') || _.isEqual(horse.regType, 'Renew'))
+      return;
+
     return {
       createdAt: new Date(),
       horseRN: horse.horseRN.trim(),
@@ -42,36 +46,40 @@ async function addHorses() {
         ? null
         : new Date(horse.registrationDate),
       regType: horse.regType as Status,
-      notConnected: true,
-    };
+      notConnected: true
+    } as Prisma.HorseCreateInput;
   });
 
-  const riders = horses.map(horse => {
-    let riders = new Array();
-    if (horse.riders.includes(',')) {
-      const riderNames = horse.riders
-        .split(',')
-        .map((rider: string) => rider.trim());
-      riders.push({ riders: riderNames, horseRN: horse.horseRN });
-    } else {
-      riders.push({ riders: horse.riders, horseRN: horse.horseRN });
-    }
+  const riders: Rider[] = horses.map(horse => {
+    let rider: Rider;
 
-    return riders;
+    const riderNames = horse.riders
+      .split(',')
+      .map((rider: string) => rider.trim());
+
+    rider = { riders: riderNames, horseRN: horse.horseRN };
+    return rider;
   });
 
-  const duplicates = dupes(data);
-  console.log('duplicates', duplicates);
-
-  // await prisma.horse
-  //   .createMany({ data });
+  const noUndefinedData = removeUndefined<Prisma.HorseCreateInput>(data);
+  await prisma.horse.createMany({ data: noUndefinedData });
 
   return riders;
 }
 
-async function addMembers() {
+function removeUndefined<T>(data: (T | undefined)[]) {
+  return data.filter((item: any): item is T => item !== undefined);
+}
+
+async function seedMembers() {
   console.log('Adding Members...');
   members.forEach(async member => {
+    if (
+      _.isEqual(member.memberStatus, 'Annual') ||
+      _.isEqual(member.memberStatus, 'Renew')
+    )
+      return;
+
     const memberDB: Prisma.MemberCreateInput = {
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -115,18 +123,67 @@ async function addMembers() {
   });
 }
 
+async function addCombo(fullName: string, horseRN: string) {
+  const member = await prisma.member
+    .findUnique({
+      where: {
+        fullName,
+      },
+    });
+
+  const horse = await prisma.horse
+    .findUnique({
+      where: {
+        horseRN
+      },
+    });
+
+  if (!_.isNull(member) && !_.isNull(horse)) {
+    await prisma.riderCombo.create({
+      data: {
+        member: {
+          connect: {
+            fullName,
+          },
+        },
+        horse: {
+          connect: {
+            horseRN,
+          },
+        },
+      },
+    });
+  }
+}
+
+async function seedRiders(riders: Rider[]) {
+  console.log('Adding Riders...');
+  riders.forEach(async rider => {
+    if (Array.isArray(rider.riders)) {
+      rider.riders.forEach(async fullName => {
+        addCombo(fullName, rider.horseRN);
+      });
+    } else {
+      addCombo(rider.riders, rider.horseRN);
+    }
+  });
+}
+
 async function load() {
-  const riders = await addHorses().catch(err => {
+  const riders = await seedHorses().catch(err => {
     console.log(err);
     process.exit(1);
   });
 
-  console.log(riders);
+  seedMembers().catch(err => {
+    console.log(err);
+    process.exit(1);
+  });
 
-  // await addMembers().catch(err => {
-  //   console.log(err);
-  //   process.exit(1);
-  // });
+  seedRiders(riders).catch(err => {
+    console.log(err.cause);
+    process.exit(1);
+  });
 }
 
 cleanUp().then(() => load());

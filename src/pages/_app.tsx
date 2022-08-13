@@ -34,6 +34,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         />
         <meta
           name='viewport'
+          initial-scale='100%'
           content='viewport-fit=cover'
         />
       </Head>
