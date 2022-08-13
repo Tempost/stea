@@ -1,6 +1,6 @@
-import * as z from 'zod';
-import { PaymentMethod } from '@prisma/client';
-import { CompleteMember, RelatedMemberModel } from './index';
+import * as z from "zod"
+import { PaymentMethod } from "@prisma/client"
+import { CompleteMember, RelatedMemberModel } from "./index"
 
 export const PaymentModel = z.object({
   updatedAt: z.date().nullish(),
@@ -10,10 +10,10 @@ export const PaymentModel = z.object({
   datePaid: z.date().nullish(),
   paymentMethod: z.nativeEnum(PaymentMethod).nullish(),
   checkNumber: z.number().int().nullish(),
-});
+})
 
 export interface CompletePayment extends z.infer<typeof PaymentModel> {
-  member: CompleteMember;
+  member: CompleteMember
 }
 
 /**
@@ -21,8 +21,6 @@ export interface CompletePayment extends z.infer<typeof PaymentModel> {
  *
  * NOTE: Lazy required in case of potential circular dependencies within schema
  */
-export const RelatedPaymentModel: z.ZodSchema<CompletePayment> = z.lazy(() =>
-  PaymentModel.extend({
-    member: RelatedMemberModel,
-  })
-);
+export const RelatedPaymentModel: z.ZodSchema<CompletePayment> = z.lazy(() => PaymentModel.extend({
+  member: RelatedMemberModel,
+}))

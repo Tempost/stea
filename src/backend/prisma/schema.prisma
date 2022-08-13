@@ -95,7 +95,7 @@ model Member {
 model Payment {
   updatedAt     DateTime?      @updatedAt
   comments      String?        @db.VarChar(4000)
-  member        Member         @relation(fields: [payee], references: [fullName])
+  member        Member         @relation(fields: [payee], references: [fullName], onDelete: Cascade, onUpdate: Cascade)
   payee         String         @id
   amountPaid    Int?
   datePaid      DateTime?
@@ -109,7 +109,7 @@ model Horse {
   horseRN          String               @id @db.VarChar(255)
   horseAKA         String?              @db.VarChar(255)
   notConnected     Boolean?             @default(false)
-  ownerRec         NonMemberHorseOwner? @relation(fields: [owner], references: [fullName])
+  ownerRec         NonMemberHorseOwner? @relation(fields: [owner], references: [fullName], onDelete: Cascade)
   memberOwner      Member?              @relation(fields: [memberName], references: [fullName])
   memberName       String?
   registrationDate DateTime?
@@ -119,28 +119,28 @@ model Horse {
 }
 
 model TotalPoints {
-  uid         String       @id @default(cuid())
-  createdAt   DateTime?    @default(now())
-  updatedAt   DateTime?    @updatedAt
-  division    String       @db.VarChar(20)
-  totalPoints Float
-  totalShows  Int
-  completedHT Boolean
-  multiVenue  Boolean
-  RiderCombo  RiderCombo[]
+  uid           String     @id @default(cuid())
+  createdAt     DateTime?  @default(now())
+  updatedAt     DateTime?  @updatedAt
+  division      String     @db.VarChar(20)
+  totalPoints   Float
+  totalShows    Int
+  completedHT   Boolean
+  multiVenue    Boolean
+  RiderCombo    RiderCombo @relation(fields: [riderComboUid], references: [uid])
+  riderComboUid String
 }
 
 model RiderCombo {
-  uid        String       @id @default(cuid())
-  createdAt  DateTime?    @default(now())
-  updatedAt  DateTime?    @updatedAt
-  member     Member       @relation(fields: [memberName], references: [fullName])
-  horse      Horse        @relation(fields: [horseName], references: [horseRN])
-  points     TotalPoints? @relation(fields: [pointsUid], references: [uid])
-  pointsUid  String?
-  memberName String
-  horseName  String
-  shows      Show[]
+  uid         String        @id @default(cuid())
+  createdAt   DateTime?     @default(now())
+  updatedAt   DateTime?     @updatedAt
+  member      Member        @relation(fields: [memberName], references: [fullName], onDelete: Cascade, onUpdate: Cascade)
+  horse       Horse         @relation(fields: [horseName], references: [horseRN], onDelete: Cascade, onUpdate: Cascade)
+  memberName  String
+  horseName   String
+  shows       Show[]
+  TotalPoints TotalPoints[]
 }
 
 model Show {

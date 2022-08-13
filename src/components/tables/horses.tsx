@@ -10,7 +10,7 @@ import { useMemo } from 'react';
 function HorseTable() {
   const horses = trpc.useQuery(['horse.get-horses']);
 
-  const memberCols = useMemo<ColumnDef<Horse>[]>(
+  const horseCols = useMemo<ColumnDef<Horse>[]>(
     () => [
       {
         header: 'Horses',
@@ -22,7 +22,7 @@ function HorseTable() {
               const date: Date = info.getValue();
               if (_.isNull(date)) return 'N/A';
 
-              return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
+              return `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`;
             },
             header: () => <span> Registration Date </span>,
           },
@@ -64,7 +64,7 @@ function HorseTable() {
 
   return (
     <TableWithData
-      colDef={memberCols}
+      colDef={horseCols}
       query={horses}
       paginate={true}
     />

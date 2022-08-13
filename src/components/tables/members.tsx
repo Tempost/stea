@@ -20,7 +20,7 @@ function MemberTable() {
             cell: info => {
               const date: Date = info.getValue();
 
-              return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
+              return `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`;
             },
             header: () => <span> Join Date </span>,
           },
