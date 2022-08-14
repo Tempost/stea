@@ -1,8 +1,4 @@
 module.exports = {
-  purge: {
-    enabled: true,
-    content: ['./src/pages/**/*.{ts,tsx}', './src/components/**/*.{ts,tsx}'],
-  },
   content: ['./src/pages/**/*.{ts,tsx}', './src/components/**/*.{ts,tsx}'],
   theme: {
     extend: {

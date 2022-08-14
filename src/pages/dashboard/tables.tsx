@@ -13,8 +13,7 @@ function Tables() {
   const memberSelected = _.isEqual(table, 'members');
   const horseSelected = _.isEqual(table, 'horses');
   const ownersSelected = _.isEqual(table, 'owners');
-  const pointsSelected = _.isEqual(table, 'points');
-  const combosSelected = _.isEqual(table, 'ridercombos');
+  const combosSelected = _.isEqual(table, 'riders');
 
   return (
     <div className='grid place-items-center gap-10'>
@@ -42,16 +41,10 @@ function Tables() {
           Owners
         </button>
         <button
-          className={pointsSelected ? activeBtn : 'btn'}
-          value='points'
-        >
-          Points
-        </button>
-        <button
           className={combosSelected ? activeBtn : 'btn'}
-          value='ridercombos'
+          value='riders'
         >
-          Rider Combos
+          Riders
         </button>
       </div>
       <TablePicker table={table} />

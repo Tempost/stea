@@ -10,11 +10,11 @@ export const TotalPointsModel = z.object({
   totalShows: z.number().int(),
   completedHT: z.boolean(),
   multiVenue: z.boolean(),
-  riderComboUid: z.string(),
+  riderUid: z.string(),
 })
 
 export interface CompleteTotalPoints extends z.infer<typeof TotalPointsModel> {
-  RiderCombo: CompleteRiderCombo
+  rider: CompleteRiderCombo
 }
 
 /**
@@ -23,5 +23,5 @@ export interface CompleteTotalPoints extends z.infer<typeof TotalPointsModel> {
  * NOTE: Lazy required in case of potential circular dependencies within schema
  */
 export const RelatedTotalPointsModel: z.ZodSchema<CompleteTotalPoints> = z.lazy(() => TotalPointsModel.extend({
-  RiderCombo: RelatedRiderComboModel,
+  rider: RelatedRiderComboModel,
 }))

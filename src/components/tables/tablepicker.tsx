@@ -1,5 +1,6 @@
 import MemberTable from './members';
-import { HorseTable, OwnerTable, Points, TableSelection } from '.';
+import { HorseTable, OwnerTable, TableSelection } from '.';
+import RidersTable from './ridercombos';
 
 interface TablePickerProps {
   table: TableSelection;
@@ -13,9 +14,8 @@ function TablePicker({ table }: TablePickerProps) {
       return <HorseTable />;
     case 'owners':
       return <OwnerTable />;
-    case 'points':
-      return <Points />;
-    case 'ridercombos':
+    case 'riders':
+      return <RidersTable />;
     default:
       return <>No valid table...</>;
   }

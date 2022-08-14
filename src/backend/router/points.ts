@@ -8,7 +8,7 @@ export const points = createRouter()
       const points = await prisma.totalPoints
         .findMany({
           include: {
-            RiderCombo: {
+            rider: {
               include: {
                 horse: true,
                 member: true

@@ -13,7 +13,7 @@ export interface CompleteRiderCombo extends z.infer<typeof RiderComboModel> {
   member: CompleteMember
   horse: CompleteHorse
   shows: CompleteShow[]
-  TotalPoints: CompleteTotalPoints[]
+  points?: CompleteTotalPoints | null
 }
 
 /**
@@ -25,5 +25,5 @@ export const RelatedRiderComboModel: z.ZodSchema<CompleteRiderCombo> = z.lazy(()
   member: RelatedMemberModel,
   horse: RelatedHorseModel,
   shows: RelatedShowModel.array(),
-  TotalPoints: RelatedTotalPointsModel.array(),
+  points: RelatedTotalPointsModel.nullish(),
 }))
