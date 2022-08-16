@@ -6,12 +6,10 @@ import {
   RiderComboModel,
 } from '@/backend/prisma/zod';
 import { z } from 'zod';
-import _ from 'lodash';
 
 import { TextInput, Select } from '@/components/data-entry';
 import { HorseFieldArray, RiderComboFieldArray } from './fieldarrayfields';
 import useZodForm from '@/utils/usezodform';
-import { useEffect } from 'react';
 
 const phoneTypes = [
   {
@@ -62,7 +60,6 @@ function HorseRegistration() {
     console.log(formValues);
   }
 
-  !_.isEmpty(errors) && console.log(errors);
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSumbit)}>

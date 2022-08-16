@@ -1,6 +1,5 @@
 import { trpc } from '@/utils/trpc';
 import { ColumnDef } from '@tanstack/react-table';
-import _ from 'lodash';
 
 import { DashboardLayout } from '@/components/layout';
 import { TableWithData } from '@/components/tables';
@@ -55,8 +54,10 @@ function Applications() {
   console.log(members.data);
   return (
     <div className='pt-28 w-full grid place-items-center'>
-      {_.isEmpty(members.data) ? (
-        <>No New Members...</>
+      {(members.data !== undefined && members.data.length < 0) ? (
+        <div className='shadow-xl rounded-lg p-5'>
+          No New Members...
+        </div>
       ) : (
         <TableWithData
           colDef={applicantCols}

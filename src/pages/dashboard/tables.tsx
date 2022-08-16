@@ -1,5 +1,4 @@
 import { ReactElement, useState } from 'react';
-import _ from 'lodash';
 
 import { DashboardLayout } from '@/components/layout';
 import TablePicker from '@/components/tables/tablepicker';
@@ -10,13 +9,13 @@ const activeBtn = 'btn btn-active';
 function Tables() {
   const [table, setTable] = useState<TableSelection>('members');
 
-  const memberSelected = _.isEqual(table, 'members');
-  const horseSelected = _.isEqual(table, 'horses');
-  const ownersSelected = _.isEqual(table, 'owners');
-  const combosSelected = _.isEqual(table, 'riders');
+  const memberSelected = table === 'members';
+  const horseSelected = table === 'horses';
+  const ownersSelected = table === 'owners';
+  const combosSelected = table === 'riders';
 
   return (
-    <div className='grid place-items-center gap-10'>
+    <div className='pt-28 grid place-items-center gap-10'>
       <div
         className='btn-group'
         //@ts-ignore TODO: why is value not on target?

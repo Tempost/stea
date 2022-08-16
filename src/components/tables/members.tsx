@@ -1,15 +1,19 @@
-import { trpc } from '@/utils/trpc';
+import { useMemo } from 'react';
 
+import { trpc } from '@/utils/trpc';
 import TableWithData from './tablewithdata';
 
 import type { Member } from '@prisma/client';
 import type { ColumnDef } from '@tanstack/react-table';
-import { useMemo } from 'react';
 
-function MemberTable() {
+interface MemberTableProps {
+  overRideDefaultCols?: ColumnDef<Member>[];
+}
+
+function MemberTable({ overRideDefaultCols }: MemberTableProps) {
   const members = trpc.useQuery(['member.get-members']);
 
-  const memberCols = useMemo<ColumnDef<Member>[]>(
+  const defaultCols = useMemo<ColumnDef<Member>[]>(
     () => [
       {
         header: 'Members',
@@ -68,7 +72,7 @@ function MemberTable() {
 
   return (
     <TableWithData
-      colDef={memberCols}
+      colDef={overRideDefaultCols ?? defaultCols}
       query={members}
       paginate={true}
     />

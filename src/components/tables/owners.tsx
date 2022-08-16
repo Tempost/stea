@@ -1,5 +1,4 @@
 import { trpc } from '@/utils/trpc';
-import _ from 'lodash';
 
 import TableWithData from './tablewithdata';
 
@@ -20,7 +19,7 @@ function OwnerTable() {
             id: 'createdAt',
             cell: info => {
               const date: Date = info.getValue();
-              if (_.isNull(date)) return 'N/A';
+              if (date === null) return 'N/A';
 
               return `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`;
             },

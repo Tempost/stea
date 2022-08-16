@@ -1,5 +1,4 @@
 import NextLink from 'next/link';
-import _ from 'lodash';
 
 interface WrapperProps {
   href?: string;

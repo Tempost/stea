@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import _ from 'lodash';
 
 import { createRouter } from './utils';
 import { prisma } from '@/backend/prisma';
@@ -17,7 +16,7 @@ export const nonMemberHorseOwner = createRouter()
     async resolve({ input }) {
       let data;
 
-      if (_.isUndefined(input)) {
+      if (input === undefined) {
         data = await prisma.nonMemberHorseOwner
           .findMany()
           .then(owners => owners)

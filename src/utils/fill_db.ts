@@ -2,7 +2,6 @@ import members from './members.json';
 import horses from './horses.json';
 import { JRSR, PaymentMethod, Prisma, Status } from '@prisma/client';
 import { Type } from '@prisma/client';
-import _ from 'lodash';
 
 export default function fill(mutator: any) {
   horses.forEach((horse) => {
@@ -18,7 +17,7 @@ export default function fill(mutator: any) {
       createdAt: new Date(),
       horseRN: horse.horseRN,
       horseAKA: horse.horseAKA,
-      registrationDate: _.isEmpty(horse.horseRN) ? null : new Date(horse.horseRN),
+      registrationDate: horse.horseRN === '' ? null : new Date(horse.horseRN),
       regType: horse.regType as Status,
       notConnected: true
     };
@@ -42,7 +41,7 @@ export default function fill(mutator: any) {
       address: member.address,
       city: member.city,
       state: member.state,
-      zip: (_.isEmpty(member.zip) ? 0 : parseInt(member.zip)),
+      zip: (member.zip === '' ? 0 : parseInt(member.zip)),
       phone: member.phone,
       email: member.email,
       comments: member.comments,

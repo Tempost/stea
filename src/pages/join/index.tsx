@@ -1,5 +1,4 @@
 import { ChangeEvent, useState } from 'react';
-import _ from 'lodash';
 
 import { PublicLayout } from '@/components/layout';
 import SteaJoinForm from '@/components/forms';
@@ -18,7 +17,7 @@ function JoinStea() {
 
   return (
     <div className='grid place-content-center h-full bg-opacity-50'>
-      {!_.isUndefined(formType) ? (
+      {(formType !== undefined) ? (
         <div className='card w-fit bg-base-100 shadow-[0_0_10px_0_rgba(0,0,0,0.3)] p-8'>
           <button
             className='btn btn-link btn-sm self-end'

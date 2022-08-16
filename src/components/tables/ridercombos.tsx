@@ -1,16 +1,19 @@
+import { useMemo } from 'react';
 import { trpc } from '@/utils/trpc';
-import _ from 'lodash';
 
 import TableWithData from './tablewithdata';
 
+import type { CompleteRiderCombo } from '@/backend/prisma/zod';
 import type { ColumnDef } from '@tanstack/react-table';
-import { useMemo } from 'react';
-import { CompleteRiderCombo } from '@/backend/prisma/zod';
 
-function RidersTable() {
+interface RidersTableProps {
+  overRideDefaultCols?: ColumnDef<CompleteRiderCombo>[];
+}
+
+function RidersTable({ overRideDefaultCols }: RidersTableProps) {
   const riders = trpc.useQuery(['rider.get-riders']);
 
-  const riderCols = useMemo<ColumnDef<CompleteRiderCombo>[]>(
+  const defaultCols = useMemo<ColumnDef<CompleteRiderCombo>[]>(
     () => [
       {
         header: 'Riders',
@@ -47,7 +50,7 @@ function RidersTable() {
 
   return (
     <TableWithData
-      colDef={riderCols}
+      colDef={overRideDefaultCols ?? defaultCols}
       query={riders}
       paginate={true}
     />

@@ -1,5 +1,4 @@
 import { JRSR, PaymentMethod, Prisma, Status, Type } from '@prisma/client';
-import _ from 'lodash';
 
 import { prisma } from '../backend/prisma';
 import members from './members.json';
@@ -36,14 +35,14 @@ async function seedHorses() {
   console.log('Adding Horses...');
 
   const data = horses.map(horse => {
-    if (_.isEqual(horse.regType, 'Annual') || _.isEqual(horse.regType, 'Renew'))
+    if(horse.regType !== 'Life')
       return;
 
     return {
       createdAt: new Date(),
       horseRN: horse.horseRN.trim(),
       horseAKA: horse.horseAKA.trim(),
-      registrationDate: _.isEmpty(horse.registrationDate)
+      registrationDate: horse.registrationDate === ''
         ? null
         : new Date(horse.registrationDate),
       regType: horse.regType as Status,
@@ -75,10 +74,7 @@ function removeUndefined<T>(data: (T | undefined)[]) {
 async function seedMembers() {
   console.log('Adding Members...');
   members.forEach(async member => {
-    if (
-      _.isEqual(member.memberStatus, 'Annual') ||
-      _.isEqual(member.memberStatus, 'Renew')
-    )
+    if(member.memberStatus !== 'Life')
       return;
 
     const memberDB: Prisma.MemberCreateInput = {
@@ -95,7 +91,7 @@ async function seedMembers() {
       address: member.address,
       city: member.city,
       state: member.state,
-      zip: _.isEmpty(member.zip) ? 0 : parseInt(member.zip),
+      zip: member.zip === '' ? 0 : parseInt(member.zip),
       phone: member.phone,
       email: member.email,
       comments: member.comments,
@@ -137,7 +133,7 @@ async function addCombo(fullName: string, horseRN: string) {
     },
   });
 
-  if (!_.isNull(member) && !_.isNull(horse)) {
+  if (member !== null && horse !== null) {
     await prisma.riderCombo.create({
       data: {
         member: {

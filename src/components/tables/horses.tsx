@@ -1,16 +1,19 @@
-import { trpc } from '@/utils/trpc';
-import _ from 'lodash';
+import { useMemo } from 'react';
 
+import { trpc } from '@/utils/trpc';
 import TableWithData from './tablewithdata';
 
 import type { Horse } from '@prisma/client';
 import type { ColumnDef } from '@tanstack/react-table';
-import { useMemo } from 'react';
 
-function HorseTable() {
+interface HorseTableProps {
+  overRideDefaultCols?: ColumnDef<Horse>[];
+}
+
+function HorseTable({ overRideDefaultCols }: HorseTableProps) {
   const horses = trpc.useQuery(['horse.get-horses']);
 
-  const horseCols = useMemo<ColumnDef<Horse>[]>(
+  const defaultCols = useMemo<ColumnDef<Horse>[]>(
     () => [
       {
         header: 'Horses',
@@ -20,7 +23,7 @@ function HorseTable() {
             id: 'registrationDate',
             cell: info => {
               const date: Date = info.getValue();
-              if (_.isNull(date)) return 'N/A';
+              if (date === null) return 'N/A';
 
               return `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`;
             },
@@ -64,7 +67,7 @@ function HorseTable() {
 
   return (
     <TableWithData
-      colDef={horseCols}
+      colDef={overRideDefaultCols ?? defaultCols}
       query={horses}
       paginate={true}
     />

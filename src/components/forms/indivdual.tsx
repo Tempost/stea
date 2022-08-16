@@ -1,7 +1,5 @@
-import { HorseModel, MemberModel } from '@/backend/prisma/zod';
 import { z } from 'zod';
 import { FieldValues, FormProvider, useFormState } from 'react-hook-form';
-import _ from 'lodash';
 
 import {
   Radio,
@@ -10,6 +8,8 @@ import {
   Select,
   NumericInput,
 } from '@/components/data-entry';
+
+import { HorseModel, MemberModel } from '@/backend/prisma/zod';
 import JRSR from './JRSRField';
 import states from '@/utils/states.json';
 import useZodForm from '@/utils/usezodform';

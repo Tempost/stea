@@ -1,6 +1,5 @@
 import { trpc } from '@/utils/trpc';
 import { ColumnDef } from '@tanstack/react-table';
-import _ from 'lodash';
 
 import { DashboardLayout } from '@/components/layout';
 import { TableWithData } from '@/components/tables';
@@ -31,11 +30,13 @@ const pointCols: ColumnDef<Show>[] = [
 
 function Points() {
   const memberPoints = trpc.useQuery(['shows.get', { reviewed: false }]);
-
+  
   return (
     <div className='pt-28 w-full grid place-items-center'>
-      {_.isEmpty(memberPoints.data) ? (
-        <>No new shows to review...</>
+      {memberPoints.data !== undefined && memberPoints.data.length < 0 ? (
+        <div className='shadow-xl rounded-lg p-5'>
+          No new shows to review...
+        </div>
       ) : (
         <TableWithData
           colDef={pointCols}

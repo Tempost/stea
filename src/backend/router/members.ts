@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import _ from 'lodash';
 
 import { createRouter } from './utils';
 import { prisma } from '@/backend/prisma';
@@ -17,7 +16,7 @@ export const member = createRouter()
     async resolve({ input }) {
       let data;
 
-      if (_.isUndefined(input)) {
+      if (input === undefined) {
         data = await prisma.member
           .findMany()
           .then(members => members)
@@ -66,7 +65,7 @@ export const member = createRouter()
 
     async resolve({ input }) {
       console.log(input.member, input.payment);
-      const member = await prisma.member
+      await prisma.member
         .create({
           data: {
             ...input.member,
@@ -79,9 +78,9 @@ export const member = createRouter()
         })
         .catch(err => console.log('ERROR', err));
 
-      if (!_.isUndefined(input.horses)) {
+      if (input.horses !== undefined) {
         for (let horse of input.horses) {
-          const horseRes = await prisma.horse.create({
+          await prisma.horse.create({
             data: {
               ...horse,
               memberName: input.member.fullName,

@@ -90,7 +90,7 @@ export const dashMenuItems: Menu[] = [
     name: 'Tables',
   },
   {
-    href: '',
+    href: '/dashboard/submit',
     name: 'Submit Points',
   },
   {

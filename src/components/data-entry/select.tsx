@@ -1,6 +1,4 @@
-import { forwardRef, useId } from 'react';
-import type { DetailedHTMLProps, SelectHTMLAttributes } from 'react';
-import _ from 'lodash';
+import { forwardRef, useId, DetailedHTMLProps, SelectHTMLAttributes } from 'react';
 
 interface SelectOption {
   label: string;
@@ -9,12 +7,17 @@ interface SelectOption {
 
 interface SelectInputProps
   extends DetailedHTMLProps<
-    SelectHTMLAttributes<HTMLSelectElement>,
-    HTMLSelectElement
+  SelectHTMLAttributes<HTMLSelectElement>,
+  HTMLSelectElement
   > {
   label?: string;
   labelStyle?: string;
   options: SelectOption[];
+}
+
+function capitalize(s: string) {
+  if (!s) return s;
+  return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
 const Select = forwardRef<HTMLSelectElement, SelectInputProps>(
@@ -45,7 +48,7 @@ const Select = forwardRef<HTMLSelectElement, SelectInputProps>(
                 key={item.label}
                 value={item.value}
               >
-                {_.capitalize(item.value)}
+                {capitalize(item.value)}
               </option>
             );
           })}
