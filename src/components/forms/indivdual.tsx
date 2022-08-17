@@ -57,6 +57,15 @@ function IndivdualRegistration() {
   const isUnder18 = watch('member.JRSR', 'SR');
   const isRegHorse = watch('horseReg', false);
 
+  const finishButtonStyles = `
+    btn
+    btn-primary
+    ${memberMutation.isSuccess && 'btn-success'}
+    ${memberMutation.isError && 'btn-error'}
+    mt-8
+    w-full
+  `;
+
   function onSumbit(formValues: FieldValues) {
     formValues.member.fullName = `${formValues.member.firstName} ${formValues.member.lastName}`;
 
@@ -73,6 +82,7 @@ function IndivdualRegistration() {
   formState.errors &&
     formState.isDirty &&
     console.log(formState.errors, formState);
+
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSumbit)}>
@@ -215,7 +225,7 @@ function IndivdualRegistration() {
           {isRegHorse && <HorseFieldArray />}
         </div>
         <button
-          className='btn btn-primary mt-8 w-full'
+          className={finishButtonStyles}
           type='submit'
         >
           Finished

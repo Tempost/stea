@@ -1,9 +1,9 @@
 import { useFieldArray, useFormContext } from 'react-hook-form';
-import { Horse, RiderCombo, Status } from '@prisma/client';
+import { Prisma, RiderCombo, Status } from '@prisma/client';
 import { Radio, TextInput } from '../data-entry';
 
 type Horses = {
-  horses: Horse[];
+  horses: Prisma.HorseCreateManyInput[];
 };
 
 type RiderCombos = {
@@ -126,15 +126,9 @@ export function HorseFieldArray() {
         className='btn btn-outline btn-xs'
         onClick={() =>
           append({
-            createdAt: null,
-            updatedAt: null,
             horseRN: '',
-            horseAKA: null,
-            notConnected: null,
-            memberName: null,
-            registrationDate: null,
+            horseAKA: '',
             regType: 'Annual' as Status,
-            owner: null
           })
         }
       >

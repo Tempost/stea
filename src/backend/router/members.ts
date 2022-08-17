@@ -64,7 +64,7 @@ export const member = createRouter()
     }),
 
     async resolve({ input }) {
-      console.log(input.member, input.payment);
+      console.log(input.member, input.payment, input.horses);
       await prisma.member
         .create({
           data: {
@@ -80,9 +80,11 @@ export const member = createRouter()
 
       if (input.horses !== undefined) {
         for (let horse of input.horses) {
+          const date = new Date();
           await prisma.horse.create({
             data: {
               ...horse,
+              registrationDate: date,
               memberName: input.member.fullName,
             },
           });

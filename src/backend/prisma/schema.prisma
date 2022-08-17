@@ -78,7 +78,7 @@ model Member {
   confirmed         Boolean      @default(false)
   currentUSEAMember Boolean      @default(false)
   businessName      String?      @db.VarChar(100)
-  membershipDate    DateTime?
+  membershipDate    DateTime?    @default(now())
   memberType        Type
   memberStatus      Status
   JRSR              JRSR
@@ -112,7 +112,7 @@ model Horse {
   ownerRec         NonMemberHorseOwner? @relation(fields: [owner], references: [fullName], onDelete: Cascade)
   memberOwner      Member?              @relation(fields: [memberName], references: [fullName])
   memberName       String?
-  registrationDate DateTime?
+  registrationDate DateTime?            @default(now())
   regType          Status
   RiderCombo       RiderCombo[]
   owner            String?
