@@ -59,6 +59,11 @@ function BusinessRegistration() {
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSumbit)}>
         <h2 className='divider'>Business Registration</h2>
+
+        <h3 className='text-center m-2'>
+          As part of the membership you can submit<br/>your company logo on our home page!
+        </h3>
+
         <div className='flex flex-col gap-2'>
           <h3>Name of Business*</h3>
           <TextInput
@@ -80,6 +85,7 @@ function BusinessRegistration() {
               inputMode='text'
               className='input-sm'
               placeholder='Address Line 2'
+              name='temp'
             />
 
             <div className='flex gap-1'>

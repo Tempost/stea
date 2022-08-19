@@ -45,7 +45,7 @@ export const publicMenuItems: Menu[] = [
           },
           {
             href: '/join/benefits',
-            text: 'Member Benifits',
+            text: 'Member Benefits',
           },
           {
             href: '/join/scholarship',

@@ -64,19 +64,27 @@ model NonMemberHorseOwner {
 model Member {
   createdAt         DateTime?    @default(now())
   updatedAt         DateTime?    @updatedAt
+  /// @zod.min(1)
   firstName         String       @db.VarChar(255)
+  /// @zod.min(1)
   lastName          String       @db.VarChar(255)
   fullName          String       @db.VarChar(255)
   boardMember       Boolean      @default(false)
+  /// @zod.min(1)
   address           String       @db.VarChar(255)
+  /// @zod.min(1)
   city              String       @db.VarChar(25)
+  /// @zod.min(1)
   state             String       @db.VarChar(25)
+  /// @zod.min(1)
   phone             String       @db.VarChar(15)
   phoneType         PhoneType    @default(Mobile)
+  /// @zod.min(1)
   email             String       @db.VarChar(100)
   comments          String?      @db.VarChar(4000)
   confirmed         Boolean      @default(false)
   currentUSEAMember Boolean      @default(false)
+  /// @zod.min(1)
   businessName      String?      @db.VarChar(100)
   membershipDate    DateTime?    @default(now())
   memberType        Type
@@ -106,7 +114,9 @@ model Payment {
 model Horse {
   createdAt        DateTime?            @default(now())
   updatedAt        DateTime?            @updatedAt
+  /// @zod.min(1)
   horseRN          String               @id @db.VarChar(255)
+  /// @zod.min(1)
   horseAKA         String?              @db.VarChar(255)
   notConnected     Boolean?             @default(false)
   ownerRec         NonMemberHorseOwner? @relation(fields: [owner], references: [fullName], onDelete: Cascade)
@@ -147,7 +157,9 @@ model Show {
   uid       String       @id @default(cuid())
   createdAt DateTime?    @default(now())
   updatedAt DateTime?    @updatedAt
+  /// @zod.min(1)
   showName  String       @db.VarChar(150)
+  /// @zod.min(1)
   showType  String       @db.VarChar(10)
   reviewed  Boolean      @default(false)
   riders    RiderCombo[]

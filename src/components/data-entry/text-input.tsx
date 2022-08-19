@@ -1,21 +1,24 @@
 import { forwardRef, useId } from 'react';
 import type { DetailedHTMLProps, InputHTMLAttributes } from 'react';
+import { FieldError } from 'react-hook-form';
 
 interface TextInputProps
   extends DetailedHTMLProps<
-    InputHTMLAttributes<HTMLInputElement>,
-    HTMLInputElement
+  InputHTMLAttributes<HTMLInputElement>,
+  HTMLInputElement
   > {
   label?: string;
   labelStyle?: string;
   altLabel?: string;
   inputSize?: string;
+  error?: FieldError;
+  name: string; 
 }
 
 const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
-  ({ className, label, labelStyle, altLabel, inputSize, ...props }, ref) => {
+  ({ className, label, labelStyle, altLabel, inputSize, error, ...props }, ref) => {
     const id = useId();
-
+    error && console.log(error);
     return (
       <div className={`${inputSize ? inputSize : 'w-full'}`}>
         {label !== undefined && (
@@ -31,7 +34,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
         <input
           ref={ref}
           id={`text-input${id}`}
-          className={`input input-bordered w-full ${className}`}
+          className={`input input-bordered w-full ${error && 'input-error'} ${className}`}
           type='text'
           {...props}
         />

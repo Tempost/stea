@@ -5,8 +5,8 @@ import { CompleteNonMemberHorseOwner, RelatedNonMemberHorseOwnerModel, CompleteM
 export const HorseModel = z.object({
   createdAt: z.date().nullish(),
   updatedAt: z.date().nullish(),
-  horseRN: z.string(),
-  horseAKA: z.string().nullish(),
+  horseRN: z.string().min(1),
+  horseAKA: z.string().min(1).nullish(),
   notConnected: z.boolean().nullish(),
   memberName: z.string().nullish(),
   registrationDate: z.date().nullish(),

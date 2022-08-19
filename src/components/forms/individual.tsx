@@ -39,7 +39,7 @@ const MemberFormValues = z.object({
   horses: z.array(HorseModel).optional(),
 });
 
-function IndivdualRegistration() {
+function IndividualRegistration() {
   const memberMutation = trpc.useMutation(['member.add-member']);
 
   const methods = useZodForm({
@@ -81,18 +81,19 @@ function IndivdualRegistration() {
 
   formState.errors &&
     formState.isDirty &&
-    console.log(formState.errors, formState);
+    console.log(formState.errors, formState.dirtyFields);
 
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSumbit)}>
-        <h2 className='divider'>Indivdual Membership</h2>
+        <h2 className='divider'>Individual Membership</h2>
 
         <div className='flex gap-5'>
           <TextInput
             inputMode='text'
             label='First Name*'
             className='input-sm input-primary input-primary'
+            error={formState.errors.member?.firstName}
             {...register('member.firstName', { required: true })}
           />
 
@@ -100,6 +101,7 @@ function IndivdualRegistration() {
             inputMode='text'
             label='Last Name*'
             className='input-sm input-primary'
+            error={formState.errors.member?.lastName}
             {...register('member.lastName', { required: true })}
           />
         </div>
@@ -136,6 +138,7 @@ function IndivdualRegistration() {
             inputMode='text'
             className='input-sm input-primary'
             placeholder='Address Line 1'
+            error={formState.errors.member?.address}
             {...register('member.address', { required: true })}
           />
 
@@ -143,6 +146,7 @@ function IndivdualRegistration() {
             inputMode='text'
             className='input-sm input-primary'
             placeholder='Address Line 2'
+            name='temp'
           />
 
           <div className='flex gap-1'>
@@ -150,6 +154,7 @@ function IndivdualRegistration() {
               inputMode='text'
               className='input-sm input-primary'
               placeholder='City'
+              error={formState.errors.member?.city}
               {...register('member.city', { required: true })}
             />
 
@@ -184,6 +189,7 @@ function IndivdualRegistration() {
                 label='Phone Number*'
                 inputMode='tel'
                 className='input-sm input-primary'
+                error={formState.errors.member?.phone}
                 {...register('member.phone', { required: true })}
               />
             </div>
@@ -195,6 +201,7 @@ function IndivdualRegistration() {
               altLabel={
                 'This will the primary method of contact, ensure it is up to date!'
               }
+              error={formState.errors.member?.email}
               {...register('member.email', { required: true })}
             />
           </div>
@@ -224,6 +231,7 @@ function IndivdualRegistration() {
 
           {isRegHorse && <HorseFieldArray />}
         </div>
+
         <button
           className={finishButtonStyles}
           type='submit'
@@ -235,4 +243,4 @@ function IndivdualRegistration() {
   );
 }
 
-export default IndivdualRegistration;
+export default IndividualRegistration;

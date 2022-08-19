@@ -4,7 +4,7 @@ import { Radio } from '@/components/data-entry';
 
 interface Props {
   register: UseFormRegisterReturn[];
-  watch: String;
+  watch: string;
 }
 
 // TODO: Add datepicker...

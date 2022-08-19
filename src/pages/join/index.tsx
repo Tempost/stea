@@ -30,25 +30,14 @@ function JoinStea() {
         </div>
       ) : (
         <div className='card w-fit bg-base-100 shadow-[0_0_10px_0_rgba(0,0,0,0.3)] p-8'>
-          <button
-            className='btn btn-primary w-full'
-            value='mail'
-          >
-            Join by Mail
-          </button>
-
-          <h2 className='divider divider-vertical text-xl w-full self-center my-10'>
-            Or...
-          </h2>
-
           <h2 className='text-xl border-b-2 text-center'>Join Online Below</h2>
 
           <div className='card-body'>
             <h2>Membership Application type:</h2>
             <Radio
-              label='Indivdual'
+              label='Individual'
               className='radio radio-primary radio-sm'
-              value='indivdual'
+              value='individual'
               name='app-select'
               onChange={handleRadioClick}
             />

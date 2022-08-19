@@ -1,4 +1,4 @@
-import IndivdualRegistration from './indivdual';
+import IndividualRegistration from './individual';
 import HorseRegistration from './horseonly';
 import BusinessRegistration from './business';
 
@@ -8,8 +8,8 @@ interface FormProps {
 
 function SteaJoinForm({ formType }: FormProps) {
   switch (formType) {
-    case 'indivdual':
-      return <IndivdualRegistration />;
+    case 'individual':
+      return <IndividualRegistration />;
     case 'horse':
       return <HorseRegistration />;
     case 'business':

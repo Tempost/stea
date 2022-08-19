@@ -5,8 +5,8 @@ export const ShowModel = z.object({
   uid: z.string(),
   createdAt: z.date().nullish(),
   updatedAt: z.date().nullish(),
-  showName: z.string(),
-  showType: z.string(),
+  showName: z.string().min(1),
+  showType: z.string().min(1),
   reviewed: z.boolean(),
 })
 
