@@ -123,7 +123,7 @@ export function HorseFieldArray() {
       ))}
 
       <button
-        className='btn btn-outline btn-xs'
+        className='btn btn-secondary btn-xs'
         onClick={() =>
           append({
             horseRN: '',
@@ -198,14 +198,16 @@ export function RiderComboFieldArray() {
       ))}
 
       <button
-        className='btn btn-outline btn-xs'
-        onClick={() => append({
-          uid: '',
-          createdAt: null,
-          updatedAt: null,
-          memberName: '',
-          horseName: ''
-        })}
+        className='btn btn-secondary btn-xs'
+        onClick={() =>
+          append({
+            uid: '',
+            createdAt: null,
+            updatedAt: null,
+            memberName: '',
+            horseName: '',
+          })
+        }
       >
         {AddIcon} Add Combo
       </button>

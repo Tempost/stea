@@ -7,7 +7,7 @@ import { HorseModel } from '@/backend/prisma/zod';
 import { Horse } from '@prisma/client';
 
 export const horse = createRouter()
- .query('get-horses', {
+  .query('get-horses', {
     async resolve() {
       const horses = await prisma.horse
         .findMany()

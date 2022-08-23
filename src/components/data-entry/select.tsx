@@ -1,4 +1,10 @@
-import { forwardRef, useId, DetailedHTMLProps, SelectHTMLAttributes } from 'react';
+import {
+  forwardRef,
+  useId,
+  DetailedHTMLProps,
+  SelectHTMLAttributes,
+} from 'react';
+import { FieldError } from 'react-hook-form';
 
 interface SelectOption {
   label: string;
@@ -7,11 +13,12 @@ interface SelectOption {
 
 interface SelectInputProps
   extends DetailedHTMLProps<
-  SelectHTMLAttributes<HTMLSelectElement>,
-  HTMLSelectElement
+    SelectHTMLAttributes<HTMLSelectElement>,
+    HTMLSelectElement
   > {
   label?: string;
   labelStyle?: string;
+  error?: FieldError;
   options: SelectOption[];
 }
 

@@ -12,7 +12,9 @@ interface Rider {
 async function cleanUp() {
   await prisma.horse.deleteMany({}).then(() => console.log('Horses cleaned'));
   await prisma.member.deleteMany({}).then(() => console.log('Members cleaned'));
-  await prisma.riderCombo.deleteMany({}).then(() => console.log('Riders cleaned'));
+  await prisma.riderCombo
+    .deleteMany({})
+    .then(() => console.log('Riders cleaned'));
 }
 
 function dupes<T>(data: T) {
@@ -35,16 +37,14 @@ async function seedHorses() {
   console.log('Adding Horses...');
 
   const data = horses.map(horse => {
-    if(horse.regType !== 'Life')
-      return;
+    if (horse.regType !== 'Life') return;
 
     return {
       createdAt: new Date(),
       horseRN: horse.horseRN.trim(),
       horseAKA: horse.horseAKA.trim(),
-      registrationDate: horse.registrationDate === ''
-        ? null
-        : new Date(horse.registrationDate),
+      registrationDate:
+        horse.registrationDate === '' ? null : new Date(horse.registrationDate),
       regType: horse.regType as Status,
       notConnected: true,
     } as Prisma.HorseCreateInput;
@@ -74,8 +74,7 @@ function removeUndefined<T>(data: (T | undefined)[]) {
 async function seedMembers() {
   console.log('Adding Members...');
   members.forEach(async member => {
-    if(member.memberStatus !== 'Life')
-      return;
+    if (member.memberStatus !== 'Life') return;
 
     const memberDB: Prisma.MemberCreateInput = {
       createdAt: new Date(),
@@ -175,13 +174,12 @@ async function load() {
     process.exit(1);
   });
 
-  console.log(riders.length)
+  console.log(riders.length);
 
-  await seedMembers()
-    .catch(err => {
-      console.log(err);
-      process.exit(1);
-    });
+  await seedMembers().catch(err => {
+    console.log(err);
+    process.exit(1);
+  });
 
   await seedRiders(riders).catch(err => {
     console.log(err.cause);

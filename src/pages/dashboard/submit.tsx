@@ -1,11 +1,10 @@
-import { z } from "zod";
-import type { ReactElement } from "react";
-import type { FieldValues } from "react-hook-form";
+import { z } from 'zod';
+import type { ReactElement } from 'react';
+import type { FieldValues } from 'react-hook-form';
 
-import { DashboardLayout } from "@/components/layout";
-import useZodForm from "@/utils/usezodform";
-import { ShowModel } from "@/backend/prisma/zod";
-
+import { DashboardLayout } from '@/components/layout';
+import useZodForm from '@/utils/usezodform';
+import { ShowModel } from '@/backend/prisma/zod';
 
 const Submission = z.object({
   show: ShowModel,
@@ -21,7 +20,7 @@ function SubmitPoints() {
   const { setValue, watch, register, handleSubmit, control } = methods;
 
   function onSubmit(values: FieldValues) {
-    console.log(values)
+    console.log(values);
   }
 
   return (
@@ -31,7 +30,8 @@ function SubmitPoints() {
           <h2 className='text-xl text-center text-red-500'>
             PLEASE NOTE!!
             <h3 className='text-lg'>
-              Ensure the sheet containing the points is in the correct format<br />
+              Ensure the sheet containing the points is in the correct format
+              <br />
               Otherwise points might not get correctly added
             </h3>
           </h2>
@@ -47,7 +47,6 @@ function SubmitPoints() {
     </div>
   );
 }
-
 
 SubmitPoints.getLayout = (page: ReactElement) => {
   return <DashboardLayout>{page}</DashboardLayout>;

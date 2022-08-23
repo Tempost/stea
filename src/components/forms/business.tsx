@@ -35,7 +35,6 @@ const MemberFormValues = z.object({
 });
 
 function BusinessRegistration() {
-
   const methods = useZodForm({
     reValidateMode: 'onSubmit',
     shouldFocusError: true,
@@ -61,7 +60,9 @@ function BusinessRegistration() {
         <h2 className='divider'>Business Registration</h2>
 
         <h3 className='text-center m-2'>
-          As part of the membership you can submit<br/>your company logo on our home page!
+          As part of the membership you can submit
+          <br />
+          your company logo on our home page!
         </h3>
 
         <div className='flex flex-col gap-2'>
@@ -107,7 +108,10 @@ function BusinessRegistration() {
                 className='input-sm'
                 placeholder='Zip Code'
                 inputSize='w-fit'
-                {...register('member.zip', { required: true, valueAsNumber: true })}
+                {...register('member.zip', {
+                  required: true,
+                  valueAsNumber: true,
+                })}
               />
             </div>
           </div>

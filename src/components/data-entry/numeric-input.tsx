@@ -1,5 +1,6 @@
 import { forwardRef, useId } from 'react';
 import type { DetailedHTMLProps, InputHTMLAttributes } from 'react';
+import { FieldError } from 'react-hook-form';
 
 interface NumericInputProps
   extends DetailedHTMLProps<
@@ -9,10 +10,11 @@ interface NumericInputProps
   label?: string;
   labelStyle?: string;
   inputSize?: string;
+  error?: FieldError;
 }
 
 const NumericInput = forwardRef<HTMLInputElement, NumericInputProps>(
-  ({ className, label, labelStyle, inputSize, ...props }, ref) => {
+  ({ className, label, labelStyle, inputSize, error, ...props }, ref) => {
     const id = useId();
 
     return (
@@ -30,7 +32,9 @@ const NumericInput = forwardRef<HTMLInputElement, NumericInputProps>(
         <input
           ref={ref}
           id={`numeric-input${id}`}
-          className={`input input-bordered w-full ${className}`}
+          className={`input input-bordered w-full ${
+            error && 'input-error border-2'
+          } ${className}`}
           type='text'
           {...props}
         />

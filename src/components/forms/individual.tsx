@@ -79,10 +79,6 @@ function IndividualRegistration() {
   setValue('member.boardMember', false);
   setValue('member.confirmed', false);
 
-  formState.errors &&
-    formState.isDirty &&
-    console.log(formState.errors, formState.dirtyFields);
-
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSumbit)}>
@@ -132,7 +128,7 @@ function IndividualRegistration() {
           )}
         </div>
 
-        <h3>Address*</h3>
+        <h3 className='mt-3'>Address*</h3>
         <div className='flex flex-col gap-2'>
           <TextInput
             inputMode='text'
@@ -160,6 +156,7 @@ function IndividualRegistration() {
 
             <Select
               className='select-sm select-primary'
+              error={formState.errors.member?.state}
               options={states}
               {...register('member.state', { required: true })}
             />
@@ -169,6 +166,7 @@ function IndividualRegistration() {
               className='input-sm input-primary'
               placeholder='Zip Code'
               inputSize='w-fit'
+              error={formState.errors.member?.zip}
               {...register('member.zip', {
                 required: true,
                 valueAsNumber: true,
@@ -206,22 +204,20 @@ function IndividualRegistration() {
             />
           </div>
 
-          <h3>Registration Type*</h3>
-          <div className='flex gap-5'>
-            <Radio
-              label='Annual'
-              value='Annual'
-              className='radio radio-primary radio-sm'
-              {...register('member.memberStatus', { required: true })}
-            />
+          <h3 className='mt-3'>Registration Type*</h3>
+          <Radio
+            label='Annual'
+            value='Annual'
+            className='radio radio-primary radio-sm'
+            {...register('member.memberStatus', { required: true })}
+          />
 
-            <Radio
-              label='Life'
-              value='Life'
-              className='radio radio-primary radio-sm'
-              {...register('member.memberStatus', { required: true })}
-            />
-          </div>
+          <Radio
+            label='Life'
+            value='Life'
+            className='radio radio-primary radio-sm'
+            {...register('member.memberStatus', { required: true })}
+          />
 
           <Checkbox
             label='Do you plan to register your horse(s)?'

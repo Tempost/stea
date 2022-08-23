@@ -1,1714 +1,1714 @@
 [
- {
-   "Level": "Preliminary",
-   "Division": "",
-   "Rider First Name": "Katherine",
-   "Rider Last Name": "Rivera",
-   "Rider Name": "Katherine Rivera",
-   "Horse Name": "HVL Hocus Pocus",
-   "TOTAL POINTS": 10,
-   "Total # of shows completed": 2,
-   "Completed a HT? (Yes": {
+  {
+    "Level": "Preliminary",
+    "Division": "",
+    "Rider First Name": "Katherine",
+    "Rider Last Name": "Rivera",
+    "Rider Name": "Katherine Rivera",
+    "Horse Name": "HVL Hocus Pocus",
+    "TOTAL POINTS": 10,
+    "Total # of shows completed": 2,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "Yes"
-   }
-},
- {
-   "Level": "Training",
-   "Division": "Senior",
-   "Rider First Name": "",
-   "Rider Last Name": "",
-   "Rider Name": "",
-   "Horse Name": "",
-   "TOTAL POINTS": null,
-   "Total # of shows completed": null,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Training",
+    "Division": "Senior",
+    "Rider First Name": "",
+    "Rider Last Name": "",
+    "Rider Name": "",
+    "Horse Name": "",
+    "TOTAL POINTS": null,
+    "Total # of shows completed": null,
+    "Completed a HT? (Yes": {
       "No)": ""
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": ""
-   }
-},
- {
-   "Level": "Training",
-   "Division": "Senior",
-   "Rider First Name": "Rebecca",
-   "Rider Last Name": "Speer",
-   "Rider Name": "Rebecca Speer",
-   "Horse Name": "Heather",
-   "TOTAL POINTS": 28,
-   "Total # of shows completed": 4,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Training",
+    "Division": "Senior",
+    "Rider First Name": "Rebecca",
+    "Rider Last Name": "Speer",
+    "Rider Name": "Rebecca Speer",
+    "Horse Name": "Heather",
+    "TOTAL POINTS": 28,
+    "Total # of shows completed": 4,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "Yes"
-   }
-},
- {
-   "Level": "Training",
-   "Division": "Senior",
-   "Rider First Name": "Amanda",
-   "Rider Last Name": "Merritt",
-   "Rider Name": "Amanda Merritt",
-   "Horse Name": "Apparition",
-   "TOTAL POINTS": 24,
-   "Total # of shows completed": 2,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Training",
+    "Division": "Senior",
+    "Rider First Name": "Amanda",
+    "Rider Last Name": "Merritt",
+    "Rider Name": "Amanda Merritt",
+    "Horse Name": "Apparition",
+    "TOTAL POINTS": 24,
+    "Total # of shows completed": 2,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "Yes"
-   }
-},
- {
-   "Level": "Training",
-   "Division": "Senior",
-   "Rider First Name": "Sarah ",
-   "Rider Last Name": "Goodyear",
-   "Rider Name": "Sarah Goodyear",
-   "Horse Name": "Flagmount's Harmony",
-   "TOTAL POINTS": 12,
-   "Total # of shows completed": 4,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Training",
+    "Division": "Senior",
+    "Rider First Name": "Sarah ",
+    "Rider Last Name": "Goodyear",
+    "Rider Name": "Sarah Goodyear",
+    "Horse Name": "Flagmount's Harmony",
+    "TOTAL POINTS": 12,
+    "Total # of shows completed": 4,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "Yes"
-   }
-},
- {
-   "Level": "Training",
-   "Division": "Senior",
-   "Rider First Name": "Stacey ",
-   "Rider Last Name": "Lynch",
-   "Rider Name": "Stacey Lynch",
-   "Horse Name": "Bambino",
-   "TOTAL POINTS": 2.5,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Training",
+    "Division": "Senior",
+    "Rider First Name": "Stacey ",
+    "Rider Last Name": "Lynch",
+    "Rider Name": "Stacey Lynch",
+    "Horse Name": "Bambino",
+    "TOTAL POINTS": 2.5,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "No"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Training",
-   "Division": "Senior",
-   "Rider First Name": "Mindy",
-   "Rider Last Name": "Wiper",
-   "Rider Name": "Mindy WIper",
-   "Horse Name": "Call Me Captain Bendanie",
-   "TOTAL POINTS": 2.5,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Training",
+    "Division": "Senior",
+    "Rider First Name": "Mindy",
+    "Rider Last Name": "Wiper",
+    "Rider Name": "Mindy WIper",
+    "Horse Name": "Call Me Captain Bendanie",
+    "TOTAL POINTS": 2.5,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "No"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Training",
-   "Division": "Senior",
-   "Rider First Name": "Hannah",
-   "Rider Last Name": "Elbert",
-   "Rider Name": "Hannah Elbert",
-   "Horse Name": "Southern Chrome",
-   "TOTAL POINTS": 1.5,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Training",
+    "Division": "Senior",
+    "Rider First Name": "Hannah",
+    "Rider Last Name": "Elbert",
+    "Rider Name": "Hannah Elbert",
+    "Horse Name": "Southern Chrome",
+    "TOTAL POINTS": 1.5,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "No"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Training",
-   "Division": "Junior",
-   "Rider First Name": "Willow",
-   "Rider Last Name": "Schwartz",
-   "Rider Name": "Willow Schwartz",
-   "Horse Name": "Flashy Bandit",
-   "TOTAL POINTS": 19,
-   "Total # of shows completed": 3,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Training",
+    "Division": "Junior",
+    "Rider First Name": "Willow",
+    "Rider Last Name": "Schwartz",
+    "Rider Name": "Willow Schwartz",
+    "Horse Name": "Flashy Bandit",
+    "TOTAL POINTS": 19,
+    "Total # of shows completed": 3,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "Yes"
-   }
-},
- {
-   "Level": "Training",
-   "Division": "Junior",
-   "Rider First Name": "Kaetlyn",
-   "Rider Last Name": "Perkins",
-   "Rider Name": "Kaetlyn Perkins",
-   "Horse Name": "Arizona Sweet",
-   "TOTAL POINTS": 0,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Training",
+    "Division": "Junior",
+    "Rider First Name": "Kaetlyn",
+    "Rider Last Name": "Perkins",
+    "Rider Name": "Kaetlyn Perkins",
+    "Horse Name": "Arizona Sweet",
+    "TOTAL POINTS": 0,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Novice",
-   "Division": "Senior",
-   "Rider First Name": "Kathy",
-   "Rider Last Name": "Rivera",
-   "Rider Name": "Kathy Rivera",
-   "Horse Name": "Malmo 54",
-   "TOTAL POINTS": 14,
-   "Total # of shows completed": 2,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Novice",
+    "Division": "Senior",
+    "Rider First Name": "Kathy",
+    "Rider Last Name": "Rivera",
+    "Rider Name": "Kathy Rivera",
+    "Horse Name": "Malmo 54",
+    "TOTAL POINTS": 14,
+    "Total # of shows completed": 2,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "Yes"
-   }
-},
- {
-   "Level": "Novice",
-   "Division": "Senior",
-   "Rider First Name": "Laura",
-   "Rider Last Name": "Sparks",
-   "Rider Name": "Laura Sparks",
-   "Horse Name": "GTB Felix Felicis",
-   "TOTAL POINTS": 12,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Novice",
+    "Division": "Senior",
+    "Rider First Name": "Laura",
+    "Rider Last Name": "Sparks",
+    "Rider Name": "Laura Sparks",
+    "Horse Name": "GTB Felix Felicis",
+    "TOTAL POINTS": 12,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Novice",
-   "Division": "Senior",
-   "Rider First Name": "Emily ",
-   "Rider Last Name": "Wilson",
-   "Rider Name": "Emily Wilson",
-   "Horse Name": "King Pony",
-   "TOTAL POINTS": 12,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Novice",
+    "Division": "Senior",
+    "Rider First Name": "Emily ",
+    "Rider Last Name": "Wilson",
+    "Rider Name": "Emily Wilson",
+    "Horse Name": "King Pony",
+    "TOTAL POINTS": 12,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Novice",
-   "Division": "Senior",
-   "Rider First Name": "Maria ",
-   "Rider Last Name": "Balch",
-   "Rider Name": "Maria Balch",
-   "Horse Name": "Mohican",
-   "TOTAL POINTS": 11.5,
-   "Total # of shows completed": 4,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Novice",
+    "Division": "Senior",
+    "Rider First Name": "Maria ",
+    "Rider Last Name": "Balch",
+    "Rider Name": "Maria Balch",
+    "Horse Name": "Mohican",
+    "TOTAL POINTS": 11.5,
+    "Total # of shows completed": 4,
+    "Completed a HT? (Yes": {
       "No)": "No"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "Yes"
-   }
-},
- {
-   "Level": "Novice",
-   "Division": "Senior",
-   "Rider First Name": "Alexis",
-   "Rider Last Name": "Ellison",
-   "Rider Name": "Alexis Ellison",
-   "Horse Name": "Lucky One's Hailo",
-   "TOTAL POINTS": 9,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Novice",
+    "Division": "Senior",
+    "Rider First Name": "Alexis",
+    "Rider Last Name": "Ellison",
+    "Rider Name": "Alexis Ellison",
+    "Horse Name": "Lucky One's Hailo",
+    "TOTAL POINTS": 9,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Novice",
-   "Division": "Senior",
-   "Rider First Name": "Debbie",
-   "Rider Last Name": "Blake",
-   "Rider Name": "Debbie Blake",
-   "Horse Name": "Brave Heart",
-   "TOTAL POINTS": 9,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Novice",
+    "Division": "Senior",
+    "Rider First Name": "Debbie",
+    "Rider Last Name": "Blake",
+    "Rider Name": "Debbie Blake",
+    "Horse Name": "Brave Heart",
+    "TOTAL POINTS": 9,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Novice",
-   "Division": "Senior",
-   "Rider First Name": "Joanna",
-   "Rider Last Name": "Strychalski",
-   "Rider Name": "Joanna Strychalski",
-   "Horse Name": "Galaxy R",
-   "TOTAL POINTS": 6,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Novice",
+    "Division": "Senior",
+    "Rider First Name": "Joanna",
+    "Rider Last Name": "Strychalski",
+    "Rider Name": "Joanna Strychalski",
+    "Horse Name": "Galaxy R",
+    "TOTAL POINTS": 6,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Novice",
-   "Division": "Senior",
-   "Rider First Name": "Terri",
-   "Rider Last Name": "Miller",
-   "Rider Name": "Terri Miller",
-   "Horse Name": "Beau Regard",
-   "TOTAL POINTS": 6,
-   "Total # of shows completed": 2,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Novice",
+    "Division": "Senior",
+    "Rider First Name": "Terri",
+    "Rider Last Name": "Miller",
+    "Rider Name": "Terri Miller",
+    "Horse Name": "Beau Regard",
+    "TOTAL POINTS": 6,
+    "Total # of shows completed": 2,
+    "Completed a HT? (Yes": {
       "No)": "No"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Novice",
-   "Division": "Senior",
-   "Rider First Name": "Jennifer",
-   "Rider Last Name": "Owens",
-   "Rider Name": "Jennifer Owens",
-   "Horse Name": "Bad as Bandini",
-   "TOTAL POINTS": 3.5,
-   "Total # of shows completed": 2,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Novice",
+    "Division": "Senior",
+    "Rider First Name": "Jennifer",
+    "Rider Last Name": "Owens",
+    "Rider Name": "Jennifer Owens",
+    "Horse Name": "Bad as Bandini",
+    "TOTAL POINTS": 3.5,
+    "Total # of shows completed": 2,
+    "Completed a HT? (Yes": {
       "No)": "No"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "Yes"
-   }
-},
- {
-   "Level": "Novice",
-   "Division": "Senior",
-   "Rider First Name": "Kaitlyn ",
-   "Rider Last Name": "Arnold",
-   "Rider Name": "Kaitlyn Arnold",
-   "Horse Name": "Cash In Hand",
-   "TOTAL POINTS": 3,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Novice",
+    "Division": "Senior",
+    "Rider First Name": "Kaitlyn ",
+    "Rider Last Name": "Arnold",
+    "Rider Name": "Kaitlyn Arnold",
+    "Horse Name": "Cash In Hand",
+    "TOTAL POINTS": 3,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Novice",
-   "Division": "Senior",
-   "Rider First Name": "Deanna",
-   "Rider Last Name": "Terry",
-   "Rider Name": "Deanna Terry",
-   "Horse Name": "Lipstickquick",
-   "TOTAL POINTS": 3,
-   "Total # of shows completed": 2,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Novice",
+    "Division": "Senior",
+    "Rider First Name": "Deanna",
+    "Rider Last Name": "Terry",
+    "Rider Name": "Deanna Terry",
+    "Horse Name": "Lipstickquick",
+    "TOTAL POINTS": 3,
+    "Total # of shows completed": 2,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Novice",
-   "Division": "Senior",
-   "Rider First Name": "Amanda ",
-   "Rider Last Name": "Merritt",
-   "Rider Name": "Amanda Merrit",
-   "Horse Name": "Agreeable (On Probation)",
-   "TOTAL POINTS": 3,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Novice",
+    "Division": "Senior",
+    "Rider First Name": "Amanda ",
+    "Rider Last Name": "Merritt",
+    "Rider Name": "Amanda Merrit",
+    "Horse Name": "Agreeable (On Probation)",
+    "TOTAL POINTS": 3,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Novice",
-   "Division": "Senior",
-   "Rider First Name": "Abigail",
-   "Rider Last Name": "Stringer",
-   "Rider Name": "Abigail Stringer",
-   "Horse Name": "Rhiannon",
-   "TOTAL POINTS": 0,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Novice",
+    "Division": "Senior",
+    "Rider First Name": "Abigail",
+    "Rider Last Name": "Stringer",
+    "Rider Name": "Abigail Stringer",
+    "Horse Name": "Rhiannon",
+    "TOTAL POINTS": 0,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Novice",
-   "Division": "Senior",
-   "Rider First Name": "Mindy",
-   "Rider Last Name": "Wiper",
-   "Rider Name": "Mindy Wiper",
-   "Horse Name": "Call Me Captain Bendanie",
-   "TOTAL POINTS": 0,
-   "Total # of shows completed": 2,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Novice",
+    "Division": "Senior",
+    "Rider First Name": "Mindy",
+    "Rider Last Name": "Wiper",
+    "Rider Name": "Mindy Wiper",
+    "Horse Name": "Call Me Captain Bendanie",
+    "TOTAL POINTS": 0,
+    "Total # of shows completed": 2,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Novice",
-   "Division": "Senior",
-   "Rider First Name": "Colleen",
-   "Rider Last Name": "Nelson",
-   "Rider Name": "Colleen Nelson",
-   "Horse Name": "What a Scenic View",
-   "TOTAL POINTS": 0,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Novice",
+    "Division": "Senior",
+    "Rider First Name": "Colleen",
+    "Rider Last Name": "Nelson",
+    "Rider Name": "Colleen Nelson",
+    "Horse Name": "What a Scenic View",
+    "TOTAL POINTS": 0,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Novice",
-   "Division": "Senior",
-   "Rider First Name": "Lauren",
-   "Rider Last Name": "Perry",
-   "Rider Name": "Lauren Perry",
-   "Horse Name": "Hell Of A Storm",
-   "TOTAL POINTS": 0,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Novice",
+    "Division": "Senior",
+    "Rider First Name": "Lauren",
+    "Rider Last Name": "Perry",
+    "Rider Name": "Lauren Perry",
+    "Horse Name": "Hell Of A Storm",
+    "TOTAL POINTS": 0,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Novice",
-   "Division": "Senior",
-   "Rider First Name": "Laura",
-   "Rider Last Name": "Mann",
-   "Rider Name": "Laura Mann",
-   "Horse Name": "Problem Solved",
-   "TOTAL POINTS": 0,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Novice",
+    "Division": "Senior",
+    "Rider First Name": "Laura",
+    "Rider Last Name": "Mann",
+    "Rider Name": "Laura Mann",
+    "Horse Name": "Problem Solved",
+    "TOTAL POINTS": 0,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Novice",
-   "Division": "Senior",
-   "Rider First Name": "Hannah ",
-   "Rider Last Name": "Elbert",
-   "Rider Name": "Hannah Elbert",
-   "Horse Name": "Southern Chrome",
-   "TOTAL POINTS": 0,
-   "Total # of shows completed": 2,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Novice",
+    "Division": "Senior",
+    "Rider First Name": "Hannah ",
+    "Rider Last Name": "Elbert",
+    "Rider Name": "Hannah Elbert",
+    "Horse Name": "Southern Chrome",
+    "TOTAL POINTS": 0,
+    "Total # of shows completed": 2,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "Yes"
-   }
-},
- {
-   "Level": "Novice",
-   "Division": "Junior",
-   "Rider First Name": "",
-   "Rider Last Name": "",
-   "Rider Name": "",
-   "Horse Name": "",
-   "TOTAL POINTS": null,
-   "Total # of shows completed": null,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Novice",
+    "Division": "Junior",
+    "Rider First Name": "",
+    "Rider Last Name": "",
+    "Rider Name": "",
+    "Horse Name": "",
+    "TOTAL POINTS": null,
+    "Total # of shows completed": null,
+    "Completed a HT? (Yes": {
       "No)": ""
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": ""
-   }
-},
- {
-   "Level": "Novice",
-   "Division": "Junior",
-   "Rider First Name": "Millie",
-   "Rider Last Name": "Rackley",
-   "Rider Name": "Millie Rackley",
-   "Horse Name": "Above and Beyond",
-   "TOTAL POINTS": 18,
-   "Total # of shows completed": 2,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Novice",
+    "Division": "Junior",
+    "Rider First Name": "Millie",
+    "Rider Last Name": "Rackley",
+    "Rider Name": "Millie Rackley",
+    "Horse Name": "Above and Beyond",
+    "TOTAL POINTS": 18,
+    "Total # of shows completed": 2,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Novice",
-   "Division": "Junior",
-   "Rider First Name": "Willow",
-   "Rider Last Name": "Schwartz",
-   "Rider Name": "Willow Schwartz",
-   "Horse Name": "Flashy Bandit",
-   "TOTAL POINTS": 15,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Novice",
+    "Division": "Junior",
+    "Rider First Name": "Willow",
+    "Rider Last Name": "Schwartz",
+    "Rider Name": "Willow Schwartz",
+    "Horse Name": "Flashy Bandit",
+    "TOTAL POINTS": 15,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Novice",
-   "Division": "Junior",
-   "Rider First Name": "Lauren",
-   "Rider Last Name": "Replogle",
-   "Rider Name": "Lauren Replogle",
-   "Horse Name": "Cornerstone's Natural Perfection",
-   "TOTAL POINTS": 15,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Novice",
+    "Division": "Junior",
+    "Rider First Name": "Lauren",
+    "Rider Last Name": "Replogle",
+    "Rider Name": "Lauren Replogle",
+    "Horse Name": "Cornerstone's Natural Perfection",
+    "TOTAL POINTS": 15,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Novice",
-   "Division": "Junior",
-   "Rider First Name": "Taylor",
-   "Rider Last Name": "McLaughlin",
-   "Rider Name": "Taylor McLaughlin",
-   "Horse Name": "Hearts A Racing",
-   "TOTAL POINTS": 12.5,
-   "Total # of shows completed": 4,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Novice",
+    "Division": "Junior",
+    "Rider First Name": "Taylor",
+    "Rider Last Name": "McLaughlin",
+    "Rider Name": "Taylor McLaughlin",
+    "Horse Name": "Hearts A Racing",
+    "TOTAL POINTS": 12.5,
+    "Total # of shows completed": 4,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "Yes"
-   }
-},
- {
-   "Level": "Novice",
-   "Division": "Junior",
-   "Rider First Name": "Riley ",
-   "Rider Last Name": "Hunsucker",
-   "Rider Name": "Riley Hunsucker",
-   "Horse Name": "Island Lake",
-   "TOTAL POINTS": 12,
-   "Total # of shows completed": 2,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Novice",
+    "Division": "Junior",
+    "Rider First Name": "Riley ",
+    "Rider Last Name": "Hunsucker",
+    "Rider Name": "Riley Hunsucker",
+    "Horse Name": "Island Lake",
+    "TOTAL POINTS": 12,
+    "Total # of shows completed": 2,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "Yes"
-   }
-},
- {
-   "Level": "Novice",
-   "Division": "Junior",
-   "Rider First Name": "Audrey",
-   "Rider Last Name": "Abbott",
-   "Rider Name": "Audrey Abbott",
-   "Horse Name": "Stride Right",
-   "TOTAL POINTS": 3,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Novice",
+    "Division": "Junior",
+    "Rider First Name": "Audrey",
+    "Rider Last Name": "Abbott",
+    "Rider Name": "Audrey Abbott",
+    "Horse Name": "Stride Right",
+    "TOTAL POINTS": 3,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Novice",
-   "Division": "Junior",
-   "Rider First Name": "Gemma",
-   "Rider Last Name": "Prince",
-   "Rider Name": "Gemma Prince",
-   "Horse Name": "Plateaux",
-   "TOTAL POINTS": 1.5,
-   "Total # of shows completed": 2,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Novice",
+    "Division": "Junior",
+    "Rider First Name": "Gemma",
+    "Rider Last Name": "Prince",
+    "Rider Name": "Gemma Prince",
+    "Horse Name": "Plateaux",
+    "TOTAL POINTS": 1.5,
+    "Total # of shows completed": 2,
+    "Completed a HT? (Yes": {
       "No)": "No"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Novice",
-   "Division": "Junior",
-   "Rider First Name": "Payton ",
-   "Rider Last Name": "McBee",
-   "Rider Name": "Payton McBee",
-   "Horse Name": "Mine Four Keeps",
-   "TOTAL POINTS": 0,
-   "Total # of shows completed": 2,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Novice",
+    "Division": "Junior",
+    "Rider First Name": "Payton ",
+    "Rider Last Name": "McBee",
+    "Rider Name": "Payton McBee",
+    "Horse Name": "Mine Four Keeps",
+    "TOTAL POINTS": 0,
+    "Total # of shows completed": 2,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Novice",
-   "Division": "Junior",
-   "Rider First Name": "Bosley",
-   "Rider Last Name": "Kuker",
-   "Rider Name": "Bosley Kuker",
-   "Horse Name": "Let Coyote Run",
-   "TOTAL POINTS": 0,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Novice",
+    "Division": "Junior",
+    "Rider First Name": "Bosley",
+    "Rider Last Name": "Kuker",
+    "Rider Name": "Bosley Kuker",
+    "Horse Name": "Let Coyote Run",
+    "TOTAL POINTS": 0,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Novice",
-   "Division": "Junior",
-   "Rider First Name": "Avery ",
-   "Rider Last Name": "McGrew",
-   "Rider Name": "Avery McGrew",
-   "Horse Name": "I'm A Space Cowboy",
-   "TOTAL POINTS": 0,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Novice",
+    "Division": "Junior",
+    "Rider First Name": "Avery ",
+    "Rider Last Name": "McGrew",
+    "Rider Name": "Avery McGrew",
+    "Horse Name": "I'm A Space Cowboy",
+    "TOTAL POINTS": 0,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Beginner Novice",
-   "Division": "Senior",
-   "Rider First Name": "Maria",
-   "Rider Last Name": "Balch",
-   "Rider Name": "Maria Balch",
-   "Horse Name": "Mohican",
-   "TOTAL POINTS": 27,
-   "Total # of shows completed": 2,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Beginner Novice",
+    "Division": "Senior",
+    "Rider First Name": "Maria",
+    "Rider Last Name": "Balch",
+    "Rider Name": "Maria Balch",
+    "Horse Name": "Mohican",
+    "TOTAL POINTS": 27,
+    "Total # of shows completed": 2,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "Yes"
-   }
-},
- {
-   "Level": "Beginner Novice",
-   "Division": "Senior",
-   "Rider First Name": "Kaylyn",
-   "Rider Last Name": "Chalman",
-   "Rider Name": "Kaylyn Chalman",
-   "Horse Name": "Lord Fred",
-   "TOTAL POINTS": 15,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Beginner Novice",
+    "Division": "Senior",
+    "Rider First Name": "Kaylyn",
+    "Rider Last Name": "Chalman",
+    "Rider Name": "Kaylyn Chalman",
+    "Horse Name": "Lord Fred",
+    "TOTAL POINTS": 15,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Beginner Novice",
-   "Division": "Senior",
-   "Rider First Name": "Hannah",
-   "Rider Last Name": "Elbert",
-   "Rider Name": "Hannah Elbert",
-   "Horse Name": "Frank B",
-   "TOTAL POINTS": 15,
-   "Total # of shows completed": 3,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Beginner Novice",
+    "Division": "Senior",
+    "Rider First Name": "Hannah",
+    "Rider Last Name": "Elbert",
+    "Rider Name": "Hannah Elbert",
+    "Horse Name": "Frank B",
+    "TOTAL POINTS": 15,
+    "Total # of shows completed": 3,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "Yes"
-   }
-},
- {
-   "Level": "Beginner Novice",
-   "Division": "Senior",
-   "Rider First Name": "Amanda",
-   "Rider Last Name": "Merritt",
-   "Rider Name": "Amanda Merritt",
-   "Horse Name": "Agreeable (On Probation)",
-   "TOTAL POINTS": 15,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Beginner Novice",
+    "Division": "Senior",
+    "Rider First Name": "Amanda",
+    "Rider Last Name": "Merritt",
+    "Rider Name": "Amanda Merritt",
+    "Horse Name": "Agreeable (On Probation)",
+    "TOTAL POINTS": 15,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Beginner Novice",
-   "Division": "Senior",
-   "Rider First Name": "Marcella",
-   "Rider Last Name": "Pinell",
-   "Rider Name": "Marcella Pinell",
-   "Horse Name": "Poison Ivy d'Avalon",
-   "TOTAL POINTS": 12,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Beginner Novice",
+    "Division": "Senior",
+    "Rider First Name": "Marcella",
+    "Rider Last Name": "Pinell",
+    "Rider Name": "Marcella Pinell",
+    "Horse Name": "Poison Ivy d'Avalon",
+    "TOTAL POINTS": 12,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Beginner Novice",
-   "Division": "Senior",
-   "Rider First Name": "Maggie",
-   "Rider Last Name": "McCarthy",
-   "Rider Name": "Maggie McCarthy",
-   "Horse Name": "Lizabeth",
-   "TOTAL POINTS": 9,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Beginner Novice",
+    "Division": "Senior",
+    "Rider First Name": "Maggie",
+    "Rider Last Name": "McCarthy",
+    "Rider Name": "Maggie McCarthy",
+    "Horse Name": "Lizabeth",
+    "TOTAL POINTS": 9,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Beginner Novice",
-   "Division": "Senior",
-   "Rider First Name": "Karyssa",
-   "Rider Last Name": "Roberts",
-   "Rider Name": "Karyssa Roberts",
-   "Horse Name": "Maximus",
-   "TOTAL POINTS": 9,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Beginner Novice",
+    "Division": "Senior",
+    "Rider First Name": "Karyssa",
+    "Rider Last Name": "Roberts",
+    "Rider Name": "Karyssa Roberts",
+    "Horse Name": "Maximus",
+    "TOTAL POINTS": 9,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Beginner Novice",
-   "Division": "Senior",
-   "Rider First Name": "Kara",
-   "Rider Last Name": "Schrader",
-   "Rider Name": "Kara Schrader",
-   "Horse Name": "Quincy's Rouletta Queen",
-   "TOTAL POINTS": 6,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Beginner Novice",
+    "Division": "Senior",
+    "Rider First Name": "Kara",
+    "Rider Last Name": "Schrader",
+    "Rider Name": "Kara Schrader",
+    "Horse Name": "Quincy's Rouletta Queen",
+    "TOTAL POINTS": 6,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Beginner Novice",
-   "Division": "Senior",
-   "Rider First Name": "Catherine ",
-   "Rider Last Name": "Nesbit",
-   "Rider Name": "Catherine Nesbit",
-   "Horse Name": "Steam Engine",
-   "TOTAL POINTS": 6,
-   "Total # of shows completed": 2,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Beginner Novice",
+    "Division": "Senior",
+    "Rider First Name": "Catherine ",
+    "Rider Last Name": "Nesbit",
+    "Rider Name": "Catherine Nesbit",
+    "Horse Name": "Steam Engine",
+    "TOTAL POINTS": 6,
+    "Total # of shows completed": 2,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Beginner Novice",
-   "Division": "Senior",
-   "Rider First Name": "Katherine",
-   "Rider Last Name": "Rivera",
-   "Rider Name": "Katherine Rivera",
-   "Horse Name": "Malmo 54",
-   "TOTAL POINTS": 6,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Beginner Novice",
+    "Division": "Senior",
+    "Rider First Name": "Katherine",
+    "Rider Last Name": "Rivera",
+    "Rider Name": "Katherine Rivera",
+    "Horse Name": "Malmo 54",
+    "TOTAL POINTS": 6,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Beginner Novice",
-   "Division": "Senior",
-   "Rider First Name": "Deborah",
-   "Rider Last Name": "Horn",
-   "Rider Name": "Deborah Horn",
-   "Horse Name": "Tricky Red Devil",
-   "TOTAL POINTS": 5,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Beginner Novice",
+    "Division": "Senior",
+    "Rider First Name": "Deborah",
+    "Rider Last Name": "Horn",
+    "Rider Name": "Deborah Horn",
+    "Horse Name": "Tricky Red Devil",
+    "TOTAL POINTS": 5,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "No"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Beginner Novice",
-   "Division": "Senior",
-   "Rider First Name": "Terri",
-   "Rider Last Name": "Miller",
-   "Rider Name": "Terri Miller",
-   "Horse Name": "Beau Regard",
-   "TOTAL POINTS": 4,
-   "Total # of shows completed": 2,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Beginner Novice",
+    "Division": "Senior",
+    "Rider First Name": "Terri",
+    "Rider Last Name": "Miller",
+    "Rider Name": "Terri Miller",
+    "Horse Name": "Beau Regard",
+    "TOTAL POINTS": 4,
+    "Total # of shows completed": 2,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "Yes"
-   }
-},
- {
-   "Level": "Beginner Novice",
-   "Division": "Senior",
-   "Rider First Name": "Emily",
-   "Rider Last Name": "Wilson",
-   "Rider Name": "Emily Wilson",
-   "Horse Name": "Curragh Kiss",
-   "TOTAL POINTS": 3,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Beginner Novice",
+    "Division": "Senior",
+    "Rider First Name": "Emily",
+    "Rider Last Name": "Wilson",
+    "Rider Name": "Emily Wilson",
+    "Horse Name": "Curragh Kiss",
+    "TOTAL POINTS": 3,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Beginner Novice",
-   "Division": "Senior",
-   "Rider First Name": "Christine",
-   "Rider Last Name": "Arden",
-   "Rider Name": "Christine Arden",
-   "Horse Name": "Beau",
-   "TOTAL POINTS": 3,
-   "Total # of shows completed": 3,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Beginner Novice",
+    "Division": "Senior",
+    "Rider First Name": "Christine",
+    "Rider Last Name": "Arden",
+    "Rider Name": "Christine Arden",
+    "Horse Name": "Beau",
+    "TOTAL POINTS": 3,
+    "Total # of shows completed": 3,
+    "Completed a HT? (Yes": {
       "No)": "No"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "Yes"
-   }
-},
- {
-   "Level": "Beginner Novice",
-   "Division": "Senior",
-   "Rider First Name": "Sarah",
-   "Rider Last Name": "Stroup",
-   "Rider Name": "Sarah Stroup",
-   "Horse Name": "Storm Velocity",
-   "TOTAL POINTS": 3,
-   "Total # of shows completed": 2,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Beginner Novice",
+    "Division": "Senior",
+    "Rider First Name": "Sarah",
+    "Rider Last Name": "Stroup",
+    "Rider Name": "Sarah Stroup",
+    "Horse Name": "Storm Velocity",
+    "TOTAL POINTS": 3,
+    "Total # of shows completed": 2,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Beginner Novice",
-   "Division": "Senior",
-   "Rider First Name": "Jennifer",
-   "Rider Last Name": "Owens",
-   "Rider Name": "Jennifer Owens",
-   "Horse Name": "Bad as Bandini",
-   "TOTAL POINTS": 3,
-   "Total # of shows completed": 4,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Beginner Novice",
+    "Division": "Senior",
+    "Rider First Name": "Jennifer",
+    "Rider Last Name": "Owens",
+    "Rider Name": "Jennifer Owens",
+    "Horse Name": "Bad as Bandini",
+    "TOTAL POINTS": 3,
+    "Total # of shows completed": 4,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "Yes"
-   }
-},
- {
-   "Level": "Beginner Novice",
-   "Division": "Senior",
-   "Rider First Name": "Bernadean",
-   "Rider Last Name": "Britt",
-   "Rider Name": "Bernadean Britt",
-   "Horse Name": "Prissy",
-   "TOTAL POINTS": 2,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Beginner Novice",
+    "Division": "Senior",
+    "Rider First Name": "Bernadean",
+    "Rider Last Name": "Britt",
+    "Rider Name": "Bernadean Britt",
+    "Horse Name": "Prissy",
+    "TOTAL POINTS": 2,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "No"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Beginner Novice",
-   "Division": "Senior",
-   "Rider First Name": "Laura",
-   "Rider Last Name": "Mann",
-   "Rider Name": "Laura Mann",
-   "Horse Name": "Problem Solved",
-   "TOTAL POINTS": 0,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Beginner Novice",
+    "Division": "Senior",
+    "Rider First Name": "Laura",
+    "Rider Last Name": "Mann",
+    "Rider Name": "Laura Mann",
+    "Horse Name": "Problem Solved",
+    "TOTAL POINTS": 0,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Beginner Novice",
-   "Division": "Junior",
-   "Rider First Name": "",
-   "Rider Last Name": "",
-   "Rider Name": "",
-   "Horse Name": "",
-   "TOTAL POINTS": null,
-   "Total # of shows completed": null,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Beginner Novice",
+    "Division": "Junior",
+    "Rider First Name": "",
+    "Rider Last Name": "",
+    "Rider Name": "",
+    "Horse Name": "",
+    "TOTAL POINTS": null,
+    "Total # of shows completed": null,
+    "Completed a HT? (Yes": {
       "No)": ""
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": ""
-   }
-},
- {
-   "Level": "Beginner Novice",
-   "Division": "Junior",
-   "Rider First Name": "Shelby ",
-   "Rider Last Name": "Owen",
-   "Rider Name": "Shelby Owen",
-   "Horse Name": "Contemporary Art",
-   "TOTAL POINTS": 18,
-   "Total # of shows completed": 3,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Beginner Novice",
+    "Division": "Junior",
+    "Rider First Name": "Shelby ",
+    "Rider Last Name": "Owen",
+    "Rider Name": "Shelby Owen",
+    "Horse Name": "Contemporary Art",
+    "TOTAL POINTS": 18,
+    "Total # of shows completed": 3,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "Yes"
-   }
-},
- {
-   "Level": "Beginner Novice",
-   "Division": "Junior",
-   "Rider First Name": "Avery",
-   "Rider Last Name": "McGrew",
-   "Rider Name": "Avery McGrew",
-   "Horse Name": "I'm A Space Cowboy",
-   "TOTAL POINTS": 9,
-   "Total # of shows completed": 2,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Beginner Novice",
+    "Division": "Junior",
+    "Rider First Name": "Avery",
+    "Rider Last Name": "McGrew",
+    "Rider Name": "Avery McGrew",
+    "Horse Name": "I'm A Space Cowboy",
+    "TOTAL POINTS": 9,
+    "Total # of shows completed": 2,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Beginner Novice",
-   "Division": "Junior",
-   "Rider First Name": "Julia",
-   "Rider Last Name": "Pinell",
-   "Rider Name": "Julia Pinell",
-   "Horse Name": "Mint Julep d'Avalon",
-   "TOTAL POINTS": 7,
-   "Total # of shows completed": 2,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Beginner Novice",
+    "Division": "Junior",
+    "Rider First Name": "Julia",
+    "Rider Last Name": "Pinell",
+    "Rider Name": "Julia Pinell",
+    "Horse Name": "Mint Julep d'Avalon",
+    "TOTAL POINTS": 7,
+    "Total # of shows completed": 2,
+    "Completed a HT? (Yes": {
       "No)": "No"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Beginner Novice",
-   "Division": "Junior",
-   "Rider First Name": "Maddie",
-   "Rider Last Name": "Mumm",
-   "Rider Name": "Maddie Mumm",
-   "Horse Name": "Apollo",
-   "TOTAL POINTS": 6,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Beginner Novice",
+    "Division": "Junior",
+    "Rider First Name": "Maddie",
+    "Rider Last Name": "Mumm",
+    "Rider Name": "Maddie Mumm",
+    "Horse Name": "Apollo",
+    "TOTAL POINTS": 6,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Beginner Novice",
-   "Division": "Junior",
-   "Rider First Name": "Shelby ",
-   "Rider Last Name": "Owen",
-   "Rider Name": "Shelby Owen",
-   "Horse Name": "Felene",
-   "TOTAL POINTS": 3,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Beginner Novice",
+    "Division": "Junior",
+    "Rider First Name": "Shelby ",
+    "Rider Last Name": "Owen",
+    "Rider Name": "Shelby Owen",
+    "Horse Name": "Felene",
+    "TOTAL POINTS": 3,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "No"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Beginner Novice",
-   "Division": "Junior",
-   "Rider First Name": "Piper ",
-   "Rider Last Name": "Etheridge",
-   "Rider Name": "Piper Etheridge",
-   "Horse Name": "Mighty Mississippi",
-   "TOTAL POINTS": 2,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Beginner Novice",
+    "Division": "Junior",
+    "Rider First Name": "Piper ",
+    "Rider Last Name": "Etheridge",
+    "Rider Name": "Piper Etheridge",
+    "Horse Name": "Mighty Mississippi",
+    "TOTAL POINTS": 2,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "No"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Beginner Novice",
-   "Division": "Junior",
-   "Rider First Name": "Abby",
-   "Rider Last Name": "Foster",
-   "Rider Name": "Abby Foster",
-   "Horse Name": "A Reason to Win",
-   "TOTAL POINTS": 0,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Beginner Novice",
+    "Division": "Junior",
+    "Rider First Name": "Abby",
+    "Rider Last Name": "Foster",
+    "Rider Name": "Abby Foster",
+    "Horse Name": "A Reason to Win",
+    "TOTAL POINTS": 0,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Beginner Novice",
-   "Division": "Junior",
-   "Rider First Name": "Willow",
-   "Rider Last Name": "Schwartz",
-   "Rider Name": "Willow Schwartz",
-   "Horse Name": "Count d'Artagnan",
-   "TOTAL POINTS": 0,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Beginner Novice",
+    "Division": "Junior",
+    "Rider First Name": "Willow",
+    "Rider Last Name": "Schwartz",
+    "Rider Name": "Willow Schwartz",
+    "Horse Name": "Count d'Artagnan",
+    "TOTAL POINTS": 0,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "No"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Goldilocks",
-   "Division": "Senior",
-   "Rider First Name": "",
-   "Rider Last Name": "",
-   "Rider Name": "",
-   "Horse Name": "",
-   "TOTAL POINTS": null,
-   "Total # of shows completed": null,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Goldilocks",
+    "Division": "Senior",
+    "Rider First Name": "",
+    "Rider Last Name": "",
+    "Rider Name": "",
+    "Horse Name": "",
+    "TOTAL POINTS": null,
+    "Total # of shows completed": null,
+    "Completed a HT? (Yes": {
       "No)": ""
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": ""
-   }
-},
- {
-   "Level": "Goldilocks",
-   "Division": "Senior",
-   "Rider First Name": "Lindsay",
-   "Rider Last Name": "Holliday",
-   "Rider Name": "Lindsay Holliday",
-   "Horse Name": "Jack My Style",
-   "TOTAL POINTS": 21,
-   "Total # of shows completed": 3,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Goldilocks",
+    "Division": "Senior",
+    "Rider First Name": "Lindsay",
+    "Rider Last Name": "Holliday",
+    "Rider Name": "Lindsay Holliday",
+    "Horse Name": "Jack My Style",
+    "TOTAL POINTS": 21,
+    "Total # of shows completed": 3,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "Yes"
-   }
-},
- {
-   "Level": "Goldilocks",
-   "Division": "Senior",
-   "Rider First Name": "Amy",
-   "Rider Last Name": "Clemmons",
-   "Rider Name": "Amy Clemmons",
-   "Horse Name": "Gatsby's Touch of Chrome",
-   "TOTAL POINTS": 15,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Goldilocks",
+    "Division": "Senior",
+    "Rider First Name": "Amy",
+    "Rider Last Name": "Clemmons",
+    "Rider Name": "Amy Clemmons",
+    "Horse Name": "Gatsby's Touch of Chrome",
+    "TOTAL POINTS": 15,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Goldilocks",
-   "Division": "Senior",
-   "Rider First Name": "Grace",
-   "Rider Last Name": "Atkins",
-   "Rider Name": "Grace Atkins",
-   "Horse Name": "You n Me Too",
-   "TOTAL POINTS": 9,
-   "Total # of shows completed": 3,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Goldilocks",
+    "Division": "Senior",
+    "Rider First Name": "Grace",
+    "Rider Last Name": "Atkins",
+    "Rider Name": "Grace Atkins",
+    "Horse Name": "You n Me Too",
+    "TOTAL POINTS": 9,
+    "Total # of shows completed": 3,
+    "Completed a HT? (Yes": {
       "No)": "No"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "Yes"
-   }
-},
- {
-   "Level": "Goldilocks",
-   "Division": "Senior",
-   "Rider First Name": "Christine",
-   "Rider Last Name": "Arden",
-   "Rider Name": "Christine Arden",
-   "Horse Name": "Beau",
-   "TOTAL POINTS": 5,
-   "Total # of shows completed": 3,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Goldilocks",
+    "Division": "Senior",
+    "Rider First Name": "Christine",
+    "Rider Last Name": "Arden",
+    "Rider Name": "Christine Arden",
+    "Horse Name": "Beau",
+    "TOTAL POINTS": 5,
+    "Total # of shows completed": 3,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "Yes"
-   }
-},
- {
-   "Level": "Goldilocks",
-   "Division": "Senior",
-   "Rider First Name": "Emma",
-   "Rider Last Name": "Poppy",
-   "Rider Name": "Emma Poppy",
-   "Horse Name": "Mailibu",
-   "TOTAL POINTS": 5,
-   "Total # of shows completed": 3,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Goldilocks",
+    "Division": "Senior",
+    "Rider First Name": "Emma",
+    "Rider Last Name": "Poppy",
+    "Rider Name": "Emma Poppy",
+    "Horse Name": "Mailibu",
+    "TOTAL POINTS": 5,
+    "Total # of shows completed": 3,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "Yes"
-   }
-},
- {
-   "Level": "Goldilocks",
-   "Division": "Senior",
-   "Rider First Name": "Hannah",
-   "Rider Last Name": "Elbert",
-   "Rider Name": "Hannah Elbert",
-   "Horse Name": "Maximus",
-   "TOTAL POINTS": 4,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Goldilocks",
+    "Division": "Senior",
+    "Rider First Name": "Hannah",
+    "Rider Last Name": "Elbert",
+    "Rider Name": "Hannah Elbert",
+    "Horse Name": "Maximus",
+    "TOTAL POINTS": 4,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "No"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Goldilocks",
-   "Division": "Senior",
-   "Rider First Name": "Deborah ",
-   "Rider Last Name": "Horn",
-   "Rider Name": "Deborah Horn",
-   "Horse Name": "Tricky Red Devil",
-   "TOTAL POINTS": 3,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Goldilocks",
+    "Division": "Senior",
+    "Rider First Name": "Deborah ",
+    "Rider Last Name": "Horn",
+    "Rider Name": "Deborah Horn",
+    "Horse Name": "Tricky Red Devil",
+    "TOTAL POINTS": 3,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Goldilocks",
-   "Division": "Senior",
-   "Rider First Name": "Hannah",
-   "Rider Last Name": "Elbert",
-   "Rider Name": "Hannah Elbert",
-   "Horse Name": "Frank B",
-   "TOTAL POINTS": 2.5,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Goldilocks",
+    "Division": "Senior",
+    "Rider First Name": "Hannah",
+    "Rider Last Name": "Elbert",
+    "Rider Name": "Hannah Elbert",
+    "Horse Name": "Frank B",
+    "TOTAL POINTS": 2.5,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "No"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Goldilocks",
-   "Division": "Senior",
-   "Rider First Name": "Olivia",
-   "Rider Last Name": "Skirutis",
-   "Rider Name": "Olivia Skirutis",
-   "Horse Name": "Uma",
-   "TOTAL POINTS": 0,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Goldilocks",
+    "Division": "Senior",
+    "Rider First Name": "Olivia",
+    "Rider Last Name": "Skirutis",
+    "Rider Name": "Olivia Skirutis",
+    "Horse Name": "Uma",
+    "TOTAL POINTS": 0,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Goldilocks",
-   "Division": "Senior",
-   "Rider First Name": "Christine",
-   "Rider Last Name": "Hogan",
-   "Rider Name": "Christine Hogan",
-   "Horse Name": "Handsome Lad",
-   "TOTAL POINTS": 0,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Goldilocks",
+    "Division": "Senior",
+    "Rider First Name": "Christine",
+    "Rider Last Name": "Hogan",
+    "Rider Name": "Christine Hogan",
+    "Horse Name": "Handsome Lad",
+    "TOTAL POINTS": 0,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Goldilocks",
-   "Division": "Junior",
-   "Rider First Name": "",
-   "Rider Last Name": "",
-   "Rider Name": "",
-   "Horse Name": "",
-   "TOTAL POINTS": null,
-   "Total # of shows completed": null,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Goldilocks",
+    "Division": "Junior",
+    "Rider First Name": "",
+    "Rider Last Name": "",
+    "Rider Name": "",
+    "Horse Name": "",
+    "TOTAL POINTS": null,
+    "Total # of shows completed": null,
+    "Completed a HT? (Yes": {
       "No)": ""
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": ""
-   }
-},
- {
-   "Level": "Goldilocks",
-   "Division": "Junior",
-   "Rider First Name": "Piper ",
-   "Rider Last Name": "Etheridge",
-   "Rider Name": "Piper Etheridge",
-   "Horse Name": "Mighty Mississippi",
-   "TOTAL POINTS": 18,
-   "Total # of shows completed": 2,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Goldilocks",
+    "Division": "Junior",
+    "Rider First Name": "Piper ",
+    "Rider Last Name": "Etheridge",
+    "Rider Name": "Piper Etheridge",
+    "Horse Name": "Mighty Mississippi",
+    "TOTAL POINTS": 18,
+    "Total # of shows completed": 2,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Goldilocks",
-   "Division": "Junior",
-   "Rider First Name": "Julia",
-   "Rider Last Name": "Pinell",
-   "Rider Name": "Julia Pinell",
-   "Horse Name": "Castleberry's Dirty Harry",
-   "TOTAL POINTS": 16,
-   "Total # of shows completed": 3,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Goldilocks",
+    "Division": "Junior",
+    "Rider First Name": "Julia",
+    "Rider Last Name": "Pinell",
+    "Rider Name": "Julia Pinell",
+    "Horse Name": "Castleberry's Dirty Harry",
+    "TOTAL POINTS": 16,
+    "Total # of shows completed": 3,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "Yes"
-   }
-},
- {
-   "Level": "Goldilocks",
-   "Division": "Junior",
-   "Rider First Name": "Shelby",
-   "Rider Last Name": "Owen",
-   "Rider Name": "Shelby Owen",
-   "Horse Name": "Contemporary Art",
-   "TOTAL POINTS": 15,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Goldilocks",
+    "Division": "Junior",
+    "Rider First Name": "Shelby",
+    "Rider Last Name": "Owen",
+    "Rider Name": "Shelby Owen",
+    "Horse Name": "Contemporary Art",
+    "TOTAL POINTS": 15,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Goldilocks",
-   "Division": "Junior",
-   "Rider First Name": "Willow ",
-   "Rider Last Name": "Schwartz",
-   "Rider Name": "Willow Schwartz",
-   "Horse Name": "Count D'Argnan",
-   "TOTAL POINTS": 3,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Goldilocks",
+    "Division": "Junior",
+    "Rider First Name": "Willow ",
+    "Rider Last Name": "Schwartz",
+    "Rider Name": "Willow Schwartz",
+    "Horse Name": "Count D'Argnan",
+    "TOTAL POINTS": 3,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Goldilocks",
-   "Division": "Junior",
-   "Rider First Name": "Elena",
-   "Rider Last Name": "Foulks",
-   "Rider Name": "Elena Foulks",
-   "Horse Name": "Eskimo's Warrior",
-   "TOTAL POINTS": 1,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Goldilocks",
+    "Division": "Junior",
+    "Rider First Name": "Elena",
+    "Rider Last Name": "Foulks",
+    "Rider Name": "Elena Foulks",
+    "Horse Name": "Eskimo's Warrior",
+    "TOTAL POINTS": 1,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "No"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Goldilocks",
-   "Division": "Junior",
-   "Rider First Name": "Maddi",
-   "Rider Last Name": "Mumm",
-   "Rider Name": "Maddi Mumm",
-   "Horse Name": "Grandisimo",
-   "TOTAL POINTS": 0,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Goldilocks",
+    "Division": "Junior",
+    "Rider First Name": "Maddi",
+    "Rider Last Name": "Mumm",
+    "Rider Name": "Maddi Mumm",
+    "Horse Name": "Grandisimo",
+    "TOTAL POINTS": 0,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Green As Grass",
-   "Division": "Senior",
-   "Rider First Name": "",
-   "Rider Last Name": "",
-   "Rider Name": "",
-   "Horse Name": "",
-   "TOTAL POINTS": null,
-   "Total # of shows completed": null,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Green As Grass",
+    "Division": "Senior",
+    "Rider First Name": "",
+    "Rider Last Name": "",
+    "Rider Name": "",
+    "Horse Name": "",
+    "TOTAL POINTS": null,
+    "Total # of shows completed": null,
+    "Completed a HT? (Yes": {
       "No)": ""
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": ""
-   }
-},
- {
-   "Level": "Green As Grass",
-   "Division": "Senior",
-   "Rider First Name": "Ashley",
-   "Rider Last Name": "Duff",
-   "Rider Name": "Ashley Duff",
-   "Horse Name": "Princess Fiona",
-   "TOTAL POINTS": 17.5,
-   "Total # of shows completed": 5,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Green As Grass",
+    "Division": "Senior",
+    "Rider First Name": "Ashley",
+    "Rider Last Name": "Duff",
+    "Rider Name": "Ashley Duff",
+    "Horse Name": "Princess Fiona",
+    "TOTAL POINTS": 17.5,
+    "Total # of shows completed": 5,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "Yes"
-   }
-},
- {
-   "Level": "Green As Grass",
-   "Division": "Senior",
-   "Rider First Name": "Nancy",
-   "Rider Last Name": "Jaehne",
-   "Rider Name": "Nancy Jaehne",
-   "Horse Name": "Harry",
-   "TOTAL POINTS": 15,
-   "Total # of shows completed": 3,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Green As Grass",
+    "Division": "Senior",
+    "Rider First Name": "Nancy",
+    "Rider Last Name": "Jaehne",
+    "Rider Name": "Nancy Jaehne",
+    "Horse Name": "Harry",
+    "TOTAL POINTS": 15,
+    "Total # of shows completed": 3,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Green As Grass",
-   "Division": "Senior",
-   "Rider First Name": "Irene",
-   "Rider Last Name": "Doo",
-   "Rider Name": "Irene Doo",
-   "Horse Name": "Diamond Dynamite",
-   "TOTAL POINTS": 8,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Green As Grass",
+    "Division": "Senior",
+    "Rider First Name": "Irene",
+    "Rider Last Name": "Doo",
+    "Rider Name": "Irene Doo",
+    "Horse Name": "Diamond Dynamite",
+    "TOTAL POINTS": 8,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "No"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Green As Grass",
-   "Division": "Senior",
-   "Rider First Name": "Cristie",
-   "Rider Last Name": "Palmer",
-   "Rider Name": "Cristie Palmer",
-   "Horse Name": "Fahrenheit",
-   "TOTAL POINTS": 6,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Green As Grass",
+    "Division": "Senior",
+    "Rider First Name": "Cristie",
+    "Rider Last Name": "Palmer",
+    "Rider Name": "Cristie Palmer",
+    "Horse Name": "Fahrenheit",
+    "TOTAL POINTS": 6,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Green As Grass",
-   "Division": "Senior",
-   "Rider First Name": "Maria ",
-   "Rider Last Name": "Micci",
-   "Rider Name": "Maria Micci",
-   "Horse Name": "Island Blue",
-   "TOTAL POINTS": 4.5,
-   "Total # of shows completed": 2,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Green As Grass",
+    "Division": "Senior",
+    "Rider First Name": "Maria ",
+    "Rider Last Name": "Micci",
+    "Rider Name": "Maria Micci",
+    "Horse Name": "Island Blue",
+    "TOTAL POINTS": 4.5,
+    "Total # of shows completed": 2,
+    "Completed a HT? (Yes": {
       "No)": "No"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "Yes"
-   }
-},
- {
-   "Level": "Green As Grass",
-   "Division": "Senior",
-   "Rider First Name": "Amy",
-   "Rider Last Name": "Clemmons",
-   "Rider Name": "Amy Clemmons",
-   "Horse Name": "Gatsby's Touch of Chrome",
-   "TOTAL POINTS": 3,
-   "Total # of shows completed": 2,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Green As Grass",
+    "Division": "Senior",
+    "Rider First Name": "Amy",
+    "Rider Last Name": "Clemmons",
+    "Rider Name": "Amy Clemmons",
+    "Horse Name": "Gatsby's Touch of Chrome",
+    "TOTAL POINTS": 3,
+    "Total # of shows completed": 2,
+    "Completed a HT? (Yes": {
       "No)": "No"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Green As Grass",
-   "Division": "Senior",
-   "Rider First Name": "Cristie",
-   "Rider Last Name": "Palmer",
-   "Rider Name": "Cristie Palmer",
-   "Horse Name": "Berry Awesom",
-   "TOTAL POINTS": 2.5,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Green As Grass",
+    "Division": "Senior",
+    "Rider First Name": "Cristie",
+    "Rider Last Name": "Palmer",
+    "Rider Name": "Cristie Palmer",
+    "Horse Name": "Berry Awesom",
+    "TOTAL POINTS": 2.5,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "No"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Green As Grass",
-   "Division": "Senior",
-   "Rider First Name": "Sara",
-   "Rider Last Name": "Pavone",
-   "Rider Name": "Sara Pavone",
-   "Horse Name": "Fahrenheit",
-   "TOTAL POINTS": 0,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Green As Grass",
+    "Division": "Senior",
+    "Rider First Name": "Sara",
+    "Rider Last Name": "Pavone",
+    "Rider Name": "Sara Pavone",
+    "Horse Name": "Fahrenheit",
+    "TOTAL POINTS": 0,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Green As Grass",
-   "Division": "Junior",
-   "Rider First Name": "",
-   "Rider Last Name": "",
-   "Rider Name": "",
-   "Horse Name": "",
-   "TOTAL POINTS": null,
-   "Total # of shows completed": null,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Green As Grass",
+    "Division": "Junior",
+    "Rider First Name": "",
+    "Rider Last Name": "",
+    "Rider Name": "",
+    "Horse Name": "",
+    "TOTAL POINTS": null,
+    "Total # of shows completed": null,
+    "Completed a HT? (Yes": {
       "No)": ""
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": ""
-   }
-},
- {
-   "Level": "Green As Grass",
-   "Division": "Junior",
-   "Rider First Name": "Anneliese",
-   "Rider Last Name": "Williams",
-   "Rider Name": "Anneliese Williams",
-   "Horse Name": "Applejack",
-   "TOTAL POINTS": 34.5,
-   "Total # of shows completed": 3,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Green As Grass",
+    "Division": "Junior",
+    "Rider First Name": "Anneliese",
+    "Rider Last Name": "Williams",
+    "Rider Name": "Anneliese Williams",
+    "Horse Name": "Applejack",
+    "TOTAL POINTS": 34.5,
+    "Total # of shows completed": 3,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Green As Grass",
-   "Division": "Junior",
-   "Rider First Name": "Elena",
-   "Rider Last Name": "Foulks",
-   "Rider Name": "Elena Foulks",
-   "Horse Name": "Eskimo's Warrior",
-   "TOTAL POINTS": 30,
-   "Total # of shows completed": 4,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Green As Grass",
+    "Division": "Junior",
+    "Rider First Name": "Elena",
+    "Rider Last Name": "Foulks",
+    "Rider Name": "Elena Foulks",
+    "Horse Name": "Eskimo's Warrior",
+    "TOTAL POINTS": 30,
+    "Total # of shows completed": 4,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "Yes"
-   }
-},
- {
-   "Level": "Green As Grass",
-   "Division": "Junior",
-   "Rider First Name": "Evie",
-   "Rider Last Name": "DeSteffen",
-   "Rider Name": "Evie DeSteffen",
-   "Horse Name": "Follow Your Bliss",
-   "TOTAL POINTS": 16.5,
-   "Total # of shows completed": 2,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Green As Grass",
+    "Division": "Junior",
+    "Rider First Name": "Evie",
+    "Rider Last Name": "DeSteffen",
+    "Rider Name": "Evie DeSteffen",
+    "Horse Name": "Follow Your Bliss",
+    "TOTAL POINTS": 16.5,
+    "Total # of shows completed": 2,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Green As Grass",
-   "Division": "Junior",
-   "Rider First Name": "Paige",
-   "Rider Last Name": "Krueger",
-   "Rider Name": "Paige Krueger",
-   "Horse Name": "I Can't Belive Its Not Butter",
-   "TOTAL POINTS": 12.5,
-   "Total # of shows completed": 3,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Green As Grass",
+    "Division": "Junior",
+    "Rider First Name": "Paige",
+    "Rider Last Name": "Krueger",
+    "Rider Name": "Paige Krueger",
+    "Horse Name": "I Can't Belive Its Not Butter",
+    "TOTAL POINTS": 12.5,
+    "Total # of shows completed": 3,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "Yes"
-   }
-},
- {
-   "Level": "Green As Grass",
-   "Division": "Junior",
-   "Rider First Name": "Hailey",
-   "Rider Last Name": "Kuftic",
-   "Rider Name": "Hailey Kuftic",
-   "Horse Name": "Balor (Root Beer Float)",
-   "TOTAL POINTS": 8,
-   "Total # of shows completed": 3,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Green As Grass",
+    "Division": "Junior",
+    "Rider First Name": "Hailey",
+    "Rider Last Name": "Kuftic",
+    "Rider Name": "Hailey Kuftic",
+    "Horse Name": "Balor (Root Beer Float)",
+    "TOTAL POINTS": 8,
+    "Total # of shows completed": 3,
+    "Completed a HT? (Yes": {
       "No)": "No"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Green As Grass",
-   "Division": "Junior",
-   "Rider First Name": "Ashton",
-   "Rider Last Name": "Pinter",
-   "Rider Name": "Ashton Pinter",
-   "Horse Name": "Holly (Perfectly Painted)",
-   "TOTAL POINTS": 8,
-   "Total # of shows completed": 2,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Green As Grass",
+    "Division": "Junior",
+    "Rider First Name": "Ashton",
+    "Rider Last Name": "Pinter",
+    "Rider Name": "Ashton Pinter",
+    "Horse Name": "Holly (Perfectly Painted)",
+    "TOTAL POINTS": 8,
+    "Total # of shows completed": 2,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "Yes"
-   }
-},
- {
-   "Level": "Green As Grass",
-   "Division": "Junior",
-   "Rider First Name": "Nina",
-   "Rider Last Name": "Castro",
-   "Rider Name": "Nina Castro",
-   "Horse Name": "Balinese Poker Chip",
-   "TOTAL POINTS": 6,
-   "Total # of shows completed": 2,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Green As Grass",
+    "Division": "Junior",
+    "Rider First Name": "Nina",
+    "Rider Last Name": "Castro",
+    "Rider Name": "Nina Castro",
+    "Horse Name": "Balinese Poker Chip",
+    "TOTAL POINTS": 6,
+    "Total # of shows completed": 2,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Green As Grass",
-   "Division": "Junior",
-   "Rider First Name": "Nina",
-   "Rider Last Name": "Castro",
-   "Rider Name": "Nina Castro",
-   "Horse Name": "Island Blue",
-   "TOTAL POINTS": 5,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Green As Grass",
+    "Division": "Junior",
+    "Rider First Name": "Nina",
+    "Rider Last Name": "Castro",
+    "Rider Name": "Nina Castro",
+    "Horse Name": "Island Blue",
+    "TOTAL POINTS": 5,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "No"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Green As Grass",
-   "Division": "Junior",
-   "Rider First Name": "Chloe",
-   "Rider Last Name": "Doss",
-   "Rider Name": "Chloe Doss",
-   "Horse Name": "Rosmel's Chili Pepper",
-   "TOTAL POINTS": 5,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Green As Grass",
+    "Division": "Junior",
+    "Rider First Name": "Chloe",
+    "Rider Last Name": "Doss",
+    "Rider Name": "Chloe Doss",
+    "Horse Name": "Rosmel's Chili Pepper",
+    "TOTAL POINTS": 5,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "No"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Green As Grass",
-   "Division": "Junior",
-   "Rider First Name": "Kacie Lynn",
-   "Rider Last Name": "Lange",
-   "Rider Name": "Kacie Lynn Lange",
-   "Horse Name": "Dutton's Dream",
-   "TOTAL POINTS": 5,
-   "Total # of shows completed": 2,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Green As Grass",
+    "Division": "Junior",
+    "Rider First Name": "Kacie Lynn",
+    "Rider Last Name": "Lange",
+    "Rider Name": "Kacie Lynn Lange",
+    "Horse Name": "Dutton's Dream",
+    "TOTAL POINTS": 5,
+    "Total # of shows completed": 2,
+    "Completed a HT? (Yes": {
       "No)": "No"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Green As Grass",
-   "Division": "Junior",
-   "Rider First Name": "Alyssa ",
-   "Rider Last Name": "Ideus",
-   "Rider Name": "Alyssa  Ideus",
-   "Horse Name": "Little Kid Sneakers",
-   "TOTAL POINTS": 4,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Green As Grass",
+    "Division": "Junior",
+    "Rider First Name": "Alyssa ",
+    "Rider Last Name": "Ideus",
+    "Rider Name": "Alyssa  Ideus",
+    "Horse Name": "Little Kid Sneakers",
+    "TOTAL POINTS": 4,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "No"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Green As Grass",
-   "Division": "Junior",
-   "Rider First Name": "Eva",
-   "Rider Last Name": "Hargrove",
-   "Rider Name": "Eva Hargrove",
-   "Horse Name": "Herbie Rides Again",
-   "TOTAL POINTS": 2,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Green As Grass",
+    "Division": "Junior",
+    "Rider First Name": "Eva",
+    "Rider Last Name": "Hargrove",
+    "Rider Name": "Eva Hargrove",
+    "Horse Name": "Herbie Rides Again",
+    "TOTAL POINTS": 2,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "No"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-},
- {
-   "Level": "Green As Grass",
-   "Division": "Junior",
-   "Rider First Name": "Lily",
-   "Rider Last Name": "Tansill",
-   "Rider Name": "Lily Tansill",
-   "Horse Name": "Ta na na",
-   "TOTAL POINTS": 0,
-   "Total # of shows completed": 1,
-   "Completed a HT? (Yes": {
+    }
+  },
+  {
+    "Level": "Green As Grass",
+    "Division": "Junior",
+    "Rider First Name": "Lily",
+    "Rider Last Name": "Tansill",
+    "Rider Name": "Lily Tansill",
+    "Horse Name": "Ta na na",
+    "TOTAL POINTS": 0,
+    "Total # of shows completed": 1,
+    "Completed a HT? (Yes": {
       "No)": "Yes"
-   },
-   "Completed at 2 venues? (Yes": {
+    },
+    "Completed at 2 venues? (Yes": {
       "No)": "No"
-   }
-}
+    }
+  }
 ]

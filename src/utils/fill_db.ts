@@ -4,7 +4,7 @@ import { JRSR, PaymentMethod, Prisma, Status } from '@prisma/client';
 import { Type } from '@prisma/client';
 
 export default function fill(mutator: any) {
-  horses.forEach((horse) => {
+  horses.forEach(horse => {
     let horseDB: Prisma.HorseCreateInput;
     let arr = new Array<string>();
     if (horse.riders.includes(',')) {
@@ -19,12 +19,12 @@ export default function fill(mutator: any) {
       horseAKA: horse.horseAKA,
       registrationDate: horse.horseRN === '' ? null : new Date(horse.horseRN),
       regType: horse.regType as Status,
-      notConnected: true
+      notConnected: true,
     };
     mutator.mutate({ horse: horseDB });
-  })
+  });
 
-  members.forEach((member) => {
+  members.forEach(member => {
     let paymentDB: Prisma.PaymentCreateWithoutMemberInput;
     let memberDB: Prisma.MemberCreateInput;
     memberDB = {
@@ -41,7 +41,7 @@ export default function fill(mutator: any) {
       address: member.address,
       city: member.city,
       state: member.state,
-      zip: (member.zip === '' ? 0 : parseInt(member.zip)),
+      zip: member.zip === '' ? 0 : parseInt(member.zip),
       phone: member.phone,
       email: member.email,
       comments: member.comments,

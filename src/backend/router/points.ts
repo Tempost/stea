@@ -11,10 +11,10 @@ export const points = createRouter()
             rider: {
               include: {
                 horse: true,
-                member: true
-              }
-            }
-          }
+                member: true,
+              },
+            },
+          },
         })
         .then(points => {
           return points;
@@ -22,10 +22,10 @@ export const points = createRouter()
         .catch(err => {
           console.log(err);
         });
-      
+
       return points as TotalPoints[];
     },
   })
   .mutation('update-rc-points', {
-    async resolve() { },
+    async resolve() {},
   });
