@@ -14,27 +14,12 @@ export const nonMemberHorseOwner = createRouter()
     input: z.object({ ownerName: z.string() }).optional(),
 
     async resolve({ input }) {
-      let data;
+      const data = await prisma.nonMemberHorseOwner
+        .findMany()
+        .then(owners => owners)
+        .catch(err => console.log('Backend Error:', err));
 
-      if (input === undefined) {
-        data = await prisma.nonMemberHorseOwner
-          .findMany()
-          .then(owners => owners)
-          .catch(err => console.log('Backend Error:', err));
-
-        return data as NonMemberHorseOwner[];
-      } else {
-        data = await prisma.nonMemberHorseOwner
-          .findFirst({
-            where: {
-              fullName: input.ownerName,
-            },
-          })
-          .then(owners => owners)
-          .catch(err => console.log('Backend Error:', err));
-
-        return data as NonMemberHorseOwner;
-      }
+      return data as NonMemberHorseOwner[];
     },
   })
   .mutation('add-owner-horse', {
@@ -46,23 +31,32 @@ export const nonMemberHorseOwner = createRouter()
     async resolve({ input }) {
       console.log(input.owner, input.horses, input.combos);
 
-      const resOwner = await prisma.nonMemberHorseOwner
-        .create({
-          data: {
-            ...input.owner,
-            horses: {
-              createMany: {
-                data: [...input.horses],
+      const addTo = await prisma.nonMemberHorseOwner.findUnique({
+        where: { fullName: input.owner.fullName },
+      });
+
+      if (addTo === null) {
+        console.log('null');
+        await prisma.nonMemberHorseOwner
+          .create({
+            data: {
+              ...input.owner,
+              horses: {
+                createMany: {
+                  data: [...input.horses],
+                },
               },
             },
-          },
-        })
-        .then(owners => owners)
-        .catch(err => console.log('Backend Error:', err));
+          })
+          .then(owners => owners)
+          .catch(err => console.log('Backend Error:', err));
+      } else {
+        console.log('not null');
+      }
 
       if (input.combos) {
         for (let combo of input.combos) {
-          const resCombo = await prisma.riderCombo
+          await prisma.riderCombo
             .create({
               data: {
                 horse: {
@@ -79,9 +73,8 @@ export const nonMemberHorseOwner = createRouter()
             })
             .then(combos => combos)
             .catch(err => console.log('Backend Error:', err));
-
-          console.log(resCombo);
         }
       }
+
     },
   });

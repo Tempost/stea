@@ -12,6 +12,7 @@ import states from '@/utils/states.json';
 import useZodForm from '@/utils/usezodform';
 import { HorseModel, MemberModel } from '@/backend/prisma/zod';
 import { HorseFieldArray, RiderComboFieldArray } from './fieldarrayfields';
+import RegType from './regtype';
 
 const phoneTypes = [
   {
@@ -41,7 +42,7 @@ function BusinessRegistration() {
     shouldUnregister: true,
     schema: MemberFormValues,
   });
-  const { register, watch, handleSubmit } = methods;
+  const { register, watch, handleSubmit, formState: { errors } } = methods;
 
   const isRegHorse = watch('horseReg', false);
 
@@ -69,7 +70,8 @@ function BusinessRegistration() {
           <h3>Name of Business*</h3>
           <TextInput
             inputMode='text'
-            className='input-sm'
+            className='input-sm input-primary'
+            error={errors.member?.businessName}
             {...register('member.businessName', { required: true })}
           />
 
@@ -77,14 +79,15 @@ function BusinessRegistration() {
           <div className='flex flex-col gap-2'>
             <TextInput
               inputMode='text'
-              className='input-sm'
+              className='input-sm input-primary'
               placeholder='Address Line 1'
+              error={errors.member?.address}
               {...register('member.address', { required: true })}
             />
 
             <TextInput
               inputMode='text'
-              className='input-sm'
+              className='input-sm input-primary'
               placeholder='Address Line 2'
               name='temp'
             />
@@ -92,22 +95,25 @@ function BusinessRegistration() {
             <div className='flex gap-1'>
               <TextInput
                 inputMode='text'
-                className='input-sm'
+                className='input-sm input-primary'
                 placeholder='City'
+                error={errors.member?.city}
                 {...register('member.city', { required: true })}
               />
 
               <Select
-                className='select-sm'
+                className='select-sm select-primary'
                 options={states}
+                error={errors.member?.state}
                 {...register('member.state', { required: true })}
               />
 
               <NumericInput
                 inputMode='numeric'
-                className='input-sm'
+                className='input-sm input-primary'
                 placeholder='Zip Code'
                 inputSize='w-fit'
+                error={errors.member?.zip}
                 {...register('member.zip', {
                   required: true,
                   valueAsNumber: true,
@@ -122,21 +128,23 @@ function BusinessRegistration() {
               <TextInput
                 inputMode='text'
                 label='First Name*'
-                className='input-sm'
+                className='input-sm input-primary'
+                error={errors.member?.firstName}
                 {...register('member.firstName', { required: true })}
               />
 
               <TextInput
                 inputMode='text'
                 label='Last Name*'
-                className='input-sm'
+                className='input-sm input-primary'
+                error={errors.member?.lastName}
                 {...register('member.lastName', { required: true })}
               />
             </div>
             <div className='flex gap-2'>
               <Select
                 label='Phone Type*'
-                className='select-sm'
+                className='select-sm select-primary'
                 options={phoneTypes}
                 {...register('member.phoneType', { required: true })}
               />
@@ -144,7 +152,8 @@ function BusinessRegistration() {
               <TextInput
                 label='Phone Number*'
                 inputMode='tel'
-                className='input-sm'
+                className='input-sm input-primary'
+                error={errors.member?.phone}
                 {...register('member.phone', { required: true })}
               />
             </div>
@@ -152,27 +161,17 @@ function BusinessRegistration() {
             <TextInput
               label='Email*'
               inputMode='text'
-              className='input-sm'
+              className='input-sm input-primary'
+              error={errors.member?.email}
               altLabel={
                 'This will the primary method of contact, ensure it is up to date!'
               }
               {...register('member.email', { required: true })}
             />
 
-            <h3>Registration Type*</h3>
-            <div className='flex gap-5'>
-              <Radio
-                label='Annual'
-                className='radio radio-primary radio-sm'
-                {...register('member.memberStatus', { required: true })}
-              />
-
-              <Radio
-                label='Life'
-                className='radio radio-primary radio-sm'
-                {...register('member.memberStatus', { required: true })}
-              />
-            </div>
+            <RegType
+              register={register('member.memberStatus', { required: true })}
+            />
           </div>
 
           <Checkbox

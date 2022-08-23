@@ -4,32 +4,27 @@ import { Radio } from '@/components/data-entry';
 
 interface Props {
   register: UseFormRegisterReturn;
-  watch: string;
 }
 
-// TODO: Add datepicker...
-
-const JRSR = ({ register, watch }: Props) => {
-  const isJR = watch === 'JR';
-
+function RegType({ register }: Props) {
   return (
-    <div className='mt-3'>
-      <h3>Is applicant under 18*</h3>
+    <div>
+      <h3 className='mt-3'>Registration Type*</h3>
       <Radio
-        label='Yes'
-        value='JR'
+        label='Annual'
+        value='Annual'
         className='radio radio-primary radio-sm'
         {...register}
       />
 
       <Radio
-        label='No'
-        value='SR'
+        label='Life'
+        value='Life'
         className='radio radio-primary radio-sm'
         {...register}
       />
     </div>
   );
-};
+}
 
-export default JRSR;
+export default RegType;

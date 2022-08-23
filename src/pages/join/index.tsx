@@ -4,8 +4,6 @@ import { PublicLayout } from '@/components/layout';
 import SteaJoinForm from '@/components/forms';
 import { Radio } from '@/components/data-entry';
 
-// TODO: Align Radio buttons and label properly
-
 function JoinStea() {
   const [formType, setFormType] = useState<FormType>();
 

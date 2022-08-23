@@ -17,6 +17,7 @@ import { trpc } from '@/utils/trpc';
 import { HorseFieldArray } from './fieldarrayfields';
 
 import { Type } from '@prisma/client';
+import RegType from './regtype';
 
 const phoneTypes = [
   {
@@ -102,32 +103,6 @@ function IndividualRegistration() {
           />
         </div>
 
-        <JRSR
-          register={[register('member.JRSR')]}
-          watch={isUnder18}
-        />
-
-        <div className='flex gap-2'>
-          <Checkbox
-            label='Current USEA Member?'
-            className='checkbox checkbox-primary checkbox-sm'
-            {...register('member.currentUSEAMember')}
-          />
-
-          {isUSEAMember && (
-            <NumericInput
-              inputMode='text'
-              className='input-sm input-primary'
-              placeholder='USEA Member ID'
-              inputSize='w-50'
-              {...register('member.useaMemberID', {
-                required: isUSEAMember,
-                valueAsNumber: true,
-              })}
-            />
-          )}
-        </div>
-
         <h3 className='mt-3'>Address*</h3>
         <div className='flex flex-col gap-2'>
           <TextInput
@@ -204,20 +179,36 @@ function IndividualRegistration() {
             />
           </div>
 
-          <h3 className='mt-3'>Registration Type*</h3>
-          <Radio
-            label='Annual'
-            value='Annual'
-            className='radio radio-primary radio-sm'
-            {...register('member.memberStatus', { required: true })}
+          <RegType
+            register={register('member.memberStatus', { required: true })}
           />
 
-          <Radio
-            label='Life'
-            value='Life'
-            className='radio radio-primary radio-sm'
-            {...register('member.memberStatus', { required: true })}
+          <JRSR
+            register={register('member.JRSR', { required: true })}
+            watch={isUnder18}
           />
+
+          <div className='flex gap-2'>
+            <Checkbox
+              label='Current USEA Member?'
+              className='checkbox checkbox-primary checkbox-sm'
+              {...register('member.currentUSEAMember')}
+            />
+
+            {isUSEAMember && (
+              <NumericInput
+                inputMode='text'
+                className='input-sm input-primary'
+                placeholder='USEA Member ID'
+                inputSize='w-50'
+                error={formState.errors.member?.useaMemberID}
+                {...register('member.useaMemberID', {
+                  required: isUSEAMember,
+                  valueAsNumber: true,
+                })}
+              />
+            )}
+          </div>
 
           <Checkbox
             label='Do you plan to register your horse(s)?'

@@ -1,6 +1,7 @@
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { Prisma, RiderCombo, Status } from '@prisma/client';
-import { Radio, TextInput } from '../data-entry';
+import { TextInput } from '../data-entry';
+import RegType from './regtype';
 
 type Horses = {
   horses: Prisma.HorseCreateManyInput[];
@@ -77,27 +78,9 @@ export function HorseFieldArray() {
           </h2>
 
           <div className='card-body'>
-            <h3>Registration Type*</h3>
-
-            <div className='flex gap-5'>
-              <Radio
-                label='Annual'
-                className='radio radio-secondary radio-sm'
-                value='Annual'
-                {...register(`horses.${index}.regType` as const, {
-                  required: true,
-                })}
-              />
-
-              <Radio
-                label='Life'
-                className='radio radio-secondary radio-sm'
-                value='Life'
-                {...register(`horses.${index}.regType` as const, {
-                  required: true,
-                })}
-              />
-            </div>
+            <RegType
+              register={register(`horses.${index}.regType` as const, { required: true })}
+            />
 
             <div className='flex flex-col gap-2'>
               <TextInput
@@ -184,6 +167,7 @@ export function RiderComboFieldArray() {
                   required: true,
                 })}
               />
+
               <TextInput
                 label='Horse Registered Name*'
                 inputMode='text'

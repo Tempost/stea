@@ -19,7 +19,7 @@ function Tables() {
       <div
         className='btn-group'
         //@ts-ignore TODO: why is value not on target?
-        onClick={e => setTable(e.target.value)}
+        onClick={e => setTable(e.current.value)}
       >
         <button
           className={memberSelected ? activeBtn : 'btn'}

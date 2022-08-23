@@ -71,14 +71,16 @@ function HorseRegistration() {
             <TextInput
               inputMode='text'
               label='First Name*'
-              className='input-sm'
+              className='input-sm input-primary'
+              error={errors.owner?.firstName}
               {...register('owner.firstName', { required: true })}
             />
 
             <TextInput
               inputMode='text'
               label='Last Name*'
-              className='input-sm'
+              className='input-sm input-primary'
+              error={errors.owner?.lastName}
               {...register('owner.lastName', { required: true })}
             />
           </div>
@@ -87,7 +89,8 @@ function HorseRegistration() {
             <TextInput
               label='Email'
               inputMode='text'
-              className='input-sm'
+              className='input-sm input-primary'
+              error={errors.owner?.email}
               altLabel='This will the primary method of contact, ensure it is up to date!'
               {...register('owner.email', { required: true })}
             />
@@ -95,7 +98,7 @@ function HorseRegistration() {
             <div className='flex gap-2'>
               <Select
                 label='Phone Type*'
-                className='select-sm'
+                className='select-sm input-primary'
                 options={phoneTypes}
                 {...register('owner.phoneType', { required: true })}
               />
@@ -103,7 +106,8 @@ function HorseRegistration() {
               <TextInput
                 label='Phone Number*'
                 inputMode='tel'
-                className='input-sm'
+                className='input-sm input-primary'
+                error={errors.owner?.phone}
                 {...register('owner.phone', { required: true })}
               />
             </div>
