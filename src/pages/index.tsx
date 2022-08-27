@@ -3,27 +3,26 @@ import Link from 'next/link';
 import { PublicLayout } from '@/components/layout';
 
 import { ReactElement } from 'react';
+import Image from 'next/image';
 
 function Home() {
   return (
     <>
       <section>
         <div className='hero min-h-screen bg-home-hero bg-fixed'>
-          <div className='hero-overlay bg-opacity-40'></div>
+          <div className='hero-overlay bg-opacity-50'></div>
 
           <div className='hero-content text-neutral-content text-center'>
-            <div className='flex flex-col gap-5 items-center min-w-full'>
-              <h2 className='text-8xl'> STEA </h2>
-              <p className='text-sm'> South Texas Eventing Association </p>
+            <div className='flex flex-col items-center min-w-full'>
+              <Image width={500} height={500} src='/stea_logo.svg'/>
 
-              <h2 className='text-3xl'>
-                {' '}
-                Texas's Southwest Premier Eventing Association{' '}
+              <h2 className='text-3xl prose-headings:h2'>
+                Where your eventing journey begins
               </h2>
               <Link href={'/join'}>
                 <button
                   data-cy='join-link-button'
-                  className='btn btn-primary w-[50%]'
+                  className='btn btn-primary mt-20 text-xl w-[75%]'
                 >
                   Join Today!
                 </button>
@@ -34,25 +33,11 @@ function Home() {
       </section>
 
       <section className='flex flex-col items-center'>
-        <h1 className='text-xl'> End of Year Placings</h1>
-        <table className='table table-compact w-fit'>
-          <thead>
-            <tr>
-              <th></th>
-              <th>Division</th>
-              <th>Member</th>
-              <th>Horse</th>
-              <th>Total Points</th>
-              <th>Show Count</th>
-              <th>Placing</th>
-            </tr>
-          </thead>
-        </table>
+        <h1 className='text-xl prose-headings:h1'> End of Year Placings</h1>
       </section>
 
       <section className='flex flex-col items-center'>
-        <h1 className='text-xl'>Recognized vendors</h1>
-        <div></div>
+        <h1 className='text-xl prose-headings:h1'>Recognized vendors</h1>
       </section>
       <section>
         <h1>HTML Ipsum Presents</h1>

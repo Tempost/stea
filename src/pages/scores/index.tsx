@@ -43,7 +43,15 @@ function SteaPoints() {
   );
 
   return (
-    <div className='pt-28 w-full grid place-items-center'>
+    <div className='w-full grid place-items-center gap-5'>
+      <a
+        className='btn btn-primary'
+        href='/stea_points.docx'
+        rel='noopener noreferrer'
+      >
+        Download Guidelines
+      </a>
+
       <RidersTable overRideDefaultCols={riderCols} />
     </div>
   );

@@ -1,6 +1,8 @@
 import { PublicLayout } from '@/components/layout';
-function SteaGuidelines() {}
 import { ReactElement } from 'react';
+
+function SteaGuidelines() {}
+
 SteaGuidelines.getLayout = (page: ReactElement) => {
   return <PublicLayout>{page}</PublicLayout>;
 };

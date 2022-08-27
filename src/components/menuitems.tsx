@@ -16,22 +16,12 @@ export const publicMenuItems: Menu[] = [
     name: 'Members & Horses',
   },
   {
+    href: '/scores',
     name: 'Points',
-    render: ({ name: navText }) => (
-      <NavLinkMenu
-        name={navText}
-        routes={[
-          {
-            href: '/scores',
-            text: 'Scores',
-          },
-          {
-            href: '/scores/guidelines',
-            text: 'Guidelines',
-          },
-        ]}
-      />
-    ),
+  },
+  {
+    href: '/calender',
+    name: 'Calender',
   },
   {
     name: 'Join',
@@ -56,10 +46,6 @@ export const publicMenuItems: Menu[] = [
     ),
   },
   {
-    href: '/calender',
-    name: 'Calender',
-  },
-  {
     href: '/contactus',
     name: 'Contact Us',
   },
@@ -67,7 +53,6 @@ export const publicMenuItems: Menu[] = [
 
 export const dashMenuItems: Menu[] = [
   {
-    href: '',
     name: 'Review',
     render: ({ name: navText }) => (
       <NavLinkMenu
@@ -94,7 +79,23 @@ export const dashMenuItems: Menu[] = [
     name: 'Submit Points',
   },
   {
-    href: '',
     name: 'Documents',
+    // TODO: Add download links to the download options
+    render: ({ name: navText }) => (
+      <NavLinkMenu
+        name={navText}
+        routes={
+          [
+            {
+              href: '',
+              text: 'Point submission form',
+            },
+            {
+              href: '',
+              text: 'Organizer Pack',
+            },
+          ]}
+      />
+    ),
   },
 ];

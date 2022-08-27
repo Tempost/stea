@@ -3,19 +3,18 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        'home-hero': "url('/STEA_photos/A99I3830-(ZF-5269-01547-1-001).jpg')",
+        'home-hero': "url('/A99I3830-(ZF-5269-01547-1-001).jpg')",
       },
     },
   },
   plugins: [require('@tailwindcss/typography'), require('daisyui')],
   daisyui: {
     styled: true,
-    themes: true,
+    themes: ['light'],
     base: true,
     utils: true,
     logs: true,
     rtl: false,
     prefix: '',
-    darkTheme: 'dark',
   },
 };

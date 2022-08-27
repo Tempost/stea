@@ -7,13 +7,11 @@ interface Props {
   watch: string;
 }
 
-// TODO: Add datepicker...
-
 const JRSR = ({ register, watch }: Props) => {
   const isJR = watch === 'JR';
 
   return (
-    <div className='mt-3'>
+    <div className='mt-3 w-fit'>
       <h3>Is applicant under 18*</h3>
       <Radio
         label='Yes'
