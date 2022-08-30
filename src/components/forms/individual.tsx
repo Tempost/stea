@@ -184,7 +184,9 @@ function IndividualRegistration() {
           />
 
           <JRSR
-            register={register('member.JRSR', { required: true })}
+            radioRegister={register('member.JRSR', { required: true })}
+            dateRegister={register('member.dateOfBirth', { required: true })}
+            error={formState.errors.member?.dateOfBirth}
             watch={isUnder18}
           />
 
