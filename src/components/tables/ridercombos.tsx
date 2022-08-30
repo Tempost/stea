@@ -7,16 +7,17 @@ import type { CompleteRiderCombo } from '@/backend/prisma/zod';
 import type { ColumnDef } from '@tanstack/react-table';
 
 interface RidersTableProps {
+  title?: string;
   overRideDefaultCols?: ColumnDef<CompleteRiderCombo>[];
 }
 
-function RidersTable({ overRideDefaultCols }: RidersTableProps) {
+function RidersTable({ title, overRideDefaultCols }: RidersTableProps) {
   const riders = trpc.useQuery(['rider.get-riders']);
 
   const defaultCols = useMemo<ColumnDef<CompleteRiderCombo>[]>(
     () => [
       {
-        header: 'Riders',
+        header: title ?? 'Riders',
         columns: [
           {
             accessorKey: 'horseName',

@@ -13,16 +13,17 @@ function Home() {
           <div className='hero-overlay bg-opacity-50'></div>
 
           <div className='hero-content text-neutral-content text-center'>
-            <div className='flex flex-col items-center min-w-full'>
-              <Image width={500} height={500} src='/stea_logo.svg'/>
+            <div className='flex flex-col items-center min-w-full gap-5'>
+              <Image width={600} height={441} layout='intrinsic' src='/stea_logo_white.png'/>
 
-              <h2 className='text-3xl prose-headings:h2'>
-                Where your eventing journey begins
+              <h2 className='text-5xl'>
+                Where Your Eventing Journey Begins
               </h2>
+
               <Link href={'/join'}>
                 <button
                   data-cy='join-link-button'
-                  className='btn btn-primary mt-20 text-xl w-[75%]'
+                  className='btn btn-primary btn-lg text-3xl'
                 >
                   Join Today!
                 </button>

@@ -25,11 +25,19 @@ function TableWithData<T>({ colDef, query, paginate }: TableWithDataProps<T>) {
   const table = useReactTable(tableOpts);
 
   if (query.isLoading) {
-    return <>Loading...</>;
+    return (
+      <div className='shadow-xl rounded-b-lg p-5'>
+        Loading...
+      </div>
+    );
   }
 
   if (query.isError) {
-    return <>Error...</>;
+    return (
+      <div className='shadow-xl rounded-b-lg p-5'>
+        Error...
+      </div>
+    );
   }
 
   return (
@@ -47,25 +55,29 @@ function TableWithData<T>({ colDef, query, paginate }: TableWithDataProps<T>) {
                   {header.isPlaceholder
                     ? null
                     : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
                 </th>
               ))}
             </tr>
           ))}
         </thead>
+
         <tbody className='border'>
           {table.getRowModel().rows.map(row => (
             <tr
               key={row.id}
               className='divide-x'
             >
-              {row.getVisibleCells().map(cell => (
-                <td key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
+              {row.getVisibleCells().map(cell => {
+                const shouldCenter = typeof cell.getValue() === 'number';
+                return (
+                  <td key={cell.id} className={shouldCenter ? 'text-center' : ''}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                )
+              })}
             </tr>
           ))}
         </tbody>
