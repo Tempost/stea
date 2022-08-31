@@ -21,7 +21,9 @@ function OwnerTable() {
               const date: Date = info.getValue();
               if (date === null) return 'N/A';
 
-              return `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`;
+              return `${
+                date.getMonth() + 1
+              }/${date.getDate()}/${date.getFullYear()}`;
             },
             header: () => <span> Registration Date </span>,
           },

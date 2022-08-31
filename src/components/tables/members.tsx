@@ -24,7 +24,9 @@ function MemberTable({ overRideDefaultCols }: MemberTableProps) {
             cell: info => {
               const date: Date = info.getValue();
 
-              return `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`;
+              return `${
+                date.getMonth() + 1
+              }/${date.getDate()}/${date.getFullYear()}`;
             },
             header: () => <span> Join Date </span>,
           },

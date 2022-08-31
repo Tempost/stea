@@ -8,7 +8,7 @@ interface Props {
 
 function RegType({ register }: Props) {
   return (
-    <div className ='mt-3 w-fit'>
+    <div className='mt-3 w-fit'>
       <h3>Registration Type*</h3>
       <Radio
         label='Annual'

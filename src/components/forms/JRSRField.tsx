@@ -1,8 +1,6 @@
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
-import 'flatpickr/dist/themes/material_blue.css';
-import Flatpickr from 'react-flatpickr';
 
-import { Radio, TextInput } from '@/components/data-entry';
+import { Radio, ControlledDatePicker } from '@/components/data-entry';
 
 interface Props {
   radioRegister: UseFormRegisterReturn;
@@ -31,19 +29,7 @@ const JRSR = ({ radioRegister, dateRegister, error, watch }: Props) => {
         {...radioRegister}
       />
 
-      {isJR ? (
-        <Flatpickr
-          render={({ defaultValue, value, ...props }, ref) => (
-            <TextInput
-              placeholder='Date of Birth'
-              className='input-sm input-primary'
-              error={error}
-              {...dateRegister}
-              ref={ref}
-            />
-          )}
-        />
-      ) : null}
+      {isJR ? <ControlledDatePicker register={dateRegister} /> : null}
     </div>
   );
 };

@@ -12,7 +12,7 @@ interface TextInputProps
   altLabel?: string;
   inputSize?: string;
   error?: FieldError;
-  name: string;
+  name?: string;
 }
 
 const TextInput = forwardRef<HTMLInputElement, TextInputProps>(

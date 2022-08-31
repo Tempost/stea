@@ -14,11 +14,14 @@ function Home() {
 
           <div className='hero-content text-neutral-content text-center'>
             <div className='flex flex-col items-center min-w-full gap-5'>
-              <Image width={600} height={441} layout='intrinsic' src='/stea_logo_white.png'/>
+              <Image
+                width={600}
+                height={441}
+                layout='intrinsic'
+                src='/stea_logo_white.png'
+              />
 
-              <h2 className='text-5xl'>
-                Where Your Eventing Journey Begins
-              </h2>
+              <h2 className='text-5xl'>Where Your Eventing Journey Begins</h2>
 
               <Link href={'/join'}>
                 <button

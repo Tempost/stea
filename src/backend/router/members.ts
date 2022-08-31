@@ -56,15 +56,12 @@ export const member = createRouter()
   })
   .mutation('add-member', {
     input: z.object({
-      // NOTE: Will throw trpc client error if UID is not omited from the validator
-      // when creating fresh members with payment info we do not need UID its auto generated
       member: MemberModel.required(),
       payment: PaymentModel.omit({ payee: true }).optional(),
       horses: HorseModel.array().optional(),
     }),
 
     async resolve({ input }) {
-      console.log(input.member, input.payment, input.horses);
       await prisma.member
         .create({
           data: {

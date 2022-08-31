@@ -17,9 +17,10 @@ function MembersAnHorses() {
             id: 'membershipDate',
             cell: info => {
               const date: Date = info.getValue();
-              if (date === null) return 'N/A';
 
-              return `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`;
+              return `${
+                date.getMonth() + 1
+              }/${date.getDate()}/${date.getFullYear()}`;
             },
             header: () => <span> Join Date </span>,
           },
@@ -59,7 +60,9 @@ function MembersAnHorses() {
               const date: Date = info.getValue();
               if (date === null) return 'N/A';
 
-              return `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`;
+              return `${
+                date.getMonth() + 1
+              }/${date.getDate()}/${date.getFullYear()}`;
             },
             header: () => <span> Registration Date </span>,
           },

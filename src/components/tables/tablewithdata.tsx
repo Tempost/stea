@@ -25,19 +25,11 @@ function TableWithData<T>({ colDef, query, paginate }: TableWithDataProps<T>) {
   const table = useReactTable(tableOpts);
 
   if (query.isLoading) {
-    return (
-      <div className='shadow-xl rounded-b-lg p-5'>
-        Loading...
-      </div>
-    );
+    return <div className='shadow-xl rounded-b-lg p-5'>Loading...</div>;
   }
 
   if (query.isError) {
-    return (
-      <div className='shadow-xl rounded-b-lg p-5'>
-        Error...
-      </div>
-    );
+    return <div className='shadow-xl rounded-b-lg p-5'>Error...</div>;
   }
 
   return (
@@ -55,9 +47,9 @@ function TableWithData<T>({ colDef, query, paginate }: TableWithDataProps<T>) {
                   {header.isPlaceholder
                     ? null
                     : flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                 </th>
               ))}
             </tr>
@@ -73,10 +65,13 @@ function TableWithData<T>({ colDef, query, paginate }: TableWithDataProps<T>) {
               {row.getVisibleCells().map(cell => {
                 const shouldCenter = typeof cell.getValue() === 'number';
                 return (
-                  <td key={cell.id} className={shouldCenter ? 'text-center' : ''}>
+                  <td
+                    key={cell.id}
+                    className={shouldCenter ? 'text-center' : ''}
+                  >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
-                )
+                );
               })}
             </tr>
           ))}

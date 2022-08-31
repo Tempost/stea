@@ -42,7 +42,12 @@ function BusinessRegistration() {
     shouldUnregister: true,
     schema: MemberFormValues,
   });
-  const { register, watch, handleSubmit, formState: { errors } } = methods;
+  const {
+    register,
+    watch,
+    handleSubmit,
+    formState: { errors },
+  } = methods;
 
   const isRegHorse = watch('horseReg', false);
 

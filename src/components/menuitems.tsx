@@ -84,17 +84,16 @@ export const dashMenuItems: Menu[] = [
     render: ({ name: navText }) => (
       <NavLinkMenu
         name={navText}
-        routes={
-          [
-            {
-              href: '',
-              text: 'Point submission form',
-            },
-            {
-              href: '',
-              text: 'Organizer Pack',
-            },
-          ]}
+        routes={[
+          {
+            href: '',
+            text: 'Point submission form',
+          },
+          {
+            href: '',
+            text: 'Organizer Pack',
+          },
+        ]}
       />
     ),
   },

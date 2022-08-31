@@ -53,6 +53,7 @@ function IndividualRegistration() {
   const { setValue, watch, register, handleSubmit, control } = methods;
 
   const formState = useFormState({ control });
+  console.log(methods.getValues());
 
   const isUSEAMember = watch('member.currentUSEAMember', false);
   const isUnder18 = watch('member.JRSR', 'SR');
@@ -185,8 +186,9 @@ function IndividualRegistration() {
 
           <JRSR
             radioRegister={register('member.JRSR', { required: true })}
-            dateRegister={register('member.dateOfBirth', { required: true })}
-            error={formState.errors.member?.dateOfBirth}
+            dateRegister={register('member.dateOfBirth', {
+              required: isUnder18,
+            })}
             watch={isUnder18}
           />
 

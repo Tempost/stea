@@ -3,8 +3,8 @@ import type { DetailedHTMLProps, InputHTMLAttributes } from 'react';
 
 interface RadioProps
   extends DetailedHTMLProps<
-  InputHTMLAttributes<HTMLInputElement>,
-  HTMLInputElement
+    InputHTMLAttributes<HTMLInputElement>,
+    HTMLInputElement
   > {
   label: string | JSX.Element;
 }

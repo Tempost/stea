@@ -79,7 +79,9 @@ export function HorseFieldArray() {
 
           <div className='card-body'>
             <RegType
-              register={register(`horses.${index}.regType` as const, { required: true })}
+              register={register(`horses.${index}.regType` as const, {
+                required: true,
+              })}
             />
 
             <div className='flex flex-col gap-2'>
