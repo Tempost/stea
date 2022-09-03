@@ -2,6 +2,8 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 import { Prisma, RiderCombo, Status } from '@prisma/client';
 import { TextInput } from '../data-entry';
 import RegType from './regtype';
+import { useAtom } from 'jotai';
+import { updateFormState } from '@/utils/atoms';
 
 type Horses = {
   horses: Prisma.HorseCreateManyInput[];
@@ -53,6 +55,8 @@ export function HorseFieldArray() {
     name: 'horses',
   });
 
+  const [, update] = useAtom(updateFormState);
+
   return (
     <>
       <h2 className='text-sm font-bold'>
@@ -71,7 +75,10 @@ export function HorseFieldArray() {
             Horse {index + 1}
             <button
               className='btn btn-link text-red-500 btn-xs'
-              onClick={() => remove(index)}
+              onClick={() => {
+                update('REMOVE');
+                remove(index);
+              }}
             >
               {TrashIcon}
             </button>
@@ -109,13 +116,14 @@ export function HorseFieldArray() {
 
       <button
         className='btn btn-secondary btn-xs'
-        onClick={() =>
+        onClick={() => {
+          update('ADD');
           append({
             horseRN: '',
             horseAKA: '',
             regType: 'Annual' as Status,
-          })
-        }
+          });
+        }}
       >
         {AddIcon} Add Horse
       </button>
