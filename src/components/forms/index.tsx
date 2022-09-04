@@ -8,14 +8,14 @@ import { formState } from '@/utils/atoms';
 function SteaJoinForm() {
   const [state] = useAtom(formState);
 
-  switch (state.selection) {
-    case 'individual':
+  switch (state.type) {
+    case 'Individual':
       return <IndividualRegistration />;
-    case 'horse':
+    case 'Horse':
       return <HorseRegistration />;
-    case 'business':
+    case 'Business':
       return <BusinessRegistration />;
-    case 'payment':
+    case 'Payment':
       return <Payment />;
     default:
       return <h1 className='prose prose-2xl'>Invalid form selected...</h1>;

@@ -23,7 +23,7 @@ export type AppPropsWithLayout = AppProps & {
 const AtomsDevTools = ({ children }: any) => {
   useAtomsDevtools('Form State');
   return children;
-}
+};
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout || (page => page);
@@ -44,9 +44,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           content='viewport-fit=cover'
         />
       </Head>
-      <AtomsDevTools>
-        {getLayout(<Component {...pageProps} />)}
-      </AtomsDevTools>
+      <AtomsDevTools>{getLayout(<Component {...pageProps} />)}</AtomsDevTools>
     </>
   );
 }

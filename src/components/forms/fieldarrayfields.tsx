@@ -2,8 +2,6 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 import { Prisma, RiderCombo, Status } from '@prisma/client';
 import { TextInput } from '../data-entry';
 import RegType from './regtype';
-import { useAtom } from 'jotai';
-import { updateFormState } from '@/utils/atoms';
 
 type Horses = {
   horses: Prisma.HorseCreateManyInput[];
@@ -55,8 +53,6 @@ export function HorseFieldArray() {
     name: 'horses',
   });
 
-  const [, update] = useAtom(updateFormState);
-
   return (
     <>
       <h2 className='text-sm font-bold'>
@@ -75,10 +71,7 @@ export function HorseFieldArray() {
             Horse {index + 1}
             <button
               className='btn btn-link text-red-500 btn-xs'
-              onClick={() => {
-                update('REMOVE');
-                remove(index);
-              }}
+              onClick={() => remove(index)}
             >
               {TrashIcon}
             </button>
@@ -95,7 +88,7 @@ export function HorseFieldArray() {
               <TextInput
                 label='Registered Name*'
                 inputMode='text'
-                className='input-sm'
+                className='input-sm input-primary'
                 {...register(`horses.${index}.horseRN` as const, {
                   required: true,
                 })}
@@ -104,10 +97,8 @@ export function HorseFieldArray() {
               <TextInput
                 label='Aka Name'
                 inputMode='text'
-                className='input-sm'
-                {...register(`horses.${index}.horseAKA` as const, {
-                  required: true,
-                })}
+                className='input-sm input-primary'
+                {...register(`horses.${index}.horseAKA` as const)}
               />
             </div>
           </div>
@@ -116,14 +107,13 @@ export function HorseFieldArray() {
 
       <button
         className='btn btn-secondary btn-xs'
-        onClick={() => {
-          update('ADD');
+        onClick={() =>
           append({
             horseRN: '',
             horseAKA: '',
             regType: 'Annual' as Status,
-          });
-        }}
+          })
+        }
       >
         {AddIcon} Add Horse
       </button>

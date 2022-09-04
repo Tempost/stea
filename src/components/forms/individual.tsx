@@ -15,8 +15,10 @@ import useZodForm from '@/utils/usezodform';
 import { trpc } from '@/utils/trpc';
 import { HorseFieldArray } from './fieldarrayfields';
 
-import { Type } from '@prisma/client';
+import { Type, Horse } from '@prisma/client';
 import RegType from './regtype';
+import { useSetAtom } from 'jotai';
+import { updateFormState } from '@/utils/atoms';
 
 const phoneTypes = [
   {
@@ -41,6 +43,7 @@ const MemberFormValues = z.object({
 
 function IndividualRegistration() {
   const memberMutation = trpc.useMutation(['member.add-member']);
+  const update = useSetAtom(updateFormState);
 
   const methods = useZodForm({
     reValidateMode: 'onSubmit',
@@ -68,12 +71,29 @@ function IndividualRegistration() {
   `;
 
   function onSumbit(formValues: FieldValues) {
+    const lifeCount = formValues.horses.filter(
+      (horse: Horse) => horse.regType === 'Life'
+    ).length;
+
+    const annualCount = formValues.horses.filter(
+      (horse: Horse) => horse.regType === 'Annual'
+    ).length;
+
+    update({ type: 'HORSE', payload: { lifeCount, annualCount } });
+
     formValues.member.fullName = `${formValues.member.firstName} ${formValues.member.lastName}`;
 
-    memberMutation.mutate({
-      member: formValues.member,
-      horses: formValues.horses,
-    });
+    update({type: 'FORMTYPE', payload: 'Payment'})
+
+    // TODO: Move adding to the DB to the payment screen
+    // memberMutation.mutate({
+    //   member: formValues.member,
+    //   horses: formValues.horses,
+    // });
+  }
+
+  function handleRadioClick(e: any) {
+    update({ type: 'STATUS', payload: e.target.value });
   }
 
   setValue('member.memberType', 'Individual' as Type);
@@ -180,6 +200,7 @@ function IndividualRegistration() {
           </div>
 
           <RegType
+            onClick={handleRadioClick}
             register={register('member.memberStatus', { required: true })}
           />
 
