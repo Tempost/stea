@@ -1,6 +1,6 @@
 import { Status } from '@prisma/client';
 
-export const FORMTYPE = ['Individual', 'Business', 'Horse', 'Payment'] as const;
+export const FORMTYPE = ['Individual', 'Business', 'Horse'] as const;
 export type FormType = typeof FORMTYPE[number];
 
 export const STATUS = ['Life', 'Annual', 'Renew'] as const;

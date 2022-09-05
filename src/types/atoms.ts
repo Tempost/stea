@@ -2,9 +2,12 @@ import { Status, Type } from '@prisma/client';
 import { FormType, STATUS, TYPE } from './common';
 
 export interface FormState {
-  type?: FormType;
-  member: MemberPayload;
-  horses: HorsePayload;
+  type: FormType;
+  memberCost: number;
+  horses: {
+    lifeCost: number;
+    annualCost: number;
+  };
 }
 
 export interface ReducerAction {
@@ -17,10 +20,7 @@ export interface HorsePayload {
   annualCount: number;
 }
 
-export interface MemberPayload {
-  type?: Type;
-  status?: Status;
-}
+export type MemberPayload = Type | Status;
 
 export function isHorsePayload(o: any): o is HorsePayload {
   return o?.lifeCount !== undefined;

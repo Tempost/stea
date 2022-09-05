@@ -1,18 +1,26 @@
+import { ReactElement } from 'react';
 import { FieldValues, FormProvider } from 'react-hook-form';
 import { z } from 'zod';
 
 import {
-  Radio,
   TextInput,
   Select,
   NumericInput,
   Checkbox,
 } from '@/components/data-entry';
+
 import states from '@/utils/states.json';
 import useZodForm from '@/utils/usezodform';
 import { HorseModel, MemberModel } from '@/backend/prisma/zod';
-import { HorseFieldArray, RiderComboFieldArray } from './fieldarrayfields';
-import RegType from './regtype';
+import {
+  HorseFieldArray,
+  RiderComboFieldArray,
+} from '@/components/forms/fieldarrayfields';
+import RegType from '@/components/forms/regtype';
+import { useSetAtom } from 'jotai';
+import { formState, updateFormState } from '@/utils/atoms';
+import { FormLayout } from '@/components/layout';
+import { Horse, Type } from '@prisma/client';
 
 const phoneTypes = [
   {
@@ -46,12 +54,36 @@ function BusinessRegistration() {
     register,
     watch,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = methods;
 
+  const update = useSetAtom(updateFormState);
+
   const isRegHorse = watch('horseReg', false);
 
+  const finishButtonStyles = `
+    btn
+    btn-primary
+    mt-8
+    w-full
+  `;
+
   function onSumbit(formValues: FieldValues) {
+    if (formValues.horses !== undefined) {
+      const lifeCount = formValues.horses.filter(
+        (horse: Horse) => horse.regType === 'Life'
+      ).length;
+
+      const annualCount = formValues.horses.filter(
+        (horse: Horse) => horse.regType === 'Annual'
+      ).length;
+
+      update({
+        type: 'HORSE',
+        payload: { lifeCount: lifeCount, annualCount: annualCount },
+      });
+    }
     formValues.member.fullName = `${formValues.member.firstName} ${formValues.member.lastName}`;
 
     // memberMutation.mutate({
@@ -59,6 +91,16 @@ function BusinessRegistration() {
     //   horses: formValues.horses,
     // });
   }
+
+  function handleRadioClick(e: any) {
+    update({ type: 'STATUS', payload: e.target.value });
+  }
+
+  setValue('member.memberType', 'Individual' as Type);
+  setValue('member.boardMember', false);
+  setValue('member.confirmed', false);
+  setValue('member.currentUSEAMember', false);
+  setValue('member.JRSR', 'SR');
 
   return (
     <FormProvider {...methods}>
@@ -188,15 +230,20 @@ function BusinessRegistration() {
           {isRegHorse && <HorseFieldArray />}
           {isRegHorse && <RiderComboFieldArray />}
         </div>
+
         <button
-          className='btn btn-primary mt-8 w-full'
           type='submit'
+          className={finishButtonStyles}
         >
-          Finished
+          Move to payment
         </button>
       </form>
     </FormProvider>
   );
 }
+
+BusinessRegistration.getLayout = (page: ReactElement) => {
+  return <FormLayout>{page}</FormLayout>;
+};
 
 export default BusinessRegistration;

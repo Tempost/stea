@@ -14,7 +14,7 @@ const initOptions: ReactPayPalScriptOptions = {
 function PayPalButton() {
   return (
     <button
-      className='mt-8 w-full'
+      className='w-full'
       type='submit'
     >
       <PayPalScriptProvider options={initOptions}>

@@ -5,19 +5,26 @@ import {
   ReducerAction,
   HorsePayload,
   isHorsePayload,
-  isSignUpType,
+  MemberPayload,
+  isMemberPayload,
 } from '@/types/atoms';
-import { Status, Type } from '@prisma/client';
-import { FormType, isFormType, isStatus } from '@/types/common';
+import { FormType, isFormType } from '@/types/common';
+
+const costs = {
+  Individual: 55,
+  AnnualPerHorse: 20,
+  Business: 65,
+  Life: 500,
+  LifePerHorse: 150,
+  Family: 0,
+};
 
 const initFormState: FormState = {
-  member: {
-    type: undefined,
-    status: undefined,
-  },
+  type: 'Individual',
+  memberCost: 0,
   horses: {
-    lifeCount: 0,
-    annualCount: 0,
+    lifeCost: 0,
+    annualCost: 0,
   },
 };
 
@@ -30,51 +37,46 @@ const updateFormType = atom(null, (get, set, updateValue: FormType) => {
     draft.type = updateValue;
   });
 
+  set(formState, newState);
+});
+
+const updateSignupCost = atom(null, (get, set, updateValue: MemberPayload) => {
+  const prev = get(formState);
+  const newState = produce(prev, draft => {
+    if (updateValue === 'Annual') {
+      if (draft.type === 'Individual') draft.memberCost = costs[draft.type];
+
+      if (draft.type === 'Business') draft.memberCost = costs[draft.type];
+    }
+
+    if (updateValue === 'Life') draft.memberCost = costs[updateValue];
+  });
+  set(formState, newState);
+});
+
+const updateHorseCost = atom(null, (get, set, updateValue: HorsePayload) => {
+  const prev = get(formState);
+  const newState = produce(prev, draft => {
+    draft.horses = {
+      lifeCost: updateValue.lifeCount * costs.LifePerHorse,
+      annualCost: updateValue.annualCount * costs.AnnualPerHorse,
+    };
+  });
+
   console.log(newState);
   set(formState, newState);
 });
 
-const updateSignUp = atom(null, (get, set, updateValue: Type) => {
-  const prev = get(formState);
-  const newState = produce(prev, draft => {
-    draft.member.type = updateValue;
-  });
-
-  set(formState, newState);
-});
-
-const updateStatus = atom(null, (get, set, updateValue: Status) => {
-  const prev = get(formState);
-  const newState = produce(prev, draft => {
-    draft.member.status = updateValue;
-  });
-
-  set(formState, newState);
-});
-
-const updateHorseCount = atom(null, (get, set, updateValue: HorsePayload) => {
-  const prev = get(formState);
-  const newState = produce(prev, draft => {
-    draft.horses = updateValue;
-  });
-
-  set(formState, newState);
-});
-
 const updateFormState = atom(null, (_get, set, action: ReducerAction) => {
-  console.log(action);
   switch (action.type) {
     case 'FORMTYPE':
       isFormType(action.payload) && set(updateFormType, action.payload);
       break;
-    case 'SIGNUPTYPE':
-      isSignUpType(action.payload) && set(updateSignUp, action.payload);
-      break;
     case 'STATUS':
-      isStatus(action.payload) && set(updateStatus, action.payload);
+      isMemberPayload(action.payload) && set(updateSignupCost, action.payload);
       break;
     case 'HORSE':
-      isHorsePayload(action.payload) && set(updateHorseCount, action.payload);
+      isHorsePayload(action.payload) && set(updateHorseCost, action.payload);
       break;
     case 'RESET':
       set(formState, initFormState);

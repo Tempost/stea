@@ -1,18 +1,28 @@
 import { UseFormRegisterReturn } from 'react-hook-form';
 
 import { Radio } from '@/components/data-entry';
-import { MouseEventHandler } from 'react';
+import { useSetAtom } from 'jotai';
+import { updateFormState } from '@/utils/atoms';
+import { Status } from '@prisma/client';
+import { ChangeEvent } from 'react';
 
 interface Props {
   register: UseFormRegisterReturn;
-  onClick?: MouseEventHandler<HTMLDivElement>;
+  noAtomUpdate?: boolean;
 }
 
-function RegType({ register, onClick }: Props) {
+function RegType({ register, noAtomUpdate }: Props) {
+  const update = useSetAtom(updateFormState);
+
+  function handleRadioClick(e: ChangeEvent<HTMLInputElement>) {
+    !noAtomUpdate &&
+      update({ type: 'STATUS', payload: e.target.value as Status });
+  }
+
   return (
     <div
       className='mt-3 w-fit'
-      onClick={onClick}
+      onChange={handleRadioClick}
     >
       <h3>Registration Type*</h3>
       <Radio

@@ -1,3 +1,4 @@
+import { ReactElement } from 'react';
 import { z } from 'zod';
 import { FieldValues, FormProvider, useFormState } from 'react-hook-form';
 
@@ -9,16 +10,17 @@ import {
 } from '@/components/data-entry';
 
 import { HorseModel, MemberModel } from '@/backend/prisma/zod';
-import JRSR from './JRSRField';
+import JRSR from '@/components/forms/JRSRField';
 import states from '@/utils/states.json';
 import useZodForm from '@/utils/usezodform';
 import { trpc } from '@/utils/trpc';
-import { HorseFieldArray } from './fieldarrayfields';
+import { HorseFieldArray } from '@/components/forms/fieldarrayfields';
 
 import { Type, Horse } from '@prisma/client';
-import RegType from './regtype';
+import RegType from '@/components/forms/regtype';
 import { useSetAtom } from 'jotai';
 import { updateFormState } from '@/utils/atoms';
+import { FormLayout } from '@/components/layout';
 
 const phoneTypes = [
   {
@@ -54,8 +56,7 @@ function IndividualRegistration() {
 
   const { setValue, watch, register, handleSubmit, control } = methods;
 
-  const formState = useFormState({ control });
-  console.log(methods.getValues());
+  const inputState = useFormState({ control });
 
   const isUSEAMember = watch('member.currentUSEAMember', false);
   const isUnder18 = watch('member.JRSR', 'SR');
@@ -71,29 +72,28 @@ function IndividualRegistration() {
   `;
 
   function onSumbit(formValues: FieldValues) {
-    const lifeCount = formValues.horses.filter(
-      (horse: Horse) => horse.regType === 'Life'
-    ).length;
+    if (formValues.horses !== undefined) {
+      const lifeCount = formValues.horses.filter(
+        (horse: Horse) => horse.regType === 'Life'
+      ).length;
 
-    const annualCount = formValues.horses.filter(
-      (horse: Horse) => horse.regType === 'Annual'
-    ).length;
+      const annualCount = formValues.horses.filter(
+        (horse: Horse) => horse.regType === 'Annual'
+      ).length;
 
-    update({ type: 'HORSE', payload: { lifeCount, annualCount } });
+      update({
+        type: 'HORSE',
+        payload: { lifeCount: lifeCount, annualCount: annualCount },
+      });
+    }
 
     formValues.member.fullName = `${formValues.member.firstName} ${formValues.member.lastName}`;
 
-    update({type: 'FORMTYPE', payload: 'Payment'})
-
-    // TODO: Move adding to the DB to the payment screen
+    // TODO: Move adding to the DB via the payment screen
     // memberMutation.mutate({
     //   member: formValues.member,
     //   horses: formValues.horses,
     // });
-  }
-
-  function handleRadioClick(e: any) {
-    update({ type: 'STATUS', payload: e.target.value });
   }
 
   setValue('member.memberType', 'Individual' as Type);
@@ -110,7 +110,7 @@ function IndividualRegistration() {
             inputMode='text'
             label='First Name*'
             className='input-sm input-primary input-primary'
-            error={formState.errors.member?.firstName}
+            error={inputState.errors.member?.firstName}
             {...register('member.firstName', { required: true })}
           />
 
@@ -118,7 +118,7 @@ function IndividualRegistration() {
             inputMode='text'
             label='Last Name*'
             className='input-sm input-primary'
-            error={formState.errors.member?.lastName}
+            error={inputState.errors.member?.lastName}
             {...register('member.lastName', { required: true })}
           />
         </div>
@@ -129,7 +129,7 @@ function IndividualRegistration() {
             inputMode='text'
             className='input-sm input-primary'
             placeholder='Address Line 1'
-            error={formState.errors.member?.address}
+            error={inputState.errors.member?.address}
             {...register('member.address', { required: true })}
           />
 
@@ -145,13 +145,13 @@ function IndividualRegistration() {
               inputMode='text'
               className='input-sm input-primary'
               placeholder='City'
-              error={formState.errors.member?.city}
+              error={inputState.errors.member?.city}
               {...register('member.city', { required: true })}
             />
 
             <Select
               className='select-sm select-primary'
-              error={formState.errors.member?.state}
+              error={inputState.errors.member?.state}
               options={states}
               {...register('member.state', { required: true })}
             />
@@ -161,7 +161,7 @@ function IndividualRegistration() {
               className='input-sm input-primary'
               placeholder='Zip Code'
               inputSize='w-fit'
-              error={formState.errors.member?.zip}
+              error={inputState.errors.member?.zip}
               {...register('member.zip', {
                 required: true,
                 valueAsNumber: true,
@@ -182,7 +182,7 @@ function IndividualRegistration() {
                 label='Phone Number*'
                 inputMode='tel'
                 className='input-sm input-primary'
-                error={formState.errors.member?.phone}
+                error={inputState.errors.member?.phone}
                 {...register('member.phone', { required: true })}
               />
             </div>
@@ -194,13 +194,12 @@ function IndividualRegistration() {
               altLabel={
                 'This will the primary method of contact, ensure it is up to date!'
               }
-              error={formState.errors.member?.email}
+              error={inputState.errors.member?.email}
               {...register('member.email', { required: true })}
             />
           </div>
 
           <RegType
-            onClick={handleRadioClick}
             register={register('member.memberStatus', { required: true })}
           />
 
@@ -225,9 +224,9 @@ function IndividualRegistration() {
                 className='input-sm input-primary'
                 placeholder='USEA Member ID'
                 inputSize='w-50'
-                error={formState.errors.member?.useaMemberID}
+                error={inputState.errors.member?.useaMemberID}
                 {...register('member.useaMemberID', {
-                  required: isUSEAMember,
+                  required: true,
                   valueAsNumber: true,
                 })}
               />
@@ -244,14 +243,18 @@ function IndividualRegistration() {
         </div>
 
         <button
-          className={finishButtonStyles}
           type='submit'
+          className={finishButtonStyles}
         >
-          Finished
+          Move to payment
         </button>
       </form>
     </FormProvider>
   );
 }
+
+IndividualRegistration.getLayout = (page: ReactElement) => {
+  return <FormLayout>{page}</FormLayout>;
+};
 
 export default IndividualRegistration;

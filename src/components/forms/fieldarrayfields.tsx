@@ -46,20 +46,25 @@ const TrashIcon = (
 );
 
 export function HorseFieldArray() {
-  const { register, control } = useFormContext<Horses>();
+  const {
+    register,
+    control,
+    formState: { errors },
+  } = useFormContext<Horses>();
 
   const { fields, append, remove } = useFieldArray<Horses>({
     control,
+    shouldUnregister: true,
     name: 'horses',
   });
 
+  console.log(errors);
   return (
-    <>
+    <section className='grid gap-2'>
       <h2 className='text-sm font-bold'>
         List the horses you are registering.
         <br />
-        Note that the horse’s registered name MUST be used when entering a STEA
-        show.
+        Note that the horse’s registered name MUST be used when entering a show.
       </h2>
 
       {fields.map((field, index) => (
@@ -71,6 +76,7 @@ export function HorseFieldArray() {
             Horse {index + 1}
             <button
               className='btn btn-link text-red-500 btn-xs'
+              type='button'
               onClick={() => remove(index)}
             >
               {TrashIcon}
@@ -79,16 +85,18 @@ export function HorseFieldArray() {
 
           <div className='card-body'>
             <RegType
+              noAtomUpdate={true}
               register={register(`horses.${index}.regType` as const, {
                 required: true,
               })}
             />
 
-            <div className='flex flex-col gap-2'>
+            <span className='flex flex-col gap-2'>
               <TextInput
                 label='Registered Name*'
                 inputMode='text'
                 className='input-sm input-primary'
+                error={Array.isArray(errors.horses) && errors.horses.at(index)}
                 {...register(`horses.${index}.horseRN` as const, {
                   required: true,
                 })}
@@ -100,13 +108,15 @@ export function HorseFieldArray() {
                 className='input-sm input-primary'
                 {...register(`horses.${index}.horseAKA` as const)}
               />
-            </div>
+            </span>
           </div>
         </div>
       ))}
 
+      <p className='text-error text-xl font-semibold'>{errors.horses?.message}</p>
       <button
-        className='btn btn-secondary btn-xs'
+        className='btn btn-secondary btn-xs w-full'
+        type='button'
         onClick={() =>
           append({
             horseRN: '',
@@ -117,12 +127,16 @@ export function HorseFieldArray() {
       >
         {AddIcon} Add Horse
       </button>
-    </>
+    </section>
   );
 }
 
 export function RiderComboFieldArray() {
-  const { register, control } = useFormContext<RiderCombos>();
+  const {
+    register,
+    control,
+    formState: { errors },
+  } = useFormContext<RiderCombos>();
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -130,7 +144,7 @@ export function RiderComboFieldArray() {
   });
 
   return (
-    <>
+    <section className='grid gap-5'>
       <h2 className='text-sm font-bold'>
         List <strong>ALL</strong> rider/horse combination(s).
         <br />
@@ -151,6 +165,7 @@ export function RiderComboFieldArray() {
             Combination {index + 1}
             <button
               className='btn btn-link text-red-500 btn-xs'
+              type='button'
               onClick={() => remove(index)}
             >
               {TrashIcon}
@@ -158,11 +173,15 @@ export function RiderComboFieldArray() {
           </h2>
 
           <div className='card-body'>
-            <div className='flex gap-5'>
+            <span className='flex gap-5'>
               <TextInput
                 label='Rider Name*'
                 inputMode='text'
-                className='input-sm'
+                className='input-sm input-primary'
+                error={
+                  Array.isArray(errors.riderCombos) &&
+                  errors.riderCombos.at(index)
+                }
                 {...register(`riderCombos.${index}.memberName`, {
                   required: true,
                 })}
@@ -171,18 +190,24 @@ export function RiderComboFieldArray() {
               <TextInput
                 label='Horse Registered Name*'
                 inputMode='text'
-                className='input-sm'
+                className='input-sm input-primary'
+                error={
+                  Array.isArray(errors.riderCombos) &&
+                  errors.riderCombos.at(index)
+                }
                 {...register(`riderCombos.${index}.horseName`, {
                   required: true,
                 })}
               />
-            </div>
+            </span>
           </div>
         </div>
       ))}
 
+      <p className='text-error text-xl font-semibold'>{errors.riderCombos?.message}</p>
       <button
-        className='btn btn-secondary btn-xs'
+        className='btn btn-secondary btn-xs w-full'
+        type='button'
         onClick={() =>
           append({
             uid: '',
@@ -195,6 +220,6 @@ export function RiderComboFieldArray() {
       >
         {AddIcon} Add Combo
       </button>
-    </>
+    </section>
   );
 }

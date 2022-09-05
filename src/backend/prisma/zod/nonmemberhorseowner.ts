@@ -5,11 +5,11 @@ import { CompleteHorse, RelatedHorseModel } from "./index"
 export const NonMemberHorseOwnerModel = z.object({
   createdAt: z.date().nullish(),
   updatedAt: z.date().nullish(),
-  firstName: z.string(),
-  lastName: z.string(),
+  firstName: z.string().min(1),
+  lastName: z.string().min(1),
   fullName: z.string(),
-  email: z.string(),
-  phone: z.string(),
+  email: z.string().min(1),
+  phone: z.string().min(1),
   phoneType: z.nativeEnum(PhoneType),
 })
 
