@@ -21,6 +21,7 @@ import RegType from '@/components/forms/regtype';
 import { useSetAtom } from 'jotai';
 import { updateFormState } from '@/utils/atoms';
 import { FormLayout } from '@/components/layout';
+import Payment from './payment';
 
 const phoneTypes = [
   {
@@ -38,7 +39,7 @@ const phoneTypes = [
 ];
 
 const MemberFormValues = z.object({
-  member: MemberModel.omit({ fullName: true }),
+  member: MemberModel,
   horseReg: z.boolean(),
   horses: z.array(HorseModel).optional(),
 });
@@ -72,23 +73,6 @@ function IndividualRegistration() {
   `;
 
   function onSumbit(formValues: FieldValues) {
-    if (formValues.horses !== undefined) {
-      const lifeCount = formValues.horses.filter(
-        (horse: Horse) => horse.regType === 'Life'
-      ).length;
-
-      const annualCount = formValues.horses.filter(
-        (horse: Horse) => horse.regType === 'Annual'
-      ).length;
-
-      update({
-        type: 'HORSE',
-        payload: { lifeCount: lifeCount, annualCount: annualCount },
-      });
-    }
-
-    formValues.member.fullName = `${formValues.member.firstName} ${formValues.member.lastName}`;
-
     // TODO: Move adding to the DB via the payment screen
     // memberMutation.mutate({
     //   member: formValues.member,
@@ -96,9 +80,36 @@ function IndividualRegistration() {
     // });
   }
 
+  function triggerValidation() {
+    const formValues = methods.getValues();
+
+    methods.setValue(
+      'member.fullName',
+      `${formValues.member.firstName} ${formValues.member.lastName}`
+    );
+
+    methods.trigger().then(() => {
+      if (formValues.horses !== undefined) {
+        const lifeCount = formValues.horses.filter(
+          horse => horse.regType === 'Life'
+        ).length;
+
+        const annualCount = formValues.horses.filter(
+          horse => horse.regType === 'Annual'
+        ).length;
+
+        update({
+          type: 'HORSE',
+          payload: { lifeCount: lifeCount, annualCount: annualCount },
+        });
+      }
+    });
+  }
+
   setValue('member.memberType', 'Individual' as Type);
   setValue('member.boardMember', false);
   setValue('member.confirmed', false);
+  console.log(methods.formState.errors);
 
   return (
     <FormProvider {...methods}>
@@ -242,12 +253,17 @@ function IndividualRegistration() {
           {isRegHorse && <HorseFieldArray />}
         </div>
 
-        <button
-          type='submit'
-          className={finishButtonStyles}
-        >
-          Move to payment
-        </button>
+        {methods.formState.isValid ? (
+          <Payment />
+        ) : (
+          <button
+            type='button'
+            className={finishButtonStyles}
+            onClick={() => triggerValidation()}
+          >
+            Move to payment
+          </button>
+        )}
       </form>
     </FormProvider>
   );

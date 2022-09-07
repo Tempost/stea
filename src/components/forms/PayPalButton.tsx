@@ -1,3 +1,4 @@
+import { ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
 import {
   PayPalScriptProvider,
   PayPalButtons,
@@ -5,17 +6,21 @@ import {
 } from '@paypal/react-paypal-js';
 
 const initOptions: ReactPayPalScriptOptions = {
-  'client-id': 'test',
+  'client-id': process.env.NEXT_PUBLIC_SANDBOX_CLIENT_ID,
   currency: 'USD',
   intent: 'capture',
   'data-react-paypal-script-id': 'paypal-button',
 };
 
-function PayPalButton() {
+interface PaymentProps extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
+  amountOwed: number;
+}
+
+function PayPalButton({ amountOwed, ...props }: PaymentProps) {
   return (
     <button
       className='w-full'
-      type='submit'
+      {...props}
     >
       <PayPalScriptProvider options={initOptions}>
         <PayPalButtons
@@ -25,6 +30,16 @@ function PayPalButton() {
             color: 'blue',
             label: 'paypal',
             tagline: false,
+          }}
+          createOrder={(data, actions) => {
+            console.log('paypal data', data);
+            return actions.order.create({
+              intent: 'CAPTURE',
+              purchase_units: [{
+                amount: { value: '1.00', currency_code: 'USD' },
+                description: 'STEA registration'
+              }]
+            })
           }}
         />
       </PayPalScriptProvider>

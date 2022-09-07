@@ -10,11 +10,10 @@ function Payment() {
   console.log(state);
 
   return (
-    <div>
-      <div className='bg-gray-200'>Your sign-up costs ${}</div>
-
+    <>
+      <div className='bg-gray-200'>Your sign-up costs ${state.memberCost + state.horses.lifeCost + state.horses.annualCost}</div>
       <PayPalButton />
-    </div>
+    </>
   );
 }
 
