@@ -16,12 +16,12 @@ import useZodForm from '@/utils/usezodform';
 import { trpc } from '@/utils/trpc';
 import { HorseFieldArray } from '@/components/forms/fieldarrayfields';
 
-import { Type, Horse } from '@prisma/client';
+import { Type } from '@prisma/client';
 import RegType from '@/components/forms/regtype';
 import { useSetAtom } from 'jotai';
 import { updateFormState } from '@/utils/atoms';
 import { FormLayout } from '@/components/layout';
-import Payment from './payment';
+import FinishPayment from '@/components/forms/FinishPayment';
 
 const phoneTypes = [
   {
@@ -63,17 +63,7 @@ function IndividualRegistration() {
   const isUnder18 = watch('member.JRSR', 'SR');
   const isRegHorse = watch('horseReg', false);
 
-  const finishButtonStyles = `
-    btn
-    btn-primary
-    ${memberMutation.isSuccess && 'btn-success'}
-    ${memberMutation.isError && 'btn-error'}
-    mt-8
-    w-full
-  `;
-
   function onSumbit(formValues: FieldValues) {
-    // TODO: Move adding to the DB via the payment screen
     // memberMutation.mutate({
     //   member: formValues.member,
     //   horses: formValues.horses,
@@ -251,19 +241,11 @@ function IndividualRegistration() {
           />
 
           {isRegHorse && <HorseFieldArray />}
-        </div>
 
-        {methods.formState.isValid ? (
-          <Payment />
-        ) : (
-          <button
-            type='button'
-            className={finishButtonStyles}
-            onClick={() => triggerValidation()}
-          >
-            Move to payment
-          </button>
-        )}
+          <FinishPayment
+            triggerValidation={triggerValidation}
+          />
+        </div>
       </form>
     </FormProvider>
   );

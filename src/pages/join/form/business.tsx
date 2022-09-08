@@ -18,9 +18,10 @@ import {
 } from '@/components/forms/fieldarrayfields';
 import RegType from '@/components/forms/regtype';
 import { useSetAtom } from 'jotai';
-import { formState, updateFormState } from '@/utils/atoms';
+import { updateFormState } from '@/utils/atoms';
 import { FormLayout } from '@/components/layout';
-import { Horse, Type } from '@prisma/client';
+import { Type } from '@prisma/client';
+import FinishPayment from '@/components/forms/FinishPayment';
 
 const phoneTypes = [
   {
@@ -38,7 +39,7 @@ const phoneTypes = [
 ];
 
 const MemberFormValues = z.object({
-  member: MemberModel.omit({ fullName: true }),
+  member: MemberModel,
   horseReg: z.boolean(),
   horses: z.array(HorseModel).optional(),
 });
@@ -62,38 +63,37 @@ function BusinessRegistration() {
 
   const isRegHorse = watch('horseReg', false);
 
-  const finishButtonStyles = `
-    btn
-    btn-primary
-    mt-8
-    w-full
-  `;
-
   function onSumbit(formValues: FieldValues) {
-    if (formValues.horses !== undefined) {
-      const lifeCount = formValues.horses.filter(
-        (horse: Horse) => horse.regType === 'Life'
-      ).length;
-
-      const annualCount = formValues.horses.filter(
-        (horse: Horse) => horse.regType === 'Annual'
-      ).length;
-
-      update({
-        type: 'HORSE',
-        payload: { lifeCount: lifeCount, annualCount: annualCount },
-      });
-    }
-    formValues.member.fullName = `${formValues.member.firstName} ${formValues.member.lastName}`;
-
     // memberMutation.mutate({
     //   member: formValues.member,
     //   horses: formValues.horses,
     // });
   }
 
-  function handleRadioClick(e: any) {
-    update({ type: 'STATUS', payload: e.target.value });
+  function triggerValidation() {
+    const formValues = methods.getValues();
+
+    methods.setValue(
+      'member.fullName',
+      `${formValues.member.firstName} ${formValues.member.lastName}`
+    );
+
+    methods.trigger().then(() => {
+      if (formValues.horses !== undefined) {
+        const lifeCount = formValues.horses.filter(
+          horse => horse.regType === 'Life'
+        ).length;
+
+        const annualCount = formValues.horses.filter(
+          horse => horse.regType === 'Annual'
+        ).length;
+
+        update({
+          type: 'HORSE',
+          payload: { lifeCount: lifeCount, annualCount: annualCount },
+        });
+      }
+    });
   }
 
   setValue('member.memberType', 'Individual' as Type);
@@ -229,14 +229,8 @@ function BusinessRegistration() {
 
           {isRegHorse && <HorseFieldArray />}
           {isRegHorse && <RiderComboFieldArray />}
+          <FinishPayment triggerValidation={triggerValidation} />
         </div>
-
-        <button
-          type='submit'
-          className={finishButtonStyles}
-        >
-          Move to payment
-        </button>
       </form>
     </FormProvider>
   );

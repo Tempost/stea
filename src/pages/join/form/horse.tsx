@@ -15,9 +15,9 @@ import {
 } from '@/components/forms/fieldarrayfields';
 import useZodForm from '@/utils/usezodform';
 import { FormLayout } from '@/components/layout';
-import { Horse } from '@prisma/client';
 import { useSetAtom } from 'jotai';
 import { updateFormState } from '@/utils/atoms';
+import FinishPayment from '@/components/forms/FinishPayment';
 
 const phoneTypes = [
   {
@@ -35,7 +35,7 @@ const phoneTypes = [
 ];
 
 const OwnerHorseFormValues = z.object({
-  owner: NonMemberHorseOwnerModel.omit({ fullName: true }).required(),
+  owner: NonMemberHorseOwnerModel,
   horses: z.array(HorseModel).min(1, 'Horse is required'),
   riderCombos: z
     .array(RiderComboModel.omit({ uid: true }))
@@ -59,37 +59,40 @@ function HorseRegistration() {
 
   const update = useSetAtom(updateFormState);
 
-  const finishButtonStyles = `
-    btn
-    btn-primary
-    mt-8
-    w-full
-  `;
-
   function onSumbit(formValues: FieldValues) {
-    if (formValues.horses !== undefined) {
-      const lifeCount = formValues.horses.filter(
-        (horse: Horse) => horse.regType === 'Life'
-      ).length;
-
-      const annualCount = formValues.horses.filter(
-        (horse: Horse) => horse.regType === 'Annual'
-      ).length;
-
-      update({
-        type: 'HORSE',
-        payload: { lifeCount: lifeCount, annualCount: annualCount },
-      });
-    }
-
-    // TODO: Find better way to do this
-    formValues.owner.fullName = `${formValues.owner.firstName} ${formValues.owner.lastName}`;
     // horseMutation.mutate({
     //   horses: formValues.horses,
     //   owner: formValues.owner,
     //   combos: formValues.riderCombos,
     // });
   }
+
+  function triggerValidation() {
+    const formValues = methods.getValues();
+
+    methods.setValue(
+      'owner.fullName',
+      `${formValues.owner.firstName} ${formValues.owner.lastName}`
+    );
+
+    methods.trigger().then(() => {
+      if (formValues.horses !== undefined) {
+        const lifeCount = formValues.horses.filter(
+          horse => horse.regType === 'Life'
+        ).length;
+
+        const annualCount = formValues.horses.filter(
+          horse => horse.regType === 'Annual'
+        ).length;
+
+        update({
+          type: 'HORSE',
+          payload: { lifeCount: lifeCount, annualCount: annualCount },
+        });
+      }
+    });
+  }
+
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSumbit)}>
@@ -147,14 +150,9 @@ function HorseRegistration() {
         <section className='mt-10 grid gap-5'>
           <HorseFieldArray />
           <RiderComboFieldArray />
+          <FinishPayment triggerValidation={triggerValidation} />
         </section>
 
-        <button
-          type='submit'
-          className={finishButtonStyles}
-        >
-          Move to payment
-        </button>
       </form>
     </FormProvider >
   );
