@@ -1,20 +1,54 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
+import Link from 'next/link';
 
-const Index: NextPage = () => {
+import { PublicLayout } from '@/components/layout';
+
+import { ReactElement } from 'react';
+import Image from 'next/image';
+
+function Home() {
   return (
-    <div>
-      <Head>
-        <title>Stea</title>
-        <meta name="description" content="STEA dressage" />
-      </Head>
+    <>
+      <section>
+        <div className='hero min-h-screen bg-home-hero bg-fixed'>
+          <div className='hero-overlay bg-opacity-50'></div>
 
-      <main>
-      
-      </main>
+          <div className='hero-content text-neutral-content text-center'>
+            <div className='flex flex-col items-center min-w-full gap-5'>
+              <Image
+                width={600}
+                height={441}
+                layout='intrinsic'
+                src='/stea_logo_white.png'
+              />
 
-    </div>
-  )
+              <h2 className='text-5xl'>Where Your Eventing Journey Begins</h2>
+
+              <Link href={'/join'}>
+                <button
+                  data-cy='join-link-button'
+                  className='btn btn-primary btn-lg text-3xl'
+                >
+                  Join Today!
+                </button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className='flex flex-col items-center'>
+        <h1 className='text-xl prose-headings:h1'> End of Year Placings</h1>
+      </section>
+
+      <section className='flex flex-col items-center'>
+        <h1 className='text-xl prose-headings:h1'>Recognized vendors</h1>
+      </section>
+    </>
+  );
 }
 
-export default Index
+Home.getLayout = (page: ReactElement) => {
+  return <PublicLayout>{page}</PublicLayout>;
+};
+
+export default Home;
