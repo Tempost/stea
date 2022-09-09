@@ -5,8 +5,8 @@ export const RiderComboModel = z.object({
   uid: z.string(),
   createdAt: z.date().nullish(),
   updatedAt: z.date().nullish(),
-  memberName: z.string(),
-  horseName: z.string(),
+  memberName: z.string().min(1),
+  horseName: z.string().min(1),
 })
 
 export interface CompleteRiderCombo extends z.infer<typeof RiderComboModel> {

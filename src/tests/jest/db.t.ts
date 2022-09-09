@@ -1,8 +1,6 @@
 import { Horse, Member, PhoneType, Status, Type } from '@prisma/client';
 import { MockContext, Context, createMockContext } from './context';
 import { createMember, createMemberWithHorses, fetchMember } from './db';
-import { expect } from '@jest/globals';
-import { CompleteMember } from '@/backend/prisma/zod';
 
 let mockCtx: MockContext;
 let ctx: Context;

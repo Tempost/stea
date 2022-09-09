@@ -2,6 +2,7 @@ import Head from 'next/head';
 import { httpBatchLink } from '@trpc/client/links/httpBatchLink';
 import { loggerLink } from '@trpc/client/links/loggerLink';
 import { withTRPC } from '@trpc/next';
+import { useAtomsDevtools } from 'jotai/devtools';
 
 import '../styles/globals.css';
 import { transformer } from '@/utils/trpc';
@@ -17,6 +18,12 @@ export type NextPageWithLayout = NextPage & {
 
 export type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
+};
+
+// TODO TODO TODO: Remove this on prod build
+const AtomsDevTools = ({ children }: any) => {
+  useAtomsDevtools('Form State');
+  return children;
 };
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
@@ -38,7 +45,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           content='viewport-fit=cover'
         />
       </Head>
-      {getLayout(<Component {...pageProps} />)}
+      <AtomsDevTools>{getLayout(<Component {...pageProps} />)}</AtomsDevTools>
     </>
   );
 }

@@ -5,6 +5,8 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
 
+const { env } = require('./src/utils/env');
+
 const nextConfig = {
   reactStrictMode: true,
   eslint: {
