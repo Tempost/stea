@@ -4,7 +4,10 @@ import { CompleteMember, RelatedMemberModel } from "./index"
 
 export const PaymentModel = z.object({
   updatedAt: z.date().nullish(),
-  comments: z.string().nullish(),
+  /**
+   * General comments about payment, might grab from paypal
+   */
+  comments: z.string().max(4000, { message: "Too many characters" }).nullish(),
   payee: z.string(),
   amountPaid: z.number().int().nullish(),
   datePaid: z.date().nullish(),

@@ -5,8 +5,18 @@ import { CompleteNonMemberHorseOwner, RelatedNonMemberHorseOwnerModel, CompleteM
 export const HorseModel = z.object({
   createdAt: z.date().nullish(),
   updatedAt: z.date().nullish(),
-  horseRN: z.string().min(1),
+  /**
+   * Registered name of the horse, unique
+   */
+  horseRN: z.string().min(1, { message: "Registered horse name is required" }),
+  /**
+   * Barn name of the horse
+   */
   horseAKA: z.string().nullish(),
+  /**
+   * Field only here becuase of seeding old members
+   * Not able to connect every member/horse back together
+   */
   notConnected: z.boolean().nullish(),
   memberName: z.string().nullish(),
   registrationDate: z.date().nullish(),

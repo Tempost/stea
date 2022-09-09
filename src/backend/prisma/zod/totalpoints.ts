@@ -2,7 +2,7 @@ import * as z from "zod"
 import { CompleteRiderCombo, RelatedRiderComboModel } from "./index"
 
 export const TotalPointsModel = z.object({
-  uid: z.string(),
+  uid: z.string().cuid({ message: "Invalid cuid" }),
   createdAt: z.date().nullish(),
   updatedAt: z.date().nullish(),
   division: z.string(),
@@ -10,7 +10,7 @@ export const TotalPointsModel = z.object({
   totalShows: z.number().int(),
   completedHT: z.boolean(),
   multiVenue: z.boolean(),
-  riderUid: z.string(),
+  riderUid: z.string().cuid({ message: "Invalid cuid" }),
 })
 
 export interface CompleteTotalPoints extends z.infer<typeof TotalPointsModel> {
