@@ -2,11 +2,11 @@ import * as z from "zod"
 import { CompleteMember, RelatedMemberModel, CompleteHorse, RelatedHorseModel, CompleteShow, RelatedShowModel, CompleteTotalPoints, RelatedTotalPointsModel } from "./index"
 
 export const RiderComboModel = z.object({
-  uid: z.string(),
+  uid: z.string().cuid(),
   createdAt: z.date().nullish(),
   updatedAt: z.date().nullish(),
-  memberName: z.string().min(1),
-  horseName: z.string().min(1),
+  memberName: z.string().min(1, { message: "Member Name is required" }),
+  horseName: z.string().min(1, { message: "Horse Name is required" }),
 })
 
 export interface CompleteRiderCombo extends z.infer<typeof RiderComboModel> {
