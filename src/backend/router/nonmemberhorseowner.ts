@@ -17,7 +17,6 @@ export const nonMemberHorseOwner = createRouter()
     async resolve({ input }) {
       const data = await prisma.nonMemberHorseOwner
         .findMany()
-        .then(owners => owners)
         .catch(err => console.log('Backend Error:', err));
 
       return data as NonMemberHorseOwner[];
@@ -27,11 +26,9 @@ export const nonMemberHorseOwner = createRouter()
     input: z.object({
       owner: NonMemberHorseOwnerModel,
       horses: z.array(HorseModel),
-      combos: z.array(RiderComboModel).optional(),
+      combos: z.array(RiderComboModel.omit({ uid: true })).optional(),
     }),
     async resolve({ input }) {
-      console.log(input.owner, input.horses, input.combos);
-
       const existingMember = await prisma.member.findUnique({
         where: { fullName: input.owner.fullName },
       });
@@ -54,19 +51,16 @@ export const nonMemberHorseOwner = createRouter()
       });
 
       if (addTo === null && existingMember === null) {
-        console.log('null');
-        await prisma.nonMemberHorseOwner
-          .create({
-            data: {
-              ...input.owner,
-              horses: {
-                createMany: {
-                  data: [...input.horses],
-                },
+        await prisma.nonMemberHorseOwner.create({
+          data: {
+            ...input.owner,
+            horses: {
+              createMany: {
+                data: [...input.horses],
               },
             },
-          })
-          .catch(err => console.log('Backend Error:', err));
+          },
+        });
       } else {
         await prisma.nonMemberHorseOwner.update({
           where: { fullName: input.owner.fullName },

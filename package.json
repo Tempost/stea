@@ -6,11 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "db-test": "dotenv -e .env.test -- jest -i router.test.ts",
     "test": "jest -i",
-    "cypress": "cypress open",
     "studio": "prisma studio",
-    "push": "prisma db push"
+    "push": "prisma db push",
+    "migrate-local": "dotenv -e .env.test -- prisma migrate dev --name test"
   },
   "dependencies": {
     "@hookform/resolvers": "^2.9.7",
