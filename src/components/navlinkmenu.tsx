@@ -1,13 +1,13 @@
 import LinkWrapper from './linkwrapper';
 
-interface Router {
+interface Link {
   href: string;
   text: string;
 }
 
 interface NavLinkMenuProps {
   name: string;
-  routes: Router[];
+  subLinks: Link[];
 }
 
 const ChevDown = (
@@ -25,7 +25,7 @@ const ChevDown = (
   </svg>
 );
 
-export default function NavLinkMenu({ name, routes }: NavLinkMenuProps) {
+export default function NavLinkMenu({ name, subLinks }: NavLinkMenuProps) {
   return (
     <div className='dropdown dropdown-hover'>
       <h2
@@ -36,7 +36,7 @@ export default function NavLinkMenu({ name, routes }: NavLinkMenuProps) {
         <span className=''>{ChevDown}</span>
       </h2>
       <ul className='dropdown-content menu p-2 shadow bg-primary-content w-52 text-neutral-focus rounded-md'>
-        {routes.map(({ href, text }) => (
+        {subLinks.map(({ href, text }) => (
           <li key={`${href}${text}`}>
             <LinkWrapper href={href ? href : ''}>
               <span className='m-1 text-sm'>{text}</span>

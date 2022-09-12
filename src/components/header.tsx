@@ -3,8 +3,8 @@ import { publicMenuItems, dashMenuItems } from './menuitems';
 
 export const PublicHeader = () => (
   <header
-    className='text-primary-content h-full w-full z-50 max-h-20 md:max-h-14
-      sm:max-h-fit fixed p-1 bg-gradient-to-b from-primary to-primary-focus'
+    className='text-primary-content h-full w-full z-50 max-h-11
+    fixed p-1 bg-gradient-to-b from-primary to-primary-focus'
   >
     <div className='flex flex-col justify-between items-end'>
       <div className='grid grid-flow-col gap-5'>

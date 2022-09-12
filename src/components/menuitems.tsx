@@ -28,7 +28,7 @@ export const publicMenuItems: Menu[] = [
     render: ({ name: navText }) => (
       <NavLinkMenu
         name={navText}
-        routes={[
+        subLinks={[
           {
             href: '/join',
             text: 'Apply for STEA Membership',
@@ -57,7 +57,7 @@ export const dashMenuItems: Menu[] = [
     render: ({ name: navText }) => (
       <NavLinkMenu
         name={navText}
-        routes={[
+        subLinks={[
           {
             href: '/dashboard/review/points',
             text: 'Points',
@@ -84,7 +84,7 @@ export const dashMenuItems: Menu[] = [
     render: ({ name: navText }) => (
       <NavLinkMenu
         name={navText}
-        routes={[
+        subLinks={[
           {
             href: '',
             text: 'Point submission form',
