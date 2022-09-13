@@ -46,33 +46,24 @@ export const nonMemberHorseOwner = createRouter()
         });
       }
 
-      const addTo = await prisma.nonMemberHorseOwner.findUnique({
+      await prisma.nonMemberHorseOwner.upsert({
         where: { fullName: input.owner.fullName },
+        create: {
+          ...input.owner,
+          horses: {
+            createMany: {
+              data: [...input.horses],
+            },
+          },
+        },
+        update: {
+          horses: {
+            createMany: {
+              data: [...input.horses],
+            },
+          },
+        }
       });
-
-      if (addTo === null && existingMember === null) {
-        await prisma.nonMemberHorseOwner.create({
-          data: {
-            ...input.owner,
-            horses: {
-              createMany: {
-                data: [...input.horses],
-              },
-            },
-          },
-        });
-      } else {
-        await prisma.nonMemberHorseOwner.update({
-          where: { fullName: input.owner.fullName },
-          data: {
-            horses: {
-              createMany: {
-                data: [...input.horses],
-              },
-            },
-          },
-        });
-      }
 
       if (input.combos) {
         for (let combo of input.combos) {

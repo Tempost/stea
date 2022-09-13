@@ -54,6 +54,29 @@ export const member = createRouter()
       // and store placing in ranking table
     },
   })
+  .mutation('remove-member', {
+    input: z.object({ fullName: z.string() }),
+    async resolve({ input }) {
+      const { fullName } = input;
+
+      const member = await prisma.member.findUnique({
+        where: { fullName },
+      });
+
+      if (!member) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: `${fullName} not found.`,
+        });
+      }
+
+      const deletedMember = await prisma.member.delete({
+        where: { fullName: member.fullName },
+      });
+
+      return deletedMember;
+    },
+  })
   .mutation('add-member', {
     input: z.object({
       member: MemberModel.required(),
