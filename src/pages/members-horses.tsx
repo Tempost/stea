@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { ReactElement, useMemo } from 'react';
 
 import { PublicLayout } from '@/components/layout';
@@ -18,9 +19,8 @@ function MembersAnHorses() {
             cell: info => {
               const date: Date = info.getValue();
 
-              return `${
-                date.getMonth() + 1
-              }/${date.getDate()}/${date.getFullYear()}`;
+              return `${date.getMonth() + 1
+                }/${date.getDate()}/${date.getFullYear()}`;
             },
             header: () => <span> Join Date </span>,
           },
@@ -60,9 +60,8 @@ function MembersAnHorses() {
               const date: Date = info.getValue();
               if (date === null) return 'N/A';
 
-              return `${
-                date.getMonth() + 1
-              }/${date.getDate()}/${date.getFullYear()}`;
+              return `${date.getMonth() + 1
+                }/${date.getDate()}/${date.getFullYear()}`;
             },
             header: () => <span> Registration Date </span>,
           },
@@ -96,6 +95,8 @@ function MembersAnHorses() {
     []
   );
 
+  // TODO: Fade Image into background
+  // <Image layout='fill' src='/membersandhorses.jpg'/>
   return (
     <div className='pt-28 w-full grid place-items-center'>
       <MemberTable overRideDefaultCols={memberCols} />

@@ -4,7 +4,10 @@ import { useSetAtom } from 'jotai';
 import { PublicHeader, DashboardHeader } from './header';
 import Footer from './footer';
 import { updateFormState } from '@/utils/atoms';
-import { PayPalScriptProvider, ReactPayPalScriptOptions } from '@paypal/react-paypal-js';
+import {
+  PayPalScriptProvider,
+  ReactPayPalScriptOptions,
+} from '@paypal/react-paypal-js';
 
 export function PublicLayout({ children }: any) {
   const router = useRouter();
@@ -12,8 +15,8 @@ export function PublicLayout({ children }: any) {
     <div className='flex flex-col h-screen'>
       <PublicHeader />
       <main
-        className={`flex-grow bg-neutral-content ${router.pathname === '/' ? '' : 'p-20'
-          }`}
+        className={`flex-grow bg-neutral-content 
+                    ${router.pathname === '/' ? '' : 'p-20'}`}
       >
         {children}
       </main>

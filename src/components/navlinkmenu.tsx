@@ -30,7 +30,7 @@ export default function NavLinkMenu({ name, subLinks }: NavLinkMenuProps) {
     <div className='dropdown dropdown-hover'>
       <h2
         tabIndex={0}
-        className='text-xl cursor-pointer flex items-center'
+        className='text-2xl cursor-pointer flex items-center'
       >
         {name}
         <span className=''>{ChevDown}</span>

@@ -1,9 +1,11 @@
+import Image from 'next/image';
 import { ReactElement } from 'react';
 
 import { PublicLayout } from '@/components/layout';
 import RidersTable from '@/components/tables/ridercombos';
 
 function SteaPoints() {
+  // <Image layout='fill' src='/points.jpg'/>
   return (
     <div className='w-full grid place-items-center gap-20'>
       <RidersTable title='Current Points' />
