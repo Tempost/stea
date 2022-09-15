@@ -8,6 +8,7 @@ interface Link {
 interface NavLinkMenuProps {
   name: string;
   subLinks: Link[];
+  drawer?: true;
 }
 
 const ChevDown = (
@@ -46,4 +47,27 @@ export default function NavLinkMenu({ name, subLinks }: NavLinkMenuProps) {
       </ul>
     </div>
   );
+}
+
+export function NavLinkSubMenu({
+  name,
+  subLinks,
+  drawer,
+}: NavLinkMenuProps) {
+  const subMenu = (
+    <li tabIndex={0}>
+      <span>
+        {name} {ChevDown}
+      </span>
+      <ul className={`bg-primary-content shadow-2xl ${drawer ? '' : 'right-0'}`}>
+        {subLinks.map(({ href, text }) => (
+          <li key={`${href}${text}`}>
+            <LinkWrapper href={href ? href : ''}>{text}</LinkWrapper>
+          </li>
+        ))}
+      </ul>
+    </li>
+  );
+
+  return (subMenu);
 }

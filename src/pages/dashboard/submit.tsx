@@ -24,7 +24,7 @@ function SubmitPoints() {
   }
 
   return (
-    <div className='pt-28 w-full grid place-items-center'>
+    <div className='w-full grid place-items-center'>
       <div className='shadow-xl rounded-lg p-5'>
         <form onSubmit={handleSubmit(onSubmit)}>
           <h2 className='text-xl text-center text-red-500'>

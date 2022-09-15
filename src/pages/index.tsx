@@ -72,7 +72,7 @@ function Home() {
           <h2 className='text-center text-red-600 font-bold'>Notice</h2>
           <div className='card-body'>
             <h3>Please remeber to check your points throught the year!</h3>
-            <p className='inline-flex gap-2'>
+            <p className='inline-flex gap-2 self-center'>
               Review rule changes for 2023
               <button className='btn btn-primary btn-xs'>
                 <span className='mr-1'>Rule Book </span> {BookIcon}

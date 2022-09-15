@@ -98,7 +98,7 @@ function MembersAnHorses() {
   // TODO: Fade Image into background
   // <Image layout='fill' src='/membersandhorses.jpg'/>
   return (
-    <div className='pt-28 w-full grid place-items-center'>
+    <div className='w-full grid place-items-center'>
       <MemberTable overRideDefaultCols={memberCols} />
       <HorseTable overRideDefaultCols={horseCols} />
     </div>

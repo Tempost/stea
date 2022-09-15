@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useSetAtom } from 'jotai';
 
-import { PublicHeader, DashboardHeader } from './header';
+import { DashboardHeader, ResponsiveHeader } from './header';
 import Footer from './footer';
 import { updateFormState } from '@/utils/atoms';
 import {
@@ -13,7 +13,7 @@ export function PublicLayout({ children }: any) {
   const router = useRouter();
   return (
     <div className='flex flex-col h-screen'>
-      <PublicHeader />
+      <ResponsiveHeader>
       <main
         className={`flex-grow bg-neutral-content 
                     ${router.pathname === '/' ? '' : 'p-20'}`}
@@ -21,6 +21,7 @@ export function PublicLayout({ children }: any) {
         {children}
       </main>
       <Footer />
+      </ResponsiveHeader>
     </div>
   );
 }

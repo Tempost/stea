@@ -1,9 +1,10 @@
-import NavLinkMenu from './navlinkmenu';
+import NavLinkMenu, { NavLinkSubMenu } from './navlinkmenu';
 
 interface Menu {
   href?: string;
   name: string;
-  render?: ({ href, name: navText }: Menu) => JSX.Element;
+  drawer?: true;
+  render?: ({ href, name }: Menu) => JSX.Element;
 }
 
 export const publicMenuItems: Menu[] = [
@@ -25,9 +26,10 @@ export const publicMenuItems: Menu[] = [
   },
   {
     name: 'Join',
-    render: ({ name: navText }) => (
-      <NavLinkMenu
-        name={navText}
+    render: ({ name, drawer }) => (
+      <NavLinkSubMenu
+        name={name}
+        drawer={drawer}
         subLinks={[
           {
             href: '/join',

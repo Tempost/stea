@@ -5,6 +5,11 @@ interface WrapperProps {
   children: JSX.Element | string | number;
 }
 
+/**
+ * @param {string} WrapperProps.href
+ * @param {JSX.Element | string | number} WrapperProps.children
+ * @description wraps anchor tag in a NextLink component
+ */
 function LinkWrapper({ href, children }: WrapperProps) {
   return (
     <NextLink href={href ? href : ''}>
