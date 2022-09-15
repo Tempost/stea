@@ -7,16 +7,15 @@ import {
   HorseModel,
   MemberModel,
   NonMemberHorseOwnerModel,
-  PaymentModel,
 } from '@/backend/prisma/zod';
-import { Payment, PaymentMethod } from '@prisma/client';
-
-const firstName = faker.name.firstName();
-const lastName = faker.name.lastName();
-const fullName = faker.name.fullName({ firstName, lastName });
-const date = new Date();
+import { PaymentMethod } from '@prisma/client';
 
 describe('testing owner apis', () => {
+  const firstName = faker.name.firstName();
+  const lastName = faker.name.lastName();
+  const fullName = faker.name.fullName({ firstName, lastName });
+  const date = new Date();
+
   it('Add/Get owner', async () => {
     const ctx = await createContextInner({});
     const caller = appRouter.createCaller(ctx);
@@ -61,9 +60,9 @@ describe('testing owner apis', () => {
     };
 
     const mutationInput: inferMutationInput<'nonMemberHorseOwner.remove-owner'> =
-      {
-        ownerName: fullName,
-      };
+    {
+      ownerName: fullName,
+    };
 
     // Get record to compare objects first
     const ownerFromGet = await caller.query(
@@ -81,6 +80,10 @@ describe('testing owner apis', () => {
 });
 
 describe('Member api routes', () => {
+  const firstName = faker.name.firstName();
+  const lastName = faker.name.lastName();
+  const fullName = faker.name.fullName({ firstName, lastName });
+  const date = new Date();
   it('Add/Get member', async () => {
     const ctx = await createContextInner({});
     const caller = appRouter.createCaller(ctx);
@@ -133,6 +136,24 @@ describe('Member api routes', () => {
     expect(memberFromGet).toMatchObject(member);
   });
 
+  test('update member', async () => {
+    const ctx = await createContextInner({});
+    const caller = appRouter.createCaller(ctx);
+
+    const mutationInput: inferMutationInput<'member.update-member'> = {
+      fullName,
+      memberStatus: 'Annual'
+    }
+
+    const queryInput: inferQueryInput<'member.get-member'> = {
+      fullName,
+    };
+
+    const updatedMember = await caller.mutation('member.update-member', mutationInput);
+
+    expect(updatedMember.memberStatus).toBe('Annual');
+  });
+
   test('delete member', async () => {
     const ctx = await createContextInner({});
     const caller = appRouter.createCaller(ctx);
@@ -155,4 +176,16 @@ describe('Member api routes', () => {
 
     expect(memberFromDelete).toMatchObject(memberFromGet);
   });
+});
+
+describe('Shows api routes', () => {
+  const showName = faker.address.county();
+  it('add/get show', async () => {
+    const mutationInput: inferMutationInput<'shows.add'> = {
+      uid: '',
+      showName: '',
+      showType: '',
+      reviewed: false
+    }
+  })
 });

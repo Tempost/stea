@@ -116,7 +116,7 @@ export const member = createRouter()
     input: MemberModel.deepPartial(),
     async resolve({ input: { fullName, ...others } }) {
       console.log(fullName, others);
-      await prisma.member
+      return await prisma.member
         .update({
           where: {
             fullName: fullName,
@@ -125,6 +125,5 @@ export const member = createRouter()
             ...others,
           },
         })
-        .catch(err => console.log('Error:', err));
     },
   });
