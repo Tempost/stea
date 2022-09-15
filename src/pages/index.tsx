@@ -13,8 +13,11 @@ interface NavCardProps extends LinkProps {
 function NavCard({ img, bodyText, ...props }: NavCardProps) {
   return (
     <NextLink {...props}>
-      <div className='card shadow-lg card-bordered bg-cyan-500 hover:cursor-pointer'>
-        <figure><Image width={300} height={200} layout='intrinsic' src={img} /></figure>
+      <div className='rounded-xl overflow-clip shadow-lg bg-cyan-500 hover:cursor-pointer w-[75%] h-full'>
+        <div className='block w-full'>
+          <Image width={400} height={400} layout='responsive' src={img} />
+        </div>
+
         <div className='card-body text-center text-2xl font-bold'>
           <p>{bodyText}</p>
         </div>
@@ -50,7 +53,7 @@ function Home() {
       </div>
 
       <div className='flex flex-col px-20'>
-        <div className='grid grid-flow-col justify-items-center mt-10'>
+        <div className='grid lg:grid-flow-col justify-items-center sm:gap-10 md:gap-10 mt-10'>
           <NavCard
             bodyText='Membership'
             href='/join/benefits'
