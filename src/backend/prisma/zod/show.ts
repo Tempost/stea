@@ -1,5 +1,5 @@
 import * as z from "zod"
-import { CompleteRiderCombo, RelatedRiderComboModel } from "./index"
+import { CompletePoints, RelatedPointsModel } from "./index"
 
 export const ShowModel = z.object({
   uid: z.string().cuid({ message: "Invalid cuid" }),
@@ -11,10 +11,11 @@ export const ShowModel = z.object({
    * Submitted points have yet to be review by board member
    */
   reviewed: z.boolean(),
+  showDate: z.date(),
 })
 
 export interface CompleteShow extends z.infer<typeof ShowModel> {
-  riders: CompleteRiderCombo[]
+  points: CompletePoints[]
 }
 
 /**
@@ -23,5 +24,5 @@ export interface CompleteShow extends z.infer<typeof ShowModel> {
  * NOTE: Lazy required in case of potential circular dependencies within schema
  */
 export const RelatedShowModel: z.ZodSchema<CompleteShow> = z.lazy(() => ShowModel.extend({
-  riders: RelatedRiderComboModel.array(),
+  points: RelatedPointsModel.array(),
 }))

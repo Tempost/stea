@@ -134,8 +134,8 @@ model Horse {
   /// Field only here becuase of seeding old members
   /// Not able to connect every member/horse back together
   notConnected     Boolean?             @default(false)
-  ownerRec         NonMemberHorseOwner? @relation(fields: [owner], references: [fullName], onDelete: Cascade)
-  memberOwner      Member?              @relation(fields: [memberName], references: [fullName])
+  ownerRec         NonMemberHorseOwner? @relation(fields: [owner], references: [fullName], onDelete: Cascade, onUpdate: Cascade)
+  memberOwner      Member?              @relation(fields: [memberName], references: [fullName], onDelete: Cascade, onUpdate: Cascade)
   memberName       String?
   registrationDate DateTime?            @default(now())
   regType          Status
@@ -143,46 +143,48 @@ model Horse {
   owner            String?
 }
 
-model TotalPoints {
+model RiderCombo {
   /// @zod.cuid({ message: "Invalid cuid"})
-  uid         String     @id @default(cuid())
-  createdAt   DateTime?  @default(now())
-  updatedAt   DateTime?  @updatedAt
-  division    String     @db.VarChar(20)
-  totalPoints Float      @default(0)
-  totalShows  Int        @default(0)
-  completedHT Boolean    @default(false)
-  multiVenue  Boolean    @default(false)
-  rider       RiderCombo @relation(fields: [riderUid], references: [uid], onDelete: Cascade, onUpdate: Cascade)
-  /// @zod.cuid({ message: "Invalid cuid"})
-  riderUid    String     @unique
+  uid         String    @id @default(cuid())
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime? @updatedAt
+  division    String    @db.VarChar(20)
+  totalPoints Float     @default(0)
+  totalShows  Int       @default(0)
+  completedHT Boolean   @default(false)
+  multiVenue  Boolean   @default(false)
+  member      Member    @relation(fields: [memberName], references: [fullName], onDelete: Cascade, onUpdate: Cascade)
+  horse       Horse     @relation(fields: [horseName], references: [horseRN], onDelete: Cascade, onUpdate: Cascade)
+  /// @zod.min(1, { message: "Member Name is required" })
+  memberName  String
+  /// @zod.min(1, { message: "Horse Name is required" })
+  horseName   String
+  points      Points[]
 }
 
-model RiderCombo {
-  /// @zod.cuid()
-  uid        String       @id @default(cuid())
-  createdAt  DateTime?    @default(now())
-  updatedAt  DateTime?    @updatedAt
-  member     Member       @relation(fields: [memberName], references: [fullName], onDelete: Cascade, onUpdate: Cascade)
-  horse      Horse        @relation(fields: [horseName], references: [horseRN], onDelete: Cascade, onUpdate: Cascade)
+model Points {
+  /// @zod.cuid({ message: "Invalid cuid"})
+  uid        String     @id @default(cuid())
   /// @zod.min(1, { message: "Member Name is required" })
-  memberName String
-  /// @zod.min(1, { message: "Horse Name is required" })
-  horseName  String
-  shows      Show[]
-  points     TotalPoints?
+  riderUid   String
+  showUid    String
+  Show       Show       @relation(fields: [showUid], references: [uid])
+  RiderCombo RiderCombo @relation(fields: [riderUid], references: [uid])
+  /// @zod.cuid({ message: "Invalid cuid"})
+  points     Int
 }
 
 model Show {
   /// @zod.cuid({ message: "Invalid cuid"})
-  uid       String       @id @default(cuid())
-  createdAt DateTime?    @default(now())
-  updatedAt DateTime?    @updatedAt
+  uid       String    @id @default(cuid())
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
   /// @zod.min(1, { message: "Show name is required" })
-  showName  String       @db.VarChar(150)
+  showName  String    @db.VarChar(150)
   /// @zod.min(1, { message: "Show type is required" })
-  showType  String       @db.VarChar(10)
+  showType  String    @db.VarChar(10)
   /// Submitted points have yet to be review by board member
-  reviewed  Boolean      @default(false)
-  riders    RiderCombo[]
+  reviewed  Boolean   @default(false)
+  showDate  DateTime
+  points    Points[]
 }

@@ -20,29 +20,31 @@ type FormType = typeof FORMTYPE[number];
 
 const STATUS = ['Life', 'Annual', 'Renew'] as const;
 
-test('Horse Status', () => {
-  const type: Status = 'Life';
-  const falseType = 'Horse';
+describe('Type predicate tests', () => {
+  test('Horse Status', () => {
+    const type: Status = 'Life';
+    const falseType = 'Horse';
 
-  expect(isStatus(type)).toBe(true);
-  expect(isStatus(falseType)).toBe(false);
-});
+    expect(isStatus(type)).toBe(true);
+    expect(isStatus(falseType)).toBe(false);
+  });
 
-test('Form Type', () => {
-  const type: FormType = 'Horse';
-  const falseType = 'Life';
+  test('Form Type', () => {
+    const type: FormType = 'Horse';
+    const falseType = 'Life';
 
-  expect(isFormType(type)).toBe(true);
-  expect(isFormType(falseType)).toBe(false);
-});
+    expect(isFormType(type)).toBe(true);
+    expect(isFormType(falseType)).toBe(false);
+  });
 
-test('horse payload', () => {
-  const payload = {
-    lifeCount: 1,
-    annualCount: 2,
-  };
-  const falsePayload = 'Individual';
+  test('horse payload', () => {
+    const payload = {
+      lifeCount: 1,
+      annualCount: 2,
+    };
+    const falsePayload = 'Individual';
 
-  expect(isHorsePayload(payload)).toBe(true);
-  expect(isHorsePayload(falsePayload)).toBe(false);
+    expect(isHorsePayload(payload)).toBe(true);
+    expect(isHorsePayload(falsePayload)).toBe(false);
+  });
 });

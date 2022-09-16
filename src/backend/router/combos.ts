@@ -1,23 +1,59 @@
 import { createRouter } from './utils';
 
 import { prisma } from '@/backend/prisma';
-import { CompleteRiderCombo } from '../prisma/zod';
+import { TRPCError } from '@trpc/server';
+import { z } from 'zod';
 
-export const riders = createRouter().query('get-riders', {
-  async resolve() {
-    const riders = await prisma.riderCombo
-      .findMany({
+
+export const riders = createRouter()
+  .query('get-riders', {
+    input: z.object({
+      memberName: z.string(),
+      horseName: z.string(),
+    }).deepPartial().optional(),
+    async resolve({ input }) {
+      const riders = await prisma.riderCombo.findMany({
+        where: {
+          memberName: input?.memberName,
+          horseName: input?.horseName,
+        },
         select: {
-          memberName: true,
-          horseName: true,
+          member: true,
+          horse: true,
           shows: true,
           points: true,
         },
-      })
-      .catch(err => {
-        console.log(err);
       });
 
-    return riders as CompleteRiderCombo[];
-  },
-});
+      return riders;
+    },
+  })
+  .query('get-rider', {
+    input: z.object({
+      memberName: z.string().optional(),
+      horseName: z.string().optional(),
+    }),
+    async resolve({ input }) {
+      const riders = await prisma.riderCombo.findFirst({
+        where: {
+          memberName: input?.memberName,
+          horseName: input?.horseName,
+        },
+        select: {
+          member: true,
+          horse: true,
+          shows: true,
+          points: true,
+        },
+      });
+
+      if (!riders) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: `${input.memberName} riding ${input.horseName} not found.`,
+        });
+      }
+
+      return riders;
+    },
+  });

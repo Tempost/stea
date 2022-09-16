@@ -1,10 +1,15 @@
 import * as z from "zod"
-import { CompleteMember, RelatedMemberModel, CompleteHorse, RelatedHorseModel, CompleteShow, RelatedShowModel, CompleteTotalPoints, RelatedTotalPointsModel } from "./index"
+import { CompleteMember, RelatedMemberModel, CompleteHorse, RelatedHorseModel, CompletePoints, RelatedPointsModel } from "./index"
 
 export const RiderComboModel = z.object({
-  uid: z.string().cuid(),
+  uid: z.string().cuid({ message: "Invalid cuid" }),
   createdAt: z.date().nullish(),
   updatedAt: z.date().nullish(),
+  division: z.string(),
+  totalPoints: z.number(),
+  totalShows: z.number().int(),
+  completedHT: z.boolean(),
+  multiVenue: z.boolean(),
   memberName: z.string().min(1, { message: "Member Name is required" }),
   horseName: z.string().min(1, { message: "Horse Name is required" }),
 })
@@ -12,8 +17,7 @@ export const RiderComboModel = z.object({
 export interface CompleteRiderCombo extends z.infer<typeof RiderComboModel> {
   member: CompleteMember
   horse: CompleteHorse
-  shows: CompleteShow[]
-  points?: CompleteTotalPoints | null
+  points: CompletePoints[]
 }
 
 /**
@@ -24,6 +28,5 @@ export interface CompleteRiderCombo extends z.infer<typeof RiderComboModel> {
 export const RelatedRiderComboModel: z.ZodSchema<CompleteRiderCombo> = z.lazy(() => RiderComboModel.extend({
   member: RelatedMemberModel,
   horse: RelatedHorseModel,
-  shows: RelatedShowModel.array(),
-  points: RelatedTotalPointsModel.nullish(),
+  points: RelatedPointsModel.array(),
 }))

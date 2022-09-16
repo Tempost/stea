@@ -1,31 +1,36 @@
 import { prisma } from '@/backend/prisma';
-import { TotalPoints } from '@prisma/client';
+import { z } from 'zod';
 import { createRouter } from './utils';
+
+const requestForUpdate = z.object({
+  fullName: z.string(),
+  horseName: z.string(),
+  showName: z.string(),
+
+});
 
 export const points = createRouter()
   .query('get-points', {
     async resolve() {
-      const points = await prisma.totalPoints
-        .findMany({
-          include: {
-            rider: {
-              include: {
-                horse: true,
-                member: true,
-              },
+      return await prisma.totalPoints.findMany({
+        include: {
+          rider: {
+            include: {
+              horse: true,
+              member: true,
             },
           },
-        })
-        .then(points => {
-          return points;
-        })
-        .catch(err => {
-          console.log(err);
-        });
-
-      return points as TotalPoints[];
+        },
+      });
     },
   })
-  .mutation('update-rc-points', {
-    async resolve() {},
+  .mutation('update', {
+    input: z.object({
+      fullName: z.string(),
+      horseName: z.string(),
+      showName: z.string(),
+    }),
+    async resolve() {
+
+    },
   });

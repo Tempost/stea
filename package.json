@@ -9,7 +9,7 @@
     "db-test": "dotenv -e .env.test -- jest -i router.test.ts",
     "test": "jest -i",
     "studio": "prisma studio",
-    "push": "prisma db push",
+    "push": "dotenv -e .env.development -- prisma db push",
     "migrate-local": "dotenv -e .env.test -- prisma migrate dev --name test"
   },
   "dependencies": {

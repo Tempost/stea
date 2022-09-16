@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { createRouter } from './utils';
 import { prisma } from '@/backend/prisma';
 import { HorseModel, PaymentModel, MemberModel } from '@/backend/prisma/zod';
-import { Member } from '@prisma/client';
+import { TRPCError } from '@trpc/server';
 
 export const member = createRouter()
   .query('get-members', {
@@ -39,19 +39,8 @@ export const member = createRouter()
   })
   .query('applicants', {
     async resolve() {
-      const members = await prisma.member
+      return await prisma.member
         .findMany({ where: { confirmed: false } })
-        .then(members => members)
-        .catch(err => console.log('Backend Error:', err));
-
-      return members as Member[];
-    },
-  })
-  .query('eoy-placings', {
-    async resolve() {
-      // Need member, horse and placing info
-      // Generate placing? or create new table with Placing Enums
-      // and store placing in ranking table
     },
   })
   .mutation('remove-member', {
@@ -115,7 +104,6 @@ export const member = createRouter()
   .mutation('update-member', {
     input: MemberModel.deepPartial(),
     async resolve({ input: { fullName, ...others } }) {
-      console.log(fullName, others);
       return await prisma.member
         .update({
           where: {
