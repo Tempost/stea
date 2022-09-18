@@ -79,7 +79,7 @@ function IndividualRegistration() {
     );
 
     methods.trigger().then(() => {
-      if (formValues.horses !== undefined) {
+      if (formValues.horses) {
         const lifeCount = formValues.horses.filter(
           horse => horse.regType === 'Life'
         ).length;
@@ -106,11 +106,11 @@ function IndividualRegistration() {
       <form onSubmit={handleSubmit(onSumbit)}>
         <h2 className='divider'>Individual Membership</h2>
 
-        <div className='flex gap-5'>
+        <div className='flex gap-1 md:gap-5'>
           <TextInput
             inputMode='text'
             label='First Name*'
-            className='input-sm input-primary input-primary'
+            className='input-primary'
             error={inputState.errors.member?.firstName}
             {...register('member.firstName', { required: true })}
           />
@@ -118,7 +118,7 @@ function IndividualRegistration() {
           <TextInput
             inputMode='text'
             label='Last Name*'
-            className='input-sm input-primary'
+            className='input-primary'
             error={inputState.errors.member?.lastName}
             {...register('member.lastName', { required: true })}
           />
@@ -128,7 +128,7 @@ function IndividualRegistration() {
         <div className='flex flex-col gap-2'>
           <TextInput
             inputMode='text'
-            className='input-sm input-primary'
+            className='input-primary'
             placeholder='Address Line 1'
             error={inputState.errors.member?.address}
             {...register('member.address', { required: true })}
@@ -136,7 +136,7 @@ function IndividualRegistration() {
 
           <TextInput
             inputMode='text'
-            className='input-sm input-primary'
+            className='input-primary'
             placeholder='Address Line 2'
             name='temp'
           />
@@ -144,14 +144,14 @@ function IndividualRegistration() {
           <div className='flex gap-1'>
             <TextInput
               inputMode='text'
-              className='input-sm input-primary'
+              className='input-primary'
               placeholder='City'
               error={inputState.errors.member?.city}
               {...register('member.city', { required: true })}
             />
 
             <Select
-              className='select-sm select-primary'
+              className='select-primary'
               error={inputState.errors.member?.state}
               options={states}
               {...register('member.state', { required: true })}
@@ -159,7 +159,7 @@ function IndividualRegistration() {
 
             <NumericInput
               inputMode='numeric'
-              className='input-sm input-primary'
+              className='input-primary'
               placeholder='Zip Code'
               inputSize='w-fit'
               error={inputState.errors.member?.zip}
@@ -174,7 +174,7 @@ function IndividualRegistration() {
             <div className='flex gap-2'>
               <Select
                 label='Phone Type*'
-                className='select-sm select-primary'
+                className='select-primary'
                 options={phoneTypes}
                 {...register('member.phoneType', { required: true })}
               />
@@ -182,7 +182,7 @@ function IndividualRegistration() {
               <TextInput
                 label='Phone Number*'
                 inputMode='tel'
-                className='input-sm input-primary'
+                className='input-primary'
                 error={inputState.errors.member?.phone}
                 {...register('member.phone', { required: true })}
               />
@@ -191,7 +191,7 @@ function IndividualRegistration() {
             <TextInput
               label='Email*'
               inputMode='text'
-              className='input-sm input-primary'
+              className='input-primary'
               altLabel={
                 'This will the primary method of contact, ensure it is up to date!'
               }
@@ -215,14 +215,13 @@ function IndividualRegistration() {
           <div className='flex gap-2'>
             <Checkbox
               label='Current USEA Member?'
-              className='checkbox checkbox-primary checkbox-sm'
               {...register('member.currentUSEAMember')}
             />
 
             {isUSEAMember && (
               <NumericInput
                 inputMode='text'
-                className='input-sm input-primary'
+                className='input-primary'
                 placeholder='USEA Member ID'
                 inputSize='w-50'
                 error={inputState.errors.member?.useaMemberID}
@@ -236,15 +235,12 @@ function IndividualRegistration() {
 
           <Checkbox
             label='Do you plan to register your horse(s)?'
-            className='checkbox checkbox-primary checkbox-sm'
             {...register('horseReg')}
           />
 
           {isRegHorse && <HorseFieldArray />}
 
-          <FinishPayment
-            triggerValidation={triggerValidation}
-          />
+          <FinishPayment triggerValidation={triggerValidation} />
         </div>
       </form>
     </FormProvider>

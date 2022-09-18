@@ -1,5 +1,4 @@
 import React from 'react';
-import { useState } from 'react';
 import { Hamburger } from './icons';
 import LinkWrapper from './linkwrapper';
 import { publicMenuItems, dashMenuItems } from './menuitems';

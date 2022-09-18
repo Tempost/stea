@@ -30,7 +30,7 @@ function ControlledDatePicker({ register }: DatePickerProps) {
             selected={props.field.value}
             customInput={
               <TextInput
-                className='input-sm input-primary'
+                className='input-primary'
                 {...register}
               />
             }

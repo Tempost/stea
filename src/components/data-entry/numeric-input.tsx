@@ -19,7 +19,7 @@ const NumericInput = forwardRef<HTMLInputElement, NumericInputProps>(
 
     return (
       <div className={`${inputSize ? inputSize : 'w-full'}`}>
-        {label !== undefined && (
+        {label && (
           <label
             className={`label flex-col ${labelStyle}`}
             htmlFor={`numeric-input${id}`}
@@ -32,7 +32,7 @@ const NumericInput = forwardRef<HTMLInputElement, NumericInputProps>(
         <input
           ref={ref}
           id={`numeric-input${id}`}
-          className={`input input-bordered w-full ${
+          className={`input input-bordered input-md md:input-sm w-full ${
             error && 'input-error border-2'
           } ${className}`}
           type='text'

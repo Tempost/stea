@@ -54,7 +54,7 @@ function Applications() {
   console.log(members.data);
   return (
     <div className='pt-28 w-full grid place-items-center'>
-      {members.data !== undefined && members.data.length < 0 ? (
+      {members.data && members.data.length < 0 ? (
         <div className='shadow-xl rounded-lg p-5'>No New Members...</div>
       ) : (
         <TableWithData

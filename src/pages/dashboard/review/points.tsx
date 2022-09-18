@@ -33,7 +33,7 @@ function Points() {
 
   return (
     <div className='pt-28 w-full grid place-items-center'>
-      {memberPoints.data !== undefined && memberPoints.data.length < 0 ? (
+      {memberPoints.data && memberPoints.data.length < 0 ? (
         <div className='shadow-xl rounded-lg p-5'>
           No new shows to review...
         </div>

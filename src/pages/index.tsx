@@ -1,34 +1,15 @@
-import NextLink, { LinkProps } from 'next/link';
+import NextLink from 'next/link';
 
 import { PublicLayout } from '@/components/layout';
 
 import { ReactElement } from 'react';
 import Image from 'next/image';
 import { BookIcon, CalenderIcon } from '@/components/icons';
-
-interface NavCardProps extends LinkProps {
-  img: string; // TODO: Better type for this?
-  bodyText: React.ReactNode;
-}
-function NavCard({ img, bodyText, ...props }: NavCardProps) {
-  return (
-    <NextLink {...props}>
-      <div className='rounded-xl overflow-clip shadow-lg bg-cyan-500 hover:cursor-pointer w-[75%] h-full'>
-        <div className='block w-full'>
-          <Image width={400} height={400} layout='responsive' src={img} />
-        </div>
-
-        <div className='card-body text-center text-2xl font-bold'>
-          <p>{bodyText}</p>
-        </div>
-      </div>
-    </NextLink>
-  );
-}
+import NavCard from '@/components/navcard';
 
 function Home() {
   return (
-    <div>
+    <>
       <div className='hero min-h-screen bg-home-hero bg-fixed'>
         <div className='hero-overlay bg-opacity-50'></div>
 
@@ -52,8 +33,8 @@ function Home() {
         </div>
       </div>
 
-      <div className='flex flex-col px-20'>
-        <div className='grid lg:grid-flow-col justify-items-center sm:gap-10 md:gap-10 mt-10'>
+      <div className='flex flex-col px-20 gap-10 mt-10'>
+        <div className='self-center flex flex-col md:flex-row md:flex-wrap justify-around gap-5'>
           <NavCard
             bodyText='Membership'
             href='/join/benefits'
@@ -71,7 +52,7 @@ function Home() {
           />
         </div>
 
-        <section className='card p-5 shadow-2xl w-fit mt-10 text-2xl self-center'>
+        <section className='card p-5 shadow-2xl w-fit text-2xl self-center'>
           <h2 className='text-center text-red-600 font-bold'>Notice</h2>
           <div className='card-body'>
             <h3>Please remeber to check your points throught the year!</h3>
@@ -84,11 +65,11 @@ function Home() {
           </div>
         </section>
 
-        <section className='flex flex-col gap-2 self-center items-center mt-10'>
+        <section className='flex flex-col gap-2 self-center items-center'>
           <h1 className='text-xl'>End of Year Placings</h1>
         </section>
 
-        <section className='flex flex-col gap-2 self-center items-center mt-10'>
+        <section className='flex flex-col gap-2 self-center items-center'>
           <h2 className='text-xl'>Upcoming Events</h2>
           <NextLink href='/calender'>
             <button className='btn btn-primary btn-md grid place-content-center grid-flow-col gap-2'>
@@ -100,12 +81,12 @@ function Home() {
           {/* TODO: Make some sort of event display component? */}
         </section>
 
-        <section className='flex flex-col gap-2 items-center mt-10'>
+        <section className='flex flex-col gap-2 items-center'>
           <h1 className='text-xl'>Recognized vendors</h1>
           {/* TODO: List of vendors w/ photos */}
         </section>
       </div>
-    </div>
+    </>
   );
 }
 

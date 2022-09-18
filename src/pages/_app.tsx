@@ -41,8 +41,8 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         />
         <meta
           name='viewport'
-          initial-scale='100%'
-          content='viewport-fit=cover'
+          initial-scale='1'
+          content='width=device-width'
         />
       </Head>
       <AtomsDevTools>{getLayout(<Component {...pageProps} />)}</AtomsDevTools>

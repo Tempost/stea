@@ -75,7 +75,7 @@ export const member = createRouter()
         })
         .catch(err => console.log('ERROR', err));
 
-      if (input.horses !== undefined) {
+      if (input.horses) {
         for (let horse of input.horses) {
           const date = new Date();
           await prisma.horse.create({

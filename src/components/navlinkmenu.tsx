@@ -55,7 +55,7 @@ export function NavLinkSubMenu({
   drawer,
 }: NavLinkMenuProps) {
   const subMenu = (
-    <li tabIndex={0}>
+    <li tabIndex={0} className='z-20'>
       <span>
         {name} {ChevDown}
       </span>

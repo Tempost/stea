@@ -28,14 +28,14 @@ function RegType({ register, noAtomUpdate }: Props) {
       <Radio
         label='Annual'
         value='Annual'
-        className='radio radio-primary radio-sm'
+        className='radio-primary'
         {...register}
       />
 
       <Radio
         label='Life'
         value='Life'
-        className='radio radio-primary radio-sm'
+        className='radio-primary'
         {...register}
       />
     </div>

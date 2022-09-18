@@ -16,7 +16,7 @@ export function PublicLayout({ children }: any) {
       <ResponsiveHeader>
       <main
         className={`flex-grow bg-neutral-content 
-                    ${router.pathname === '/' ? '' : 'p-20'}`}
+                    ${router.pathname === '/' ? '' : 'p-4 sm:p-8 md:p-10 lg:p-16'}`}
       >
         {children}
       </main>
@@ -30,7 +30,7 @@ export function DashboardLayout({ children }: any) {
   return (
     <div className='flex flex-col h-screen'>
       <DashboardHeader />
-      <main className='flex-grow bg-neutral-content mt-16'>{children}</main>
+      <main className='flex-grow bg-neutral-content p-4 sm:p-8 md:p-10 lg:p-16'>{children}</main>
     </div>
   );
 }
@@ -63,7 +63,7 @@ export function FormLayout({ children }: any) {
   return (
     <PublicLayout>
       <div className='grid place-content-center h-full bg-opacity-50'>
-        <div className='card w-fit bg-base-100 shadow-[0_0_10px_0_rgba(0,0,0,0.3)] p-8'>
+        <div className='card w-fit bg-base-100 shadow-[0_0_10px_0_rgba(0,0,0,0.3)] p-5 md:p-8'>
           {showReturn && returnButton}
           <PayPalScriptProvider options={initOptions}>
             {children}

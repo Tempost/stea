@@ -24,7 +24,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
 
     return (
       <div className={`${inputSize ? inputSize : 'w-full'}`}>
-        {label !== undefined && (
+        {label && (
           <label
             className={`label flex-col ${labelStyle}`}
             htmlFor={`text-input${id}`}
@@ -37,14 +37,14 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
         <input
           ref={ref}
           id={`text-input${id}`}
-          className={`input input-bordered w-full ${
+          className={`input input-bordered md:input-sm w-full ${
             error && 'input-error border-2'
           } ${className}`}
           type='text'
           {...props}
         />
 
-        {altLabel !== undefined && (
+        {altLabel && (
           <label
             className={`label-text-alt ${labelStyle}`}
             htmlFor={`text-input${id}`}
