@@ -15,12 +15,12 @@ function Home() {
 
         <div className='hero-content text-neutral-content text-center'>
           <div className='flex flex-col items-center min-w-full gap-5'>
-            <Image
-              width={600}
-              height={441}
-              layout='intrinsic'
-              src='/stea_logo_white.png'
-            />
+              <Image
+                width={450}
+                height={250}
+                layout='intrinsic'
+                src='/stea_logo_no_horse_border.svg'
+              />
 
             <h2 className='text-5xl'>Where Your Eventing Journey Begins</h2>
 
@@ -33,7 +33,7 @@ function Home() {
         </div>
       </div>
 
-      <div className='flex flex-col px-20 gap-10 mt-10'>
+      <div className='flex flex-col gap-5 md:gap-10 p-5 md:p-10'>
         <div className='self-center flex flex-col md:flex-row md:flex-wrap justify-around gap-5'>
           <NavCard
             bodyText='Membership'
@@ -52,13 +52,13 @@ function Home() {
           />
         </div>
 
-        <section className='card p-5 shadow-2xl w-fit text-2xl self-center'>
+        <section className='card p-5 shadow-2xl w-fit text-lg md:text-2xl self-center'>
           <h2 className='text-center text-red-600 font-bold'>Notice</h2>
           <div className='card-body'>
             <h3>Please remeber to check your points throught the year!</h3>
-            <p className='inline-flex gap-2 self-center'>
+            <p className='self-center'>
               Review rule changes for 2023
-              <button className='btn btn-primary btn-xs'>
+              <button className='btn btn-primary btn-sm md:btn-xs'>
                 <span className='mr-1'>Rule Book </span> {BookIcon}
               </button>
             </p>
