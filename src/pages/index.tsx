@@ -52,11 +52,11 @@ function Home() {
           />
         </div>
 
-        <section className='card p-5 shadow-2xl w-fit text-lg md:text-2xl self-center'>
+        <section className='card card-compact shadow-2xl w-fit text-lg md:text-2xl self-center'>
           <h2 className='text-center text-red-600 font-bold'>Notice</h2>
           <div className='card-body'>
             <h3>Please remeber to check your points throught the year!</h3>
-            <p className='self-center'>
+            <p>
               Review rule changes for 2023
               <button className='btn btn-primary btn-sm md:btn-xs'>
                 <span className='mr-1'>Rule Book </span> {BookIcon}

@@ -11,10 +11,11 @@ export default function NavCard({ img, bodyText, ...props }: NavCardProps) {
     <NextLink {...props}>
       <a
         className='
-        card shadow-lg bg-cyan-500 w-[60vw] sm:w-[50vw] md:w-[40vw] hover:cursor-pointer hover:scale-[1.05]
-        hover:shadow-2xl transition-all ease-in-out delay-75 image-full'
+        card image-full shadow-lg bg-cyan-500 w-[20em] sm:w-[25em] md:w-[30em]
+        hover:cursor-pointer hover:scale-[1.05] hover:shadow-2xl group
+        transition-all ease-in-out delay-75'
       >
-        <div className='h-[25vh] sm:h-[30vh] relative'>
+        <div className='h-[15em] sm:h-[20em] md:h-[25em] relative'>
           <Image
             layout='fill'
             src={img}
@@ -23,7 +24,7 @@ export default function NavCard({ img, bodyText, ...props }: NavCardProps) {
 
         <div
           className='card-body grid place-items-center text-2xl md:text-3xl font-semibold
-          underline hover:font-extrabold hover:scale-[1.10] delay-75 transition-all ease-in-out'
+          underline group-hover:font-semibold hover:scale-[1.10] delay-75 transition-all ease-in-out'
         >
           <p>{bodyText}</p>
         </div>
