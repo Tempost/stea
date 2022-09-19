@@ -169,8 +169,8 @@ model Points {
   /// @zod.min(1, { message: "Member Name is required" })
   riderUid   String
   showUid    String
-  Show       Show       @relation(fields: [showUid], references: [uid])
-  RiderCombo RiderCombo @relation(fields: [riderUid], references: [uid])
+  Show       Show       @relation(fields: [showUid], references: [uid], onDelete: Cascade, onUpdate: Cascade)
+  RiderCombo RiderCombo @relation(fields: [riderUid], references: [uid], onDelete: Cascade, onUpdate: Cascade)
   points     Float
 }
 

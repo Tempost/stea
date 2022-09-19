@@ -5,6 +5,7 @@ import { createRouter } from './utils';
 import { prisma } from '@/backend/prisma';
 
 const selectFields = {
+  uid: true,
   member: true,
   horse: true,
   shows: true,

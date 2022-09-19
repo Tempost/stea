@@ -20,7 +20,7 @@ describe('tRPC router tests', () => {
 
     const tableNames = await prisma.$queryRaw<
       Array<{ TABLE_NAME: string }>
-    >`SELECT TABLE_NAME from information_schema.TABLES WHERE TABLE_SCHEMA ='stea_test';`;
+      >`SELECT TABLE_NAME from information_schema.TABLES WHERE TABLE_SCHEMA ='stea_test';`;
 
     for (const { TABLE_NAME } of tableNames) {
       if (TABLE_NAME !== '_prisma_migrations') {
@@ -228,18 +228,18 @@ describe('tRPC router tests', () => {
       const newFirstName = faker.name.firstName();
       const newLastName = faker.name.lastName();
       const mutationInput: inferMutationInput<'nonMemberHorseOwner.update-owner'> =
-        {
-          ownerName: fullName,
-          patch: {
+      {
+        ownerName: fullName,
+        patch: {
+          firstName: newFirstName,
+          lastName: newLastName,
+          fullName: faker.name.fullName({
             firstName: newFirstName,
             lastName: newLastName,
-            fullName: faker.name.fullName({
-              firstName: newFirstName,
-              lastName: newLastName,
-            }),
-            email: faker.internet.email(),
-          },
-        };
+          }),
+          email: faker.internet.email(),
+        },
+      };
 
       const updatedOwner = await caller.mutation(
         'nonMemberHorseOwner.update-owner',
@@ -265,9 +265,9 @@ describe('tRPC router tests', () => {
       };
 
       const mutationInput: inferMutationInput<'nonMemberHorseOwner.remove-owner'> =
-        {
-          ownerName: fullName,
-        };
+      {
+        ownerName: fullName,
+      };
 
       // Get record to compare objects first
       const ownerFromGet = await caller.query(
@@ -359,7 +359,10 @@ describe('tRPC router tests', () => {
     const firstName = faker.name.firstName();
     const lastName = faker.name.lastName();
     const fullName = faker.name.fullName({ firstName, lastName });
+    const showName = faker.address.county();
     const date = new Date();
+    let showUID: string;
+    let riderUID: string;
 
     const horse = {
       horseRN: faker.animal.horse(),
@@ -397,6 +400,14 @@ describe('tRPC router tests', () => {
       };
 
       await caller.mutation('member.add-member', input);
+      const mutationInput: inferMutationInput<'shows.add'> = {
+        showName: showName,
+        showType: '???',
+        showDate: date,
+      };
+
+      const newShow = await caller.mutation('shows.add', mutationInput);
+      showUID = newShow.uid;
     });
 
     it('Get combo', async () => {
@@ -411,10 +422,20 @@ describe('tRPC router tests', () => {
       const comboFromGet = await caller.query('rider.get-rider', { ...combo });
       expect(comboFromGet.member.fullName).toBe(fullName);
       expect(comboFromGet.horse.horseRN).toBe(horse.horseRN);
+      riderUID = comboFromGet.uid;
     });
 
     it('Request for points change', async () => {
       // NOTE: Takes memberName, horseName, showDate/ShowName, new points to ammend
+      const ctx = await createContextInner({});
+      const caller = appRouter.createCaller(ctx);
+
+      const requestUpdate: inferMutationInput<'points.update-points'> = {
+        riderUID,
+        showUID,
+        ammendPoints: 1,
+      };
+      await caller.mutation('points.update-points', requestUpdate);
     });
 
     it('Delete combo', async () => {
@@ -428,6 +449,12 @@ describe('tRPC router tests', () => {
       const deletedMember = await caller.mutation('rider.remove-rider', combo);
 
       expect(deletedMember).toMatchObject(combo);
+    });
+  });
+
+  describe('Point Submission from csv', () => {
+    it('Submit via api', () => {
+
     });
   });
 });
