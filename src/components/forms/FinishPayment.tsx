@@ -1,5 +1,5 @@
-import Payment from "@/components/forms/Payment";
-import { useFormContext } from "react-hook-form";
+import Payment from '@/components/forms/Payment';
+import { useFormContext } from 'react-hook-form';
 
 interface FinishPaymentProps {
   triggerValidation: () => void;

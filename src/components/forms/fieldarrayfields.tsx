@@ -80,7 +80,9 @@ export function HorseFieldArray() {
         </div>
       ))}
 
-      <p className='text-error text-xl font-semibold'>{errors.horses?.message}</p>
+      <p className='text-error text-xl font-semibold'>
+        {errors.horses?.message}
+      </p>
       <button
         className='btn btn-secondary btn-xs w-full'
         type='button'
@@ -171,7 +173,9 @@ export function RiderComboFieldArray() {
         </div>
       ))}
 
-      <p className='text-error text-xl font-semibold'>{errors.riderCombos?.message}</p>
+      <p className='text-error text-xl font-semibold'>
+        {errors.riderCombos?.message}
+      </p>
       <button
         className='btn btn-secondary btn-xs w-full'
         type='button'

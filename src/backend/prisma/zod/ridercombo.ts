@@ -1,5 +1,5 @@
 import * as z from "zod"
-import { CompleteMember, RelatedMemberModel, CompleteHorse, RelatedHorseModel, CompletePoints, RelatedPointsModel } from "./index"
+import { CompleteMember, RelatedMemberModel, CompleteHorse, RelatedHorseModel, CompletePoints, RelatedPointsModel, CompleteShow, RelatedShowModel } from "./index"
 
 export const RiderComboModel = z.object({
   uid: z.string().cuid({ message: "Invalid cuid" }),
@@ -18,6 +18,7 @@ export interface CompleteRiderCombo extends z.infer<typeof RiderComboModel> {
   member: CompleteMember
   horse: CompleteHorse
   points: CompletePoints[]
+  shows: CompleteShow[]
 }
 
 /**
@@ -29,4 +30,5 @@ export const RelatedRiderComboModel: z.ZodSchema<CompleteRiderCombo> = z.lazy(()
   member: RelatedMemberModel,
   horse: RelatedHorseModel,
   points: RelatedPointsModel.array(),
+  shows: RelatedShowModel.array(),
 }))

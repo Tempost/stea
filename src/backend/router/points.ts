@@ -6,7 +6,6 @@ const requestForUpdate = z.object({
   fullName: z.string(),
   horseName: z.string(),
   showName: z.string(),
-
 });
 
 export const points = createRouter()
@@ -30,7 +29,5 @@ export const points = createRouter()
       horseName: z.string(),
       showName: z.string(),
     }),
-    async resolve() {
-
-    },
+    async resolve() {},
   });

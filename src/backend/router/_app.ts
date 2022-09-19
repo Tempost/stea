@@ -1,7 +1,7 @@
 import { transformer } from '@/utils/trpc';
 import { horse } from './horses';
 import { member } from './members';
-import { points } from './points';
+// import { points } from './points';
 import { show } from './shows';
 import { riders } from './combos';
 import { nonMemberHorseOwner } from './nonmemberhorseowner';
@@ -12,7 +12,7 @@ export const appRouter = createRouter()
   .merge('member.', member)
   .merge('nonMemberHorseOwner.', nonMemberHorseOwner)
   .merge('horse.', horse)
-  .merge('ranking.', points)
+  // .merge('ranking.', points)
   .merge('rider.', riders)
   .merge('shows.', show);
 

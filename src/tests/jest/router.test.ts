@@ -10,7 +10,7 @@ import {
   MemberModel,
   NonMemberHorseOwnerModel,
 } from '@/backend/prisma/zod';
-import { PaymentMethod, PrismaPromise } from '@prisma/client';
+import { PaymentMethod, Prisma, PrismaPromise, Status } from '@prisma/client';
 
 describe('tRPC router tests', () => {
   // In the case where records are left in the DB, delete all data from the tables
@@ -47,14 +47,15 @@ describe('tRPC router tests', () => {
     const lastName = faker.name.lastName();
     const fullName = faker.name.fullName({ firstName, lastName });
     const date = new Date();
+
+    const horse: z.infer<typeof HorseModel> = {
+      horseRN: faker.animal.horse(),
+      regType: 'Life',
+    };
+
     it('Add/Get member', async () => {
       const ctx = await createContextInner({});
       const caller = appRouter.createCaller(ctx);
-
-      const horse: z.infer<typeof HorseModel> = {
-        horseRN: faker.animal.horse(),
-        regType: 'Life',
-      };
 
       const payment = {
         amountPaid: 50,
@@ -83,10 +84,16 @@ describe('tRPC router tests', () => {
         zip: parseInt(faker.address.zipCodeByState('TX')),
       };
 
+      const newHorse = {
+        horseRN: faker.animal.horse(),
+        regType: 'Annual' as Status,
+      };
+
       const input: inferMutationInput<'member.add-member'> = {
         member,
-        horses: [horse],
+        horses: [newHorse],
         payment,
+        division: 'GAG',
       };
 
       await caller.mutation('member.add-member', input);
@@ -112,14 +119,10 @@ describe('tRPC router tests', () => {
         email: faker.internet.exampleEmail(firstName, lastName),
       };
 
-      const horse: z.infer<typeof HorseModel> = {
-        horseRN: faker.animal.horse(),
-        regType: 'Life',
-      };
-
-      const combo = {
+      const combo: Prisma.RiderComboCreateManyInput = {
         memberName: fullName,
         horseName: horse.horseRN,
+        division: 'GAG',
       };
 
       const input: inferMutationInput<'nonMemberHorseOwner.add-owner-horse'> = {
@@ -184,14 +187,13 @@ describe('tRPC router tests', () => {
     const lastName = faker.name.lastName();
     let fullName = faker.name.fullName({ firstName, lastName });
 
+    const horse: z.infer<typeof HorseModel> = {
+      horseRN: faker.animal.horse(),
+      regType: 'Life',
+    };
     it('Add/Get owner', async () => {
       const ctx = await createContextInner({});
       const caller = appRouter.createCaller(ctx);
-
-      const horse: z.infer<typeof HorseModel> = {
-        horseRN: faker.animal.horse(),
-        regType: 'Life',
-      };
 
       const owner: z.infer<typeof NonMemberHorseOwnerModel> = {
         fullName,
@@ -281,10 +283,12 @@ describe('tRPC router tests', () => {
       expect(ownerFromDelete).toMatchObject(ownerFromGet);
     });
   });
+
   describe('Shows api routes', () => {
     const showName = faker.address.county();
     const date = new Date();
     let showUid: string;
+
     it('add/get show', async () => {
       const ctx = await createContextInner({});
       const caller = appRouter.createCaller(ctx);
@@ -340,6 +344,7 @@ describe('tRPC router tests', () => {
       const showFromGet = await caller.query('shows.get-show', {
         uid: showUid,
       });
+
       const deletedShow = await caller.mutation(
         'shows.remove-show',
         mutationInput
@@ -347,6 +352,82 @@ describe('tRPC router tests', () => {
       expect(deletedShow.showName).toBe(showFromGet.showName);
       expect(deletedShow.showType).toBe(showFromGet.showType);
       expect(deletedShow.showDate).toMatchObject(showFromGet.showDate);
+    });
+  });
+
+  describe('Rider combo apis (including points)', () => {
+    const firstName = faker.name.firstName();
+    const lastName = faker.name.lastName();
+    const fullName = faker.name.fullName({ firstName, lastName });
+    const date = new Date();
+
+    const horse = {
+      horseRN: faker.animal.horse(),
+      regType: 'Life' as Status,
+    };
+
+    beforeAll(async () => {
+      const ctx = await createContextInner({});
+      const caller = appRouter.createCaller(ctx);
+
+      const member: z.infer<typeof MemberModel> = {
+        fullName,
+        firstName,
+        lastName,
+        phone: faker.phone.number('###-###-####'),
+        phoneType: 'Mobile',
+        email: faker.internet.exampleEmail(firstName, lastName),
+        boardMember: false,
+        address: faker.address.street(),
+        city: faker.address.cityName(),
+        state: faker.address.street(),
+        confirmed: false,
+        currentUSEAMember: false,
+        memberType: 'Business',
+        memberStatus: 'Life',
+        JRSR: 'JR',
+        dateOfBirth: date,
+        zip: parseInt(faker.address.zipCodeByState('TX')),
+      };
+
+      const input: inferMutationInput<'member.add-member'> = {
+        division: 'GAG',
+        member,
+        horses: [horse],
+      };
+
+      await caller.mutation('member.add-member', input);
+    });
+
+    it('Get combo', async () => {
+      const ctx = await createContextInner({});
+      const caller = appRouter.createCaller(ctx);
+
+      const combo: inferQueryInput<'rider.get-rider'> = {
+        memberName: fullName,
+        horseName: horse.horseRN,
+      };
+
+      const comboFromGet = await caller.query('rider.get-rider', { ...combo });
+      expect(comboFromGet.member.fullName).toBe(fullName);
+      expect(comboFromGet.horse.horseRN).toBe(horse.horseRN);
+    });
+
+    it('Request for points change', async () => {
+      // NOTE: Takes memberName, horseName, showDate/ShowName, new points to ammend
+    });
+
+    it('Delete combo', async () => {
+      const ctx = await createContextInner({});
+      const caller = appRouter.createCaller(ctx);
+
+      const combo: inferMutationInput<'rider.remove-rider'> = {
+        memberName: fullName,
+        horseName: horse.horseRN,
+      };
+      const deletedMember = await caller.mutation('rider.remove-rider', combo);
+
+      expect(deletedMember).toMatchObject(combo);
     });
   });
 });

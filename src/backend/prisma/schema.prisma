@@ -160,6 +160,7 @@ model RiderCombo {
   /// @zod.min(1, { message: "Horse Name is required" })
   horseName   String
   points      Points[]
+  shows       Show[]
 }
 
 model Points {
@@ -170,21 +171,21 @@ model Points {
   showUid    String
   Show       Show       @relation(fields: [showUid], references: [uid])
   RiderCombo RiderCombo @relation(fields: [riderUid], references: [uid])
-  /// @zod.cuid({ message: "Invalid cuid"})
-  points     Int
+  points     Float
 }
 
 model Show {
   /// @zod.cuid({ message: "Invalid cuid"})
-  uid       String    @id @default(cuid())
-  createdAt DateTime? @default(now())
-  updatedAt DateTime? @updatedAt
+  uid       String       @id @default(cuid())
+  createdAt DateTime?    @default(now())
+  updatedAt DateTime?    @updatedAt
   /// @zod.min(1, { message: "Show name is required" })
-  showName  String    @db.VarChar(150)
+  showName  String       @db.VarChar(150)
   /// @zod.min(1, { message: "Show type is required" })
-  showType  String    @db.VarChar(10)
+  showType  String       @db.VarChar(10)
   /// Submitted points have yet to be review by board member
-  reviewed  Boolean   @default(false)
+  reviewed  Boolean      @default(false)
   showDate  DateTime
   points    Points[]
+  riders    RiderCombo[]
 }

@@ -5,7 +5,7 @@ export const PointsModel = z.object({
   uid: z.string().cuid({ message: "Invalid cuid" }),
   riderUid: z.string().min(1, { message: "Member Name is required" }),
   showUid: z.string(),
-  points: z.number().int().cuid({ message: "Invalid cuid" }),
+  points: z.number(),
 })
 
 export interface CompletePoints extends z.infer<typeof PointsModel> {

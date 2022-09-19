@@ -1,8 +1,9 @@
 import { JRSR, PaymentMethod, Prisma, Status, Type } from '@prisma/client';
 
-import { prisma } from '../backend/prisma';
+import { prisma } from '@/backend/prisma';
 import members from './members.json';
 import horses from './horses.json';
+import { removeUndefined } from '../helpers';
 
 interface Rider {
   riders: string | string[];
@@ -65,10 +66,6 @@ async function seedHorses() {
   await prisma.horse.createMany({ data: noUndefinedData });
 
   return riders;
-}
-
-function removeUndefined<T>(data: (T | undefined)[]) {
-  return data.filter((item: any): item is T => item !== undefined);
 }
 
 async function seedMembers() {
@@ -135,6 +132,7 @@ async function addCombo(fullName: string, horseRN: string) {
   if (member !== null && horse !== null) {
     await prisma.riderCombo.create({
       data: {
+        division: '',
         member: {
           connect: {
             fullName,
@@ -143,11 +141,6 @@ async function addCombo(fullName: string, horseRN: string) {
         horse: {
           connect: {
             horseRN,
-          },
-        },
-        points: {
-          create: {
-            division: '',
           },
         },
       },

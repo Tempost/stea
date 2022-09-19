@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
-import { createRouter } from './utils';
+import { createRouter, prepareCombos } from './utils';
 import { prisma } from '@/backend/prisma';
-import { NonMemberHorseOwner } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import { HorseModel, NonMemberHorseOwnerModel } from '@/backend/prisma/zod';
 import { TRPCError } from '@trpc/server';
 
@@ -10,22 +10,23 @@ const addOwnerInput = z.object({
   owner: NonMemberHorseOwnerModel,
   horses: z.array(HorseModel),
   combos: z
-    .array(z.object({ memberName: z.string(), horseName: z.string() }))
+    .array(
+      z.object({
+        memberName: z.string(),
+        horseName: z.string(),
+        division: z.string(),
+      })
+    )
     .optional(),
 });
 type AddOwnerInput = z.infer<typeof addOwnerInput>;
 
 export const nonMemberHorseOwner = createRouter()
   .query('get-owners', {
-    input: z.object({ ownerName: z.string() }).optional(),
+    async resolve() {
+      const data = await prisma.nonMemberHorseOwner.findMany();
 
-    // TODO: Get by fullName
-    async resolve({ input }) {
-      const data = await prisma.nonMemberHorseOwner
-        .findMany()
-        .catch(err => console.log('Backend Error:', err));
-
-      return data as NonMemberHorseOwner[];
+      return data;
     },
   })
   .query('get-owner', {
@@ -98,14 +99,10 @@ export const nonMemberHorseOwner = createRouter()
           where: { fullName: input.owner.fullName },
           data: {
             RiderCombo: {
-              createMany: {
-                data: prepareCombos(input.combos),
-              },
+              create: [...prepareCombos(input.combos)],
             },
             Horse: {
-              createMany: {
-                data: [...input.horses],
-              },
+              create: [...input.horses],
             },
           },
         });
@@ -115,16 +112,6 @@ export const nonMemberHorseOwner = createRouter()
       }
     },
   });
-
-function prepareCombos(combos: Array<{memberName: string; horseName: string}> | undefined) {
-  if (!combos) {
-    return [];
-  }
-
-  return combos.map((combo) => {
-    return { horseName: combo.horseName }
-  })
-}
 
 async function upsertOwner({ owner, horses, combos }: AddOwnerInput) {
   const newOwner = await prisma.nonMemberHorseOwner.upsert({
@@ -151,6 +138,7 @@ async function upsertOwner({ owner, horses, combos }: AddOwnerInput) {
     for (let combo of combos) {
       await prisma.riderCombo.create({
         data: {
+          division: combo.division,
           horse: {
             connect: {
               horseRN: combo.horseName,
