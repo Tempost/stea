@@ -8,29 +8,36 @@ import {
   PayPalScriptProvider,
   ReactPayPalScriptOptions,
 } from '@paypal/react-paypal-js';
+import { LayoutProps } from '@/types/common';
 
-export function PublicLayout({ children }: any) {
+export function PublicLayout({ children }: LayoutProps) {
   const router = useRouter();
   return (
     <div className='flex flex-col h-screen'>
       <ResponsiveHeader>
-      <main
-        className={`flex-grow bg-neutral-content 
-                    ${router.pathname === '/' ? '' : 'p-4 sm:p-8 md:p-10 lg:p-16'}`}
-      >
-        {children}
-      </main>
-      <Footer />
+        <main
+          className={`flex-grow bg-neutral-content 
+                    ${
+                      router.pathname === '/'
+                        ? ''
+                        : 'p-4 sm:p-8 md:p-10 lg:p-16'
+                    }`}
+        >
+          {children}
+        </main>
+        <Footer />
       </ResponsiveHeader>
     </div>
   );
 }
 
-export function DashboardLayout({ children }: any) {
+export function DashboardLayout({ children }: LayoutProps) {
   return (
     <div className='flex flex-col h-screen'>
       <DashboardHeader />
-      <main className='flex-grow bg-neutral-content p-4 sm:p-8 md:p-10 lg:p-16'>{children}</main>
+      <main className='flex-grow bg-neutral-content p-4 sm:p-8 md:p-10 lg:p-16'>
+        {children}
+      </main>
     </div>
   );
 }
@@ -42,7 +49,7 @@ const initOptions: ReactPayPalScriptOptions = {
   'data-react-paypal-script-id': 'paypal-button',
 };
 
-export function FormLayout({ children }: any) {
+export function FormLayout({ children }: LayoutProps) {
   const router = useRouter();
   const update = useSetAtom(updateFormState);
 

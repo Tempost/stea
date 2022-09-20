@@ -19,12 +19,12 @@ export const Hamburger = (
     xmlns='http://www.w3.org/2000/svg'
     fill='none'
     viewBox='0 0 24 24'
-    className='inline-block w-6 h-6 stroke-current'
+    className='inline-block w-8 h-8 stroke-current'
   >
     <path
       strokeLinecap='round'
       strokeLinejoin='round'
-      strokeWidth='2'
+      strokeWidth='2.5'
       d='M4 6h16M4 12h16M4 18h16'
     ></path>
   </svg>
@@ -35,7 +35,7 @@ export const BookIcon = (
     xmlns='http://www.w3.org/2000/svg'
     fill='none'
     viewBox='0 0 24 24'
-    strokeWidth={1.5}
+    strokeWidth='1.5'
     stroke='currentColor'
     className='w-6 h-6'
   >
@@ -54,7 +54,7 @@ export const AddIcon = (
     fill='none'
     viewBox='0 0 24 24'
     stroke='currentColor'
-    strokeWidth={2}
+    strokeWidth='2'
   >
     <path
       strokeLinecap='round'

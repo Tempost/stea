@@ -47,7 +47,7 @@ export const ResponsiveHeader = ({ children }: any) => {
               {Hamburger}
             </label>
           </div>
-          <div className='flex-1 px-2 mx-2'>South Texas Eventing</div>
+          <div className='flex-1 text-2xl px-2 mx-2'>South Texas Eventing</div>
           <div className='flex-none hidden lg:block'>
             <ul className='menu menu-horizontal rounded-box p-2'>
               {publicMenuItems.map(({ href, name, render }) => (
@@ -70,8 +70,8 @@ export const ResponsiveHeader = ({ children }: any) => {
         <label
           htmlFor='my-drawer-3'
           className='drawer-overlay'
-        ></label>
-        <ul className='menu p-4 w-[25vw] bg-base-100'>
+        />
+        <ul className='menu p-4 w-56 bg-base-100'>
           {publicMenuItems.map(({ href, name, render }) => (
             <React.Fragment key={name}>
               {render ? (
