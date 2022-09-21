@@ -5,12 +5,14 @@ import { PublicLayout } from '@/components/layout';
 import RidersTable from '@/components/tables/ridercombos';
 
 function SteaPoints() {
+  // TODO: Better responsiveness
   return (
     <div className='w-full grid place-items-center gap-20'>
 
       <RidersTable title='Current Points' />
-      <div className='card w-[80%] shadow-2xl'>
-        <figure className='h-[20em] sm:h-[25em] md:h-[30em] relative'>
+
+      <div className='card w-[20em] sm:w-[30em] shadow-2xl'>
+        <figure className='h-[15em] sm:h-[25em] md:h-[30em] relative'>
           <Image layout='fill' src='/points.jpg' />
         </figure>
 

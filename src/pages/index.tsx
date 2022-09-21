@@ -15,17 +15,21 @@ function Home() {
 
         <div className='hero-content text-neutral-content text-center'>
           <div className='flex flex-col items-center min-w-full gap-5'>
+            <div className='w-[85%]'>
               <Image
                 width={450}
                 height={250}
                 layout='intrinsic'
                 src='/stea_logo_no_horse_border.svg'
               />
+            </div>
 
-            <h2 className='text-2xl md:text-3xl lg:text-4xl'>Where Your Eventing Journey Begins</h2>
+            <h2 className='text-2xl md:text-3xl lg:text-4xl'>
+              Where Your Eventing Journey Begins
+            </h2>
 
             <NextLink href={'/join'}>
-              <button className='btn btn-primary btn-lg text-3xl'>
+              <button className='btn btn-primary btn-lg text-xl md:btn-xl md:text-2xl'>
                 Join Today!
               </button>
             </NextLink>
@@ -52,11 +56,15 @@ function Home() {
           />
         </div>
 
-        <section className='card card-compact shadow-2xl w-fit text-lg md:text-2xl self-center'>
-          <h2 className='text-center text-red-600 font-bold'>Notice</h2>
+        <section className='card card-compact shadow-2xl w-fit  self-center'>
+          <h2 className='text-center text-red-600 font-bold text-xl md:text-2xl lg:text-3xl'>
+            Notice
+          </h2>
           <div className='card-body'>
-            <h3>Please remeber to check your points throught the year!</h3>
-            <p>
+            <p className='text-lg md:text-2xl font-semibold text-center'>
+              Please remeber to check your points throught the year!
+            </p>
+            <p className='inline-grid place-content-center text-xl md:text-2xl'>
               Review rule changes for 2023
               <button className='btn btn-primary btn-sm md:btn-xs'>
                 <span className='mr-1'>Rule Book </span> {BookIcon}

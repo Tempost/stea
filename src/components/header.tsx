@@ -38,7 +38,7 @@ export const ResponsiveHeader = ({ children }: any) => {
         className='drawer-toggle'
       />
       <div className='drawer-content flex flex-col'>
-        <div className='z-50 w-full navbar bg-gradient-to-b from-primary to-primary-focus text-gray-300 font-semibold'>
+        <div className='z-50 w-full navbar bg-teal-800  text-gray-300 font-semibold'>
           <div className='flex-none lg:hidden'>
             <label
               htmlFor='my-drawer-3'
@@ -47,6 +47,7 @@ export const ResponsiveHeader = ({ children }: any) => {
               {Hamburger}
             </label>
           </div>
+
           <div className='flex-1 text-2xl px-2 mx-2'>South Texas Eventing</div>
           <div className='flex-none hidden lg:block'>
             <ul className='menu menu-horizontal rounded-box p-1 text-lg'>
@@ -66,6 +67,7 @@ export const ResponsiveHeader = ({ children }: any) => {
         </div>
         {children}
       </div>
+
       <div className='drawer-side'>
         <label
           htmlFor='my-drawer-3'

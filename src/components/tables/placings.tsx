@@ -6,12 +6,12 @@ import TableWithData from './tablewithdata';
 import type { CompleteRiderCombo } from '@/backend/prisma/zod';
 import type { ColumnDef } from '@tanstack/react-table';
 
-interface RidersTableProps {
+interface PlacingsTableProps {
   title?: string;
-  overRideDefaultCols?: ColumnDef<CompleteRiderCombo>[];
+  overrideDefaultCols?: ColumnDef<CompleteRiderCombo>[];
 }
 
-function RidersTable({ title, overRideDefaultCols }: RidersTableProps) {
+function PlacingsTable({ title, overrideDefaultCols }: PlacingsTableProps) {
   const riders = trpc.useQuery(['rider.get-riders']);
 
   const defaultCols = useMemo<ColumnDef<CompleteRiderCombo>[]>(
@@ -31,6 +31,18 @@ function RidersTable({ title, overRideDefaultCols }: RidersTableProps) {
             cell: info => info.getValue(),
             header: () => <span> Rider </span>,
           },
+          {
+            accessorKey: 'points.totalPoints',
+            id: 'point.totalPointss',
+            cell: info => info.getValue(),
+            header: () => <span> Points </span>,
+          },
+          {
+            accessorKey: 'points.totalShows',
+            id: 'point.totalShows',
+            cell: info => info.getValue(),
+            header: () => <span> Shows Attended </span>,
+          },
         ],
       },
     ],
@@ -39,11 +51,11 @@ function RidersTable({ title, overRideDefaultCols }: RidersTableProps) {
 
   return (
     <TableWithData
-      colDef={overRideDefaultCols ?? defaultCols}
+      colDef={overrideDefaultCols ?? defaultCols}
       query={riders}
       paginate={true}
     />
   );
 }
 
-export default RidersTable;
+export default PlacingsTable;
