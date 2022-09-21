@@ -6,12 +6,19 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 });
 
 const { env } = require('./src/utils/env');
+console.log(env);
 
 const nextConfig = {
   reactStrictMode: true,
   eslint: {
     ignoreDuringBuilds: true,
   },
+  // compiler: {
+  //   removeConsole: {
+  //     exclude: ['error'],
+  //   },
+  // },
+  // swcMinify: true,
 };
 
 // @ts-ignore

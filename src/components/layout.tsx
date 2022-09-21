@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { useSetAtom } from 'jotai';
+import Image from 'next/image';
 
 import { DashboardHeader, ResponsiveHeader } from './header';
 import Footer from './footer';
@@ -17,11 +18,10 @@ export function PublicLayout({ children }: LayoutProps) {
       <ResponsiveHeader>
         <main
           className={`flex-grow bg-neutral-content 
-                    ${
-                      router.pathname === '/'
-                        ? ''
-                        : 'p-4 sm:p-8 md:p-10 lg:p-16'
-                    }`}
+                    ${router.pathname === '/'
+              ? ''
+              : 'p-4 sm:p-8 md:p-10 lg:p-16'
+            }`}
         >
           {children}
         </main>
@@ -69,7 +69,8 @@ export function FormLayout({ children }: LayoutProps) {
 
   return (
     <PublicLayout>
-      <div className='grid place-content-center h-full bg-opacity-50'>
+      <div className='grid place-content-center h-full'>
+        <Image objectFit='cover' layout='fill' src='/stea_join_salute.jpg'/>
         <div className='card w-fit bg-base-100 shadow-[0_0_10px_0_rgba(0,0,0,0.3)] p-5 md:p-8'>
           {showReturn && returnButton}
           <PayPalScriptProvider options={initOptions}>

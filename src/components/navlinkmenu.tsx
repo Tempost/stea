@@ -34,7 +34,7 @@ export default function NavLinkMenu({ name, subLinks }: NavLinkMenuProps) {
         className='text-2xl cursor-pointer flex items-center'
       >
         {name}
-        <span className=''>{ChevDown}</span>
+        <span>{ChevDown}</span>
       </h2>
       <ul className='dropdown-content menu p-2 shadow bg-primary-content w-52 text-neutral-focus rounded-md'>
         {subLinks.map(({ href, text }) => (
@@ -49,25 +49,26 @@ export default function NavLinkMenu({ name, subLinks }: NavLinkMenuProps) {
   );
 }
 
-export function NavLinkSubMenu({
-  name,
-  subLinks,
-  drawer,
-}: NavLinkMenuProps) {
+export function NavLinkSubMenu({ name, subLinks, drawer }: NavLinkMenuProps) {
   const subMenu = (
-    <li tabIndex={0} className='z-20'>
+    <li
+      tabIndex={0}
+      className='z-20'
+    >
       <span>
         {name} {ChevDown}
       </span>
-      <ul className={`bg-primary-content shadow-2xl ${drawer ? '' : 'right-0'}`}>
+      <ul className={`bg-primary shadow-2xl text-base ${drawer ? '' : 'right-0'}`}>
         {subLinks.map(({ href, text }) => (
           <li key={`${href}${text}`}>
-            <LinkWrapper href={href ? href : ''}>{text}</LinkWrapper>
+            <LinkWrapper href={href ? href : ''}>
+              <span className='text-gray-300 font-semibold'>{text}</span>
+            </LinkWrapper>
           </li>
         ))}
       </ul>
     </li>
   );
 
-  return (subMenu);
+  return subMenu;
 }

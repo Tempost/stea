@@ -4,7 +4,7 @@ function Footer() {
     <footer
       className='footer footer-center p-2 text-neutral-content
                  bg-gradient-to-t from-primary to-primary-focus
-                 shadow-[0_-4px_20px_0_rgba(0,0,0,0.3)] h-fit'
+                 shadow-[0_-4px_20px_0_rgba(0,0,0,0.3)] h-fit z-50'
     >
       <div className='flex flex-row'>
         <h1 className='footer-title text-2xl'>Footer</h1>

@@ -11,7 +11,7 @@ export default function NavCard({ img, bodyText, ...props }: NavCardProps) {
     <NextLink {...props}>
       <a
         className='
-        card image-full shadow-lg bg-cyan-500 w-[20em] sm:w-[25em] md:w-[30em]
+        card image-full shadow-lg w-[20em] sm:w-[25em] md:w-[30em]
         hover:cursor-pointer hover:scale-[1.05] hover:shadow-2xl group
         transition-all ease-in-out delay-75'
       >

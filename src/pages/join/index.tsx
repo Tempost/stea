@@ -18,9 +18,8 @@ function JoinStea() {
   }
 
   return (
-    <section className=''>
+    <section>
       <h2 className='text-2xl border-b-2 text-center'>Join Online Below</h2>
-
       <div className='card-body grid place-items-center'>
         <h2>Membership Application type:</h2>
         <div

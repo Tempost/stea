@@ -5,22 +5,29 @@ import { PublicLayout } from '@/components/layout';
 import RidersTable from '@/components/tables/ridercombos';
 
 function SteaPoints() {
-  // <Image layout='fill' src='/points.jpg'/>
   return (
     <div className='w-full grid place-items-center gap-20'>
-      <RidersTable title='Current Points' />
 
-      <div className='grid place-items-center gap-5'>
-        <h2 className='text-2xl'>
-          Click here for more information on show points!
-        </h2>
-        <a
-          className='btn btn-primary'
-          href='/stea_points.docx'
-          rel='noopener noreferrer'
-        >
-          Download Guidelines
-        </a>
+      <RidersTable title='Current Points' />
+      <div className='card w-[80%] shadow-2xl'>
+        <figure className='h-[20em] sm:h-[25em] md:h-[30em] relative'>
+          <Image layout='fill' src='/points.jpg' />
+        </figure>
+
+        <div className='p-2'>
+          <h2 className='text-lg md:text-2xl text-center'>
+            Click here for more information on show points!
+          </h2>
+          <div className="card-actions justify-center">
+            <a
+              className='btn btn-primary btn-sm md:btn-md'
+              href='/stea_points.docx'
+              rel='noopener noreferrer'
+            >
+              Download Guidelines
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -38,7 +38,7 @@ export const ResponsiveHeader = ({ children }: any) => {
         className='drawer-toggle'
       />
       <div className='drawer-content flex flex-col'>
-        <div className='w-full navbar bg-gradient-to-b from-primary to-primary-focus'>
+        <div className='z-50 w-full navbar bg-gradient-to-b from-primary to-primary-focus text-gray-300 font-semibold'>
           <div className='flex-none lg:hidden'>
             <label
               htmlFor='my-drawer-3'
@@ -49,7 +49,7 @@ export const ResponsiveHeader = ({ children }: any) => {
           </div>
           <div className='flex-1 text-2xl px-2 mx-2'>South Texas Eventing</div>
           <div className='flex-none hidden lg:block'>
-            <ul className='menu menu-horizontal rounded-box p-2'>
+            <ul className='menu menu-horizontal rounded-box p-1 text-lg'>
               {publicMenuItems.map(({ href, name, render }) => (
                 <React.Fragment key={name}>
                   {render ? (
@@ -71,7 +71,7 @@ export const ResponsiveHeader = ({ children }: any) => {
           htmlFor='my-drawer-3'
           className='drawer-overlay'
         />
-        <ul className='menu p-4 w-56 bg-base-100'>
+        <ul className='menu p-4 w-56 bg-base-100 text-neutral-focus font-semibold'>
           {publicMenuItems.map(({ href, name, render }) => (
             <React.Fragment key={name}>
               {render ? (

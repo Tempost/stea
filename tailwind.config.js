@@ -4,6 +4,7 @@ module.exports = {
     extend: {
       backgroundImage: {
         'home-hero': "url('/train_jump.jpg')",
+        'join-hero': "url('/stea_join_salute.jpg')",
         'points-head': "url('/white_horse_ribbon_3.jpeg')",
       },
     },

@@ -22,7 +22,7 @@ function Home() {
                 src='/stea_logo_no_horse_border.svg'
               />
 
-            <h2 className='text-5xl'>Where Your Eventing Journey Begins</h2>
+            <h2 className='text-2xl md:text-3xl lg:text-4xl'>Where Your Eventing Journey Begins</h2>
 
             <NextLink href={'/join'}>
               <button className='btn btn-primary btn-lg text-3xl'>
@@ -37,7 +37,7 @@ function Home() {
         <div className='self-center flex flex-col md:flex-row md:flex-wrap justify-around gap-5'>
           <NavCard
             bodyText='Membership'
-            href='/join/benefits'
+            href='/members-horses'
             img='/membership_landing.jpeg'
           />
           <NavCard
