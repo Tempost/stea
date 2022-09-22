@@ -31,7 +31,6 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   return (
     <>
       <Head>
-        <html lang='en'/>
         <title>STEA</title>
         <meta
           property='og:title'
