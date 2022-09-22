@@ -13,12 +13,15 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  images: {
+    formats: ['image/avif', 'image/webp'],
+  },
+  swcMinify: true,
   // compiler: {
   //   removeConsole: {
   //     exclude: ['error'],
   //   },
   // },
-  // swcMinify: true,
 };
 
 // @ts-ignore

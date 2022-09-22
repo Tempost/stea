@@ -3,8 +3,7 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        'home-hero': "url('/train_jump.jpg')",
-        'join-hero': "url('/stea_join_salute.jpg')",
+        'home-hero': "url('/train_jump_1440.webp')",
         'points-head': "url('/white_horse_ribbon_3.jpeg')",
       },
     },
