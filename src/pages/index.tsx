@@ -21,6 +21,7 @@ function Home() {
                 height={250}
                 layout='intrinsic'
                 src='/stea_logo_no_horse_border.svg'
+                alt='STEA Logo'
               />
             </div>
 

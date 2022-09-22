@@ -31,13 +31,13 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   return (
     <>
       <Head>
+        <html lang='en'/>
         <title>STEA</title>
         <meta
           property='og:title'
           name='description'
           content='STEA dressage'
           charSet='UTF-8'
-          lang='en'
         />
         <meta
           name='viewport'

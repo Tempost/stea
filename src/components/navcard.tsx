@@ -20,6 +20,7 @@ export default function NavCard({ img, bodyText, ...props }: NavCardProps) {
           <Image
             layout='fill'
             src={img}
+            alt='Background image for card'
           />
         </figure>
 

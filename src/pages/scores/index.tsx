@@ -11,9 +11,9 @@ function SteaPoints() {
 
       <RidersTable title='Current Points' />
 
-      <div className='card w-[20em] sm:w-[30em] shadow-2xl'>
-        <figure className='h-[15em] sm:h-[25em] md:h-[30em] relative'>
-          <Image layout='fill' src='/points.jpg' />
+      <div className='card w-[20em] sm:w-[30em] md:w-[40em] lg:w-[45em] shadow-2xl'>
+        <figure className='h-[15em] sm:h-[25em] md:h-[30em] lg:h-[35em] relative'>
+          <Image layout='fill' src='/points.jpg' alt='Displaying show rewards inside of arena' />
         </figure>
 
         <div className='p-2'>
