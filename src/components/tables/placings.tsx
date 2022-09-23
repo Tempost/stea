@@ -1,20 +1,20 @@
 import { useMemo } from 'react';
-import { trpc } from '@/utils/trpc';
+import { inferQueryOutput, trpc } from '@/utils/trpc';
 
 import TableWithData from './tablewithdata';
 
-import type { CompleteRiderCombo } from '@/backend/prisma/zod';
 import type { ColumnDef } from '@tanstack/react-table';
 
+type RiderCombo = inferQueryOutput<'rider.get-riders'>[number];
 interface PlacingsTableProps {
   title?: string;
-  overrideDefaultCols?: ColumnDef<CompleteRiderCombo>[];
+  overrideDefaultCols?: ColumnDef<RiderCombo>[];
 }
 
 function PlacingsTable({ title, overrideDefaultCols }: PlacingsTableProps) {
   const riders = trpc.useQuery(['rider.get-riders']);
 
-  const defaultCols = useMemo<ColumnDef<CompleteRiderCombo>[]>(
+  const defaultCols = useMemo<ColumnDef<RiderCombo>[]>(
     () => [
       {
         header: title ?? 'Riders',

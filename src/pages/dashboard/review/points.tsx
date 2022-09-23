@@ -29,7 +29,7 @@ const pointCols: ColumnDef<Show>[] = [
 ];
 
 function Points() {
-  const memberPoints = trpc.useQuery(['shows.get', { reviewed: false }]);
+  const memberPoints = trpc.useQuery(['shows.get-shows']);
 
   return (
     <div className='pt-28 w-full grid place-items-center'>

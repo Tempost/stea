@@ -8,34 +8,27 @@ import { Status } from '@prisma/client';
 
 export const member = createRouter()
   .query('get-members', {
+    async resolve() {
+      return await prisma.member.findMany();
+    },
+  })
+  .query('get-member', {
     input: z
       .object({
-        memberName: z.string(),
-      })
-      .optional(),
-
+        fullName: z.string(),
+      }),
     async resolve({ input }) {
-      let data;
+      const { fullName } = input;
+      const member = await prisma.member.findUnique({ where: { fullName } });
 
-      if (input === undefined) {
-        data = await prisma.member
-          .findMany()
-          .then(members => members)
-          .catch(err => console.log('Backend Error:', err));
-
-        return data as Member[];
-      } else {
-        data = await prisma.member
-          .findFirst({
-            where: {
-              fullName: input.memberName,
-            },
-          })
-          .then(members => members)
-          .catch(err => console.log('Backend Error:', err));
-
-        return data as Member;
+      if (!member) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: `${fullName} not found.`,
+        });
       }
+
+      return member;
     },
   })
   .query('applicants', {
@@ -84,11 +77,11 @@ export const member = createRouter()
     async resolve({ input }) {
       const riderCombo = input.horses
         ? input.horses.map(horse => {
-            return {
-              horseName: horse.horseRN,
-              division: input.division,
-            };
-          })
+          return {
+            horseName: horse.horseRN,
+            division: input.division,
+          };
+        })
         : [];
 
       return await prisma.member.create({

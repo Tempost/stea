@@ -4,6 +4,7 @@ import { createRouter } from './utils';
 
 import { prisma } from '@/backend/prisma';
 import { Horse } from '@prisma/client';
+import { TRPCError } from '@trpc/server';
 
 export const horse = createRouter()
   .query('get-horses', {
