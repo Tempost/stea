@@ -62,6 +62,6 @@
   },
   "prisma": {
     "schema": "./src/backend/prisma/schema.prisma",
-    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} src/utils/seed_db.ts"
+    "seed": "dotenv -e .env.development -- ts-node --project src/utils/seed/tsconfig.json src/utils/seed/seed_db.ts"
   }
 }

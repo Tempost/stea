@@ -1,6 +1,13 @@
-import { JRSR, PaymentMethod, Prisma, Status, Type } from '@prisma/client';
+import {
+  JRSR,
+  PaymentMethod,
+  Prisma,
+  PrismaPromise,
+  Status,
+  Type,
+} from '@prisma/client';
 
-import { prisma } from '@/backend/prisma';
+import { prisma } from '../../backend/prisma';
 import members from './members.json';
 import horses from './horses.json';
 import { removeUndefined } from '../helpers';
@@ -11,14 +18,34 @@ interface Rider {
 }
 
 async function cleanUp() {
-  await prisma.horse.deleteMany({}).then(() => console.log('Horses cleaned'));
-  await prisma.member.deleteMany({}).then(() => console.log('Members cleaned'));
-  await prisma.riderCombo
-    .deleteMany({})
-    .then(() => console.log('Riders cleaned'));
+  const transactions: PrismaPromise<any>[] = [];
+  transactions.push(prisma.$executeRaw`SET FOREIGN_KEY_CHECKS = 0;`);
+
+  const tableNames = await prisma.$queryRaw<
+    Array<{ TABLE_NAME: string }>
+    >`SELECT TABLE_NAME from information_schema.TABLES WHERE TABLE_SCHEMA ='stea';`;
+
+  for (const { TABLE_NAME } of tableNames) {
+    if (TABLE_NAME !== '_prisma_migrations') {
+      try {
+        transactions.push(
+          prisma.$executeRawUnsafe(`TRUNCATE stea.${TABLE_NAME}`)
+        );
+      } catch (error) {
+        console.log({ error });
+      }
+    }
+  }
+
+  transactions.push(prisma.$executeRaw`SET FOREIGN_KEY_CHECKS = 1;`);
+  try {
+    return prisma.$transaction(transactions);
+  } catch (error) {
+    console.log({ error });
+  }
 }
 
-function dupes<T>(data: T) {
+function findDupes<T>(data: T) {
   let duplicates = new Array<Prisma.HorseCreateInput>();
   if (Array.isArray(data)) {
     data.forEach((el, i) => {
@@ -37,29 +64,27 @@ function dupes<T>(data: T) {
 async function seedHorses() {
   console.log('Adding Horses...');
 
-  const data = horses.map(horse => {
-    if (horse.regType !== 'Life') return;
-
-    return {
-      createdAt: new Date(),
-      horseRN: horse.horseRN.trim(),
-      horseAKA: horse.horseAKA.trim(),
-      registrationDate:
-        horse.registrationDate === '' ? null : new Date(horse.registrationDate),
-      regType: horse.regType as Status,
-      notConnected: true,
-    } as Prisma.HorseCreateInput;
-  });
+  const data = horses
+    .filter(horse => horse.regType === 'Life')
+    .map(horse => {
+      return {
+        createdAt: new Date(),
+        horseRN: horse.horseRN.trim(),
+        horseAKA: horse.horseAKA.trim(),
+        registrationDate:
+          horse.registrationDate === ''
+            ? null
+            : new Date(horse.registrationDate),
+        regType: horse.regType as Status,
+        notConnected: true,
+      } as Prisma.HorseCreateInput;
+    });
 
   const riders: Rider[] = horses.map(horse => {
-    let rider: Rider;
-
-    const riderNames = horse.riders
-      .split(',')
-      .map((rider: string) => rider.trim());
-
-    rider = { riders: riderNames, horseRN: horse.horseRN };
-    return rider;
+    return {
+      riders: horse.riders.split(',').map(rider => rider.trim()),
+      horseRN: horse.horseRN,
+    };
   });
 
   const noUndefinedData = removeUndefined<Prisma.HorseCreateInput>(data);
@@ -70,50 +95,50 @@ async function seedHorses() {
 
 async function seedMembers() {
   console.log('Adding Members...');
-  members.forEach(async member => {
-    if (member.memberStatus !== 'Life') return;
+  const dbActions = members
+    .filter(member => member.memberStatus === 'Life')
+    .map(async member => {
+      const memberDB: Prisma.MemberCreateInput = {
+        createdAt: new Date(),
+        firstName: member.firstName,
+        lastName: member.lastName,
+        fullName: member.fullName,
+        membershipDate: new Date(member.membershipDate),
+        memberType: member.memberType as Type,
+        memberStatus: member.memberStatus as Status,
+        JRSR: member.JRSR as JRSR,
+        boardMember: false,
+        address: member.address,
+        city: member.city,
+        state: member.state,
+        zip: member.zip === '' ? 0 : parseInt(member.zip),
+        phone: member.phone,
+        email: member.email,
+        comments: member.comments,
+        confirmed: true,
+      };
 
-    const memberDB: Prisma.MemberCreateInput = {
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      firstName: member.firstName,
-      lastName: member.lastName,
-      fullName: member.fullName,
-      membershipDate: new Date(member.membershipDate),
-      memberType: member.memberType as Type,
-      memberStatus: member.memberStatus as Status,
-      JRSR: member.JRSR as JRSR,
-      boardMember: false,
-      address: member.address,
-      city: member.city,
-      state: member.state,
-      zip: member.zip === '' ? 0 : parseInt(member.zip),
-      phone: member.phone,
-      email: member.email,
-      comments: member.comments,
-      confirmed: true,
-    };
+      const paymentDB: Prisma.PaymentCreateWithoutMemberInput = {
+        amountPaid: member.amountPaid,
+        datePaid: new Date(member.datePaid),
+        paymentMethod: member.paymentMethod as PaymentMethod,
+        checkNumber: member.checkNumber,
+        comments: member['Additional Payment(s)'],
+      };
 
-    const paymentDB: Prisma.PaymentCreateWithoutMemberInput = {
-      amountPaid: member.amountPaid,
-      updatedAt: new Date(),
-      datePaid: new Date(member.datePaid),
-      paymentMethod: member.paymentMethod as PaymentMethod,
-      checkNumber: member.checkNumber,
-      comments: member['Additional Payment(s)'],
-    };
-
-    await prisma.member.create({
-      data: {
-        ...memberDB,
-        payment: {
-          create: {
-            ...paymentDB,
+      return await prisma.member.create({
+        data: {
+          ...memberDB,
+          payment: {
+            create: {
+              ...paymentDB,
+            },
           },
         },
-      },
+      });
     });
-  });
+
+  return dbActions;
 }
 
 async function addCombo(fullName: string, horseRN: string) {
@@ -169,15 +194,21 @@ async function load() {
 
   console.log(riders.length);
 
-  await seedMembers().catch(err => {
+  const newMembers = await seedMembers().catch(err => {
     console.log(err);
     process.exit(1);
   });
 
-  await seedRiders(riders).catch(err => {
+  console.log(newMembers.length);
+
+  await seedRiders(riders)
+  .catch(err => {
     console.log(err.cause);
     process.exit(1);
   });
 }
 
-cleanUp().then(() => load());
+cleanUp().then(res => {
+  console.log(res);
+  load();
+});

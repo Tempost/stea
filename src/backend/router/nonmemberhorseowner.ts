@@ -2,7 +2,6 @@ import { z } from 'zod';
 
 import { createRouter, prepareCombos } from './utils';
 import { prisma } from '@/backend/prisma';
-import { Prisma } from '@prisma/client';
 import { HorseModel, NonMemberHorseOwnerModel } from '@/backend/prisma/zod';
 import { TRPCError } from '@trpc/server';
 
