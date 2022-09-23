@@ -152,9 +152,8 @@ function HorseRegistration() {
           <RiderComboFieldArray />
           <FinishPayment triggerValidation={triggerValidation} />
         </section>
-
       </form>
-    </FormProvider >
+    </FormProvider>
   );
 }
 
