@@ -1,5 +1,5 @@
 import { useFieldArray, useFormContext } from 'react-hook-form';
-import { Prisma, RiderCombo, Status } from '@prisma/client';
+import { Prisma, Status } from '@prisma/client';
 import { TextInput } from '../data-entry';
 import RegType from './regtype';
 import { AddIcon, TrashIcon } from '../icons';
@@ -9,7 +9,7 @@ type Horses = {
 };
 
 type RiderCombos = {
-  riderCombos: RiderCombo[];
+  riderCombos: Prisma.RiderComboCreateManyInput[];
 };
 
 export function HorseFieldArray() {
@@ -181,9 +181,7 @@ export function RiderComboFieldArray() {
         type='button'
         onClick={() =>
           append({
-            uid: '',
-            createdAt: null,
-            updatedAt: null,
+            division: '',
             memberName: '',
             horseName: '',
           })
