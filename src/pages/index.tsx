@@ -4,8 +4,9 @@ import { PublicLayout } from '@/components/layout';
 
 import { ReactElement } from 'react';
 import Image from 'next/image';
-import { BookIcon, CalenderIcon } from '@/components/icons';
+import { BookIcon } from '@/components/icons';
 import NavCard from '@/components/navcard';
+import { EOYPlacing, UpcomingEvents } from '@/components/home';
 
 function Home() {
   return (
@@ -29,7 +30,7 @@ function Home() {
               Where Your Eventing Journey Begins
             </h2>
 
-            <NextLink href={'/join'}>
+            <NextLink href={'/join'} prefetch={false}>
               <button className='btn btn-primary btn-lg text-xl md:btn-xl md:text-2xl'>
                 Join Today!
               </button>
@@ -75,19 +76,11 @@ function Home() {
         </section>
 
         <section className='flex flex-col gap-2 self-center items-center'>
-          <h1 className='text-xl'>End of Year Placings</h1>
+          <EOYPlacing />
         </section>
 
         <section className='flex flex-col gap-2 self-center items-center'>
-          <h2 className='text-xl'>Upcoming Events</h2>
-          <NextLink href='/calender'>
-            <button className='btn btn-primary btn-md grid place-content-center grid-flow-col gap-2'>
-              {CalenderIcon} View Full Calender
-            </button>
-          </NextLink>
-
-          {/* TODO: Grab shows happening in the next month and display here */}
-          {/* TODO: Make some sort of event display component? */}
+          <UpcomingEvents />
         </section>
 
         <section className='flex flex-col gap-2 items-center'>

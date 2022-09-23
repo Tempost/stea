@@ -23,7 +23,7 @@
     "@trpc/react": "^9.27.2",
     "@trpc/server": "^9.27.2",
     "cuid": "^2.1.8",
-    "daisyui": "^2.24.0",
+    "daisyui": "^2.31.0",
     "immer": "^9.0.15",
     "jotai": "^1.8.2",
     "nanoid": "^4.0.0",

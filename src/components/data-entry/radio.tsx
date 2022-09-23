@@ -3,13 +3,13 @@ import type { DetailedHTMLProps, InputHTMLAttributes } from 'react';
 
 interface RadioProps
   extends DetailedHTMLProps<
-    InputHTMLAttributes<HTMLInputElement>,
-    HTMLInputElement
+  InputHTMLAttributes<HTMLInputElement>,
+  HTMLInputElement
   > {
   label: string | JSX.Element;
 }
 
-const Radio = forwardRef<HTMLInputElement, RadioProps>(({className, label, ...props}, ref) => {
+const Radio = forwardRef<HTMLInputElement, RadioProps>(({ className, label, ...props }, ref) => {
   const id = useId();
   return (
     <div className='flex items-center justify-between w-full'>
@@ -20,15 +20,13 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>(({className, label, ...pr
         <span className='label-text'>{label}</span>
       </label>
 
-      <span className='px-[8px]'>
-        <input
-          ref={ref}
-          id={`radio-input${id}`}
-          type='radio'
-          className={`radio md:radio-sm ${className}`}
-          {...props}
-        />
-      </span>
+      <input
+        ref={ref}
+        id={`radio-input${id}`}
+        type='radio'
+        className={`radio md:radio-sm ${className}`}
+        {...props}
+      />
     </div>
   );
 });

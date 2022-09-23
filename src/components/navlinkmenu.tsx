@@ -36,7 +36,7 @@ export default function NavLinkMenu({ name, subLinks }: NavLinkMenuProps) {
         {name}
         <span>{ChevDown}</span>
       </h2>
-      <ul className='dropdown-content menu p-2 shadow bg-primary-content w-52 text-neutral-focus rounded-md'>
+      <ul className='dropdown-content menu p-2 shadow bg-primary-content w-52 rounded-md'>
         {subLinks.map(({ href, text }) => (
           <li key={`${href}${text}`}>
             <LinkWrapper href={href ? href : ''}>
@@ -62,7 +62,7 @@ export function NavLinkSubMenu({ name, subLinks, drawer }: NavLinkMenuProps) {
         {subLinks.map(({ href, text }) => (
           <li key={`${href}${text}`}>
             <LinkWrapper href={href ? href : ''}>
-              <span className='text-gray-300 font-semibold'>{text}</span>
+              <span className='font-semibold'>{text}</span>
             </LinkWrapper>
           </li>
         ))}

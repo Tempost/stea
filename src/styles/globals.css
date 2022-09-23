@@ -9,3 +9,16 @@
     margin: 0;
   }
 }
+
+.drawer-side > ul {
+  @apply bg-gradient-to-r from-blue-700 to-blue-800;
+  @apply text-gray-300;
+}
+
+.navbar > h3 {
+  @apply text-gray-300;
+}
+
+.card.image-full:before {
+  @apply bg-neutral/80;
+}

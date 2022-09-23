@@ -107,14 +107,14 @@ function BusinessRegistration() {
       <form onSubmit={handleSubmit(onSumbit)}>
         <h2 className='divider'>Business Registration</h2>
 
-        <h3 className='text-center m-2'>
+        <h3 className='text-center m-2 p-4 bg-neutral/3 rounded-box shadow-[0_0px_20px_0_rgba(0,0,0,0.3)]'>
           As part of the membership you can submit
           <br />
           your company logo on our home page!
         </h3>
 
         <div className='flex flex-col gap-2'>
-          <h3>Name of Business*</h3>
+          <h3 className='text-sm'>Name of Business*</h3>
           <TextInput
             inputMode='text'
             className='input-sm input-primary'
@@ -122,7 +122,7 @@ function BusinessRegistration() {
             {...register('member.businessName', { required: true })}
           />
 
-          <h3>Business Address*</h3>
+          <h3 className='text-sm'>Business Address*</h3>
           <div className='flex flex-col gap-2'>
             <TextInput
               inputMode='text'
@@ -169,7 +169,7 @@ function BusinessRegistration() {
             </div>
           </div>
 
-          <h3>Contact Person</h3>
+          <h3 className='mt-3 font-semibold'>Point of Contact</h3>
           <div>
             <div className='flex gap-5'>
               <TextInput

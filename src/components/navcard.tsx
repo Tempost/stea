@@ -16,7 +16,7 @@ export default function NavCard({ img, bodyText, ...props }: NavCardProps) {
         hover:cursor-pointer hover:scale-[1.05] hover:shadow-2xl group
         transition-all ease-in-out delay-75 duration-300'
       >
-        <figure>
+        <figure className='relative'>
           <Image
             layout='fill'
             src={img}

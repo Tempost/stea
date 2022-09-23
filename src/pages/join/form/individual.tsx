@@ -124,7 +124,7 @@ function IndividualRegistration() {
           />
         </div>
 
-        <h3 className='mt-3'>Address*</h3>
+        <h3 className='mt-3 pb-2 text-sm'>Address*</h3>
         <div className='flex flex-col gap-2'>
           <TextInput
             inputMode='text'
@@ -141,17 +141,17 @@ function IndividualRegistration() {
             name='temp'
           />
 
-          <div className='flex gap-1'>
+          <div className='flex gap-1 flex-col md:flex-row'>
             <TextInput
               inputMode='text'
-              className='input-primary'
+              className='input-primary w-full'
               placeholder='City'
               error={inputState.errors.member?.city}
               {...register('member.city', { required: true })}
             />
 
             <Select
-              className='select-primary'
+              className='select-primary w-full lg:w-fit'
               error={inputState.errors.member?.state}
               options={states}
               {...register('member.state', { required: true })}
@@ -161,7 +161,7 @@ function IndividualRegistration() {
               inputMode='numeric'
               className='input-primary'
               placeholder='Zip Code'
-              inputSize='w-fit'
+              inputSize='w-full lg:w-fit'
               error={inputState.errors.member?.zip}
               {...register('member.zip', {
                 required: true,
