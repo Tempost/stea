@@ -1,15 +1,14 @@
 import { useMemo } from 'react';
+import { FormProvider } from 'react-hook-form';
+import { z } from 'zod';
 
 import { trpc } from '@/utils/trpc';
 import TableWithData from './tablewithdata';
-
 import type { Show } from '@prisma/client';
 import type { ColumnDef } from '@tanstack/react-table';
 import { ShowModel } from '@/backend/prisma/zod';
 import { ControlledDatePicker, Select, TextInput } from '../data-entry';
 import useZodForm from '@/utils/usezodform';
-import { FieldValues, FormProvider } from 'react-hook-form';
-import { z } from 'zod';
 
 interface ShowTableProps {
   overRideDefaultCols?: ColumnDef<Show>[];
@@ -38,7 +37,10 @@ function AddNewShow() {
     shouldUnregister: true,
     schema: NewShowModel,
   });
-  const { register, formState: { errors } } = methods;
+  const {
+    register,
+    formState: { errors },
+  } = methods;
 
   const addNew = trpc.useMutation(['shows.add']);
 
@@ -60,7 +62,7 @@ function AddNewShow() {
         id='my-modal-6'
         className='modal-toggle'
         onClick={() => {
-          methods.reset()
+          methods.reset();
         }}
       />
 
@@ -77,7 +79,7 @@ function AddNewShow() {
                   label='Show Name*'
                   error={errors.showName}
                   {...register('showName', {
-                    required: true
+                    required: true,
                   })}
                 />
 
@@ -86,7 +88,7 @@ function AddNewShow() {
                   label='Show Type*'
                   options={showTypes}
                   {...register('showType', {
-                    required: true
+                    required: true,
                   })}
                 />
               </div>
@@ -137,8 +139,9 @@ function ShowsTable({ overRideDefaultCols }: ShowTableProps) {
               const date: Date = info.getValue();
               if (date === null) return 'N/A';
 
-              return `${date.getMonth() + 1
-                }/${date.getDate()}/${date.getFullYear()}`;
+              return `${
+                date.getMonth() + 1
+              }/${date.getDate()}/${date.getFullYear()}`;
             },
             header: () => <span> Show Date </span>,
           },
