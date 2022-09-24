@@ -1,4 +1,5 @@
 import * as z from "zod"
+import { ShowType } from "@prisma/client"
 import { CompletePoints, RelatedPointsModel, CompleteRiderCombo, RelatedRiderComboModel } from "./index"
 
 export const ShowModel = z.object({
@@ -6,7 +7,7 @@ export const ShowModel = z.object({
   createdAt: z.date().nullish(),
   updatedAt: z.date().nullish(),
   showName: z.string().min(1, { message: "Show name is required" }),
-  showType: z.string().min(1, { message: "Show type is required" }),
+  showType: z.nativeEnum(ShowType),
   /**
    * Submitted points have yet to be review by board member
    */

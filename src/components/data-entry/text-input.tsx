@@ -1,6 +1,6 @@
 import { forwardRef, useId } from 'react';
 import type { DetailedHTMLProps, InputHTMLAttributes } from 'react';
-import { FieldError } from 'react-hook-form';
+import { FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
 
 interface TextInputProps
   extends DetailedHTMLProps<
@@ -11,7 +11,7 @@ interface TextInputProps
   labelStyle?: string;
   altLabel?: string;
   inputSize?: string;
-  error?: FieldError;
+  error?: FieldError | Merge<FieldError, FieldErrorsImpl<any>>;
   name?: string;
 }
 
