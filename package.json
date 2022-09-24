@@ -8,7 +8,7 @@
     "start": "next start",
     "db-test": "dotenv -e .env.test -- jest -i router.test.ts",
     "test": "jest -i",
-    "studio": "prisma studio",
+    "studio": "dotenv -e .env.development -- prisma studio",
     "push": "dotenv -e .env.development -- prisma db push",
     "migrate-local": "dotenv -e .env.test -- prisma migrate dev --name test"
   },
@@ -28,6 +28,7 @@
     "jotai": "^1.8.2",
     "nanoid": "^4.0.0",
     "next": "^12.2.5",
+    "next-auth": "^4.10.3",
     "react": "18.2.0",
     "react-datepicker": "^4.8.0",
     "react-dom": "18.2.0",

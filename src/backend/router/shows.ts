@@ -1,7 +1,6 @@
 import { createRouter } from './utils';
 import { prisma } from '@/backend/prisma';
 import { ShowModel } from '../prisma/zod';
-import { Show } from '@prisma/client';
 import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
 
@@ -11,6 +10,7 @@ export const show = createRouter()
       const shows = await prisma.show
         .findMany({
           include: {
+            points: true,
             riders: {
               include: {
                 points: true,
@@ -19,10 +19,8 @@ export const show = createRouter()
           },
         })
         .then(shows => shows)
-        .catch(err => console.log('Error:', err));
-      console.log(shows);
 
-      return shows as Show[];
+      return shows;
     },
   })
   .query('get-show', {
@@ -54,6 +52,7 @@ export const show = createRouter()
   .mutation('add', {
     input: ShowModel.omit({ uid: true, reviewed: true }),
     async resolve({ input }) {
+      console.log(input);
       return await prisma.show.create({
         data: input,
       });

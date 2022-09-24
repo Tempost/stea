@@ -1,7 +1,7 @@
 import { ReactElement, useState } from 'react';
 
 import { DashboardLayout } from '@/components/layout';
-import { HorseTable, MemberTable, OwnerTable, TableSelection } from '@/components/tables';
+import { HorseTable, MemberTable, OwnerTable, ShowsTable, TableSelection } from '@/components/tables';
 import RidersTable from '@/components/tables/ridercombos';
 
 const activeBtn = 'btn btn-active';
@@ -13,12 +13,14 @@ function Tables() {
   const horseSelected = table === 'horses';
   const ownersSelected = table === 'owners';
   const combosSelected = table === 'riders';
+  const showsSelected = table === 'shows';
 
   const tables = {
     members: <MemberTable />,
     horses: <HorseTable />,
     owners: <OwnerTable />,
     riders: <RidersTable />,
+    shows: <ShowsTable />,
   }
 
   return (
@@ -51,6 +53,12 @@ function Tables() {
           value='riders'
         >
           Riders
+        </button>
+        <button
+          className={showsSelected ? activeBtn : 'btn'}
+          value='shows'
+        >
+          Shows
         </button>
       </div>
       {tables[table]}
