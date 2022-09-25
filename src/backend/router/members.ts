@@ -13,10 +13,9 @@ export const member = createRouter()
     },
   })
   .query('get-member', {
-    input: z
-      .object({
-        fullName: z.string(),
-      }),
+    input: z.object({
+      fullName: z.string(),
+    }),
     async resolve({ input }) {
       const { fullName } = input;
       const member = await prisma.member.findUnique({ where: { fullName } });
@@ -77,11 +76,11 @@ export const member = createRouter()
     async resolve({ input }) {
       const riderCombo = input.horses
         ? input.horses.map(horse => {
-          return {
-            horseName: horse.horseRN,
-            division: input.division,
-          };
-        })
+            return {
+              horseName: horse.horseRN,
+              division: input.division,
+            };
+          })
         : [];
 
       return await prisma.member.create({

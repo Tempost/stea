@@ -1,5 +1,5 @@
 import NextLink from 'next/link';
-import { CalenderIcon } from "../icons";
+import { CalenderIcon } from '../icons';
 
 function UpcomingEvents() {
   return (
@@ -14,7 +14,7 @@ function UpcomingEvents() {
       {/* TODO: Grab shows happening in the next month and display here */}
       {/* TODO: Make some sort of event display component? */}
     </>
-  )
+  );
 }
 
 export default UpcomingEvents;

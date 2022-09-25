@@ -23,7 +23,7 @@ async function cleanUp() {
 
   const tableNames = await prisma.$queryRaw<
     Array<{ TABLE_NAME: string }>
-    >`SELECT TABLE_NAME from information_schema.TABLES WHERE TABLE_SCHEMA ='stea';`;
+  >`SELECT TABLE_NAME from information_schema.TABLES WHERE TABLE_SCHEMA ='stea';`;
 
   for (const { TABLE_NAME } of tableNames) {
     if (TABLE_NAME !== '_prisma_migrations') {
@@ -201,8 +201,7 @@ async function load() {
 
   console.log(newMembers.length);
 
-  await seedRiders(riders)
-  .catch(err => {
+  await seedRiders(riders).catch(err => {
     console.log(err.cause);
     process.exit(1);
   });

@@ -50,9 +50,9 @@ function TableWithData<T>({ colDef, query, paginate }: TableWithDataProps<T>) {
                         {header.isPlaceholder
                           ? null
                           : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
                       </th>
                     ))}
                   </tr>
@@ -69,9 +69,14 @@ function TableWithData<T>({ colDef, query, paginate }: TableWithDataProps<T>) {
                       return (
                         <td
                           key={cell.id}
-                          className={'text-sm text-gray-900 font-normal px-3 py-2 md:px-6 md:py-4 whitespace-nowrap'}
+                          className={
+                            'text-sm text-gray-900 font-normal px-3 py-2 md:px-6 md:py-4 whitespace-nowrap'
+                          }
                         >
-                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
                         </td>
                       );
                     })}

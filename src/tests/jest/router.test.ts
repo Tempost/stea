@@ -20,7 +20,7 @@ describe('tRPC router tests', () => {
 
     const tableNames = await prisma.$queryRaw<
       Array<{ TABLE_NAME: string }>
-      >`SELECT TABLE_NAME from information_schema.TABLES WHERE TABLE_SCHEMA ='stea_test';`;
+    >`SELECT TABLE_NAME from information_schema.TABLES WHERE TABLE_SCHEMA ='stea_test';`;
 
     for (const { TABLE_NAME } of tableNames) {
       if (TABLE_NAME !== '_prisma_migrations') {
@@ -228,18 +228,18 @@ describe('tRPC router tests', () => {
       const newFirstName = faker.name.firstName();
       const newLastName = faker.name.lastName();
       const mutationInput: inferMutationInput<'nonMemberHorseOwner.update-owner'> =
-      {
-        ownerName: fullName,
-        patch: {
-          firstName: newFirstName,
-          lastName: newLastName,
-          fullName: faker.name.fullName({
+        {
+          ownerName: fullName,
+          patch: {
             firstName: newFirstName,
             lastName: newLastName,
-          }),
-          email: faker.internet.email(),
-        },
-      };
+            fullName: faker.name.fullName({
+              firstName: newFirstName,
+              lastName: newLastName,
+            }),
+            email: faker.internet.email(),
+          },
+        };
 
       const updatedOwner = await caller.mutation(
         'nonMemberHorseOwner.update-owner',
@@ -265,9 +265,9 @@ describe('tRPC router tests', () => {
       };
 
       const mutationInput: inferMutationInput<'nonMemberHorseOwner.remove-owner'> =
-      {
-        ownerName: fullName,
-      };
+        {
+          ownerName: fullName,
+        };
 
       // Get record to compare objects first
       const ownerFromGet = await caller.query(
@@ -453,8 +453,6 @@ describe('tRPC router tests', () => {
   });
 
   describe('Point Submission from csv', () => {
-    it('Submit via api', () => {
-
-    });
+    it('Submit via api', () => {});
   });
 });

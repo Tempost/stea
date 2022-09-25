@@ -20,5 +20,4 @@ export function isFormType(o: any): o is FormType {
 }
 
 export type LayoutProps = React.PropsWithChildren;
-export interface HeaderProps extends React.PropsWithChildren {
-}
+export interface HeaderProps extends React.PropsWithChildren {}

@@ -12,20 +12,17 @@ const RequestForUpdate = z.object({
 const PointsSubmission = z.object({
   memberName: z.string(),
   horseName: z.string(),
-  placing: z.number().min(1, {message: "Invalid placing."}),
+  placing: z.number().min(1, { message: 'Invalid placing.' }),
   division: z.string(),
   showUID: z.string().cuid(),
 });
 
-async function assignPoints(riderPlacing: z.infer<typeof PointsSubmission>) {
-  
-}
+async function assignPoints(riderPlacing: z.infer<typeof PointsSubmission>) {}
 
 export const points = createRouter()
   .mutation('add-points', {
     input: PointsSubmission.array(),
-    async resolve({ input }) {
-    },
+    async resolve({ input }) {},
   })
   .mutation('update-points', {
     input: RequestForUpdate,

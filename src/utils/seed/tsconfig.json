@@ -10,9 +10,7 @@
     "esModuleInterop": true,
     "module": "CommonJS",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     }
   }
 }

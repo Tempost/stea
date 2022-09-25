@@ -16,8 +16,8 @@ function ConfirmPoints({ uid }: CPProps) {
     mutation.mutate({
       uid: uid,
       patch: {
-        reviewed: true,        
-      }
+        reviewed: true,
+      },
     });
   }
 

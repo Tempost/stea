@@ -1,5 +1,3 @@
-import { z } from "zod";
+import { z } from 'zod';
 
-export const PointsUploadModel = z.object({
-  
-});
+export const PointsUploadModel = z.object({});

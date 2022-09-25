@@ -48,7 +48,9 @@ export const ResponsiveHeader = ({ children }: any) => {
             </label>
           </div>
 
-          <h3 className='flex-1 text-xl md:text-2xl px-2 mx-2'>South Texas Eventing</h3>
+          <h3 className='flex-1 text-xl md:text-2xl px-2 mx-2'>
+            South Texas Eventing
+          </h3>
           <span className='flex-none hidden lg:block'>
             <ul className='menu menu-horizontal rounded-box p-1 text-lg'>
               {publicMenuItems.map(({ href, name, render }) => (

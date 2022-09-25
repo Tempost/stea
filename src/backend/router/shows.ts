@@ -18,7 +18,7 @@ export const show = createRouter()
             },
           },
         })
-        .then(shows => shows)
+        .then(shows => shows);
 
       return shows;
     },
