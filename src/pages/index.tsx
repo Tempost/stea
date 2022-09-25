@@ -30,7 +30,10 @@ function Home() {
               Where Your Eventing Journey Begins
             </h2>
 
-            <NextLink href={'/join'} prefetch={false}>
+            <NextLink
+              href={'/join'}
+              prefetch={false}
+            >
               <button className='btn btn-primary btn-lg text-xl md:btn-xl md:text-2xl'>
                 Join Today!
               </button>

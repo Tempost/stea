@@ -1,7 +1,13 @@
 import { ReactElement, useState } from 'react';
 
 import { DashboardLayout } from '@/components/layout';
-import { HorseTable, MemberTable, OwnerTable, ShowsTable, TableSelection } from '@/components/tables';
+import {
+  HorseTable,
+  MemberTable,
+  OwnerTable,
+  ShowsTable,
+  TableSelection,
+} from '@/components/tables';
 import RidersTable from '@/components/tables/ridercombos';
 
 const activeBtn = 'btn btn-active';
@@ -21,7 +27,7 @@ function Tables() {
     owners: <OwnerTable />,
     riders: <RidersTable />,
     shows: <ShowsTable />,
-  }
+  };
 
   return (
     <div className='pt-28 grid place-items-center gap-10'>

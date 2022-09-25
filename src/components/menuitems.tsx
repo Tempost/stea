@@ -92,7 +92,8 @@ export const dashMenuItems: Menu[] = [
             text: 'Point submission form',
           },
           {
-            href: '',
+            // TODO: Create Doc link wrapper
+            href: '/stea_org_packet.pdf',
             text: 'Organizer Pack',
           },
         ]}

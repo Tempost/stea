@@ -19,7 +19,10 @@ function ControlledDatePicker({
   label,
   placeholderText,
 }: DatePickerProps) {
-  const { control, formState: { errors }} = useFormContext();
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
   const { name } = register;
 
   return (

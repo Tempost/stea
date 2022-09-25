@@ -18,9 +18,9 @@ export type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
 
-export interface AppPropsWithLayout extends AppProps<{session?: Session}> {
+export interface AppPropsWithLayout extends AppProps<{ session?: Session }> {
   Component: NextPageWithLayout;
-};
+}
 
 // TODO TODO TODO: Remove this on prod build
 const AtomsDevTools = ({ children }: any) => {
@@ -28,7 +28,10 @@ const AtomsDevTools = ({ children }: any) => {
   return children;
 };
 
-function MyApp({ Component, pageProps: { session, ...pageProps } }: AppPropsWithLayout) {
+function MyApp({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppPropsWithLayout) {
   const getLayout = Component.getLayout || (page => page);
   return (
     <>
