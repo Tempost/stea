@@ -1,9 +1,10 @@
-import NavLinkMenu from './navlinkmenu';
+import NavLinkMenu, { NavLinkSubMenu } from './navlinkmenu';
 
 interface Menu {
   href?: string;
   name: string;
-  render?: ({ href, name: navText }: Menu) => JSX.Element;
+  drawer?: true;
+  render?: ({ href, name }: Menu) => JSX.Element;
 }
 
 export const publicMenuItems: Menu[] = [
@@ -25,10 +26,11 @@ export const publicMenuItems: Menu[] = [
   },
   {
     name: 'Join',
-    render: ({ name: navText }) => (
-      <NavLinkMenu
-        name={navText}
-        routes={[
+    render: ({ name, drawer }) => (
+      <NavLinkSubMenu
+        name={name}
+        drawer={drawer}
+        subLinks={[
           {
             href: '/join',
             text: 'Apply for STEA Membership',
@@ -57,7 +59,7 @@ export const dashMenuItems: Menu[] = [
     render: ({ name: navText }) => (
       <NavLinkMenu
         name={navText}
-        routes={[
+        subLinks={[
           {
             href: '/dashboard/review/points',
             text: 'Points',
@@ -84,13 +86,14 @@ export const dashMenuItems: Menu[] = [
     render: ({ name: navText }) => (
       <NavLinkMenu
         name={navText}
-        routes={[
+        subLinks={[
           {
             href: '',
             text: 'Point submission form',
           },
           {
-            href: '',
+            // TODO: Create Doc link wrapper
+            href: '/stea_org_packet.pdf',
             text: 'Organizer Pack',
           },
         ]}

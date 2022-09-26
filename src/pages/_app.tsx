@@ -3,6 +3,7 @@ import { httpBatchLink } from '@trpc/client/links/httpBatchLink';
 import { loggerLink } from '@trpc/client/links/loggerLink';
 import { withTRPC } from '@trpc/next';
 import { useAtomsDevtools } from 'jotai/devtools';
+import type { Session } from 'next-auth';
 
 import '../styles/globals.css';
 import { transformer } from '@/utils/trpc';
@@ -11,14 +12,15 @@ import type { AppRouter } from '@/backend/router/_app';
 import type { NextComponentType, NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import type { ReactElement, ReactNode } from 'react';
+import { SessionProvider } from 'next-auth/react';
 
 export type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
 
-export type AppPropsWithLayout = AppProps & {
+export interface AppPropsWithLayout extends AppProps<{ session?: Session }> {
   Component: NextPageWithLayout;
-};
+}
 
 // TODO TODO TODO: Remove this on prod build
 const AtomsDevTools = ({ children }: any) => {
@@ -26,7 +28,10 @@ const AtomsDevTools = ({ children }: any) => {
   return children;
 };
 
-function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+function MyApp({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppPropsWithLayout) {
   const getLayout = Component.getLayout || (page => page);
   return (
     <>
@@ -37,15 +42,18 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           name='description'
           content='STEA dressage'
           charSet='UTF-8'
-          lang='en'
         />
         <meta
           name='viewport'
-          initial-scale='100%'
-          content='viewport-fit=cover'
+          initial-scale='1'
+          content='width=device-width'
         />
       </Head>
-      <AtomsDevTools>{getLayout(<Component {...pageProps} />)}</AtomsDevTools>
+      <AtomsDevTools>
+        <SessionProvider session={session}>
+          {getLayout(<Component {...pageProps} />)}
+        </SessionProvider>
+      </AtomsDevTools>
     </>
   );
 }

@@ -20,7 +20,7 @@ function RegType({ register, noAtomUpdate }: Props) {
   }
 
   return (
-    <div
+    <section
       className='mt-3 w-fit'
       onChange={handleRadioClick}
     >
@@ -28,17 +28,17 @@ function RegType({ register, noAtomUpdate }: Props) {
       <Radio
         label='Annual'
         value='Annual'
-        className='radio radio-primary radio-sm'
+        className='radio-primary'
         {...register}
       />
 
       <Radio
         label='Life'
         value='Life'
-        className='radio radio-primary radio-sm'
+        className='radio-primary'
         {...register}
       />
-    </div>
+    </section>
   );
 }
 

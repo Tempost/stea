@@ -13,7 +13,9 @@ function Payment() {
 
   return (
     <div className='grid place-content-center gap-5 border-solid border rounded-2xl border-gray-400 bg-gray-100 p-5'>
-      <h4 className='font-bold text-lg'>Your sign-up costs ${amountOwed} USD</h4>
+      <h4 className='font-bold text-lg'>
+        Your sign-up costs ${amountOwed} USD
+      </h4>
       <PayPalButton amountOwed={amountOwed} />
     </div>
   );

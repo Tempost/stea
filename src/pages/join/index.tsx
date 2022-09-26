@@ -18,9 +18,8 @@ function JoinStea() {
   }
 
   return (
-    <>
-      <h2 className='text-xl border-b-2 text-center'>Join Online Below</h2>
-
+    <section>
+      <h2 className='text-2xl border-b-2 text-center'>Join Online Below</h2>
       <div className='card-body grid place-items-center'>
         <h2>Membership Application type:</h2>
         <div
@@ -29,21 +28,21 @@ function JoinStea() {
         >
           <Radio
             label='Individual'
-            className='radio radio-primary radio-sm'
+            className='radio radio-primary radio-md md:radio-sm'
             value='Individual'
             name='app-select'
           />
 
           <Radio
             label='Business'
-            className='radio radio-primary radio-sm'
+            className='radio radio-primary radio-md md:radio-sm'
             value='Business'
             name='app-select'
           />
 
           <Radio
             label='Horse'
-            className='radio radio-primary radio-sm'
+            className='radio radio-primary radio-md md:radio-sm'
             value='Horse'
             name='app-select'
           />
@@ -58,7 +57,7 @@ function JoinStea() {
       >
         Next
       </button>
-    </>
+    </section>
   );
 }
 

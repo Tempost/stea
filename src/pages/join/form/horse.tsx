@@ -76,7 +76,7 @@ function HorseRegistration() {
     );
 
     methods.trigger().then(() => {
-      if (formValues.horses !== undefined) {
+      if (formValues.horses) {
         const lifeCount = formValues.horses.filter(
           horse => horse.regType === 'Life'
         ).length;
@@ -152,9 +152,8 @@ function HorseRegistration() {
           <RiderComboFieldArray />
           <FinishPayment triggerValidation={triggerValidation} />
         </section>
-
       </form>
-    </FormProvider >
+    </FormProvider>
   );
 }
 

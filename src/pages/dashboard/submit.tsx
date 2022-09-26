@@ -24,17 +24,17 @@ function SubmitPoints() {
   }
 
   return (
-    <div className='pt-28 w-full grid place-items-center'>
+    <div className='w-full grid place-items-center'>
       <div className='shadow-xl rounded-lg p-5'>
         <form onSubmit={handleSubmit(onSubmit)}>
           <h2 className='text-xl text-center text-red-500'>
             PLEASE NOTE!!
-            <h3 className='text-lg'>
-              Ensure the sheet containing the points is in the correct format
-              <br />
-              Otherwise points might not get correctly added
-            </h3>
           </h2>
+          <h3 className='text-lg text-center text-red-500'>
+            Ensure the sheet containing the points is in the correct format
+            <br />
+            Otherwise points might not get correctly added
+          </h3>
 
           <button
             className='btn btn-primary btn-sm w-full'

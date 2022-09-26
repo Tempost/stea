@@ -12,18 +12,17 @@ function MembersAnHorses() {
       {
         header: 'Members',
         columns: [
-          {
-            accessorKey: 'membershipDate',
-            id: 'membershipDate',
-            cell: info => {
-              const date: Date = info.getValue();
+          // {
+          //   accessorKey: 'membershipDate',
+          //   id: 'membershipDate',
+          //   cell: info => {
+          //     const date: Date = info.getValue();
 
-              return `${
-                date.getMonth() + 1
-              }/${date.getDate()}/${date.getFullYear()}`;
-            },
-            header: () => <span> Join Date </span>,
-          },
+          //     return `${date.getMonth() + 1
+          //       }/${date.getDate()}/${date.getFullYear()}`;
+          //   },
+          //   header: () => <span> Join Date </span>,
+          // },
           {
             accessorKey: 'fullName',
             id: 'fullName',
@@ -53,19 +52,18 @@ function MembersAnHorses() {
       {
         header: 'Horses',
         columns: [
-          {
-            accessorKey: 'registrationDate',
-            id: 'registrationDate',
-            cell: info => {
-              const date: Date = info.getValue();
-              if (date === null) return 'N/A';
+          // {
+          //   accessorKey: 'registrationDate',
+          //   id: 'registrationDate',
+          //   cell: info => {
+          //     const date: Date = info.getValue();
+          //     if (date === null) return 'N/A';
 
-              return `${
-                date.getMonth() + 1
-              }/${date.getDate()}/${date.getFullYear()}`;
-            },
-            header: () => <span> Registration Date </span>,
-          },
+          //     return `${date.getMonth() + 1
+          //       }/${date.getDate()}/${date.getFullYear()}`;
+          //   },
+          //   header: () => <span> Registration Date </span>,
+          // },
           {
             accessorKey: 'horseRN',
             id: 'horseRN',
@@ -96,8 +94,10 @@ function MembersAnHorses() {
     []
   );
 
+  // TODO: Fade Image into background
+  // <Image layout='fill' src='/membersandhorses.jpg'/>
   return (
-    <div className='pt-28 w-full grid place-items-center'>
+    <div className='grid grid-flow-row lg:grid-flow-col place-items-center'>
       <MemberTable overRideDefaultCols={memberCols} />
       <HorseTable overRideDefaultCols={horseCols} />
     </div>

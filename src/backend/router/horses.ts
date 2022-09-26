@@ -3,8 +3,8 @@ import { z } from 'zod';
 import { createRouter } from './utils';
 
 import { prisma } from '@/backend/prisma';
-import { HorseModel } from '@/backend/prisma/zod';
 import { Horse } from '@prisma/client';
+import { TRPCError } from '@trpc/server';
 
 export const horse = createRouter()
   .query('get-horses', {
@@ -21,20 +21,21 @@ export const horse = createRouter()
       return horses as Horse[];
     },
   })
-  .mutation('add-horse', {
-    input: z.object({
-      horse: HorseModel.required(),
-      // .extend({
-      //   riders: z.array(z.string()),
-      // }),
-    }),
+  .query('get-horse', {
+    input: z.object({ horseRN: z.string() }),
     async resolve({ input }) {
-      await prisma.horse
-        .create({
-          data: {
-            ...input.horse,
-          },
-        })
-        .catch(err => console.log(err));
+      const { horseRN } = input;
+      const horse = await prisma.horse.findUnique({
+        where: { horseRN: horseRN },
+      });
+
+      if (!horse) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: `${horseRN} not found.`,
+        });
+      }
+
+      return horse;
     },
   });
