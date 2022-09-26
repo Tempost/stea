@@ -18,14 +18,14 @@ const JRSR = ({ radioRegister, dateRegister, error, watch }: Props) => {
       <Radio
         label='Yes'
         value='JR'
-        className='radio radio-primary radio-sm'
+        className='radio-primary'
         {...radioRegister}
       />
 
       <Radio
         label='No'
         value='SR'
-        className='radio radio-primary radio-sm'
+        className='radio-primary'
         {...radioRegister}
       />
 

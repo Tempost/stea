@@ -1,33 +1,47 @@
 import { useRouter } from 'next/router';
 import { useSetAtom } from 'jotai';
+import Image from 'next/image';
 
-import { PublicHeader, DashboardHeader } from './header';
+import { DashboardHeader, ResponsiveHeader } from './header';
 import Footer from './footer';
 import { updateFormState } from '@/utils/atoms';
-import { PayPalScriptProvider, ReactPayPalScriptOptions } from '@paypal/react-paypal-js';
+import {
+  PayPalScriptProvider,
+  ReactPayPalScriptOptions,
+} from '@paypal/react-paypal-js';
+import { LayoutProps } from '@/types/common';
+import IsAuth from './auth';
 
-export function PublicLayout({ children }: any) {
+export function PublicLayout({ children }: LayoutProps) {
   const router = useRouter();
   return (
     <div className='flex flex-col h-screen'>
-      <PublicHeader />
-      <main
-        className={`flex-grow bg-neutral-content ${router.pathname === '/' ? '' : 'p-20'
-          }`}
-      >
-        {children}
-      </main>
-      <Footer />
+      <ResponsiveHeader>
+        <main
+          className={`flex-grow bg-base-100 
+                    ${router.pathname === '/'
+              ? ''
+              : 'p-4 sm:p-8 md:p-10 lg:p-16'
+            }`}
+        >
+          {children}
+        </main>
+        <Footer />
+      </ResponsiveHeader>
     </div>
   );
 }
 
-export function DashboardLayout({ children }: any) {
+export function DashboardLayout({ children }: LayoutProps) {
   return (
-    <div className='flex flex-col h-screen'>
-      <DashboardHeader />
-      <main className='flex-grow bg-neutral-content mt-16'>{children}</main>
-    </div>
+    <IsAuth>
+      <div className='flex flex-col h-screen'>
+        <DashboardHeader />
+        <main className='flex-grow bg-neutral-content p-4 sm:p-8 md:p-10 lg:p-16'>
+          {children}
+        </main>
+      </div>
+    </IsAuth>
   );
 }
 
@@ -38,7 +52,7 @@ const initOptions: ReactPayPalScriptOptions = {
   'data-react-paypal-script-id': 'paypal-button',
 };
 
-export function FormLayout({ children }: any) {
+export function FormLayout({ children }: LayoutProps) {
   const router = useRouter();
   const update = useSetAtom(updateFormState);
 
@@ -58,8 +72,16 @@ export function FormLayout({ children }: any) {
 
   return (
     <PublicLayout>
-      <div className='grid place-content-center h-full bg-opacity-50'>
-        <div className='card w-fit bg-base-100 shadow-[0_0_10px_0_rgba(0,0,0,0.3)] p-8'>
+      <figure>
+        <Image
+          objectFit='cover'
+          layout='fill'
+          src='/stea_join_salute.jpg'
+          alt='Woman on horse saluting'
+        />
+      </figure>
+      <div className='grid place-content-center h-full'>
+        <div className='card w-fit bg-base-100 shadow-[0_0_10px_0_rgba(0,0,0,0.3)] p-5 md:p-8'>
           {showReturn && returnButton}
           <PayPalScriptProvider options={initOptions}>
             {children}

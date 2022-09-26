@@ -6,6 +6,9 @@ const config: Config = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   setupFilesAfterEnv: ['<rootDir>/src/tests/jest/context.ts'],
+  moduleNameMapper: {
+    '@/(.*)': '<rootDir>/src/$1',
+  },
   globals: {
     'ts-jest': {
       tsconfig: 'tsconfig.json',

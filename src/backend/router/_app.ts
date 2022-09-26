@@ -12,7 +12,7 @@ export const appRouter = createRouter()
   .merge('member.', member)
   .merge('nonMemberHorseOwner.', nonMemberHorseOwner)
   .merge('horse.', horse)
-  .merge('ranking.', points)
+  .merge('points.', points)
   .merge('rider.', riders)
   .merge('shows.', show);
 

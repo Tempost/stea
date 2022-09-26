@@ -3,7 +3,7 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        'home-hero': "url('/train_jump.jpg')",
+        'home-hero': "url('/train_jump_1440.webp')",
         'points-head': "url('/white_horse_ribbon_3.jpeg')",
       },
     },
@@ -11,7 +11,18 @@ module.exports = {
   plugins: [require('@tailwindcss/typography'), require('daisyui')],
   daisyui: {
     styled: true,
-    themes: ['light'],
+    themes: [
+      {
+        light: {
+          ...require('daisyui/src/colors/themes')['[data-theme=light]'],
+          primary: '#1d4ed8',
+          secondary: '#D81DAC',
+          accent: '#1dd849',
+          warning: '#d8a71d',
+          'primary-focus': 'mediumblue',
+        },
+      },
+    ],
     base: true,
     utils: true,
     logs: true,

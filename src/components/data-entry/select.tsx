@@ -33,7 +33,7 @@ const Select = forwardRef<HTMLSelectElement, SelectInputProps>(
 
     return (
       <div>
-        {label !== undefined && (
+        {label && (
           <label
             className={`label flex-col ${labelStyle}`}
             htmlFor={`select-input${id}`}
@@ -46,7 +46,7 @@ const Select = forwardRef<HTMLSelectElement, SelectInputProps>(
         <select
           ref={ref}
           id={`select-input${id}`}
-          className={`select select-bordered ${className}`}
+          className={`select select-bordered md:select-sm ${className}`}
           {...props}
         >
           {options.map(item => {

@@ -1,4 +1,4 @@
-import NextLink from 'next/link';
+import Link from 'next/link';
 
 interface WrapperProps {
   href?: string;
@@ -7,9 +7,9 @@ interface WrapperProps {
 
 function LinkWrapper({ href, children }: WrapperProps) {
   return (
-    <NextLink href={href ? href : ''}>
-      <a>{children}</a>
-    </NextLink>
+    <Link href={href ? href : ''}>
+      <a rel='noopener noreferrer'>{children}</a>
+    </Link>
   );
 }
 

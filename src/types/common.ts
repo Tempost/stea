@@ -18,3 +18,6 @@ export function isStatus(o: any): o is Status {
 export function isFormType(o: any): o is FormType {
   return FORMTYPE.includes(o as FormType);
 }
+
+export type LayoutProps = React.PropsWithChildren;
+export interface HeaderProps extends React.PropsWithChildren {}

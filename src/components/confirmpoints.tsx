@@ -8,14 +8,16 @@ function ConfirmPoints({ uid }: CPProps) {
   const utils = trpc.useContext();
   const mutation = trpc.useMutation(['shows.update'], {
     onSuccess(input) {
-      utils.invalidateQueries(['shows.get']);
+      utils.invalidateQueries(['shows.get-shows']);
     },
   });
 
   function onClick() {
     mutation.mutate({
       uid: uid,
-      reviewed: true,
+      patch: {
+        reviewed: true,
+      },
     });
   }
 

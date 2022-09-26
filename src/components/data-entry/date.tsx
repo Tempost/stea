@@ -10,10 +10,19 @@ import TextInput from './text-input';
 
 interface DatePickerProps {
   register: UseFormRegisterReturn;
+  placeholderText?: string;
+  label?: string;
 }
 
-function ControlledDatePicker({ register }: DatePickerProps) {
-  const { control } = useFormContext();
+function ControlledDatePicker({
+  register,
+  label,
+  placeholderText,
+}: DatePickerProps) {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
   const { name } = register;
 
   return (
@@ -23,14 +32,16 @@ function ControlledDatePicker({ register }: DatePickerProps) {
       render={props => {
         return (
           <DatePicker
-            placeholderText='Date Of Birth'
+            placeholderText={placeholderText}
             onChange={date => {
               props.field.onChange(date);
             }}
             selected={props.field.value}
             customInput={
               <TextInput
-                className='input-sm input-primary'
+                label={label}
+                className='input-primary'
+                error={errors[name]}
                 {...register}
               />
             }

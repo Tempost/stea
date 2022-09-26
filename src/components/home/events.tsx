@@ -1,0 +1,20 @@
+import NextLink from 'next/link';
+import { CalenderIcon } from '../icons';
+
+function UpcomingEvents() {
+  return (
+    <>
+      <h2 className='text-xl'>Upcoming Events</h2>
+      <NextLink href='/calender'>
+        <button className='btn btn-primary btn-md grid place-content-center grid-flow-col gap-2'>
+          {CalenderIcon} View Full Calender
+        </button>
+      </NextLink>
+
+      {/* TODO: Grab shows happening in the next month and display here */}
+      {/* TODO: Make some sort of event display component? */}
+    </>
+  );
+}
+
+export default UpcomingEvents;
