@@ -1,9 +1,7 @@
-import Link from 'next/link';
-import { signIn, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 
 function Footer() {
-  const { data: session, status } = useSession();
-  console.log(session, status);
+  const { data: session } = useSession();
 
   return (
     <footer
@@ -13,20 +11,12 @@ function Footer() {
     >
       <div className='flex flex-row'>
         <h1 className='footer-title text-2xl'>Footer</h1>
-        <Link
-          className='mb-2'
-          href='/api/auth/signin'
-          prefetch={false}
+        <a
+          href='/dashboard'
+          className='cursor-pointer'
         >
-          <a
-            onClick={e => {
-              e.preventDefault();
-              signIn();
-            }}
-          >
-            {session ? 'Go to dashboard' : 'Login to dashboard'}
-          </a>
-        </Link>
+          {session ? 'Go to dashboard' : 'Login to dashboard'}
+        </a>
       </div>
     </footer>
   );

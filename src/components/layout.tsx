@@ -10,6 +10,7 @@ import {
   ReactPayPalScriptOptions,
 } from '@paypal/react-paypal-js';
 import { LayoutProps } from '@/types/common';
+import IsAuth from './auth';
 
 export function PublicLayout({ children }: LayoutProps) {
   const router = useRouter();
@@ -18,11 +19,10 @@ export function PublicLayout({ children }: LayoutProps) {
       <ResponsiveHeader>
         <main
           className={`flex-grow bg-base-100 
-                    ${
-                      router.pathname === '/'
-                        ? ''
-                        : 'p-4 sm:p-8 md:p-10 lg:p-16'
-                    }`}
+                    ${router.pathname === '/'
+              ? ''
+              : 'p-4 sm:p-8 md:p-10 lg:p-16'
+            }`}
         >
           {children}
         </main>
@@ -34,12 +34,14 @@ export function PublicLayout({ children }: LayoutProps) {
 
 export function DashboardLayout({ children }: LayoutProps) {
   return (
-    <div className='flex flex-col h-screen'>
-      <DashboardHeader />
-      <main className='flex-grow bg-neutral-content p-4 sm:p-8 md:p-10 lg:p-16'>
-        {children}
-      </main>
-    </div>
+    <IsAuth>
+      <div className='flex flex-col h-screen'>
+        <DashboardHeader />
+        <main className='flex-grow bg-neutral-content p-4 sm:p-8 md:p-10 lg:p-16'>
+          {children}
+        </main>
+      </div>
+    </IsAuth>
   );
 }
 
