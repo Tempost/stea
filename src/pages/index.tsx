@@ -67,13 +67,18 @@ function Home() {
           </h2>
           <div className='card-body'>
             <p className='text-lg md:text-2xl font-semibold text-center'>
-              Please remeber to check your points throught the year!
+              Please remember to check your points throughout the year!
             </p>
             <p className='inline-grid place-content-center text-xl md:text-2xl'>
               Review rule changes for 2023
-              <button className='btn btn-primary btn-sm md:btn-xs'>
-                <span className='mr-1'>Rule Book </span> {BookIcon}
-              </button>
+              <a
+                className='btn btn-primary btn-sm md:btn-xs'
+                href='/stea_rule_book.pdf'
+                rel='noopener noreferrer'
+                target='_blank'
+              >
+                <span className='mr-1'>RuleBook</span> {BookIcon}
+              </a>
             </p>
           </div>
         </section>

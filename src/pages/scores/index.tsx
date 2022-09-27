@@ -5,7 +5,6 @@ import { PublicLayout } from '@/components/layout';
 import RidersTable from '@/components/tables/ridercombos';
 
 function SteaPoints() {
-  // TODO: Better responsiveness
   return (
     <div className='w-full grid place-items-center gap-20'>
       <RidersTable title='Current Points' />
@@ -28,8 +27,9 @@ function SteaPoints() {
           <div className='card-actions justify-center'>
             <a
               className='btn btn-primary btn-sm md:btn-md'
-              href='/stea_points.docx'
+              href='/stea_points.pdf'
               rel='noopener noreferrer'
+              target='_blank'
             >
               Download Guidelines
             </a>
