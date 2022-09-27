@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
 import { useSetAtom } from 'jotai';
-import Image from 'next/image';
 
 import { DashboardHeader, ResponsiveHeader } from './header';
 import Footer from './footer';
@@ -71,23 +70,20 @@ export function FormLayout({ children }: LayoutProps) {
   );
 
   return (
-    <PublicLayout>
-      <figure>
-        <Image
-          objectFit='cover'
-          layout='fill'
-          src='/stea_join_salute.jpg'
-          alt='Woman on horse saluting'
-        />
-      </figure>
-      <div className='grid place-content-center h-full'>
-        <div className='card w-fit bg-base-100 shadow-[0_0_10px_0_rgba(0,0,0,0.3)] p-5 md:p-8'>
-          {showReturn && returnButton}
-          <PayPalScriptProvider options={initOptions}>
-            {children}
-          </PayPalScriptProvider>
-        </div>
-      </div>
-    </PublicLayout>
+    <div className='flex flex-col h-screen'>
+      <ResponsiveHeader>
+        <main className='flex-grow bg-base-100 p-4 sm:p-8 md:p-10 lg:p-16 bg-form-hero bg-center bg-cover'>
+          <div className='grid place-content-center h-full'>
+            <div className='card w-fit bg-base-100 shadow-[0_0_10px_0_rgba(0,0,0,0.3)] p-5 md:p-8'>
+              {showReturn && returnButton}
+              <PayPalScriptProvider options={initOptions}>
+                {children}
+              </PayPalScriptProvider>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </ResponsiveHeader>
+    </div>
   );
 }
