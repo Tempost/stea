@@ -39,7 +39,11 @@ const phoneTypes = [
 ];
 
 const MemberFormValues = z.object({
-  member: MemberModel,
+  member: MemberModel.omit({
+    fullName: true,
+    boardMember: true,
+    confirmed: true,
+  }),
   horseReg: z.boolean(),
   horses: z.array(HorseModel).optional(),
 });
@@ -73,11 +77,6 @@ function IndividualRegistration() {
   function triggerValidation() {
     const formValues = methods.getValues();
 
-    methods.setValue(
-      'member.fullName',
-      `${formValues.member.firstName} ${formValues.member.lastName}`
-    );
-
     methods.trigger().then(() => {
       if (formValues.horses) {
         const lifeCount = formValues.horses.filter(
@@ -97,8 +96,6 @@ function IndividualRegistration() {
   }
 
   setValue('member.memberType', 'Individual' as Type);
-  setValue('member.boardMember', false);
-  setValue('member.confirmed', false);
   console.log(methods.formState.errors);
 
   return (
@@ -192,9 +189,7 @@ function IndividualRegistration() {
               label='Email*'
               inputMode='text'
               className='input-primary'
-              altLabel={
-                'This will the primary method of contact, ensure it is up to date!'
-              }
+              altLabel={'This will be the primary method of contact.'}
               error={inputState.errors.member?.email}
               {...register('member.email', { required: true })}
             />

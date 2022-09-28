@@ -5,9 +5,10 @@ interface FinishPaymentProps {
   triggerValidation: () => void;
 }
 
+// TODO: JUST MOVE PAYMENT TO ANOTHER SCREEN
 function FinishPayment({ triggerValidation }: FinishPaymentProps) {
   const methods = useFormContext();
-
+  console.log(methods.formState.isValid)
   return (
     <>
       {methods.formState.isValid ? (

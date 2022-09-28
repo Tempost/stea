@@ -111,6 +111,8 @@ function BusinessRegistration() {
           As part of the membership you can submit
           <br />
           your company logo on our home page!
+          <br/>
+          Submit to stea@stevening.net
         </h3>
 
         <div className='flex flex-col gap-2'>
@@ -211,7 +213,7 @@ function BusinessRegistration() {
               className='input-sm input-primary'
               error={errors.member?.email}
               altLabel={
-                'This will the primary method of contact, ensure it is up to date!'
+                'This will be the primary method of contact.'
               }
               {...register('member.email', { required: true })}
             />

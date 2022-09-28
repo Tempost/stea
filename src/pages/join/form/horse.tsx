@@ -124,7 +124,7 @@ function HorseRegistration() {
               inputMode='text'
               className='input-sm input-primary'
               error={errors.owner?.email}
-              altLabel='This will the primary method of contact, ensure it is up to date!'
+              altLabel='This will be the primary method of contact.'
               {...register('owner.email', { required: true })}
             />
 

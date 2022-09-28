@@ -4,14 +4,17 @@ import { Radio } from '@/components/data-entry';
 import { useSetAtom } from 'jotai';
 import { updateFormState } from '@/utils/atoms';
 import { Status } from '@prisma/client';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, DetailedHTMLProps, InputHTMLAttributes } from 'react';
 
-interface Props {
+interface Props extends DetailedHTMLProps<
+    InputHTMLAttributes<HTMLInputElement>,
+    HTMLInputElement
+  > {
   register: UseFormRegisterReturn;
   noAtomUpdate?: boolean;
 }
 
-function RegType({ register, noAtomUpdate }: Props) {
+function RegType({ register, noAtomUpdate, onClick }: Props) {
   const update = useSetAtom(updateFormState);
 
   function handleRadioClick(e: ChangeEvent<HTMLInputElement>) {
@@ -29,6 +32,7 @@ function RegType({ register, noAtomUpdate }: Props) {
         label='Annual'
         value='Annual'
         className='radio-primary'
+        onClick={onClick}
         {...register}
       />
 
@@ -36,6 +40,7 @@ function RegType({ register, noAtomUpdate }: Props) {
         label='Life'
         value='Life'
         className='radio-primary'
+        onClick={onClick}
         {...register}
       />
     </section>

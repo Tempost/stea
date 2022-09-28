@@ -3,9 +3,14 @@ export {};
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
-      NEXT_PUBLIC_SANDBOX_CLIENT_ID: string;
-      NEXT_PUBLIC_SANDBOX_SECRET: string;
+      NEXT_PUBLIC_PAYPAL_CLIENT_ID: string;
+      PAYPAL_SECRET: string;
       DATABASE_URL: URL;
+      GOOGLE_CLIENT_ID: string;
+      GOOGLE_CLIENT_SECRET: string;
+      GOOGLE_CLIENT_ID: string;
+      NEXTAUTH_URL: string;
+      SANDBOX_ACCOUNT: string;
     }
   }
 }

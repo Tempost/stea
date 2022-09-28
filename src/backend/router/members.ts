@@ -60,7 +60,11 @@ export const member = createRouter()
   })
   .mutation('add-member', {
     input: z.object({
-      member: MemberModel.required(),
+      member: MemberModel.omit({
+        fullName: true,
+        boardMember: true,
+        confirmed: true,
+      }).required(),
       payment: PaymentModel.omit({ payee: true }).optional(),
       horses: z
         .object({
@@ -73,26 +77,27 @@ export const member = createRouter()
       division: z.string(),
     }),
 
-    async resolve({ input }) {
-      const riderCombo = input.horses
-        ? input.horses.map(horse => {
+    async resolve({ input: { member, payment, horses, division } }) {
+      const riderCombo = horses
+        ? horses.map(horse => {
             return {
               horseName: horse.horseRN,
-              division: input.division,
+              division: division,
             };
           })
         : [];
 
       return await prisma.member.create({
         data: {
-          ...input.member,
+          ...member,
+          fullName: `${member.firstName} ${member.lastName}`,
           payment: {
             create: {
-              ...input.payment,
+              ...payment,
             },
           },
           Horse: {
-            create: input.horses && [...input.horses],
+            create: horses && [...horses],
           },
           RiderCombo: {
             create: [...riderCombo],
