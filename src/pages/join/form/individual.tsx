@@ -21,7 +21,7 @@ import RegType from '@/components/forms/regtype';
 import { useSetAtom } from 'jotai';
 import { updateFormState } from '@/utils/atoms';
 import { FormLayout } from '@/components/layout';
-import FinishPayment from '@/components/forms/FinishPayment';
+import { useRouter } from 'next/router';
 
 const phoneTypes = [
   {
@@ -51,6 +51,7 @@ const MemberFormValues = z.object({
 function IndividualRegistration() {
   const memberMutation = trpc.useMutation(['member.add-member']);
   const update = useSetAtom(updateFormState);
+  const router = useRouter();
 
   const methods = useZodForm({
     reValidateMode: 'onSubmit',
@@ -68,31 +69,34 @@ function IndividualRegistration() {
   const isRegHorse = watch('horseReg', false);
 
   function onSumbit(formValues: FieldValues) {
-    // memberMutation.mutate({
-    //   member: formValues.member,
-    //   horses: formValues.horses,
-    // });
+    memberMutation.mutate({ });
   }
 
   function triggerValidation() {
     const formValues = methods.getValues();
+    console.log(formValues);
 
-    methods.trigger().then(() => {
-      if (formValues.horses) {
-        const lifeCount = formValues.horses.filter(
-          horse => horse.regType === 'Life'
-        ).length;
+    methods.trigger()
+      .then((valid) => {
+        if (valid) {
+          if (formValues.horses) {
+            const lifeCount = formValues.horses.filter(
+              horse => horse.regType === 'Life'
+            ).length;
 
-        const annualCount = formValues.horses.filter(
-          horse => horse.regType === 'Annual'
-        ).length;
+            const annualCount = formValues.horses.filter(
+              horse => horse.regType === 'Annual'
+            ).length;
 
-        update({
-          type: 'HORSE',
-          payload: { lifeCount: lifeCount, annualCount: annualCount },
-        });
-      }
-    });
+            update({
+              type: 'HORSE',
+              payload: { lifeCount: lifeCount, annualCount: annualCount },
+            });
+
+          }
+          router.push('/join/form/payment');
+        }
+      }).catch(console.log);
   }
 
   setValue('member.memberType', 'Individual' as Type);
@@ -201,9 +205,7 @@ function IndividualRegistration() {
 
           <JRSR
             radioRegister={register('member.JRSR', { required: true })}
-            dateRegister={register('member.dateOfBirth', {
-              required: isUnder18,
-            })}
+            dateName='member.dateOfBirth'
             watch={isUnder18}
           />
 
@@ -235,7 +237,13 @@ function IndividualRegistration() {
 
           {isRegHorse && <HorseFieldArray />}
 
-          <FinishPayment triggerValidation={triggerValidation} />
+          <button
+            type='button'
+            className='btn btn-primary w-full'
+            onClick={() => triggerValidation()}
+          >
+            Move to payment
+          </button>
         </div>
       </form>
     </FormProvider>

@@ -1,15 +1,14 @@
-import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
+import { UseFormRegisterReturn } from 'react-hook-form';
 
 import { Radio, ControlledDatePicker } from '@/components/data-entry';
 
 interface Props {
   radioRegister: UseFormRegisterReturn;
-  dateRegister: UseFormRegisterReturn;
-  error?: FieldError;
+  dateName: string;
   watch: string;
 }
 
-const JRSR = ({ radioRegister, dateRegister, error, watch }: Props) => {
+function JRSR({ radioRegister, dateName, watch }: Props) {
   const isJR = watch === 'JR';
 
   return (
@@ -29,9 +28,14 @@ const JRSR = ({ radioRegister, dateRegister, error, watch }: Props) => {
         {...radioRegister}
       />
 
-      {isJR ? <ControlledDatePicker register={dateRegister} /> : null}
+      {isJR ? (
+        <ControlledDatePicker
+          placeholderText='Date of Birth'
+          name={dateName}
+        />
+      ) : null}
     </div>
   );
-};
+}
 
 export default JRSR;

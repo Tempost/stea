@@ -1,30 +1,21 @@
 import DatePicker from 'react-datepicker';
-import {
-  Controller,
-  useFormContext,
-  UseFormRegisterReturn,
-} from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import TextInput from './text-input';
 
 interface DatePickerProps {
-  register: UseFormRegisterReturn;
+  name: string;
   placeholderText?: string;
   label?: string;
 }
 
 function ControlledDatePicker({
-  register,
   label,
   placeholderText,
+  name,
 }: DatePickerProps) {
-  const {
-    control,
-    formState: { errors },
-  } = useFormContext();
-  const { name } = register;
-
+  const { control } = useFormContext();
   return (
     <Controller
       name={name}
@@ -41,8 +32,6 @@ function ControlledDatePicker({
               <TextInput
                 label={label}
                 className='input-primary'
-                error={errors[name]}
-                {...register}
               />
             }
           />

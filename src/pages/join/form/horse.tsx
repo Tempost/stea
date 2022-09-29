@@ -17,7 +17,7 @@ import useZodForm from '@/utils/usezodform';
 import { FormLayout } from '@/components/layout';
 import { useSetAtom } from 'jotai';
 import { updateFormState } from '@/utils/atoms';
-import FinishPayment from '@/components/forms/FinishPayment';
+import { useRouter } from 'next/router';
 
 const phoneTypes = [
   {
@@ -49,6 +49,7 @@ function HorseRegistration() {
     shouldUnregister: true,
     schema: OwnerHorseFormValues,
   });
+  const router = useRouter();
 
   const { register, handleSubmit, formState } = methods;
   const { errors } = formState;
@@ -75,20 +76,23 @@ function HorseRegistration() {
       `${formValues.owner.firstName} ${formValues.owner.lastName}`
     );
 
-    methods.trigger().then(() => {
-      if (formValues.horses) {
-        const lifeCount = formValues.horses.filter(
-          horse => horse.regType === 'Life'
-        ).length;
+    methods.trigger().then((valid) => {
+      if (valid) {
+        if (formValues.horses) {
+          const lifeCount = formValues.horses.filter(
+            horse => horse.regType === 'Life'
+          ).length;
 
-        const annualCount = formValues.horses.filter(
-          horse => horse.regType === 'Annual'
-        ).length;
+          const annualCount = formValues.horses.filter(
+            horse => horse.regType === 'Annual'
+          ).length;
 
-        update({
-          type: 'HORSE',
-          payload: { lifeCount: lifeCount, annualCount: annualCount },
-        });
+          update({
+            type: 'HORSE',
+            payload: { lifeCount: lifeCount, annualCount: annualCount },
+          });
+        }
+        router.push('/join/form/payment')
       }
     });
   }
@@ -150,7 +154,13 @@ function HorseRegistration() {
         <section className='mt-10 grid gap-5'>
           <HorseFieldArray />
           <RiderComboFieldArray />
-          <FinishPayment triggerValidation={triggerValidation} />
+          <button
+            type='button'
+            className='btn btn-primary w-full'
+            onClick={() => triggerValidation()}
+          >
+            Move to payment
+          </button>
         </section>
       </form>
     </FormProvider>

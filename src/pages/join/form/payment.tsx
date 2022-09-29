@@ -1,7 +1,10 @@
-import { formState } from '@/utils/atoms';
-import { useAtom } from 'jotai';
-import PayPalButton from '@/components/forms/PayPalButton';
+import { ReactElement } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useAtom } from 'jotai';
+
+import { formState } from '@/utils/atoms';
+import PayPalButton from '@/components/forms/PayPalButton';
+import { FormLayout } from '@/components/layout';
 
 // TODO: Use this button on each form, don't save formstate in atom, have form onSubmit after finishing payment
 // that way we don't need to do weird stuff with saving form state in atoms
@@ -23,5 +26,9 @@ function Payment() {
     </div>
   );
 }
+
+Payment.getLayout = (page: ReactElement) => {
+  return <FormLayout>{page}</FormLayout>;
+};
 
 export default Payment;

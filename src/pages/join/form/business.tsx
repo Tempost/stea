@@ -21,7 +21,7 @@ import { useSetAtom } from 'jotai';
 import { updateFormState } from '@/utils/atoms';
 import { FormLayout } from '@/components/layout';
 import { Type } from '@prisma/client';
-import FinishPayment from '@/components/forms/FinishPayment';
+import { useRouter } from 'next/router';
 
 const phoneTypes = [
   {
@@ -60,6 +60,7 @@ function BusinessRegistration() {
   } = methods;
 
   const update = useSetAtom(updateFormState);
+  const router = useRouter();
 
   const isRegHorse = watch('horseReg', false);
 
@@ -78,7 +79,8 @@ function BusinessRegistration() {
       `${formValues.member.firstName} ${formValues.member.lastName}`
     );
 
-    methods.trigger().then(() => {
+    methods.trigger().then((valid) => {
+      if (valid) {
       if (formValues.horses) {
         const lifeCount = formValues.horses.filter(
           horse => horse.regType === 'Life'
@@ -92,6 +94,8 @@ function BusinessRegistration() {
           type: 'HORSE',
           payload: { lifeCount: lifeCount, annualCount: annualCount },
         });
+      }
+        router.push('/join/form/payment');
       }
     });
   }
@@ -107,10 +111,10 @@ function BusinessRegistration() {
       <form onSubmit={handleSubmit(onSumbit)}>
         <h2 className='divider'>Business Registration</h2>
 
-        <h3 className='text-center m-2 p-4 bg-neutral/3 rounded-box shadow-[0_0px_20px_0_rgba(0,0,0,0.3)]'>
+        <h3 className='text-center mb-2 p-4 border-solid border rounded-2xl border-gray-400 bg-gray-100'>
           As part of the membership you can submit
           <br />
-          your company logo on our home page!
+          your company logo for our home page!
           <br/>
           Submit to stea@stevening.net
         </h3>
@@ -231,7 +235,13 @@ function BusinessRegistration() {
 
           {isRegHorse && <HorseFieldArray />}
           {isRegHorse && <RiderComboFieldArray />}
-          <FinishPayment triggerValidation={triggerValidation} />
+          <button
+            type='button'
+            className='btn btn-primary w-full'
+            onClick={() => triggerValidation()}
+          >
+            Move to payment
+          </button>
         </div>
       </form>
     </FormProvider>
