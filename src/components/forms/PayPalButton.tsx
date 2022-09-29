@@ -9,6 +9,7 @@ interface PaymentProps
   amountOwed: number;
 }
 
+// TODO: Make use of on approve prop to submit form data after?
 function PayPalButton({ amountOwed, ...props }: PaymentProps) {
   return (
     <button
