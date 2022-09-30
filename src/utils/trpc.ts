@@ -32,18 +32,21 @@ export const transformer = superjson;
  * This is a helper method to infer the output of a query resolver
  * @example type HelloOutput = inferQueryOutput<'hello'>
  */
-export type inferQueryOutput<
-  TRouteKey extends keyof AppRouter['_def']['queries']
-> = inferProcedureOutput<AppRouter['_def']['queries'][TRouteKey]>;
+export type AppQueries = AppRouter['_def']['queries'];
+export type TQuery = keyof AppQueries;
+export type inferQueryOutput<TRouteKey extends TQuery> = inferProcedureOutput<
+  AppQueries[TRouteKey]
+>;
 
-export type inferQueryInput<
-  TRouteKey extends keyof AppRouter['_def']['queries']
-> = inferProcedureInput<AppRouter['_def']['queries'][TRouteKey]>;
+export type inferQueryInput<TRouteKey extends TQuery> = inferProcedureInput<
+  AppQueries[TRouteKey]
+>;
 
-export type inferMutationOutput<
-  TRouteKey extends keyof AppRouter['_def']['mutations']
-> = inferProcedureOutput<AppRouter['_def']['mutations'][TRouteKey]>;
+export type AppMutations = AppRouter['_def']['mutations'];
+export type TMutation = keyof AppMutations;
 
-export type inferMutationInput<
-  TRouteKey extends keyof AppRouter['_def']['mutations']
-> = inferProcedureInput<AppRouter['_def']['mutations'][TRouteKey]>;
+export type inferMutationOutput<TRouteKey extends TMutation> =
+  inferProcedureOutput<AppMutations[TRouteKey]>;
+
+export type inferMutationInput<TRouteKey extends TMutation> =
+  inferProcedureInput<AppMutations[TRouteKey]>;

@@ -1,6 +1,6 @@
 import { ReactElement, useState } from 'react';
 import { z } from 'zod';
-import { FieldValues, FormProvider, useFormState } from 'react-hook-form';
+import { FormProvider, useFormState } from 'react-hook-form';
 
 import {
   Checkbox,
@@ -13,7 +13,6 @@ import { HorseModel, MemberModel } from '@/backend/prisma/zod';
 import JRSR from '@/components/forms/JRSRField';
 import states from '@/utils/states.json';
 import useZodForm from '@/utils/usezodform';
-import { trpc } from '@/utils/trpc';
 import { HorseFieldArray } from '@/components/forms/fieldarrayfields';
 
 import { Type } from '@prisma/client';
@@ -21,8 +20,8 @@ import RegType from '@/components/forms/regtype';
 import { useSetAtom } from 'jotai';
 import { updateFormState } from '@/utils/atoms';
 import { FormLayout } from '@/components/layout';
-import { useRouter } from 'next/router';
 import Payment from '@/components/forms/Payment';
+import { trpc } from '@/utils/trpc';
 
 const phoneTypes = [
   {
@@ -51,29 +50,20 @@ const MemberFormValues = z.object({
 
 function IndividualRegistration() {
   const [payment, togglePayment] = useState(false);
-  const [formValues, setFormValues] = useState<z.infer<typeof MemberFormValues>>();
-  const memberMutation = trpc.useMutation(['member.add-member']);
   const update = useSetAtom(updateFormState);
 
   const methods = useZodForm({
     reValidateMode: 'onSubmit',
     shouldFocusError: true,
-    shouldUnregister: true,
     schema: MemberFormValues,
   });
 
-  const { setValue, watch, register, handleSubmit, control } = methods;
+  const { setValue, watch, register, control } = methods;
 
   const inputState = useFormState({ control });
 
   const isUSEAMember = watch('member.currentUSEAMember', false);
-  const isUnder18 = watch('member.JRSR', 'SR');
   const isRegHorse = watch('horseReg', false);
-
-  function onSumbit() {
-    console.log(formValues);
-    // memberMutation.mutate({ });
-  }
 
   function triggerValidation() {
     const formValues = methods.getValues();
@@ -96,19 +86,19 @@ function IndividualRegistration() {
             });
 
           }
-          setFormValues(formValues);
           togglePayment(true);
         }
       }).catch(console.log);
   }
 
   setValue('member.memberType', 'Individual' as Type);
-  console.log(methods.formState.errors);
+  methods.formState.isDirty && console.log(methods.formState.errors);
+
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSumbit)}>
-        <Payment showPayment={payment}>
+      <form>
+        <Payment showPayment={payment} mutationKey='member.add-member'>
           <h2 className='divider'>Individual Membership</h2>
 
           <div className='flex gap-1 md:gap-5'>
@@ -210,7 +200,7 @@ function IndividualRegistration() {
             <JRSR
               radioRegister={register('member.JRSR', { required: true })}
               dateName='member.dateOfBirth'
-              watch={isUnder18}
+              watchName='member.JRSR'
             />
 
             <div className='flex gap-2'>

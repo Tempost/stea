@@ -1,15 +1,16 @@
-import { UseFormRegisterReturn } from 'react-hook-form';
+import { useFormContext, UseFormRegisterReturn } from 'react-hook-form';
 
 import { Radio, ControlledDatePicker } from '@/components/data-entry';
 
 interface Props {
   radioRegister: UseFormRegisterReturn;
   dateName: string;
-  watch: string;
+  watchName: string;
 }
 
-function JRSR({ radioRegister, dateName, watch }: Props) {
-  const isJR = watch === 'JR';
+function JRSR({ radioRegister, dateName, watchName }: Props) {
+  const { watch } = useFormContext();
+  const isJR = watch(watchName, 'SR');
 
   return (
     <div className='mt-3 w-fit'>
@@ -28,7 +29,7 @@ function JRSR({ radioRegister, dateName, watch }: Props) {
         {...radioRegister}
       />
 
-      {isJR ? (
+      {isJR === 'JR' ? (
         <ControlledDatePicker
           placeholderText='Date of Birth'
           name={dateName}

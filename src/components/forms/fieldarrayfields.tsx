@@ -25,7 +25,6 @@ export function HorseFieldArray() {
     name: 'horses',
   });
 
-  console.log(errors);
   return (
     <section className='grid gap-2'>
       <h2 className='text-sm font-bold'>
