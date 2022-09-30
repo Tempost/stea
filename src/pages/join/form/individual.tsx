@@ -138,7 +138,7 @@ function IndividualRegistration() {
               name='temp'
             />
 
-            <div className='flex gap-1 flex-col md:flex-row'>
+            <div className='flex flex-col gap-1 md:flex-row'>
               <TextInput
                 inputMode='text'
                 className='input-primary w-full'

@@ -14,8 +14,8 @@ function Home() {
       <div className='hero min-h-screen bg-home-hero bg-fixed'>
         <div className='hero-overlay bg-opacity-50'></div>
 
-        <div className='hero-content text-neutral-content text-center'>
-          <div className='flex flex-col items-center min-w-full gap-5'>
+        <div className='hero-content text-center text-neutral-content'>
+          <div className='flex min-w-full flex-col items-center gap-5'>
             <div className='w-[85%]'>
               <Image
                 width={450}
@@ -42,8 +42,8 @@ function Home() {
         </div>
       </div>
 
-      <div className='flex flex-col gap-5 md:gap-10 p-5 md:p-10'>
-        <div className='self-center flex flex-col md:flex-row md:flex-wrap justify-around gap-5'>
+      <div className='flex flex-col gap-5 p-5 md:gap-10 md:p-10'>
+        <div className='flex flex-col justify-around gap-5 self-center md:flex-row md:flex-wrap'>
           <NavCard
             bodyText='Membership'
             href='/members-horses'
@@ -61,12 +61,12 @@ function Home() {
           />
         </div>
 
-        <section className='card card-compact shadow-2xl w-fit  self-center'>
-          <h2 className='text-center text-red-600 font-bold text-xl md:text-2xl lg:text-3xl'>
+        <section className='card-compact card w-fit self-center  shadow-2xl'>
+          <h2 className='text-center text-xl font-bold text-red-600 md:text-2xl lg:text-3xl'>
             Notice
           </h2>
           <div className='card-body'>
-            <p className='text-lg md:text-2xl font-semibold text-center'>
+            <p className='text-center text-lg font-semibold md:text-2xl'>
               Please remember to check your points throughout the year!
             </p>
             <p className='inline-grid place-content-center text-xl md:text-2xl'>
@@ -83,15 +83,15 @@ function Home() {
           </div>
         </section>
 
-        <section className='flex flex-col gap-2 self-center items-center'>
+        <section className='flex flex-col items-center gap-2 self-center'>
           <EOYPlacing />
         </section>
 
-        <section className='flex flex-col gap-2 self-center items-center'>
+        <section className='flex flex-col items-center gap-2 self-center'>
           <UpcomingEvents />
         </section>
 
-        <section className='flex flex-col gap-2 items-center'>
+        <section className='flex flex-col items-center gap-2'>
           <h1 className='text-xl'>Recognized vendors</h1>
           {/* TODO: List of vendors w/ photos */}
         </section>

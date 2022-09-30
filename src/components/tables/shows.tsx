@@ -53,7 +53,7 @@ function AddNewShow() {
     <>
       <label
         htmlFor='my-modal-6'
-        className='btn btn-primary modal-button'
+        className='modal-button btn btn-primary'
       >
         Add Show
       </label>
@@ -68,7 +68,7 @@ function AddNewShow() {
 
       <div className='modal modal-bottom sm:modal-middle'>
         <div className='modal-box overflow-visible'>
-          <h3 className='font-bold text-lg'>Enter Show Information</h3>
+          <h3 className='text-lg font-bold'>Enter Show Information</h3>
 
           <FormProvider {...methods}>
             <form onSubmit={methods.handleSubmit(submitForm)}>

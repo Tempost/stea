@@ -6,7 +6,7 @@ function UpcomingEvents() {
     <>
       <h2 className='text-xl'>Upcoming Events</h2>
       <NextLink href='/calender'>
-        <button className='btn btn-primary btn-md grid place-content-center grid-flow-col gap-2'>
+        <button className='btn btn-primary btn-md grid grid-flow-col place-content-center gap-2'>
           {CalenderIcon} View Full Calender
         </button>
       </NextLink>

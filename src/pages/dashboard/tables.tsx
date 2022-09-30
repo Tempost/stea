@@ -30,7 +30,7 @@ function Tables() {
   };
 
   return (
-    <div className='pt-28 grid place-items-center gap-10'>
+    <div className='grid place-items-center gap-10 pt-28'>
       <div
         className='btn-group'
         //@ts-ignore

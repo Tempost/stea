@@ -32,7 +32,7 @@ const NumericInput = forwardRef<HTMLInputElement, NumericInputProps>(
         <input
           ref={ref}
           id={`numeric-input${id}`}
-          className={`input input-bordered input-md md:input-sm w-full ${
+          className={`input input-bordered input-md w-full md:input-sm ${
             error && 'input-error border-2'
           } ${className}`}
           type='text'

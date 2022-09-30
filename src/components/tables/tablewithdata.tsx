@@ -25,27 +25,27 @@ function TableWithData<T>({ colDef, query, paginate }: TableWithDataProps<T>) {
   const table = useReactTable(tableOpts);
 
   if (query.isLoading) {
-    return <div className='shadow-xl rounded-b-lg p-5'>Loading...</div>;
+    return <div className='rounded-b-lg p-5 shadow-xl'>Loading...</div>;
   }
 
   if (query.isError) {
-    return <div className='shadow-xl rounded-b-lg p-5'>Error...</div>;
+    return <div className='rounded-b-lg p-5 shadow-xl'>Error...</div>;
   }
 
   return (
     <div className='flex flex-col'>
-      <div className='overflow-x-auto -mx-2 md:-mx-6 lg:-mx-8'>
-        <div className='py-2 inline-block min-w-full md:px-6 lg:px-8'>
+      <div className='-mx-2 overflow-x-auto md:-mx-6 lg:-mx-8'>
+        <div className='inline-block min-w-full py-2 md:px-6 lg:px-8'>
           <div className='overflow-hidden'>
             <table className='min-w-full'>
-              <thead className='bg-white border-b'>
+              <thead className='border-b bg-white'>
                 {table.getHeaderGroups().map(headerGroup => (
                   <tr key={headerGroup.id}>
                     {headerGroup.headers.map(header => (
                       <th
                         key={header.id}
                         colSpan={header.colSpan}
-                        className='text-sm font-medium text-gray-900 px-3 py-2 md:px-6 md:py-4 text-center'
+                        className='px-3 py-2 text-center text-sm font-medium text-gray-900 md:px-6 md:py-4'
                       >
                         {header.isPlaceholder
                           ? null
@@ -63,14 +63,14 @@ function TableWithData<T>({ colDef, query, paginate }: TableWithDataProps<T>) {
                 {table.getRowModel().rows.map(row => (
                   <tr
                     key={row.id}
-                    className='bg-white border-b transition duration-300 ease-in-out hover:bg-teal-200/50'
+                    className='border-b bg-white transition duration-300 ease-in-out hover:bg-teal-200/50'
                   >
                     {row.getVisibleCells().map(cell => {
                       return (
                         <td
                           key={cell.id}
                           className={
-                            'text-sm text-gray-900 font-normal px-3 py-2 md:px-6 md:py-4 whitespace-nowrap'
+                            'whitespace-nowrap px-3 py-2 text-sm font-normal text-gray-900 md:px-6 md:py-4'
                           }
                         >
                           {flexRender(
@@ -86,7 +86,7 @@ function TableWithData<T>({ colDef, query, paginate }: TableWithDataProps<T>) {
             </table>
 
             <div className='m-2'>
-              <div className='flex justify-between items-center gap-2 w-full'>
+              <div className='flex w-full items-center justify-between gap-2'>
                 <div className='flex gap-2'>
                   <button
                     className='btn btn-secondary btn-xs'
@@ -107,7 +107,7 @@ function TableWithData<T>({ colDef, query, paginate }: TableWithDataProps<T>) {
 
                 <div className='flex flex-col items-center'>
                   <select
-                    className='select select-xs select-secondary'
+                    className='select select-secondary select-xs'
                     value={table.getState().pagination.pageSize}
                     onChange={e => {
                       table.setPageSize(Number(e.target.value));

@@ -14,7 +14,7 @@ import IsAuth from './auth';
 export function PublicLayout({ children }: LayoutProps) {
   const router = useRouter();
   return (
-    <div className='flex flex-col h-screen'>
+    <div className='flex h-screen flex-col'>
       <ResponsiveHeader>
         <main
           className={`flex-grow bg-base-100 
@@ -35,7 +35,7 @@ export function PublicLayout({ children }: LayoutProps) {
 export function DashboardLayout({ children }: LayoutProps) {
   return (
     <IsAuth>
-      <div className='flex flex-col h-screen'>
+      <div className='flex h-screen flex-col'>
         <DashboardHeader />
         <main className='flex-grow bg-neutral-content p-4 sm:p-8 md:p-10 lg:p-16'>
           {children}
@@ -71,11 +71,11 @@ export function FormLayout({ children }: LayoutProps) {
   );
 
   return (
-    <div className='flex flex-col h-screen'>
+    <div className='flex h-screen flex-col'>
       <ResponsiveHeader>
-        <main className='flex-grow bg-base-100 p-4 sm:p-8 md:p-10 lg:p-16 bg-form-hero bg-center bg-cover'>
-          <div className='grid place-content-center h-full'>
-            <div className='card w-fit bg-base-100 shadow-[0_0_10px_0_rgba(0,0,0,0.3)] p-5 md:p-8'>
+        <main className='flex-grow bg-base-100 bg-form-hero bg-cover bg-center p-4 sm:p-8 md:p-10 lg:p-16'>
+          <div className='grid h-full place-content-center'>
+            <div className='card w-fit bg-base-100 p-5 shadow-[0_0_10px_0_rgba(0,0,0,0.3)] md:p-8'>
               <PayPalScriptProvider options={initOptions}>
                 {showReturn && returnButton}
                 {children}

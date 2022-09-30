@@ -53,9 +53,9 @@ function Applications() {
 
   console.log(members.data);
   return (
-    <div className='pt-28 w-full grid place-items-center'>
+    <div className='grid w-full place-items-center pt-28'>
       {members.data && members.data.length < 0 ? (
-        <div className='shadow-xl rounded-lg p-5'>No New Members...</div>
+        <div className='rounded-lg p-5 shadow-xl'>No New Members...</div>
       ) : (
         <TableWithData
           colDef={applicantCols}

@@ -34,6 +34,7 @@ specifiers:
   next-auth: ^4.10.3
   postcss: ^8.4.16
   prettier: ^2.7.1
+  prettier-plugin-tailwindcss: ^0.1.13
   prisma: ^4.3.1
   react: 18.2.0
   react-datepicker: ^4.8.0
@@ -93,6 +94,7 @@ devDependencies:
   jest-mock-extended: 2.0.9_bi2kohzqnxavgozw3csgny5hju
   postcss: 8.4.16
   prettier: 2.7.1
+  prettier-plugin-tailwindcss: 0.1.13_prettier@2.7.1
   prisma: 4.3.1
   ts-jest: 28.0.8_bi2kohzqnxavgozw3csgny5hju
   typescript: 4.7.4
@@ -5424,6 +5426,18 @@ packages:
     engines: { node: '>=6.0.0' }
     dependencies:
       fast-diff: 1.2.0
+    dev: true
+
+  /prettier-plugin-tailwindcss/0.1.13_prettier@2.7.1:
+    resolution:
+      {
+        integrity: sha512-/EKQURUrxLu66CMUg4+1LwGdxnz8of7IDvrSLqEtDqhLH61SAlNNUSr90UTvZaemujgl3OH/VHg+fyGltrNixw==,
+      }
+    engines: { node: '>=12.17.0' }
+    peerDependencies:
+      prettier: '>=2.2.0'
+    dependencies:
+      prettier: 2.7.1
     dev: true
 
   /prettier/2.7.1:

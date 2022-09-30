@@ -5,10 +5,10 @@ import { publicMenuItems, dashMenuItems } from './menuitems';
 
 export const PublicHeader = () => (
   <nav
-    className='text-primary-content min-w-full z-50 navbar p-1 fixed
-    bg-gradient-to-b from-blue-700 to-blue-800 grid items-center'
+    className='navbar fixed z-50 grid min-w-full items-center
+    bg-gradient-to-b from-blue-700 to-blue-800 p-1 text-primary-content'
   >
-    <div className='flex flex-col items-center navbar-center'>
+    <div className='navbar-center flex flex-col items-center'>
       <div className='grid grid-flow-col gap-5'>
         {publicMenuItems.map(({ href, name, render }) => (
           <div
@@ -38,21 +38,21 @@ export const ResponsiveHeader = ({ children }: any) => {
         className='drawer-toggle'
       />
       <div className='drawer-content flex flex-col'>
-        <div className='z-50 w-full navbar bg-gradient-to-b from-blue-700 to-blue-800 text-gray-300 font-semibold shadow-sm'>
+        <div className='navbar z-50 w-full bg-gradient-to-b from-blue-700 to-blue-800 font-semibold text-gray-300 shadow-sm'>
           <div className='flex-none lg:hidden'>
             <label
               htmlFor='my-drawer-3'
-              className='btn btn-square btn-ghost'
+              className='btn btn-ghost btn-square'
             >
               {Hamburger}
             </label>
           </div>
 
-          <h3 className='flex-1 text-xl md:text-2xl px-2 mx-2'>
+          <h3 className='mx-2 flex-1 px-2 text-xl md:text-2xl'>
             South Texas Eventing
           </h3>
-          <span className='flex-none hidden lg:block'>
-            <ul className='menu menu-horizontal rounded-box p-1 text-lg'>
+          <span className='hidden flex-none lg:block'>
+            <ul className='menu rounded-box menu-horizontal p-1 text-lg'>
               {publicMenuItems.map(({ href, name, render }) => (
                 <React.Fragment key={name}>
                   {render ? (
@@ -75,7 +75,7 @@ export const ResponsiveHeader = ({ children }: any) => {
           htmlFor='my-drawer-3'
           className='drawer-overlay'
         />
-        <ul className='menu p-4 w-56 font-semibold'>
+        <ul className='menu w-56 p-4 font-semibold'>
           {publicMenuItems.map(({ href, name, render }) => (
             <React.Fragment key={name}>
               {render ? (
@@ -95,10 +95,10 @@ export const ResponsiveHeader = ({ children }: any) => {
 
 export const DashboardHeader = () => (
   <nav
-    className='text-primary-content h-full w-full z-50 max-h-20 md:max-h-14
-      sm:max-h-fit fixed p-1 bg-gradient-to-b from-blue-700 to-blue-800'
+    className='fixed z-50 h-full max-h-20 w-full bg-gradient-to-b
+      from-blue-700 to-blue-800 p-1 text-primary-content sm:max-h-fit md:max-h-14'
   >
-    <div className='grid place-items-center h-full'>
+    <div className='grid h-full place-items-center'>
       <div className='grid grid-flow-col gap-5'>
         {dashMenuItems.map(({ href, name, render }) => (
           <div

@@ -111,7 +111,7 @@ function BusinessRegistration() {
       <form onSubmit={handleSubmit(onSumbit)}>
         <h2 className='divider'>Business Registration</h2>
 
-        <h3 className='text-center mb-2 p-4 border-solid border rounded-2xl border-gray-400 bg-gray-100'>
+        <h3 className='mb-2 rounded-2xl border border-solid border-gray-400 bg-gray-100 p-4 text-center'>
           As part of the membership you can submit
           <br />
           your company logo for our home page!
@@ -123,7 +123,7 @@ function BusinessRegistration() {
           <h3 className='text-sm'>Name of Business*</h3>
           <TextInput
             inputMode='text'
-            className='input-sm input-primary'
+            className='input-primary input-sm'
             error={errors.member?.businessName}
             {...register('member.businessName', { required: true })}
           />
@@ -132,7 +132,7 @@ function BusinessRegistration() {
           <div className='flex flex-col gap-2'>
             <TextInput
               inputMode='text'
-              className='input-sm input-primary'
+              className='input-primary input-sm'
               placeholder='Address Line 1'
               error={errors.member?.address}
               {...register('member.address', { required: true })}
@@ -140,7 +140,7 @@ function BusinessRegistration() {
 
             <TextInput
               inputMode='text'
-              className='input-sm input-primary'
+              className='input-primary input-sm'
               placeholder='Address Line 2'
               name='temp'
             />
@@ -148,14 +148,14 @@ function BusinessRegistration() {
             <div className='flex gap-1'>
               <TextInput
                 inputMode='text'
-                className='input-sm input-primary'
+                className='input-primary input-sm'
                 placeholder='City'
                 error={errors.member?.city}
                 {...register('member.city', { required: true })}
               />
 
               <Select
-                className='select-sm select-primary'
+                className='select-primary select-sm'
                 options={states}
                 error={errors.member?.state}
                 {...register('member.state', { required: true })}
@@ -163,7 +163,7 @@ function BusinessRegistration() {
 
               <NumericInput
                 inputMode='numeric'
-                className='input-sm input-primary'
+                className='input-primary input-sm'
                 placeholder='Zip Code'
                 inputSize='w-fit'
                 error={errors.member?.zip}
@@ -181,7 +181,7 @@ function BusinessRegistration() {
               <TextInput
                 inputMode='text'
                 label='First Name*'
-                className='input-sm input-primary'
+                className='input-primary input-sm'
                 error={errors.member?.firstName}
                 {...register('member.firstName', { required: true })}
               />
@@ -189,7 +189,7 @@ function BusinessRegistration() {
               <TextInput
                 inputMode='text'
                 label='Last Name*'
-                className='input-sm input-primary'
+                className='input-primary input-sm'
                 error={errors.member?.lastName}
                 {...register('member.lastName', { required: true })}
               />
@@ -197,7 +197,7 @@ function BusinessRegistration() {
             <div className='flex gap-2'>
               <Select
                 label='Phone Type*'
-                className='select-sm select-primary'
+                className='select-primary select-sm'
                 options={phoneTypes}
                 {...register('member.phoneType', { required: true })}
               />
@@ -205,7 +205,7 @@ function BusinessRegistration() {
               <TextInput
                 label='Phone Number*'
                 inputMode='tel'
-                className='input-sm input-primary'
+                className='input-primary input-sm'
                 error={errors.member?.phone}
                 {...register('member.phone', { required: true })}
               />
@@ -214,7 +214,7 @@ function BusinessRegistration() {
             <TextInput
               label='Email*'
               inputMode='text'
-              className='input-sm input-primary'
+              className='input-primary input-sm'
               error={errors.member?.email}
               altLabel={'This will be the primary method of contact.'}
               {...register('member.email', { required: true })}

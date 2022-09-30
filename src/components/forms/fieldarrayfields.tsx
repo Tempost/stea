@@ -41,7 +41,7 @@ export function HorseFieldArray() {
           <h2 className='card-title ml-3 mt-3'>
             Horse {index + 1}
             <button
-              className='btn btn-link text-red-500 btn-xs'
+              className='btn btn-link btn-xs text-red-500'
               type='button'
               onClick={() => remove(index)}
             >
@@ -61,7 +61,7 @@ export function HorseFieldArray() {
               <TextInput
                 label='Registered Name*'
                 inputMode='text'
-                className='input-sm input-primary'
+                className='input-primary input-sm'
                 error={Array.isArray(errors.horses) && errors.horses.at(index)}
                 {...register(`horses.${index}.horseRN` as const, {
                   required: true,
@@ -71,7 +71,7 @@ export function HorseFieldArray() {
               <TextInput
                 label='Aka Name'
                 inputMode='text'
-                className='input-sm input-primary'
+                className='input-primary input-sm'
                 {...register(`horses.${index}.horseAKA` as const)}
               />
             </span>
@@ -79,7 +79,7 @@ export function HorseFieldArray() {
         </div>
       ))}
 
-      <p className='text-error text-xl font-semibold'>
+      <p className='text-xl font-semibold text-error'>
         {errors.horses?.message}
       </p>
       <button
@@ -127,12 +127,12 @@ export function RiderComboFieldArray() {
       {fields.map((field, index) => (
         <div
           key={field.id}
-          className='card card-compact bg-base-200'
+          className='card-compact card bg-base-200'
         >
           <h2 className='card-title ml-3 mt-3'>
             Combination {index + 1}
             <button
-              className='btn btn-link text-red-500 btn-xs'
+              className='btn btn-link btn-xs text-red-500'
               type='button'
               onClick={() => remove(index)}
             >
@@ -145,7 +145,7 @@ export function RiderComboFieldArray() {
               <TextInput
                 label='Rider Name*'
                 inputMode='text'
-                className='input-sm input-primary'
+                className='input-primary input-sm'
                 error={
                   Array.isArray(errors.riderCombos) &&
                   errors.riderCombos.at(index)
@@ -158,7 +158,7 @@ export function RiderComboFieldArray() {
               <TextInput
                 label='Horse Registered Name*'
                 inputMode='text'
-                className='input-sm input-primary'
+                className='input-primary input-sm'
                 error={
                   Array.isArray(errors.riderCombos) &&
                   errors.riderCombos.at(index)
@@ -172,7 +172,7 @@ export function RiderComboFieldArray() {
         </div>
       ))}
 
-      <p className='text-error text-xl font-semibold'>
+      <p className='text-xl font-semibold text-error'>
         {errors.riderCombos?.message}
       </p>
       <button

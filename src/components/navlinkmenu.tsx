@@ -31,12 +31,12 @@ export default function NavLinkMenu({ name, subLinks }: NavLinkMenuProps) {
     <div className='dropdown dropdown-hover'>
       <h2
         tabIndex={0}
-        className='text-2xl cursor-pointer flex items-center'
+        className='flex cursor-pointer items-center text-2xl'
       >
         {name}
         <span>{ChevDown}</span>
       </h2>
-      <ul className='dropdown-content menu p-2 shadow bg-primary-content w-52 rounded-md'>
+      <ul className='dropdown-content menu w-52 rounded-md bg-primary-content p-2 shadow'>
         {subLinks.map(({ href, text }) => (
           <li key={`${href}${text}`}>
             <LinkWrapper href={href ? href : ''}>
@@ -59,7 +59,7 @@ export function NavLinkSubMenu({ name, subLinks, drawer }: NavLinkMenuProps) {
         {name} {ChevDown}
       </span>
       <ul
-        className={`bg-primary shadow-2xl text-base ${drawer ? '' : 'right-0'}`}
+        className={`bg-primary text-base shadow-2xl ${drawer ? '' : 'right-0'}`}
       >
         {subLinks.map(({ href, text }) => (
           <li key={`${href}${text}`}>
