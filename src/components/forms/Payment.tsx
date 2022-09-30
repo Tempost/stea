@@ -6,7 +6,12 @@ import { FormLayout } from '@/components/layout';
 import { useFormContext } from 'react-hook-form';
 import { PayPalButtons } from '@paypal/react-paypal-js';
 import { TMutation, trpc } from '@/utils/trpc';
-import { CreateOrderActions, CreateOrderData, OnApproveActions, OnApproveData } from '@paypal/paypal-js';
+import {
+  CreateOrderActions,
+  CreateOrderData,
+  OnApproveActions,
+  OnApproveData,
+} from '@paypal/paypal-js';
 
 interface PaymentProps extends PropsWithChildren {
   showPayment: boolean;
@@ -20,10 +25,6 @@ function Payment({ showPayment, children, mutation }: PaymentProps) {
 
   const amountOwed =
     state.memberCost + state.horses.lifeCost + state.horses.annualCost;
-
-  function onSubmit() {
-
-  }
 
   function createOrder(data: CreateOrderData, actions: CreateOrderActions) {
     console.log('paypal data', data);
@@ -45,11 +46,11 @@ function Payment({ showPayment, children, mutation }: PaymentProps) {
   }
 
   function onApprove(data: OnApproveData, actions: OnApproveActions) {
-    console.log(data, actions)
+    console.log(data, actions);
 
-    return actions.order!.capture().then((details) => {
+    return actions.order!.capture().then(details => {
       const name = details.payer.name?.given_name;
-      console.log(name)
+      console.log(name);
     });
   }
 

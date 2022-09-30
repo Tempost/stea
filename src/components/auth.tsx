@@ -6,15 +6,11 @@ function IsAuth({ children }: PropsWithChildren) {
     required: true,
     onUnauthenticated() {
       signIn('google', { callbackUrl: '/dashboard' });
-    }
+    },
   });
-  if (!data) return <></>
+  if (!data) return <></>;
 
-  return (
-    <>
-      {children}
-    </>
-  );
+  return <>{children}</>;
 }
 
 export default IsAuth;

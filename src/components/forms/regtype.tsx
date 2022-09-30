@@ -6,7 +6,8 @@ import { updateFormState } from '@/utils/atoms';
 import { Status } from '@prisma/client';
 import { ChangeEvent, DetailedHTMLProps, InputHTMLAttributes } from 'react';
 
-interface Props extends DetailedHTMLProps<
+interface Props
+  extends DetailedHTMLProps<
     InputHTMLAttributes<HTMLInputElement>,
     HTMLInputElement
   > {

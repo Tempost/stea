@@ -18,10 +18,11 @@ export function PublicLayout({ children }: LayoutProps) {
       <ResponsiveHeader>
         <main
           className={`flex-grow bg-base-100 
-                    ${router.pathname === '/'
-              ? ''
-              : 'p-4 sm:p-8 md:p-10 lg:p-16'
-            }`}
+                    ${
+                      router.pathname === '/'
+                        ? ''
+                        : 'p-4 sm:p-8 md:p-10 lg:p-16'
+                    }`}
         >
           {children}
         </main>

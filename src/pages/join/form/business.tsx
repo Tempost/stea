@@ -79,22 +79,22 @@ function BusinessRegistration() {
       `${formValues.member.firstName} ${formValues.member.lastName}`
     );
 
-    methods.trigger().then((valid) => {
+    methods.trigger().then(valid => {
       if (valid) {
-      if (formValues.horses) {
-        const lifeCount = formValues.horses.filter(
-          horse => horse.regType === 'Life'
-        ).length;
+        if (formValues.horses) {
+          const lifeCount = formValues.horses.filter(
+            horse => horse.regType === 'Life'
+          ).length;
 
-        const annualCount = formValues.horses.filter(
-          horse => horse.regType === 'Annual'
-        ).length;
+          const annualCount = formValues.horses.filter(
+            horse => horse.regType === 'Annual'
+          ).length;
 
-        update({
-          type: 'HORSE',
-          payload: { lifeCount: lifeCount, annualCount: annualCount },
-        });
-      }
+          update({
+            type: 'HORSE',
+            payload: { lifeCount: lifeCount, annualCount: annualCount },
+          });
+        }
         router.push('/join/form/payment');
       }
     });
@@ -115,7 +115,7 @@ function BusinessRegistration() {
           As part of the membership you can submit
           <br />
           your company logo for our home page!
-          <br/>
+          <br />
           Submit to stea@stevening.net
         </h3>
 
@@ -216,9 +216,7 @@ function BusinessRegistration() {
               inputMode='text'
               className='input-sm input-primary'
               error={errors.member?.email}
-              altLabel={
-                'This will be the primary method of contact.'
-              }
+              altLabel={'This will be the primary method of contact.'}
               {...register('member.email', { required: true })}
             />
 

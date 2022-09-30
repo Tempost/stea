@@ -76,7 +76,7 @@ function HorseRegistration() {
       `${formValues.owner.firstName} ${formValues.owner.lastName}`
     );
 
-    methods.trigger().then((valid) => {
+    methods.trigger().then(valid => {
       if (valid) {
         if (formValues.horses) {
           const lifeCount = formValues.horses.filter(
@@ -92,7 +92,7 @@ function HorseRegistration() {
             payload: { lifeCount: lifeCount, annualCount: annualCount },
           });
         }
-        router.push('/join/form/payment')
+        router.push('/join/form/payment');
       }
     });
   }

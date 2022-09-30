@@ -68,8 +68,9 @@ function IndividualRegistration() {
   function triggerValidation() {
     const formValues = methods.getValues();
 
-    methods.trigger()
-      .then((valid) => {
+    methods
+      .trigger()
+      .then(valid => {
         if (valid) {
           if (formValues.horses) {
             const lifeCount = formValues.horses.filter(
@@ -84,21 +85,23 @@ function IndividualRegistration() {
               type: 'HORSE',
               payload: { lifeCount: lifeCount, annualCount: annualCount },
             });
-
           }
           togglePayment(true);
         }
-      }).catch(console.log);
+      })
+      .catch(console.log);
   }
 
   setValue('member.memberType', 'Individual' as Type);
   methods.formState.isDirty && console.log(methods.formState.errors);
 
-
   return (
     <FormProvider {...methods}>
       <form>
-        <Payment showPayment={payment} mutationKey='member.add-member'>
+        <Payment
+          showPayment={payment}
+          mutationKey='member.add-member'
+        >
           <h2 className='divider'>Individual Membership</h2>
 
           <div className='flex gap-1 md:gap-5'>
