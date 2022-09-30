@@ -21,7 +21,6 @@ import { useSetAtom } from 'jotai';
 import { updateFormState } from '@/utils/atoms';
 import { FormLayout } from '@/components/layout';
 import Payment from '@/components/forms/Payment';
-import { trpc } from '@/utils/trpc';
 
 const phoneTypes = [
   {
@@ -100,7 +99,7 @@ function IndividualRegistration() {
       <form>
         <Payment
           showPayment={payment}
-          mutationKey='member.add-member'
+          mutation='member.add-member'
         >
           <h2 className='divider'>Individual Membership</h2>
 
