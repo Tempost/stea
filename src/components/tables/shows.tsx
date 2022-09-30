@@ -94,11 +94,9 @@ function AddNewShow() {
               </div>
 
               <ControlledDatePicker
+                name='showDate'
                 label='Show Date*'
                 placeholderText='Show Date'
-                register={register('showDate', {
-                  required: true,
-                })}
               />
 
               <div className='modal-action'>
