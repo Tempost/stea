@@ -8,9 +8,10 @@ import type { ColumnDef } from '@tanstack/react-table';
 
 interface MemberTableProps {
   overRideDefaultCols?: ColumnDef<Member>[];
+  search?: true;
 }
 
-function MemberTable({ overRideDefaultCols }: MemberTableProps) {
+function MemberTable({ overRideDefaultCols, search }: MemberTableProps) {
   const members = trpc.useQuery(['member.get-members']);
 
   const defaultCols = useMemo<ColumnDef<Member>[]>(
@@ -77,6 +78,7 @@ function MemberTable({ overRideDefaultCols }: MemberTableProps) {
       colDef={overRideDefaultCols ?? defaultCols}
       query={members}
       paginate={true}
+      search={search}
     />
   );
 }

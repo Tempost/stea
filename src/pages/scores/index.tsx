@@ -7,7 +7,10 @@ import RidersTable from '@/components/tables/ridercombos';
 function SteaPoints() {
   return (
     <div className='grid w-full place-items-center gap-20'>
-      <RidersTable title='Current Points' />
+      <RidersTable
+        title='Current Points'
+        search={true}
+      />
 
       <div className='card w-[20em] shadow-2xl sm:w-[30em] md:w-[40em] lg:w-[45em]'>
         <figure className='relative h-[15em] sm:h-[25em] md:h-[30em] lg:h-[35em]'>

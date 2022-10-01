@@ -6,7 +6,11 @@ import type { NonMemberHorseOwner } from '@prisma/client';
 import type { ColumnDef } from '@tanstack/react-table';
 import { useMemo } from 'react';
 
-function OwnerTable() {
+interface OwnerTableProps {
+  search?: boolean;
+}
+
+function OwnerTable({ search }: OwnerTableProps) {
   const owners = trpc.useQuery(['nonMemberHorseOwner.get-owners']);
 
   const ownerCols = useMemo<ColumnDef<NonMemberHorseOwner>[]>(
@@ -56,6 +60,7 @@ function OwnerTable() {
       colDef={ownerCols}
       query={owners}
       paginate={true}
+      search={search}
     />
   );
 }

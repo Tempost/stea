@@ -9,9 +9,14 @@ type RiderCombo = inferQueryOutput<'rider.get-riders'>[number];
 interface PlacingsTableProps {
   title?: string;
   overrideDefaultCols?: ColumnDef<RiderCombo>[];
+  search?: boolean;
 }
 
-function PlacingsTable({ title, overrideDefaultCols }: PlacingsTableProps) {
+function PlacingsTable({
+  title,
+  overrideDefaultCols,
+  search,
+}: PlacingsTableProps) {
   const riders = trpc.useQuery(['rider.get-riders']);
 
   const defaultCols = useMemo<ColumnDef<RiderCombo>[]>(
@@ -54,6 +59,7 @@ function PlacingsTable({ title, overrideDefaultCols }: PlacingsTableProps) {
       colDef={overrideDefaultCols ?? defaultCols}
       query={riders}
       paginate={true}
+      search={search}
     />
   );
 }

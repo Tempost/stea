@@ -29,17 +29,21 @@ dotenv -e .env.local -- pnpm studio
 # Run migrations
 
 Local for testing
+
 1. ensure local db is online
+
 ```bash
 sudo docker run --name=mysql --restart on-failure -d -p 3308:3306 -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=stea_test mysql/mysql-server:latest
 ```
 
 docker
+
 ```bash
 pnpm migrate-local
 ```
 
 Cloud (Pushes schema to planetscale db)
+
 ```bash
 pnpm push
 ```

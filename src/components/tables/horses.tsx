@@ -8,9 +8,10 @@ import type { ColumnDef } from '@tanstack/react-table';
 
 interface HorseTableProps {
   overRideDefaultCols?: ColumnDef<Horse>[];
+  search?: boolean;
 }
 
-function HorseTable({ overRideDefaultCols }: HorseTableProps) {
+function HorseTable({ overRideDefaultCols, search }: HorseTableProps) {
   const horses = trpc.useQuery(['horse.get-horses']);
 
   const defaultCols = useMemo<ColumnDef<Horse>[]>(
@@ -72,6 +73,7 @@ function HorseTable({ overRideDefaultCols }: HorseTableProps) {
       colDef={overRideDefaultCols ?? defaultCols}
       query={horses}
       paginate={true}
+      search={search}
     />
   );
 }

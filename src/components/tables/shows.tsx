@@ -12,6 +12,7 @@ import useZodForm from '@/utils/usezodform';
 
 interface ShowTableProps {
   overRideDefaultCols?: ColumnDef<Show>[];
+  search?: boolean;
 }
 
 const NewShowModel = ShowModel.omit({ uid: true, reviewed: true });
@@ -122,7 +123,7 @@ function AddNewShow() {
   );
 }
 
-function ShowsTable({ overRideDefaultCols }: ShowTableProps) {
+function ShowsTable({ overRideDefaultCols, search }: ShowTableProps) {
   const shows = trpc.useQuery(['shows.get-shows']);
 
   const defaultCols = useMemo<ColumnDef<Show>[]>(
@@ -174,6 +175,7 @@ function ShowsTable({ overRideDefaultCols }: ShowTableProps) {
         colDef={overRideDefaultCols ?? defaultCols}
         query={shows}
         paginate={true}
+        search={search}
       />
     </>
   );

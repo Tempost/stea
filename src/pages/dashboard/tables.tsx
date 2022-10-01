@@ -22,11 +22,11 @@ function Tables() {
   const showsSelected = table === 'shows';
 
   const tables = {
-    members: <MemberTable />,
-    horses: <HorseTable />,
-    owners: <OwnerTable />,
-    riders: <RidersTable />,
-    shows: <ShowsTable />,
+    members: <MemberTable search={true} />,
+    horses: <HorseTable search={true} />,
+    owners: <OwnerTable search={true} />,
+    riders: <RidersTable search={true} />,
+    shows: <ShowsTable search={true} />,
   };
 
   return (

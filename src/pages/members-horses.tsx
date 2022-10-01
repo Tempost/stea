@@ -63,8 +63,14 @@ function MembersAnHorses() {
   // <Image layout='fill' src='/membersandhorses.jpg'/>
   return (
     <div className='md:grid md:grid-flow-col md:place-content-evenly'>
-      <MemberTable overRideDefaultCols={memberCols} />
-      <HorseTable overRideDefaultCols={horseCols} />
+      <MemberTable
+        overRideDefaultCols={memberCols}
+        search={true}
+      />
+      <HorseTable
+        overRideDefaultCols={horseCols}
+        search={true}
+      />
     </div>
   );
 }

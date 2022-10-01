@@ -1,3 +1,4 @@
+import { rankItem } from '@tanstack/match-sorter-utils';
 import {
   TableOptions,
   ColumnDef,
@@ -5,21 +6,54 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
+  FilterFn,
+  getFilteredRowModel,
+  getFacetedRowModel,
 } from '@tanstack/react-table';
+import { useState } from 'react';
 import { UseQueryResult } from 'react-query';
+import DebouncedInput from '../data-entry/debouncedInput';
+
+const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
+  // Rank the item
+  const itemRank = rankItem(row.getValue(columnId), value);
+
+  // Store the itemRank info
+  addMeta({
+    itemRank,
+  });
+
+  // Return if the item should be filtered in/out
+  return itemRank.passed;
+};
 
 interface TableWithDataProps<T> {
   colDef: ColumnDef<T>[];
   query: UseQueryResult<T[] | T>;
   paginate?: boolean;
+  search?: boolean;
 }
 
-function TableWithData<T>({ colDef, query, paginate }: TableWithDataProps<T>) {
+function TableWithData<T>({
+  colDef,
+  query,
+  paginate,
+  search,
+}: TableWithDataProps<T>) {
+  const [globalFilter, setGlobalFilter] = useState('');
+
   const tableOpts: TableOptions<T> = {
     data: query.data as T[],
     columns: colDef,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: paginate ? getPaginationRowModel() : undefined,
+    getFilteredRowModel: getFilteredRowModel(),
+    getFacetedRowModel: getFacetedRowModel(),
+    globalFilterFn: fuzzyFilter,
+    state: {
+      globalFilter: globalFilter,
+    },
+    onGlobalFilterChange: setGlobalFilter,
   };
 
   const table = useReactTable(tableOpts);
@@ -45,13 +79,24 @@ function TableWithData<T>({ colDef, query, paginate }: TableWithDataProps<T>) {
                       <th
                         key={header.id}
                         colSpan={header.colSpan}
-                        className='px-3 py-2 text-center text-xs font-medium text-gray-900 select-none lg:text-sm'
+                        className='select-none px-3 py-2 text-center text-xs font-medium text-gray-900 lg:text-sm'
                       >
-                        {!header.isPlaceholder &&
-                          flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
+                        <div className='flex flex-row justify-between'>
+                          {!header.isPlaceholder &&
+                            flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                          {headerGroup.depth === 0 && search && (
+                            <DebouncedInput
+                              className='input input-primary input-sm w-36'
+                              type='text'
+                              placeholder='search'
+                              value={globalFilter ?? ''}
+                              onChange={value => setGlobalFilter(String(value))}
+                            />
                           )}
+                        </div>
                       </th>
                     ))}
                   </tr>
@@ -96,7 +141,7 @@ function TableWithData<T>({ colDef, query, paginate }: TableWithDataProps<T>) {
                   </button>
 
                   <button
-                    className='btn btn-secondary btn-xs'
+                    className='btn btn-primary btn-xs'
                     onClick={() => table.nextPage()}
                     disabled={!table.getCanNextPage()}
                   >
@@ -121,7 +166,7 @@ function TableWithData<T>({ colDef, query, paginate }: TableWithDataProps<T>) {
                       </option>
                     ))}
                   </select>
-                  <span className='flex items-center gap-1 text-2xs lg:text-sm'>
+                  <span className='text-2xs flex items-center gap-1 lg:text-sm'>
                     <div>Page</div>
                     <strong>
                       {`${table.getState().pagination.pageIndex + 1} of

@@ -10,9 +10,10 @@ type RiderCombo = inferQueryOutput<'rider.get-riders'>[number];
 interface RidersTableProps {
   title?: string;
   overRideDefaultCols?: ColumnDef<RiderCombo>[];
+  search?: boolean;
 }
 
-function RidersTable({ title, overRideDefaultCols }: RidersTableProps) {
+function RidersTable({ title, overRideDefaultCols, search }: RidersTableProps) {
   const riders = trpc.useQuery(['rider.get-riders']);
 
   const defaultCols = useMemo<ColumnDef<RiderCombo>[]>(
@@ -43,6 +44,7 @@ function RidersTable({ title, overRideDefaultCols }: RidersTableProps) {
       colDef={overRideDefaultCols ?? defaultCols}
       query={riders}
       paginate={true}
+      search={search}
     />
   );
 }
