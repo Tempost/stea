@@ -8,10 +8,6 @@ type Horses = {
   horses: Prisma.HorseCreateManyInput[];
 };
 
-type RiderCombos = {
-  riderCombos: Prisma.RiderComboCreateManyInput[];
-};
-
 export function HorseFieldArray() {
   const {
     register,
@@ -21,7 +17,6 @@ export function HorseFieldArray() {
 
   const { fields, append, remove } = useFieldArray<Horses>({
     control,
-    shouldUnregister: true,
     name: 'horses',
   });
 
@@ -94,99 +89,6 @@ export function HorseFieldArray() {
         }
       >
         {AddIcon} Add Horse
-      </button>
-    </section>
-  );
-}
-
-export function RiderComboFieldArray() {
-  const {
-    register,
-    control,
-    formState: { errors },
-  } = useFormContext<RiderCombos>();
-
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: 'riderCombos',
-  });
-
-  return (
-    <section className='grid gap-5'>
-      <h2 className='text-sm font-bold'>
-        List <strong>ALL</strong> rider/horse combination(s).
-        <br />
-        The rider/horse combinations can be changed at any time during the
-        membership year.
-        <br />
-        To ensure accurate tracking of points towards year-end awards,
-        <br />
-        please list all combinations that you are aware of currently.
-      </h2>
-
-      {fields.map((field, index) => (
-        <div
-          key={field.id}
-          className='card-compact card bg-base-200'
-        >
-          <h2 className='card-title ml-3 mt-3'>
-            Combination {index + 1}
-            <button
-              className='btn btn-link btn-xs text-red-500'
-              type='button'
-              onClick={() => remove(index)}
-            >
-              {TrashIcon}
-            </button>
-          </h2>
-
-          <div className='card-body'>
-            <span className='flex gap-5'>
-              <TextInput
-                label='Rider Name*'
-                inputMode='text'
-                className='input-primary input-sm'
-                error={
-                  Array.isArray(errors.riderCombos) &&
-                  errors.riderCombos.at(index)
-                }
-                {...register(`riderCombos.${index}.memberName`, {
-                  required: true,
-                })}
-              />
-
-              <TextInput
-                label='Horse Registered Name*'
-                inputMode='text'
-                className='input-primary input-sm'
-                error={
-                  Array.isArray(errors.riderCombos) &&
-                  errors.riderCombos.at(index)
-                }
-                {...register(`riderCombos.${index}.horseName`, {
-                  required: true,
-                })}
-              />
-            </span>
-          </div>
-        </div>
-      ))}
-
-      <p className='text-xl font-semibold text-error'>
-        {errors.riderCombos?.message}
-      </p>
-      <button
-        className='btn btn-secondary btn-xs w-full'
-        type='button'
-        onClick={() =>
-          append({
-            division: '',
-            memberName: '',
-            horseName: '',
-          })
-        }
-      >
-        {AddIcon} Add Combo
       </button>
     </section>
   );

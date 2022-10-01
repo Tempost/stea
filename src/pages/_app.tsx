@@ -45,8 +45,7 @@ function MyApp({
         />
         <meta
           name='viewport'
-          initial-scale='1'
-          content='width=device-width'
+          content='width=device-width,initial-scale=1'
         />
       </Head>
       <AtomsDevTools>

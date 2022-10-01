@@ -64,18 +64,15 @@ describe('tRPC router tests', () => {
           'This is coming from a test, if everything works ok it gets delete via cascade (:',
       };
 
-      const member: z.infer<typeof MemberModel> = {
-        fullName,
+      const member: inferMutationInput<'member.add-member'>['member'] = {
         firstName,
         lastName,
         phone: faker.phone.number('###-###-####'),
         phoneType: 'Mobile',
         email: faker.internet.exampleEmail(firstName, lastName),
-        boardMember: false,
         address: faker.address.street(),
         city: faker.address.cityName(),
         state: faker.address.street(),
-        confirmed: false,
         currentUSEAMember: false,
         memberType: 'Business',
         memberStatus: 'Life',
@@ -93,7 +90,6 @@ describe('tRPC router tests', () => {
         member,
         horses: [newHorse],
         payment,
-        division: 'GAG',
       };
 
       await caller.mutation('member.add-member', input);
@@ -101,12 +97,12 @@ describe('tRPC router tests', () => {
       // Search for each new record and verify it is valid
       // Member rec
       const memberFromGet = await caller.query('member.get-member', {
-        fullName: member.fullName,
+        fullName: `${member.firstName} ${member.lastName}`,
       });
       expect(memberFromGet).toMatchObject(member);
     });
 
-    it('update member horses/combos', async () => {
+    it('update member horses', async () => {
       const ctx = await createContextInner({});
       const caller = appRouter.createCaller(ctx);
 
@@ -119,14 +115,7 @@ describe('tRPC router tests', () => {
         email: faker.internet.exampleEmail(firstName, lastName),
       };
 
-      const combo: Prisma.RiderComboCreateManyInput = {
-        memberName: fullName,
-        horseName: horse.horseRN,
-        division: 'GAG',
-      };
-
       const input: inferMutationInput<'nonMemberHorseOwner.add-owner-horse'> = {
-        combos: [combo],
         horses: [horse],
         owner: member,
       };
@@ -136,9 +125,6 @@ describe('tRPC router tests', () => {
         horseRN: horse.horseRN,
       });
       expect(horseFromGet).toMatchObject(horse);
-
-      const comboFromGet = await caller.query('rider.get-rider', { ...combo });
-      expect(comboFromGet.horse).toMatchObject(horseFromGet);
     });
 
     it('update member', async () => {
@@ -295,7 +281,7 @@ describe('tRPC router tests', () => {
 
       const mutationInput: inferMutationInput<'shows.add'> = {
         showName: showName,
-        showType: '???',
+        showType: 'CT',
         showDate: date,
       };
 
@@ -318,7 +304,7 @@ describe('tRPC router tests', () => {
         uid: showUid,
         patch: {
           showName: faker.address.county(),
-          showType: 'CT-Only',
+          showType: 'HT',
           showDate: new Date(),
         },
       };
@@ -355,10 +341,11 @@ describe('tRPC router tests', () => {
     });
   });
 
+  // TODO: Tests broken until i add a add-rider api
   describe('Rider combo apis (including points)', () => {
     const firstName = faker.name.firstName();
     const lastName = faker.name.lastName();
-    const fullName = faker.name.fullName({ firstName, lastName });
+    const fullName = `${firstName} ${lastName}`;
     const showName = faker.address.county();
     const date = new Date();
     let showUID: string;
@@ -373,18 +360,15 @@ describe('tRPC router tests', () => {
       const ctx = await createContextInner({});
       const caller = appRouter.createCaller(ctx);
 
-      const member: z.infer<typeof MemberModel> = {
-        fullName,
+      const member: inferMutationInput<'member.add-member'>['member'] = {
         firstName,
         lastName,
         phone: faker.phone.number('###-###-####'),
         phoneType: 'Mobile',
         email: faker.internet.exampleEmail(firstName, lastName),
-        boardMember: false,
         address: faker.address.street(),
         city: faker.address.cityName(),
         state: faker.address.street(),
-        confirmed: false,
         currentUSEAMember: false,
         memberType: 'Business',
         memberStatus: 'Life',
@@ -394,7 +378,6 @@ describe('tRPC router tests', () => {
       };
 
       const input: inferMutationInput<'member.add-member'> = {
-        division: 'GAG',
         member,
         horses: [horse],
       };
@@ -402,7 +385,7 @@ describe('tRPC router tests', () => {
       await caller.mutation('member.add-member', input);
       const mutationInput: inferMutationInput<'shows.add'> = {
         showName: showName,
-        showType: '???',
+        showType: 'CT',
         showDate: date,
       };
 
@@ -420,9 +403,9 @@ describe('tRPC router tests', () => {
       };
 
       const comboFromGet = await caller.query('rider.get-rider', { ...combo });
+      riderUID = comboFromGet.uid;
       expect(comboFromGet.member.fullName).toBe(fullName);
       expect(comboFromGet.horse.horseRN).toBe(horse.horseRN);
-      riderUID = comboFromGet.uid;
     });
 
     it('Request for points change', async () => {

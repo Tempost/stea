@@ -1,5 +1,4 @@
 import { ReactElement, useState } from 'react';
-import { z } from 'zod';
 import { FormProvider, useFormState } from 'react-hook-form';
 
 import {
@@ -9,7 +8,6 @@ import {
   NumericInput,
 } from '@/components/data-entry';
 
-import { HorseModel, MemberModel } from '@/backend/prisma/zod';
 import JRSR from '@/components/forms/JRSRField';
 import states from '@/utils/states.json';
 import useZodForm from '@/utils/usezodform';
@@ -17,39 +15,16 @@ import { HorseFieldArray } from '@/components/forms/fieldarrayfields';
 
 import { Type } from '@prisma/client';
 import RegType from '@/components/forms/regtype';
-import { useSetAtom } from 'jotai';
-import { updateFormState } from '@/utils/atoms';
 import { FormLayout } from '@/components/layout';
 import Payment from '@/components/forms/Payment';
-
-const phoneTypes = [
-  {
-    label: 'mobile',
-    value: 'Mobile',
-  },
-  {
-    label: 'home',
-    value: 'Home',
-  },
-  {
-    label: 'business',
-    value: 'Business',
-  },
-];
-
-const MemberFormValues = z.object({
-  member: MemberModel.omit({
-    fullName: true,
-    boardMember: true,
-    confirmed: true,
-  }),
-  horseReg: z.boolean(),
-  horses: z.array(HorseModel).optional(),
-});
+import phoneTypes from '@/utils/phoneTypes.json';
+import { MemberFormValues } from '@/utils/zodschemas';
+import triggerValidation from '@/utils/formvalidation';
+import { useSetAtom } from 'jotai';
+import { updateFormState } from '@/utils/atoms';
 
 function IndividualRegistration() {
   const [payment, togglePayment] = useState(false);
-  const update = useSetAtom(updateFormState);
 
   const methods = useZodForm({
     reValidateMode: 'onSubmit',
@@ -63,36 +38,9 @@ function IndividualRegistration() {
 
   const isUSEAMember = watch('member.currentUSEAMember', false);
   const isRegHorse = watch('horseReg', false);
-
-  function triggerValidation() {
-    const formValues = methods.getValues();
-
-    methods
-      .trigger()
-      .then(valid => {
-        if (valid) {
-          if (formValues.horses) {
-            const lifeCount = formValues.horses.filter(
-              horse => horse.regType === 'Life'
-            ).length;
-
-            const annualCount = formValues.horses.filter(
-              horse => horse.regType === 'Annual'
-            ).length;
-
-            update({
-              type: 'HORSE',
-              payload: { lifeCount: lifeCount, annualCount: annualCount },
-            });
-          }
-          togglePayment(true);
-        }
-      })
-      .catch(console.log);
-  }
+  const update = useSetAtom(updateFormState);
 
   setValue('member.memberType', 'Individual' as Type);
-  methods.formState.isDirty && console.log(methods.formState.errors);
 
   return (
     <FormProvider {...methods}>
@@ -100,6 +48,9 @@ function IndividualRegistration() {
         <Payment
           showPayment={payment}
           mutation='member.add-member'
+          formValidation={() =>
+            triggerValidation<MemberFormValues>(methods, togglePayment, update)
+          }
         >
           <h2 className='divider'>Individual Membership</h2>
 
@@ -232,14 +183,6 @@ function IndividualRegistration() {
             />
 
             {isRegHorse && <HorseFieldArray />}
-
-            <button
-              type='button'
-              className='btn btn-primary w-full'
-              onClick={() => triggerValidation()}
-            >
-              Move to payment
-            </button>
           </div>
         </Payment>
       </form>

@@ -1,4 +1,5 @@
 import { useSession } from 'next-auth/react';
+import Link from 'next/link';
 
 function Footer() {
   const { data: session } = useSession();
@@ -11,12 +12,9 @@ function Footer() {
     >
       <div className='flex flex-row'>
         <h1 className='footer-title text-2xl'>Footer</h1>
-        <a
-          href='/dashboard'
-          className='cursor-pointer'
-        >
+        <Link href='/dashboard'>
           {session ? 'Go to dashboard' : 'Login to dashboard'}
-        </a>
+        </Link>
       </div>
     </footer>
   );

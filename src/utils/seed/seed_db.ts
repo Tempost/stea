@@ -80,17 +80,8 @@ async function seedHorses() {
       } as Prisma.HorseCreateInput;
     });
 
-  const riders: Rider[] = horses.map(horse => {
-    return {
-      riders: horse.riders.split(',').map(rider => rider.trim()),
-      horseRN: horse.horseRN,
-    };
-  });
-
   const noUndefinedData = removeUndefined<Prisma.HorseCreateInput>(data);
   await prisma.horse.createMany({ data: noUndefinedData });
-
-  return riders;
 }
 
 async function seedMembers() {
@@ -141,58 +132,11 @@ async function seedMembers() {
   return dbActions;
 }
 
-async function addCombo(fullName: string, horseRN: string) {
-  const member = await prisma.member.findUnique({
-    where: {
-      fullName,
-    },
-  });
-
-  const horse = await prisma.horse.findUnique({
-    where: {
-      horseRN,
-    },
-  });
-
-  if (member !== null && horse !== null) {
-    await prisma.riderCombo.create({
-      data: {
-        division: '',
-        member: {
-          connect: {
-            fullName,
-          },
-        },
-        horse: {
-          connect: {
-            horseRN,
-          },
-        },
-      },
-    });
-  }
-}
-
-async function seedRiders(riders: Rider[]) {
-  console.log('Adding Riders...');
-  riders.forEach(async rider => {
-    if (Array.isArray(rider.riders)) {
-      rider.riders.forEach(async fullName => {
-        addCombo(fullName, rider.horseRN);
-      });
-    } else {
-      addCombo(rider.riders, rider.horseRN);
-    }
-  });
-}
-
 async function load() {
-  const riders = await seedHorses().catch(err => {
+  await seedHorses().catch(err => {
     console.log(err);
     process.exit(1);
   });
-
-  console.log(riders.length);
 
   const newMembers = await seedMembers().catch(err => {
     console.log(err);
@@ -200,11 +144,6 @@ async function load() {
   });
 
   console.log(newMembers.length);
-
-  await seedRiders(riders).catch(err => {
-    console.log(err.cause);
-    process.exit(1);
-  });
 }
 
 cleanUp().then(res => {

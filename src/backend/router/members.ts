@@ -74,19 +74,10 @@ export const member = createRouter()
         })
         .array()
         .optional(),
-      division: z.string(),
     }),
 
-    async resolve({ input: { member, payment, horses, division } }) {
-      const riderCombo = horses
-        ? horses.map(horse => {
-            return {
-              horseName: horse.horseRN,
-              division: division,
-            };
-          })
-        : [];
-
+    async resolve({ input: { member, payment, horses } }) {
+      console.log(horses);
       return await prisma.member.create({
         data: {
           ...member,
@@ -99,13 +90,9 @@ export const member = createRouter()
           Horse: {
             create: horses && [...horses],
           },
-          RiderCombo: {
-            create: [...riderCombo],
-          },
         },
         select: {
           Horse: true,
-          RiderCombo: true,
           payment: true,
         },
       });

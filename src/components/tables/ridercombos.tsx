@@ -35,7 +35,7 @@ function RidersTable({ title, overRideDefaultCols }: RidersTableProps) {
         ],
       },
     ],
-    []
+    [title]
   );
 
   return (

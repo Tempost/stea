@@ -46,7 +46,7 @@ function PlacingsTable({ title, overrideDefaultCols }: PlacingsTableProps) {
         ],
       },
     ],
-    []
+    [title]
   );
 
   return (

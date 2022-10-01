@@ -1,0 +1,14 @@
+[
+  {
+    "label": "mobile",
+    "value": "Mobile"
+  },
+  {
+    "label": "home",
+    "value": "Home"
+  },
+  {
+    "label": "business",
+    "value": "Business"
+  }
+]

@@ -1,167 +1,99 @@
-import { ReactElement } from 'react';
-import { FieldValues, FormProvider } from 'react-hook-form';
-import { trpc } from '@/utils/trpc';
-import {
-  HorseModel,
-  NonMemberHorseOwnerModel,
-  RiderComboModel,
-} from '@/backend/prisma/zod';
-import { z } from 'zod';
+import { ReactElement, useState } from 'react';
+import { FormProvider } from 'react-hook-form';
+import { useSetAtom } from 'jotai';
 
 import { TextInput, Select } from '@/components/data-entry';
-import {
-  HorseFieldArray,
-  RiderComboFieldArray,
-} from '@/components/forms/fieldarrayfields';
+import { HorseFieldArray } from '@/components/forms/fieldarrayfields';
 import useZodForm from '@/utils/usezodform';
 import { FormLayout } from '@/components/layout';
-import { useSetAtom } from 'jotai';
+import Payment from '@/components/forms/Payment';
+import phoneTypes from '@/utils/phoneTypes.json';
+import triggerValidation from '@/utils/formvalidation';
+import { OwnerHorseFormValues } from '@/utils/zodschemas';
 import { updateFormState } from '@/utils/atoms';
-import { useRouter } from 'next/router';
-
-const phoneTypes = [
-  {
-    label: 'mobile',
-    value: 'Mobile',
-  },
-  {
-    label: 'home',
-    value: 'Home',
-  },
-  {
-    label: 'business',
-    value: 'Business',
-  },
-];
-
-const OwnerHorseFormValues = z.object({
-  owner: NonMemberHorseOwnerModel,
-  horses: z.array(HorseModel).min(1, 'Horse is required'),
-  riderCombos: z
-    .array(RiderComboModel.omit({ uid: true }))
-    .min(1, 'Rider combo is required'),
-});
 
 function HorseRegistration() {
+  const [payment, togglePayment] = useState(false);
   const methods = useZodForm({
     reValidateMode: 'onSubmit',
     shouldFocusError: true,
-    shouldUnregister: true,
     schema: OwnerHorseFormValues,
   });
-  const router = useRouter();
-
-  const { register, handleSubmit, formState } = methods;
-  const { errors } = formState;
-
-  const horseMutation = trpc.useMutation([
-    'nonMemberHorseOwner.add-owner-horse',
-  ]);
+  const {
+    register,
+    formState: { errors },
+  } = methods;
 
   const update = useSetAtom(updateFormState);
-
-  function onSumbit(formValues: FieldValues) {
-    // horseMutation.mutate({
-    //   horses: formValues.horses,
-    //   owner: formValues.owner,
-    //   combos: formValues.riderCombos,
-    // });
-  }
-
-  function triggerValidation() {
-    const formValues = methods.getValues();
-
-    methods.setValue(
-      'owner.fullName',
-      `${formValues.owner.firstName} ${formValues.owner.lastName}`
-    );
-
-    methods.trigger().then(valid => {
-      if (valid) {
-        if (formValues.horses) {
-          const lifeCount = formValues.horses.filter(
-            horse => horse.regType === 'Life'
-          ).length;
-
-          const annualCount = formValues.horses.filter(
-            horse => horse.regType === 'Annual'
-          ).length;
-
-          update({
-            type: 'HORSE',
-            payload: { lifeCount: lifeCount, annualCount: annualCount },
-          });
-        }
-        router.push('/join/form/payment');
-      }
-    });
-  }
-
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSumbit)}>
-        <h2 className='divider'>Horse Registration</h2>
-        <section className='flex flex-col gap-2'>
-          <h3>Owner Information</h3>
+      <form>
+        <Payment
+          showPayment={payment}
+          formValidation={() =>
+            triggerValidation<OwnerHorseFormValues>(
+              methods,
+              togglePayment,
+              update
+            )
+          }
+          mutation='nonMemberHorseOwner.add-owner-horse'
+        >
+          <h2 className='divider'>Horse Registration</h2>
+          <section className='flex flex-col gap-2'>
+            <h3>Owner Information</h3>
 
-          <div className='flex gap-5'>
-            <TextInput
-              inputMode='text'
-              label='First Name*'
-              className='input-primary input-sm'
-              error={errors.owner?.firstName}
-              {...register('owner.firstName', { required: true })}
-            />
-
-            <TextInput
-              inputMode='text'
-              label='Last Name*'
-              className='input-primary input-sm'
-              error={errors.owner?.lastName}
-              {...register('owner.lastName', { required: true })}
-            />
-          </div>
-
-          <div className='flex flex-col gap-2'>
-            <TextInput
-              label='Email'
-              inputMode='text'
-              className='input-primary input-sm'
-              error={errors.owner?.email}
-              altLabel='This will be the primary method of contact.'
-              {...register('owner.email', { required: true })}
-            />
-
-            <span className='flex gap-2'>
-              <Select
-                label='Phone Type*'
-                className='input-primary select-sm'
-                options={phoneTypes}
-                {...register('owner.phoneType', { required: true })}
+            <div className='flex gap-5'>
+              <TextInput
+                inputMode='text'
+                label='First Name*'
+                className='input-primary input-sm'
+                error={errors.owner?.firstName}
+                {...register('owner.firstName', { required: true })}
               />
 
               <TextInput
-                label='Phone Number*'
-                inputMode='tel'
+                inputMode='text'
+                label='Last Name*'
                 className='input-primary input-sm'
-                error={errors.owner?.phone}
-                {...register('owner.phone', { required: true })}
+                error={errors.owner?.lastName}
+                {...register('owner.lastName', { required: true })}
               />
-            </span>
-          </div>
-        </section>
+            </div>
 
-        <section className='mt-10 grid gap-5'>
-          <HorseFieldArray />
-          <RiderComboFieldArray />
-          <button
-            type='button'
-            className='btn btn-primary w-full'
-            onClick={() => triggerValidation()}
-          >
-            Move to payment
-          </button>
-        </section>
+            <div className='flex flex-col gap-2'>
+              <TextInput
+                label='Email'
+                inputMode='text'
+                className='input-primary input-sm'
+                error={errors.owner?.email}
+                altLabel='This will be the primary method of contact.'
+                {...register('owner.email', { required: true })}
+              />
+
+              <span className='flex gap-2'>
+                <Select
+                  label='Phone Type*'
+                  className='input-primary select-sm'
+                  options={phoneTypes}
+                  {...register('owner.phoneType', { required: true })}
+                />
+
+                <TextInput
+                  label='Phone Number*'
+                  inputMode='tel'
+                  className='input-primary input-sm'
+                  error={errors.owner?.phone}
+                  {...register('owner.phone', { required: true })}
+                />
+              </span>
+            </div>
+          </section>
+
+          <section className='mt-10 grid gap-5'>
+            <HorseFieldArray />
+          </section>
+        </Payment>
       </form>
     </FormProvider>
   );

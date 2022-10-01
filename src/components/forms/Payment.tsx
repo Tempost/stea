@@ -16,9 +16,15 @@ import {
 interface PaymentProps extends PropsWithChildren {
   showPayment: boolean;
   mutation: TMutation;
+  formValidation: () => void;
 }
 
-function Payment({ showPayment, children, mutation }: PaymentProps) {
+function Payment({
+  showPayment,
+  children,
+  mutation,
+  formValidation,
+}: PaymentProps) {
   const mutator = trpc.useMutation([mutation]);
   const { handleSubmit } = useFormContext();
   const [state] = useAtom(formState);
@@ -46,13 +52,18 @@ function Payment({ showPayment, children, mutation }: PaymentProps) {
     });
   }
 
+  function onSubmit(values: FieldValues) {
+    console.log(values);
+    mutator.mutate({ ...values });
+  }
+
   async function onApprove(data: OnApproveData, actions: OnApproveActions) {
     console.log(data);
 
     return actions.order!.capture().then(details => {
       const name = details.payer.name?.given_name;
       console.log(name);
-      handleSubmit(console.log)();
+      handleSubmit(onSubmit)();
     });
   }
 
@@ -78,7 +89,16 @@ function Payment({ showPayment, children, mutation }: PaymentProps) {
           </button>
         </div>
       ) : (
-        children
+        <>
+          {children}
+          <button
+            type='button'
+            className='btn btn-primary w-full'
+            onClick={() => formValidation()}
+          >
+            Move to payment
+          </button>
+        </>
       )}
     </>
   );

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { createRouter, prepareCombos } from './utils';
+import { createRouter } from './utils';
 import { prisma } from '@/backend/prisma';
 import { HorseModel, NonMemberHorseOwnerModel } from '@/backend/prisma/zod';
 import { TRPCError } from '@trpc/server';
@@ -8,15 +8,6 @@ import { TRPCError } from '@trpc/server';
 const addOwnerInput = z.object({
   owner: NonMemberHorseOwnerModel,
   horses: z.array(HorseModel),
-  combos: z
-    .array(
-      z.object({
-        memberName: z.string(),
-        horseName: z.string(),
-        division: z.string(),
-      })
-    )
-    .optional(),
 });
 type AddOwnerInput = z.infer<typeof addOwnerInput>;
 
@@ -93,13 +84,10 @@ export const nonMemberHorseOwner = createRouter()
       });
 
       if (existingMember !== null) {
-        // Existing member, update their horse/rider combos instead
+        // Existing member, update their horses instead
         return await prisma.member.update({
           where: { fullName: input.owner.fullName },
           data: {
-            RiderCombo: {
-              create: [...prepareCombos(input.combos)],
-            },
             Horse: {
               create: [...input.horses],
             },
@@ -112,7 +100,7 @@ export const nonMemberHorseOwner = createRouter()
     },
   });
 
-async function upsertOwner({ owner, horses, combos }: AddOwnerInput) {
+async function upsertOwner({ owner, horses }: AddOwnerInput) {
   const newOwner = await prisma.nonMemberHorseOwner.upsert({
     where: { fullName: owner.fullName },
     create: {
@@ -132,25 +120,5 @@ async function upsertOwner({ owner, horses, combos }: AddOwnerInput) {
     },
   });
 
-  // Create and connect any provided rider combos
-  if (combos) {
-    for (let combo of combos) {
-      await prisma.riderCombo.create({
-        data: {
-          division: combo.division,
-          horse: {
-            connect: {
-              horseRN: combo.horseName,
-            },
-          },
-          member: {
-            connect: {
-              fullName: combo.memberName,
-            },
-          },
-        },
-      });
-    }
-  }
   return newOwner;
 }
