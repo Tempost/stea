@@ -12,17 +12,6 @@ function MembersAnHorses() {
       {
         header: 'Members',
         columns: [
-          // {
-          //   accessorKey: 'membershipDate',
-          //   id: 'membershipDate',
-          //   cell: info => {
-          //     const date: Date = info.getValue();
-
-          //     return `${date.getMonth() + 1
-          //       }/${date.getDate()}/${date.getFullYear()}`;
-          //   },
-          //   header: () => <span> Join Date </span>,
-          // },
           {
             accessorKey: 'fullName',
             id: 'fullName',
@@ -52,18 +41,6 @@ function MembersAnHorses() {
       {
         header: 'Horses',
         columns: [
-          // {
-          //   accessorKey: 'registrationDate',
-          //   id: 'registrationDate',
-          //   cell: info => {
-          //     const date: Date = info.getValue();
-          //     if (date === null) return 'N/A';
-
-          //     return `${date.getMonth() + 1
-          //       }/${date.getDate()}/${date.getFullYear()}`;
-          //   },
-          //   header: () => <span> Registration Date </span>,
-          // },
           {
             accessorKey: 'horseRN',
             id: 'horseRN',
@@ -76,18 +53,6 @@ function MembersAnHorses() {
             cell: info => info.getValue(),
             header: () => <span> Barn Name </span>,
           },
-          {
-            accessorKey: 'memberName',
-            id: 'memberName',
-            cell: info => info.getValue(),
-            header: () => <span> Member </span>,
-          },
-          {
-            accessorKey: 'owner',
-            id: 'owner',
-            cell: info => info.getValue(),
-            header: () => <span> Owner </span>,
-          },
         ],
       },
     ],
@@ -97,7 +62,7 @@ function MembersAnHorses() {
   // TODO: Fade Image into background
   // <Image layout='fill' src='/membersandhorses.jpg'/>
   return (
-    <div className='grid grid-flow-row place-items-center lg:grid-flow-col'>
+    <div className='md:grid md:grid-flow-col md:place-content-evenly'>
       <MemberTable overRideDefaultCols={memberCols} />
       <HorseTable overRideDefaultCols={horseCols} />
     </div>

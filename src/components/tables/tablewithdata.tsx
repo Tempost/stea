@@ -45,14 +45,13 @@ function TableWithData<T>({ colDef, query, paginate }: TableWithDataProps<T>) {
                       <th
                         key={header.id}
                         colSpan={header.colSpan}
-                        className='px-3 py-2 text-center text-sm font-medium text-gray-900 md:px-6 md:py-4'
+                        className='px-3 py-2 text-center text-xs font-medium text-gray-900 select-none lg:text-sm'
                       >
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
+                        {!header.isPlaceholder &&
+                          flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
                       </th>
                     ))}
                   </tr>
@@ -63,14 +62,14 @@ function TableWithData<T>({ colDef, query, paginate }: TableWithDataProps<T>) {
                 {table.getRowModel().rows.map(row => (
                   <tr
                     key={row.id}
-                    className='border-b bg-white transition duration-300 ease-in-out hover:bg-teal-200/50'
+                    className='border-b bg-white transition duration-300 ease-in-out hover:bg-primary/10'
                   >
                     {row.getVisibleCells().map(cell => {
                       return (
                         <td
                           key={cell.id}
                           className={
-                            'whitespace-nowrap px-3 py-2 text-sm font-normal text-gray-900 md:px-6 md:py-4'
+                            'whitespace-nowrap px-3 py-2 text-xs font-normal text-gray-900 md:px-4 md:py-3 lg:text-sm'
                           }
                         >
                           {flexRender(
@@ -107,7 +106,7 @@ function TableWithData<T>({ colDef, query, paginate }: TableWithDataProps<T>) {
 
                 <div className='flex flex-col items-center'>
                   <select
-                    className='select select-secondary select-xs'
+                    className='select select-secondary select-xs lg:select-sm'
                     value={table.getState().pagination.pageSize}
                     onChange={e => {
                       table.setPageSize(Number(e.target.value));
@@ -122,11 +121,11 @@ function TableWithData<T>({ colDef, query, paginate }: TableWithDataProps<T>) {
                       </option>
                     ))}
                   </select>
-                  <span className='flex items-center gap-1 text-sm'>
+                  <span className='flex items-center gap-1 text-2xs lg:text-sm'>
                     <div>Page</div>
                     <strong>
-                      {table.getState().pagination.pageIndex + 1} of{' '}
-                      {table.getPageCount()}
+                      {`${table.getState().pagination.pageIndex + 1} of
+                        ${table.getPageCount()}`}
                     </strong>
                   </span>
                 </div>

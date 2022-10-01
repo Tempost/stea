@@ -7,10 +7,10 @@
     "build": "next build",
     "start": "next start",
     "db-test": "dotenv -e .env.test -- jest -i router.test.ts",
-    "test": "jest -i",
     "studio": "dotenv -e .env.development -- prisma studio",
     "push": "dotenv -e .env.development -- prisma db push",
-    "migrate-local": "dotenv -e .env.test -- prisma migrate dev --name test"
+    "migrate-local": "dotenv -e .env.test -- prisma migrate dev --name test",
+    "lint": "next lint"
   },
   "dependencies": {
     "@hookform/resolvers": "^2.9.7",
