@@ -1,4 +1,4 @@
-import NavLinkMenu, { NavLinkSubMenu } from './navlinkmenu';
+import NavLinkSubMenu from './navlinkmenu';
 
 interface Menu {
   href?: string;
@@ -57,7 +57,7 @@ export const dashMenuItems: Menu[] = [
   {
     name: 'Review',
     render: ({ name: navText }) => (
-      <NavLinkMenu
+      <NavLinkSubMenu
         name={navText}
         subLinks={[
           {
@@ -83,9 +83,9 @@ export const dashMenuItems: Menu[] = [
   {
     name: 'Documents',
     // TODO: Add download links to the download options
-    render: ({ name: navText }) => (
-      <NavLinkMenu
-        name={navText}
+    render: ({ name }) => (
+      <NavLinkSubMenu
+        name={name}
         subLinks={[
           {
             href: '',

@@ -30,9 +30,9 @@ function Tables() {
   };
 
   return (
-    <div className='grid place-items-center gap-10 pt-28'>
+    <>
       <div
-        className='btn-group'
+        className='grid grid-flow-col place-content-center btn-group pb-10'
         //@ts-ignore
         onClick={e => setTable(e.target.value)}
       >
@@ -68,7 +68,7 @@ function Tables() {
         </button>
       </div>
       {tables[table]}
-    </div>
+    </>
   );
 }
 

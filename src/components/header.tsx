@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Hamburger } from './icons';
 import LinkWrapper from './linkwrapper';
 import { publicMenuItems, dashMenuItems } from './menuitems';
@@ -52,17 +52,17 @@ export const ResponsiveHeader = ({ children }: any) => {
             South Texas Eventing
           </h3>
           <span className='hidden flex-none lg:block'>
-            <ul className='menu rounded-box menu-horizontal p-1 text-lg'>
+            <ul className='menu rounded-box menu-horizontal p-0 text-lg'>
               {publicMenuItems.map(({ href, name, render }) => (
-                <React.Fragment key={name}>
+                <Fragment key={name}>
                   {render ? (
                     render({ href, name })
                   ) : (
-                    <li key={name}>
+                    <li>
                       <LinkWrapper href={href}>{name}</LinkWrapper>
                     </li>
                   )}
-                </React.Fragment>
+                </Fragment>
               ))}
             </ul>
           </span>
@@ -77,7 +77,7 @@ export const ResponsiveHeader = ({ children }: any) => {
         />
         <ul className='menu w-56 p-4 font-semibold'>
           {publicMenuItems.map(({ href, name, render }) => (
-            <React.Fragment key={name}>
+            <Fragment key={name}>
               {render ? (
                 render({ href, name, drawer: true })
               ) : (
@@ -85,7 +85,7 @@ export const ResponsiveHeader = ({ children }: any) => {
                   <LinkWrapper href={href}>{name}</LinkWrapper>
                 </li>
               )}
-            </React.Fragment>
+            </Fragment>
           ))}
         </ul>
       </div>
@@ -95,26 +95,21 @@ export const ResponsiveHeader = ({ children }: any) => {
 
 export const DashboardHeader = () => (
   <nav
-    className='fixed z-50 h-full max-h-20 w-full bg-gradient-to-b
-      from-blue-700 to-blue-800 p-1 text-primary-content sm:max-h-fit md:max-h-14'
+    className='navbar z-50 w-full bg-gradient-to-b from-blue-700 to-blue-800
+    font-semibold text-gray-300 shadow-sm grid place-content-center'
   >
-    <div className='grid h-full place-items-center'>
-      <div className='grid grid-flow-col gap-5'>
-        {dashMenuItems.map(({ href, name, render }) => (
-          <div
-            className='hover:text-primary-content/[0.7]'
-            key={name}
-          >
-            {render ? (
-              render({ href, name })
-            ) : (
-              <LinkWrapper href={href}>
-                <h2 className='text-xl'>{name}</h2>
-              </LinkWrapper>
-            )}
-          </div>
-        ))}
-      </div>
-    </div>
+    <ul className='menu rounded-box menu-horizontal p-0 lg:text-xl'>
+      {dashMenuItems.map(({ href, name, render }) => (
+        <Fragment key={name}>
+          {render ? (
+            render({ href, name })
+          ) : (
+            <li>
+              <LinkWrapper href={href}>{name}</LinkWrapper>
+            </li>
+          )}
+        </Fragment>
+      ))}
+    </ul>
   </nav>
 );

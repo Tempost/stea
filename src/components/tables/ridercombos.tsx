@@ -22,16 +22,34 @@ function RidersTable({ title, overRideDefaultCols, search }: RidersTableProps) {
         header: title ?? 'Riders',
         columns: [
           {
-            accessorKey: 'horseName',
-            id: 'horseName',
+            accessorKey: 'horse.horseRN',
+            id: 'horse.horseRN',
             cell: info => info.getValue(),
             header: () => <span> Horse </span>,
           },
           {
-            accessorKey: 'memberName',
-            id: 'memberName',
+            accessorKey: 'member.fullName',
+            id: 'member.fullName',
             cell: info => info.getValue(),
             header: () => <span> Rider </span>,
+          },
+          {
+            accessorKey: 'totalPoints',
+            id: 'totalPoints',
+            cell: info => info.getValue(),
+            header: () => <span> Points </span>,
+          },
+          {
+            accessorKey: 'totalShows',
+            id: 'totalShows',
+            cell: info => info.getValue(),
+            header: () => <span> Shows Attended </span>,
+          },
+          {
+            accessorKey: 'division',
+            id: 'division',
+            cell: info => info.getValue(),
+            header: () => <span> Divison </span>,
           },
         ],
       },

@@ -2,12 +2,12 @@ import Image from 'next/image';
 import { ReactElement } from 'react';
 
 import { PublicLayout } from '@/components/layout';
-import RidersTable from '@/components/tables/ridercombos';
+import PlacingsTable from '@/components/tables/placings';
 
 function SteaPoints() {
   return (
     <div className='grid w-full place-items-center gap-20'>
-      <RidersTable
+      <PlacingsTable
         title='Current Points'
         search={true}
       />

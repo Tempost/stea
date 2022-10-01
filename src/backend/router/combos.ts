@@ -23,6 +23,18 @@ export const riders = createRouter()
       .object({
         memberName: z.string(),
         horseName: z.string(),
+        selectFields: z.object({
+          uid: z.boolean(),
+          member: z.boolean(),
+          horse: z.boolean(),
+          shows: z.boolean(),
+          points: z.boolean(),
+          multiVenue: z.boolean(),
+          completedHT: z.boolean(),
+          totalPoints: z.boolean(),
+          totalShows: z.boolean(),
+          division: z.boolean(),
+        }),
       })
       .deepPartial()
       .optional(),
@@ -32,7 +44,7 @@ export const riders = createRouter()
           memberName: input?.memberName,
           horseName: input?.horseName,
         },
-        select: selectFields,
+        select: input?.selectFields ?? selectFields,
       });
 
       return riders;

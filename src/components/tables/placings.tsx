@@ -17,7 +17,17 @@ function PlacingsTable({
   overrideDefaultCols,
   search,
 }: PlacingsTableProps) {
-  const riders = trpc.useQuery(['rider.get-riders']);
+  const riders = trpc.useQuery([
+    'rider.get-riders',
+    {
+      selectFields: {
+        horse: true,
+        member: true,
+        totalPoints: true,
+        totalShows: true,
+      },
+    },
+  ]);
 
   const defaultCols = useMemo<ColumnDef<RiderCombo>[]>(
     () => [
@@ -25,26 +35,26 @@ function PlacingsTable({
         header: title ?? 'Riders',
         columns: [
           {
-            accessorKey: 'horseName',
-            id: 'horseName',
+            accessorKey: 'horse.horseRN',
+            id: 'horse.horseRN',
             cell: info => info.getValue(),
             header: () => <span> Horse </span>,
           },
           {
-            accessorKey: 'memberName',
-            id: 'memberName',
+            accessorKey: 'member.fullName',
+            id: 'member.fullName',
             cell: info => info.getValue(),
             header: () => <span> Rider </span>,
           },
           {
-            accessorKey: 'points.totalPoints',
-            id: 'point.totalPointss',
+            accessorKey: 'totalPoints',
+            id: 'totalPoints',
             cell: info => info.getValue(),
             header: () => <span> Points </span>,
           },
           {
-            accessorKey: 'points.totalShows',
-            id: 'point.totalShows',
+            accessorKey: 'totalShows',
+            id: 'totalShows',
             cell: info => info.getValue(),
             header: () => <span> Shows Attended </span>,
           },
