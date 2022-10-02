@@ -46,7 +46,8 @@ export function DashboardLayout({ children }: LayoutProps) {
 }
 
 const initOptions: ReactPayPalScriptOptions = {
-  'client-id': process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID,
+  'client-id':
+    process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID ?? process.env.PAYPAL_CLIENT_ID,
   currency: 'USD',
   intent: 'capture',
   'data-react-paypal-script-id': 'paypal-button',
