@@ -19,18 +19,16 @@ specifiers:
   '@types/react': ^18.0.18
   '@types/react-datepicker': ^4.4.2
   '@types/react-dom': 18.0.6
-  '@types/react-flatpickr': ^3.8.7
   autoprefixer: ^10.4.8
-  cuid: ^2.1.8
   daisyui: ^2.31.0
   eslint: 8.19.0
   eslint-config-next: 12.2.2
   eslint-plugin-prettier: ^4.2.1
+  find-unused-exports: ^4.0.0
   immer: ^9.0.15
   jest: ^28.1.3
   jest-mock-extended: ^2.0.7
   jotai: ^1.8.2
-  nanoid: ^4.0.0
   next: ^12.2.5
   next-auth: ^4.10.3
   postcss: ^8.4.16
@@ -62,11 +60,9 @@ dependencies:
   '@trpc/next': 9.27.2_q6zioqap35hgke6xl77szo7ghe
   '@trpc/react': 9.27.2_e7pohnznr4qdgpqc5x4q3pmfcu
   '@trpc/server': 9.27.2
-  cuid: 2.1.8
   daisyui: 2.31.0_2roj5ve2z6s5oxi3qmvnsoboqa
   immer: 9.0.15
   jotai: 1.8.4_immer@9.0.15+react@18.2.0
-  nanoid: 4.0.0
   next: 12.3.1_biqbaboplfbrettd7655fr4n2y
   next-auth: 4.10.3_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
@@ -87,11 +83,11 @@ devDependencies:
   '@types/react': 18.0.21
   '@types/react-datepicker': 4.4.2_biqbaboplfbrettd7655fr4n2y
   '@types/react-dom': 18.0.6
-  '@types/react-flatpickr': 3.8.7
   autoprefixer: 10.4.12_postcss@8.4.16
   eslint: 8.19.0
   eslint-config-next: 12.2.2_4x5o4skxv6sl53vpwefgt23khm
   eslint-plugin-prettier: 4.2.1_exbhzpnbupd3ikhi4722x4yn6e
+  find-unused-exports: 4.0.0
   jest: 28.1.3_sgupjgtkb76w4hsvieap2xky7i
   jest-mock-extended: 2.0.9_bi2kohzqnxavgozw3csgny5hju
   postcss: 8.4.16
@@ -1641,16 +1637,6 @@ packages:
       '@types/react': 18.0.21
     dev: true
 
-  /@types/react-flatpickr/3.8.7:
-    resolution:
-      {
-        integrity: sha512-sIRN1WxcVjPjlYdqhDqWjdznFIb21Z1ab0prETuzW6j/xpOXMDCBI6/xtxTgaWF0hhKTqO7U1RRbaxbjyS3e5w==,
-      }
-    dependencies:
-      '@types/react': 18.0.21
-      flatpickr: 4.6.13
-    dev: true
-
   /@types/react/18.0.21:
     resolution:
       {
@@ -2487,13 +2473,6 @@ packages:
       }
     dev: true
 
-  /cuid/2.1.8:
-    resolution:
-      {
-        integrity: sha512-xiEMER6E7TlTPnDxrM4eRiC6TRgjNX9xzEZ5U/Se2YJKr7Mq4pJn/2XEHjl3STcSh96GmkHPcBXLES8M29wyyg==,
-      }
-    dev: false
-
   /daisyui/2.31.0_2roj5ve2z6s5oxi3qmvnsoboqa:
     resolution:
       {
@@ -3300,6 +3279,24 @@ packages:
     dependencies:
       to-regex-range: 5.0.1
 
+  /find-unused-exports/4.0.0:
+    resolution:
+      {
+        integrity: sha512-6ClPW9tWGMwFO2mF/SgeDfFukoKXlwJssk63LExN3i2DP7HwRBxqIrv17bIplcWsUjnq4tR1MTaf2fgHakPPyg==,
+      }
+    engines: { node: ^14.17.0 || ^16.0.0 || >= 18.0.0 }
+    hasBin: true
+    dependencies:
+      '@babel/core': 7.19.1
+      '@types/babel__core': 7.1.19
+      '@types/node': 18.7.18
+      arg: 5.0.2
+      globby: 13.1.2
+      kleur: 4.1.5
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /find-up/4.1.0:
     resolution:
       {
@@ -3320,13 +3317,6 @@ packages:
     dependencies:
       flatted: 3.2.7
       rimraf: 3.0.2
-    dev: true
-
-  /flatpickr/4.6.13:
-    resolution:
-      {
-        integrity: sha512-97PMG/aywoYpB4IvbvUJi0RQi8vearvU0oov1WW3k0WZPBMrTQVqekSX5CjSG/M4Q3i6A/0FKXC7RyAoAUUSPw==,
-      }
     dev: true
 
   /flatted/3.2.7:
@@ -3521,6 +3511,20 @@ packages:
       ignore: 5.2.0
       merge2: 1.4.1
       slash: 3.0.0
+    dev: true
+
+  /globby/13.1.2:
+    resolution:
+      {
+        integrity: sha512-LKSDZXToac40u8Q1PQtZihbNdTYSNMuWe+K5l+oa6KgDzSvVrHXlJy40hUP522RjAIoNLJYBJi7ow+rbFpIhHQ==,
+      }
+    engines: { node: ^12.20.0 || ^14.13.1 || >=16.0.0 }
+    dependencies:
+      dir-glob: 3.0.1
+      fast-glob: 3.2.12
+      ignore: 5.2.0
+      merge2: 1.4.1
+      slash: 4.0.0
     dev: true
 
   /graceful-fs/4.2.10:
@@ -4601,6 +4605,14 @@ packages:
     engines: { node: '>=6' }
     dev: true
 
+  /kleur/4.1.5:
+    resolution:
+      {
+        integrity: sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ==,
+      }
+    engines: { node: '>=6' }
+    dev: true
+
   /language-subtag-registry/0.3.22:
     resolution:
       {
@@ -4855,15 +4867,6 @@ packages:
       }
     engines: { node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1 }
     hasBin: true
-
-  /nanoid/4.0.0:
-    resolution:
-      {
-        integrity: sha512-IgBP8piMxe/gf73RTQx7hmnhwz0aaEXYakvqZyE302IXW3HyVNhdNGC+O2MwMAVhLEnvXlvKtGbtJf6wvHihCg==,
-      }
-    engines: { node: ^14 || ^16 || >=18 }
-    hasBin: true
-    dev: false
 
   /natural-compare/1.4.0:
     resolution:
@@ -5928,6 +5931,14 @@ packages:
         integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==,
       }
     engines: { node: '>=8' }
+    dev: true
+
+  /slash/4.0.0:
+    resolution:
+      {
+        integrity: sha512-3dOsAHXXUkQTpOYcoAxLIorMTp4gIQr5IW3iVb7A7lFIp0VHhnynm9izx6TssdrIcVIESAlVjtnO2K8bg+Coew==,
+      }
+    engines: { node: '>=12' }
     dev: true
 
   /source-map-js/1.0.2:

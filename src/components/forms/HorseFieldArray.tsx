@@ -78,7 +78,7 @@ export function HorseFieldArray() {
         {errors.horses?.message}
       </p>
       <button
-        className='btn btn-secondary btn-xs w-full'
+        className='btn btn-secondary btn-xs mb-5 w-full'
         type='button'
         onClick={() =>
           append({

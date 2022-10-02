@@ -11,7 +11,7 @@ import {
 import JRSR from '@/components/forms/JRSRField';
 import states from '@/utils/states.json';
 import useZodForm from '@/utils/usezodform';
-import { HorseFieldArray } from '@/components/forms/fieldarrayfields';
+import { HorseFieldArray } from '@/components/forms/HorseFieldArray';
 
 import { Type } from '@prisma/client';
 import RegType from '@/components/forms/regtype';

@@ -3,32 +3,6 @@ import { Hamburger } from './icons';
 import LinkWrapper from './linkwrapper';
 import { publicMenuItems, dashMenuItems } from './menuitems';
 
-export const PublicHeader = () => (
-  <nav
-    className='navbar fixed z-50 grid min-w-full items-center
-    bg-gradient-to-b from-blue-700 to-blue-800 p-1 text-primary-content'
-  >
-    <div className='navbar-center flex flex-col items-center'>
-      <div className='grid grid-flow-col gap-5'>
-        {publicMenuItems.map(({ href, name, render }) => (
-          <div
-            className='hover:text-primary-content/[0.7]'
-            key={name}
-          >
-            {render ? (
-              render({ href, name })
-            ) : (
-              <LinkWrapper href={href}>
-                <h2 className='text-2xl'>{name}</h2>
-              </LinkWrapper>
-            )}
-          </div>
-        ))}
-      </div>
-    </div>
-  </nav>
-);
-
 export const ResponsiveHeader = ({ children }: any) => {
   return (
     <div className='drawer'>
@@ -95,8 +69,8 @@ export const ResponsiveHeader = ({ children }: any) => {
 
 export const DashboardHeader = () => (
   <nav
-    className='navbar z-50 w-full bg-gradient-to-b from-blue-700 to-blue-800
-    font-semibold text-gray-300 shadow-sm grid place-content-center'
+    className='navbar z-50 grid w-full place-content-center bg-gradient-to-b
+    from-blue-700 to-blue-800 font-semibold text-gray-300 shadow-sm'
   >
     <ul className='menu rounded-box menu-horizontal p-0 lg:text-xl'>
       {dashMenuItems.map(({ href, name, render }) => (

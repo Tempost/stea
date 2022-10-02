@@ -10,7 +10,7 @@ import {
 } from '@/components/data-entry';
 import states from '@/utils/states.json';
 import useZodForm from '@/utils/usezodform';
-import { HorseFieldArray } from '@/components/forms/fieldarrayfields';
+import { HorseFieldArray } from '@/components/forms/HorseFieldArray';
 import RegType from '@/components/forms/regtype';
 import { FormLayout } from '@/components/layout';
 import { Type } from '@prisma/client';

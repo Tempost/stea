@@ -3,7 +3,7 @@ import { FormProvider } from 'react-hook-form';
 import { useSetAtom } from 'jotai';
 
 import { TextInput, Select } from '@/components/data-entry';
-import { HorseFieldArray } from '@/components/forms/fieldarrayfields';
+import { HorseFieldArray } from '@/components/forms/HorseFieldArray';
 import useZodForm from '@/utils/usezodform';
 import { FormLayout } from '@/components/layout';
 import Payment from '@/components/forms/Payment';
