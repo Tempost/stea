@@ -1,8 +1,10 @@
-import DatePicker from 'react-datepicker';
+// import DatePicker from 'react-datepicker';
 import { Controller, useFormContext } from 'react-hook-form';
+import DatePicker from 'react-date-picker/dist/entry.nostyle';
 
-import 'react-datepicker/dist/react-datepicker.css';
+
 import TextInput from './text-input';
+import { CalenderIcon, TrashIcon } from '../icons';
 
 interface DatePickerProps {
   name: string;
@@ -23,8 +25,9 @@ function ControlledDatePicker({
       render={props => {
         return (
           <DatePicker
-            placeholderText={placeholderText}
-            onChange={date => {
+            calendarIcon={CalenderIcon}
+            clearIcon={TrashIcon}
+            onChange={(date: Date) => {
               props.field.onChange(date);
             }}
             selected={props.field.value}
