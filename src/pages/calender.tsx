@@ -1,10 +1,7 @@
 import { ReactElement } from 'react';
 import { PublicLayout } from '@/components/layout';
-import Calender from 'react-calendar';
 
-function SteaCalender() {
-  return (<Calender/>);
-}
+function SteaCalender() {}
 
 SteaCalender.getLayout = (page: ReactElement) => {
   return <PublicLayout>{page}</PublicLayout>;
