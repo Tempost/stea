@@ -12,3 +12,5 @@
 
 3. Modal or something confirming payment after finishing form
     a. https://tailwindui.com/components/application-ui/overlays/modals
+
+4. During form validation, check if member is already a member

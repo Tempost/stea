@@ -5,12 +5,8 @@ import { faker } from '@faker-js/faker';
 import { createContextInner } from '../../backend/prisma';
 import { appRouter } from '../../backend/router/_app';
 import { inferMutationInput, inferQueryInput } from '../../utils/trpc';
-import {
-  HorseModel,
-  MemberModel,
-  NonMemberHorseOwnerModel,
-} from '@/backend/prisma/zod';
-import { PaymentMethod, Prisma, PrismaPromise, Status } from '@prisma/client';
+import { HorseModel, NonMemberHorseOwnerModel } from '@/backend/prisma/zod';
+import { PaymentMethod, PrismaPromise, Status } from '@prisma/client';
 
 describe('tRPC router tests', () => {
   // In the case where records are left in the DB, delete all data from the tables

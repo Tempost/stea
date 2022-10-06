@@ -11,7 +11,6 @@ export default function triggerValidation<
   update: (update: ReducerAction) => void
 ) {
   const formValues = methods.getValues();
-  console.log(formValues);
 
   methods.trigger().then(valid => {
     if (valid) {

@@ -13,29 +13,33 @@ function JRSR({ radioRegister, dateName, watchName }: Props) {
   const isJR = watch(watchName, 'SR');
 
   return (
-    <div className='mt-3 w-fit'>
-      <h3>Is applicant under 18*</h3>
-      <Radio
-        label='Yes'
-        value='JR'
-        className='radio-primary'
-        {...radioRegister}
-      />
-
-      <Radio
-        label='No'
-        value='SR'
-        className='radio-primary'
-        {...radioRegister}
-      />
-
-      {isJR === 'JR' ? (
-        <ControlledDatePicker
-          placeholderText='Date of Birth'
-          name={dateName}
+    <>
+      <div className='mt-3 w-fit'>
+        <h3>Is applicant under 18*</h3>
+        <Radio
+          label='Yes'
+          value='JR'
+          className='radio-primary'
+          {...radioRegister}
         />
-      ) : null}
-    </div>
+
+        <Radio
+          label='No'
+          value='SR'
+          className='radio-primary'
+          {...radioRegister}
+        />
+      </div>
+
+      <div className='w-fit'>
+        {isJR === 'JR' ? (
+          <ControlledDatePicker
+            placeholderText='Date of Birth'
+            name={dateName}
+          />
+        ) : null}
+      </div>
+    </>
   );
 }
 

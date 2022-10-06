@@ -42,11 +42,6 @@ enum JRSR {
   SR
 }
 
-enum PaymentMethod {
-  PayPal
-  Check
-}
-
 enum PhoneType {
   Mobile
   Home
@@ -106,27 +101,12 @@ model Member {
   dateOfBirth       DateTime?
   zip               Int
   useaMemberID      Int?
-  payment           Payment?
   /// List of rider combinations member is apart of
   RiderCombo        RiderCombo[]
   /// List of Horses that are linked to a member
   Horse             Horse[]
 
   @@id([fullName])
-}
-
-// Need to update payment with CUID instead of fullname ID
-model Payment {
-  updatedAt     DateTime?      @updatedAt
-  /// @zod.max(4000, { message: "Too many characters" })
-  /// General comments about payment, might grab from paypal
-  comments      String?        @db.VarChar(4000)
-  member        Member         @relation(fields: [payee], references: [fullName], onDelete: Cascade, onUpdate: Cascade)
-  payee         String         @id
-  amountPaid    Int?
-  datePaid      DateTime?
-  paymentMethod PaymentMethod?
-  checkNumber   Int?
 }
 
 model Horse {

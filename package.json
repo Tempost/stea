@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "db-test": "dotenv -e .env.test -- jest -i router.test.ts",
-    "studio": "dotenv -e .env.development -- prisma studio",
-    "push": "dotenv -e .env.development -- prisma db push",
+    "studio": "dotenv -e .env.local -- prisma studio",
+    "push": "dotenv -e .env.local -- prisma db push",
     "migrate-local": "dotenv -e .env.test -- prisma migrate dev --name test",
     "lint": "next lint"
   },
@@ -67,6 +67,6 @@
   },
   "prisma": {
     "schema": "./src/backend/prisma/schema.prisma",
-    "seed": "dotenv -e .env.development -- ts-node --project src/utils/seed/tsconfig.json src/utils/seed/seed_db.ts"
+    "seed": "dotenv -e .env.local -- ts-node --project src/utils/seed/tsconfig.json src/utils/seed/seed_db.ts"
   }
 }

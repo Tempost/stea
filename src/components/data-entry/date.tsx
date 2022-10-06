@@ -6,6 +6,7 @@ import TextInput from './text-input';
 // import { CalenderIcon, TrashIcon } from '../icons';
 // calendarIcon = { CalenderIcon }
 // clearIcon = { TrashIcon }
+import 'react-datepicker/dist/react-datepicker.css';
 
 interface DatePickerProps {
   name: string;
@@ -26,6 +27,7 @@ function ControlledDatePicker({
       render={props => {
         return (
           <DatePicker
+            showPopperArrow={false}
             placeholderText={placeholderText}
             onChange={(date: Date) => {
               props.field.onChange(date);
@@ -34,7 +36,8 @@ function ControlledDatePicker({
             customInput={
               <TextInput
                 label={label}
-                className='input-primary'
+                altLabel='Membership year runs from Dec 1st to Nov 30th of each show year.'
+                className='input-primary w-40'
               />
             }
           />

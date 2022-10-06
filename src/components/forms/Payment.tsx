@@ -1,17 +1,18 @@
 import { PropsWithChildren, ReactElement } from 'react';
+import { useRouter } from 'next/router';
 import { useAtom } from 'jotai';
-
-import { formState } from '@/utils/atoms';
-import { FormLayout } from '@/components/layout';
 import { FieldValues, useFormContext } from 'react-hook-form';
 import { PayPalButtons } from '@paypal/react-paypal-js';
-import { TMutation, trpc } from '@/utils/trpc';
 import {
   CreateOrderActions,
   CreateOrderData,
   OnApproveActions,
   OnApproveData,
 } from '@paypal/paypal-js';
+
+import { formState } from '@/utils/atoms';
+import { FormLayout } from '@/components/layout';
+import { TMutation, trpc } from '@/utils/trpc';
 
 interface PaymentProps extends PropsWithChildren {
   showPayment: boolean;
@@ -25,6 +26,7 @@ function Payment({
   mutation,
   formValidation,
 }: PaymentProps) {
+  const history = useRouter();
   const mutator = trpc.useMutation([mutation]);
   const { handleSubmit } = useFormContext();
   const [state] = useAtom(formState);
@@ -33,8 +35,6 @@ function Payment({
     state.memberCost + state.horses.lifeCost + state.horses.annualCost;
 
   function createOrder(data: CreateOrderData, actions: CreateOrderActions) {
-    console.log('paypal data', data);
-
     return actions.order.create({
       intent: 'CAPTURE',
       application_context: {
@@ -53,17 +53,15 @@ function Payment({
   }
 
   function onSubmit(values: FieldValues) {
-    console.log(values);
     mutator.mutate({ ...values });
   }
 
   async function onApprove(data: OnApproveData, actions: OnApproveActions) {
-    console.log(data);
-
     return actions.order!.capture().then(details => {
       const name = details.payer.name?.given_name;
+      console.log(details);
       console.log(name);
-      handleSubmit(onSubmit)();
+      handleSubmit(onSubmit)().then(() => history.push('/'));
     });
   }
 

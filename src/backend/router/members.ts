@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 import { createRouter } from './utils';
 import { prisma } from '@/backend/prisma';
-import { PaymentModel, MemberModel } from '@/backend/prisma/zod';
+import { MemberModel } from '@/backend/prisma/zod';
 import { TRPCError } from '@trpc/server';
 import { Status } from '@prisma/client';
 
@@ -65,7 +65,6 @@ export const member = createRouter()
         boardMember: true,
         confirmed: true,
       }).required(),
-      payment: PaymentModel.omit({ payee: true }).optional(),
       horses: z
         .object({
           horseRN: z.string(),
@@ -76,24 +75,14 @@ export const member = createRouter()
         .optional(),
     }),
 
-    async resolve({ input: { member, payment, horses } }) {
-      console.log(horses);
+    async resolve({ input: { member, horses } }) {
       return await prisma.member.create({
         data: {
           ...member,
           fullName: `${member.firstName} ${member.lastName}`,
-          payment: {
-            create: {
-              ...payment,
-            },
-          },
           Horse: {
             create: horses && [...horses],
           },
-        },
-        select: {
-          Horse: true,
-          payment: true,
         },
       });
     },

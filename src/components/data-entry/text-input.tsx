@@ -23,37 +23,39 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
     const id = useId();
 
     return (
-      <div className={`${inputSize ? inputSize : 'w-full'}`}>
-        {label && (
-          <label
-            className={`label flex-col ${labelStyle}`}
-            htmlFor={`text-input${id}`}
-            aria-label={label}
-          >
-            <span className='label-text self-start'>{label}</span>
-          </label>
-        )}
+      <>
+        <div className={`${inputSize ? inputSize : 'w-full'}`}>
+          {label && (
+            <label
+              className={`label flex-col ${labelStyle}`}
+              htmlFor={`text-input${id}`}
+              aria-label={label}
+            >
+              <span className='label-text self-start'>{label}</span>
+            </label>
+          )}
 
-        <input
-          ref={ref}
-          id={`text-input${id}`}
-          className={`input input-bordered w-full md:input-sm ${
-            error && 'input-error border-2'
-          } ${className}`}
-          type='text'
-          {...props}
-        />
+          <input
+            ref={ref}
+            id={`text-input${id}`}
+            className={`input input-bordered w-full md:input-sm ${
+              error && 'input-error border-2'
+            } ${className}`}
+            type='text'
+            {...props}
+          />
+        </div>
 
         {altLabel && (
           <label
-            className={`label-text-alt ${labelStyle}`}
+            className={`label-text-alt bg-neutral/10 rounded-sm p-0.5 w-fit ${labelStyle}`}
             htmlFor={`text-input${id}`}
             aria-label={label}
           >
             <span className='label-text-alt'>{altLabel}</span>
           </label>
         )}
-      </div>
+      </>
     );
   }
 );

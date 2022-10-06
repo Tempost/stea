@@ -1,21 +1,9 @@
-import {
-  JRSR,
-  PaymentMethod,
-  Prisma,
-  PrismaPromise,
-  Status,
-  Type,
-} from '@prisma/client';
+import { JRSR, Prisma, PrismaPromise, Status, Type } from '@prisma/client';
 
 import { prisma } from '../../backend/prisma';
 import members from './members.json';
 import horses from './horses.json';
 import { removeUndefined } from '../helpers';
-
-interface Rider {
-  riders: string | string[];
-  horseRN: string;
-}
 
 async function cleanUp() {
   const transactions: PrismaPromise<any>[] = [];
@@ -109,22 +97,9 @@ async function seedMembers() {
         confirmed: true,
       };
 
-      const paymentDB: Prisma.PaymentCreateWithoutMemberInput = {
-        amountPaid: member.amountPaid,
-        datePaid: new Date(member.datePaid),
-        paymentMethod: member.paymentMethod as PaymentMethod,
-        checkNumber: member.checkNumber,
-        comments: member['Additional Payment(s)'],
-      };
-
       return await prisma.member.create({
         data: {
           ...memberDB,
-          payment: {
-            create: {
-              ...paymentDB,
-            },
-          },
         },
       });
     });

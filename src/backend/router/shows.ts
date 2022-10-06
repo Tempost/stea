@@ -68,6 +68,7 @@ export const show = createRouter()
       }).deepPartial(),
     }),
     async resolve({ input: { uid, patch } }) {
+      console.log(patch);
       return await prisma.show.update({
         where: {
           uid: uid,

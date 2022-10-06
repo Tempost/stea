@@ -1,6 +1,5 @@
 export * from "./nonmemberhorseowner"
 export * from "./member"
-export * from "./payment"
 export * from "./horse"
 export * from "./ridercombo"
 export * from "./points"

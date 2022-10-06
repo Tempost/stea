@@ -56,6 +56,7 @@ export function HorseFieldArray() {
               <TextInput
                 label='Registered Name*'
                 inputMode='text'
+                altLabel='Horses registered name must be used when entering a show.'
                 className='input-primary input-sm'
                 error={Array.isArray(errors.horses) && errors.horses.at(index)}
                 {...register(`horses.${index}.horseRN` as const, {
@@ -64,7 +65,7 @@ export function HorseFieldArray() {
               />
 
               <TextInput
-                label='Aka Name'
+                label='Barn Name'
                 inputMode='text'
                 className='input-primary input-sm'
                 {...register(`horses.${index}.horseAKA` as const)}

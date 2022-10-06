@@ -1,6 +1,6 @@
 import members from './members.json';
 import horses from './horses.json';
-import { JRSR, PaymentMethod, Prisma, Status } from '@prisma/client';
+import { JRSR, Prisma, Status } from '@prisma/client';
 import { Type } from '@prisma/client';
 
 export default function fill(mutator: any) {
@@ -25,7 +25,6 @@ export default function fill(mutator: any) {
   });
 
   members.forEach(member => {
-    let paymentDB: Prisma.PaymentCreateWithoutMemberInput;
     let memberDB: Prisma.MemberCreateInput;
     memberDB = {
       createdAt: new Date(),
@@ -48,14 +47,6 @@ export default function fill(mutator: any) {
       confirmed: true,
     };
 
-    paymentDB = {
-      amountPaid: member.amountPaid,
-      updatedAt: new Date(),
-      datePaid: new Date(member.datePaid),
-      paymentMethod: member.paymentMethod as PaymentMethod,
-      checkNumber: member.checkNumber,
-      comments: member['Additional Payment(s)'],
-    };
-    mutator.mutate({ member: memberDB, payment: paymentDB });
+    mutator.mutate({ member: memberDB });
   });
 }
