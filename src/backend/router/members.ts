@@ -80,7 +80,8 @@ export const member = createRouter()
       return await prisma.member.create({
         data: {
           ...member,
-          fullName: `${member.firstName} ${member.lastName}`,
+          fullName:
+            member.businessName ?? `${member.firstName} ${member.lastName}`,
           Horse: {
             create: horses && [...horses],
           },

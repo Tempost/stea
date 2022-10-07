@@ -24,6 +24,7 @@ function HorseRegistration() {
   } = methods;
 
   const update = useSetAtom(updateFormState);
+  console.log(errors);
   return (
     <FormProvider {...methods}>
       <form>

@@ -37,6 +37,7 @@ function BusinessRegistration() {
 
   setValue('member.memberType', 'Individual' as Type);
   setValue('member.memberStatusType', 'Professional');
+  setValue('member.currentUSEAMember', false);
 
   return (
     <FormProvider {...methods}>

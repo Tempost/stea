@@ -18,7 +18,7 @@ export const MemberFormValues = z.object({
 });
 
 export const OwnerHorseFormValues = z.object({
-  owner: NonMemberHorseOwnerModel,
+  owner: NonMemberHorseOwnerModel.omit({ fullName: true }),
   horses: z.array(HorseModel).min(1, 'Horse is required'),
 });
 

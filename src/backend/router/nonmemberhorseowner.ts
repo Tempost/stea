@@ -6,7 +6,7 @@ import { HorseModel, NonMemberHorseOwnerModel } from '@/backend/prisma/zod';
 import { TRPCError } from '@trpc/server';
 
 const addOwnerInput = z.object({
-  owner: NonMemberHorseOwnerModel,
+  owner: NonMemberHorseOwnerModel.omit({ fullName: true }),
   horses: z.array(HorseModel),
 });
 type AddOwnerInput = z.infer<typeof addOwnerInput>;
@@ -78,32 +78,33 @@ export const nonMemberHorseOwner = createRouter()
   })
   .mutation('add-owner-horse', {
     input: addOwnerInput,
-    async resolve({ input }) {
+    async resolve({ input: { owner, horses } }) {
       const existingMember = await prisma.member.findUnique({
-        where: { fullName: input.owner.fullName },
+        where: { fullName: `${owner.firstName} ${owner.lastName}` },
       });
 
       if (existingMember !== null) {
         // Existing member, update their horses instead
         return await prisma.member.update({
-          where: { fullName: input.owner.fullName },
+          where: { fullName: `${owner.firstName} ${owner.lastName}` },
           data: {
             Horse: {
-              create: [...input.horses],
+              create: [...horses],
             },
           },
         });
       } else {
         // otherwise create/update an owner record
-        return await upsertOwner(input);
+        return await upsertOwner({ owner, horses });
       }
     },
   });
 
 async function upsertOwner({ owner, horses }: AddOwnerInput) {
   const newOwner = await prisma.nonMemberHorseOwner.upsert({
-    where: { fullName: owner.fullName },
+    where: { fullName: `${owner.firstName} ${owner.lastName}` },
     create: {
+      fullName: `${owner.firstName} ${owner.lastName}`,
       ...owner,
       horses: {
         createMany: {
