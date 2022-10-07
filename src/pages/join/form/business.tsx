@@ -10,11 +10,9 @@ import {
 } from '@/components/data-entry';
 import states from '@/utils/states.json';
 import useZodForm from '@/utils/usezodform';
-import { HorseFieldArray } from '@/components/forms/HorseFieldArray';
-import RegType from '@/components/forms/regtype';
+import { HorseFieldArray, RegType, Payment } from '@/components/forms';
 import { FormLayout } from '@/components/layout';
 import { Type } from '@prisma/client';
-import Payment from '@/components/forms/Payment';
 import phoneTypes from '@/utils/phoneTypes.json';
 import { MemberFormValues } from '@/utils/zodschemas';
 import triggerValidation from '@/utils/formvalidation';
@@ -38,7 +36,7 @@ function BusinessRegistration() {
   const update = useSetAtom(updateFormState);
 
   setValue('member.memberType', 'Individual' as Type);
-  setValue('member.JRSR', 'SR');
+  setValue('member.memberStatusType', 'Professional');
 
   return (
     <FormProvider {...methods}>

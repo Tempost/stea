@@ -19,10 +19,10 @@ function MembersAnHorses() {
             header: () => <span> Name </span>,
           },
           {
-            accessorKey: 'JRSR',
-            id: 'JRSR',
+            accessorKey: 'memberStatusType',
+            id: 'memberStatusType',
             cell: info => info.getValue(),
-            header: () => <span> Rider Level </span>,
+            header: () => <span> Member Type </span>,
           },
           {
             accessorKey: 'memberStatus',

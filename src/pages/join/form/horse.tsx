@@ -3,10 +3,9 @@ import { FormProvider } from 'react-hook-form';
 import { useSetAtom } from 'jotai';
 
 import { TextInput, Select } from '@/components/data-entry';
-import { HorseFieldArray } from '@/components/forms/HorseFieldArray';
+import { HorseFieldArray, Payment } from '@/components/forms';
 import useZodForm from '@/utils/usezodform';
 import { FormLayout } from '@/components/layout';
-import Payment from '@/components/forms/Payment';
 import phoneTypes from '@/utils/phoneTypes.json';
 import triggerValidation from '@/utils/formvalidation';
 import { OwnerHorseFormValues } from '@/utils/zodschemas';

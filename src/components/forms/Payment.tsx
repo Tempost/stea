@@ -1,4 +1,4 @@
-import { PropsWithChildren, ReactElement } from 'react';
+import { PropsWithChildren } from 'react';
 import { useRouter } from 'next/router';
 import { useAtom } from 'jotai';
 import { FieldValues, useFormContext } from 'react-hook-form';
@@ -11,7 +11,6 @@ import {
 } from '@paypal/paypal-js';
 
 import { formState } from '@/utils/atoms';
-import { FormLayout } from '@/components/layout';
 import { TMutation, trpc } from '@/utils/trpc';
 
 interface PaymentProps extends PropsWithChildren {
@@ -101,9 +100,5 @@ function Payment({
     </>
   );
 }
-
-Payment.getLayout = (page: ReactElement) => {
-  return <FormLayout>{page}</FormLayout>;
-};
 
 export default Payment;

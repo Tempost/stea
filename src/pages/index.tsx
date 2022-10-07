@@ -43,7 +43,7 @@ function Home() {
       </div>
 
       <div className='flex flex-col gap-5 p-5 md:gap-10 md:p-10'>
-        <div className='flex flex-col justify-around gap-5 self-center md:flex-row md:flex-wrap'>
+        <div className='mx-auto flex flex-col justify-around gap-5 md:flex-row md:flex-wrap'>
           <NavCard
             bodyText='Membership'
             href='/members-horses'
@@ -61,7 +61,7 @@ function Home() {
           />
         </div>
 
-        <section className='card-compact card w-fit self-center  shadow-2xl'>
+        <section className='card-compact container card mx-auto w-fit shadow-2xl'>
           <h2 className='text-center text-xl font-bold text-red-600 md:text-2xl lg:text-3xl'>
             Notice
           </h2>
@@ -83,11 +83,11 @@ function Home() {
           </div>
         </section>
 
-        <section className='flex flex-col items-center gap-2 self-center'>
+        <section className='mx-auto flex flex-col items-center gap-2'>
           <EOYPlacing />
         </section>
 
-        <section className='flex flex-col items-center gap-2 self-center'>
+        <section className='mx-auto flex flex-col items-center gap-2'>
           <UpcomingEvents />
         </section>
 

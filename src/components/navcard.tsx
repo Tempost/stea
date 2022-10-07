@@ -11,10 +11,10 @@ export default function NavCard({ img, bodyText, ...props }: NavCardProps) {
     <NextLink {...props}>
       <a
         className='
-        group card image-full h-[15em] w-[20em] shadow-lg
+        container group card image-full h-[15em] w-[20em] shadow-lg
         transition-all delay-75 duration-300
         ease-in-out hover:scale-[1.05] hover:cursor-pointer hover:shadow-2xl
-        sm:h-[20em] sm:w-[25em] md:h-[25em] md:w-[30em]'
+        '
       >
         <figure className='relative'>
           <Image

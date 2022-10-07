@@ -12,38 +12,42 @@ interface DatePickerProps {
   name: string;
   placeholderText?: string;
   label?: string;
+  hidden?: boolean;
 }
 
 function ControlledDatePicker({
   label,
   placeholderText,
   name,
+  hidden,
 }: DatePickerProps) {
   const { control } = useFormContext();
   return (
-    <Controller
-      name={name}
-      control={control}
-      render={props => {
-        return (
-          <DatePicker
-            showPopperArrow={false}
-            placeholderText={placeholderText}
-            onChange={(date: Date) => {
-              props.field.onChange(date);
-            }}
-            selected={props.field.value}
-            customInput={
-              <TextInput
-                label={label}
-                altLabel='Membership year runs from Dec 1st to Nov 30th of each show year.'
-                className='input-primary w-40'
-              />
-            }
-          />
-        );
-      }}
-    />
+    <div className={`${hidden ? 'hidden' : ''} `}>
+      <Controller
+        name={name}
+        control={control}
+        render={props => {
+          return (
+            <DatePicker
+              showPopperArrow={false}
+              placeholderText={placeholderText}
+              onChange={(date: Date) => {
+                props.field.onChange(date);
+              }}
+              selected={props.field.value}
+              customInput={
+                <TextInput
+                  label={label}
+                  altLabel='Membership year runs from Dec 1st to Nov 30th of each show year.'
+                  className='input-primary w-40'
+                />
+              }
+            />
+          );
+        }}
+      />
+    </div>
   );
 }
 

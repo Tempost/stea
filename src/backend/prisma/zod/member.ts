@@ -1,5 +1,5 @@
 import * as z from "zod"
-import { PhoneType, Type, Status, JRSR } from "@prisma/client"
+import { PhoneType, Type, Status, StatusType } from "@prisma/client"
 import { CompleteRiderCombo, RelatedRiderComboModel, CompleteHorse, RelatedHorseModel } from "./index"
 
 export const MemberModel = z.object({
@@ -28,7 +28,7 @@ export const MemberModel = z.object({
   membershipDate: z.date().nullish(),
   memberType: z.nativeEnum(Type),
   memberStatus: z.nativeEnum(Status),
-  JRSR: z.nativeEnum(JRSR),
+  memberStatusType: z.nativeEnum(StatusType),
   dateOfBirth: z.date().nullish(),
   zip: z.number().int(),
   useaMemberID: z.number().int().nullish(),

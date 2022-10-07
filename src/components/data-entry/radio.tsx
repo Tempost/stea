@@ -13,9 +13,9 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>(
   ({ className, label, ...props }, ref) => {
     const id = useId();
     return (
-      <div className='flex w-full items-center justify-between'>
+      <div className='flex items-center justify-between'>
         <label
-          className='label'
+          className='label pr-5'
           htmlFor={`radio-input${id}`}
         >
           <span className='label-text'>{label}</span>

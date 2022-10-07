@@ -7,16 +7,17 @@ import {
   Select,
   NumericInput,
 } from '@/components/data-entry';
-
-import JRSR from '@/components/forms/JRSRField';
 import states from '@/utils/states.json';
 import useZodForm from '@/utils/usezodform';
-import { HorseFieldArray } from '@/components/forms/HorseFieldArray';
-
 import { Type } from '@prisma/client';
-import RegType from '@/components/forms/regtype';
+import {
+  RegType,
+  MemberType,
+  HorseFieldArray,
+  Payment,
+  Under18,
+} from '@/components/forms';
 import { FormLayout } from '@/components/layout';
-import Payment from '@/components/forms/Payment';
 import phoneTypes from '@/utils/phoneTypes.json';
 import { MemberFormValues } from '@/utils/zodschemas';
 import triggerValidation from '@/utils/formvalidation';
@@ -146,15 +147,15 @@ function IndividualRegistration() {
               />
             </div>
 
-            <RegType
-              register={register('member.memberStatus', { required: true })}
-            />
+            <div className='container flex-col'>
+              <RegType
+                register={register('member.memberStatus', { required: true })}
+              />
 
-            <JRSR
-              radioRegister={register('member.JRSR', { required: true })}
-              dateName='member.dateOfBirth'
-              watchName='member.JRSR'
-            />
+              <MemberType register={register('member.memberStatusType')} />
+
+              <Under18 dateName='member.dateOfBirth' />
+            </div>
 
             <div className='flex gap-2'>
               <Checkbox

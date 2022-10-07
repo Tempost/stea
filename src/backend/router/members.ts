@@ -76,6 +76,7 @@ export const member = createRouter()
     }),
 
     async resolve({ input: { member, horses } }) {
+      console.log(member);
       return await prisma.member.create({
         data: {
           ...member,

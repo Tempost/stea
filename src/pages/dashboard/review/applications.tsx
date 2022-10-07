@@ -19,10 +19,10 @@ const applicantCols: ColumnDef<Member>[] = [
         header: 'Name',
       },
       {
-        accessorKey: 'JRSR',
-        id: 'JRSR',
+        accessorKey: 'memberStatusType',
+        id: 'memberStatusType',
         cell: info => info.getValue(),
-        header: 'Rider Level',
+        header: 'Member Type',
       },
       {
         accessorKey: 'email',

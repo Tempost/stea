@@ -1,4 +1,4 @@
-import { JRSR, Prisma, PrismaPromise, Status, Type } from '@prisma/client';
+import { Prisma, PrismaPromise, Status, Type } from '@prisma/client';
 
 import { prisma } from '../../backend/prisma';
 import members from './members.json';
@@ -85,7 +85,7 @@ async function seedMembers() {
         membershipDate: new Date(member.membershipDate),
         memberType: member.memberType as Type,
         memberStatus: member.memberStatus as Status,
-        JRSR: member.JRSR as JRSR,
+        memberStatusType: 'AdultAmature',
         boardMember: false,
         address: member.address,
         city: member.city,

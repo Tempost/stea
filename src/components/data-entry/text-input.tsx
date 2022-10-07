@@ -48,7 +48,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
 
         {altLabel && (
           <label
-            className={`label-text-alt bg-neutral/10 rounded-sm p-0.5 w-fit ${labelStyle}`}
+            className={`label-text-alt w-fit rounded-sm bg-info/25 p-0.5 ${labelStyle}`}
             htmlFor={`text-input${id}`}
             aria-label={label}
           >

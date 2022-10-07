@@ -6,7 +6,7 @@ import { createContextInner } from '../../backend/prisma';
 import { appRouter } from '../../backend/router/_app';
 import { inferMutationInput, inferQueryInput } from '../../utils/trpc';
 import { HorseModel, NonMemberHorseOwnerModel } from '@/backend/prisma/zod';
-import { PaymentMethod, PrismaPromise, Status } from '@prisma/client';
+import { PrismaPromise, Status } from '@prisma/client';
 
 describe('tRPC router tests', () => {
   // In the case where records are left in the DB, delete all data from the tables
@@ -53,13 +53,6 @@ describe('tRPC router tests', () => {
       const ctx = await createContextInner({});
       const caller = appRouter.createCaller(ctx);
 
-      const payment = {
-        amountPaid: 50,
-        paymentMethod: 'PayPal' as PaymentMethod,
-        comments:
-          'This is coming from a test, if everything works ok it gets delete via cascade (:',
-      };
-
       const member: inferMutationInput<'member.add-member'>['member'] = {
         firstName,
         lastName,
@@ -72,9 +65,10 @@ describe('tRPC router tests', () => {
         currentUSEAMember: false,
         memberType: 'Business',
         memberStatus: 'Life',
-        JRSR: 'JR',
         dateOfBirth: date,
         zip: parseInt(faker.address.zipCodeByState('TX')),
+        membershipDate: date,
+        memberStatusType: 'Professional',
       };
 
       const newHorse = {
@@ -85,7 +79,6 @@ describe('tRPC router tests', () => {
       const input: inferMutationInput<'member.add-member'> = {
         member,
         horses: [newHorse],
-        payment,
       };
 
       await caller.mutation('member.add-member', input);
@@ -368,9 +361,9 @@ describe('tRPC router tests', () => {
         currentUSEAMember: false,
         memberType: 'Business',
         memberStatus: 'Life',
-        JRSR: 'JR',
         dateOfBirth: date,
         zip: parseInt(faker.address.zipCodeByState('TX')),
+        memberStatusType: 'Professional',
       };
 
       const input: inferMutationInput<'member.add-member'> = {

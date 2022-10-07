@@ -38,10 +38,10 @@ function MemberTable({ overRideDefaultCols, search }: MemberTableProps) {
             header: () => <span> Name </span>,
           },
           {
-            accessorKey: 'JRSR',
-            id: 'JRSR',
+            accessorKey: 'memberStatusType',
+            id: 'MemberStatusType',
             cell: info => info.getValue(),
-            header: () => <span> Rider Level </span>,
+            header: () => <span> Member Type </span>,
           },
           {
             accessorKey: 'memberStatus',

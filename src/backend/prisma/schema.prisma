@@ -22,7 +22,12 @@ generator zod {
 enum Status {
   Life
   Annual
-  Renew
+}
+
+enum StatusType {
+  AdultAmature
+  Professional
+  Junior
 }
 
 enum ShowType {
@@ -35,11 +40,6 @@ enum Type {
   Individual
   Family
   Business
-}
-
-enum JRSR {
-  JR
-  SR
 }
 
 enum PhoneType {
@@ -97,7 +97,7 @@ model Member {
   membershipDate    DateTime?    @default(now())
   memberType        Type
   memberStatus      Status
-  JRSR              JRSR
+  memberStatusType  StatusType
   dateOfBirth       DateTime?
   zip               Int
   useaMemberID      Int?

@@ -1,14 +1,14 @@
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { Prisma, Status } from '@prisma/client';
 import { TextInput } from '../data-entry';
-import RegType from './regtype';
+import RegType from './RegType';
 import { AddIcon, TrashIcon } from '../icons';
 
 type Horses = {
   horses: Prisma.HorseCreateManyInput[];
 };
 
-export function HorseFieldArray() {
+export default function HorseFieldArray() {
   const {
     register,
     control,
