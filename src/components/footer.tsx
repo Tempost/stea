@@ -10,6 +10,7 @@ function Footer() {
       <div className='flex flex-col'>
         <h1 className='footer-title text-2xl'>South Texas Eventing</h1>
         <Link href='/dashboard'> Dashboard </Link>
+        <p>Contact email: stea@steventing.net</p>
       </div>
     </footer>
   );

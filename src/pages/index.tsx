@@ -92,7 +92,7 @@ function Home() {
         </section>
 
         <section className='flex flex-col items-center gap-2'>
-          <h1 className='text-xl'>Recognized vendors</h1>
+          <h1 className='text-2xl font-bold'>Recognized vendors</h1>
           {/* TODO: List of vendors w/ photos */}
         </section>
       </div>

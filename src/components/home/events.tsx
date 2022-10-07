@@ -2,7 +2,7 @@ import NextLink from 'next/link';
 import { CalenderIcon } from '../icons';
 
 function UpcomingEvents() {
-  return (
+  return process.env.NODE_ENV === 'production' ? (
     <>
       <h2 className='text-xl'>Upcoming Events</h2>
       <NextLink href='/calender'>
@@ -14,7 +14,7 @@ function UpcomingEvents() {
       {/* TODO: Grab shows happening in the next month and display here */}
       {/* TODO: Make some sort of event display component? */}
     </>
-  );
+  ): null;
 }
 
 export default UpcomingEvents;

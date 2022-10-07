@@ -1,6 +1,6 @@
+import { ReactElement } from 'react';
 import { PublicLayout } from '@/components/layout';
 function ContactUs() {}
-import { ReactElement } from 'react';
 ContactUs.getLayout = (page: ReactElement) => {
   return <PublicLayout>{page}</PublicLayout>;
 };
