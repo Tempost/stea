@@ -13,11 +13,6 @@ export const HorseModel = z.object({
    * Barn name of the horse
    */
   horseAKA: z.string().nullish(),
-  /**
-   * Field only here becuase of seeding old members
-   * Not able to connect every member/horse back together
-   */
-  notConnected: z.boolean().nullish(),
   memberName: z.string().nullish(),
   registrationDate: z.date().nullish(),
   regType: z.nativeEnum(Status),

@@ -64,7 +64,6 @@ async function seedHorses() {
             ? null
             : new Date(horse.registrationDate),
         regType: horse.regType as Status,
-        notConnected: true,
       } as Prisma.HorseCreateInput;
     });
 

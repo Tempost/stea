@@ -117,9 +117,6 @@ model Horse {
   horseRN          String               @id @db.VarChar(255)
   /// Barn name of the horse
   horseAKA         String?              @db.VarChar(255)
-  /// Field only here becuase of seeding old members
-  /// Not able to connect every member/horse back together
-  notConnected     Boolean?             @default(false)
   ownerRec         NonMemberHorseOwner? @relation(fields: [owner], references: [fullName], onDelete: Cascade, onUpdate: Cascade)
   memberOwner      Member?              @relation(fields: [memberName], references: [fullName], onDelete: Cascade, onUpdate: Cascade)
   memberName       String?
