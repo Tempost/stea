@@ -6,31 +6,31 @@ import horses from './horses.json';
 import { removeUndefined } from '../helpers';
 
 async function cleanUp() {
-  const transactions: PrismaPromise<any>[] = [];
-  transactions.push(prisma.$executeRaw`SET FOREIGN_KEY_CHECKS = 0;`);
+  // const transactions: PrismaPromise<any>[] = [];
+  // transactions.push(prisma.$executeRaw`SET FOREIGN_KEY_CHECKS = 0;`);
 
-  const tableNames = await prisma.$queryRaw<
-    Array<{ TABLE_NAME: string }>
-  >`SELECT TABLE_NAME from information_schema.TABLES WHERE TABLE_SCHEMA ='stea';`;
+  // const tableNames = await prisma.$queryRaw<
+  //   Array<{ TABLE_NAME: string }>
+  // >`SELECT TABLE_NAME from information_schema.TABLES WHERE TABLE_SCHEMA ='stea';`;
 
-  for (const { TABLE_NAME } of tableNames) {
-    if (TABLE_NAME !== '_prisma_migrations') {
-      try {
-        transactions.push(
-          prisma.$executeRawUnsafe(`TRUNCATE stea.${TABLE_NAME}`)
-        );
-      } catch (error) {
-        console.log({ error });
-      }
-    }
-  }
+  // for (const { TABLE_NAME } of tableNames) {
+  //   if (TABLE_NAME !== '_prisma_migrations') {
+  //     try {
+  //       transactions.push(
+  //         prisma.$executeRawUnsafe(`TRUNCATE stea.${TABLE_NAME}`)
+  //       );
+  //     } catch (error) {
+  //       console.log({ error });
+  //     }
+  //   }
+  // }
 
-  transactions.push(prisma.$executeRaw`SET FOREIGN_KEY_CHECKS = 1;`);
-  try {
-    return prisma.$transaction(transactions);
-  } catch (error) {
-    console.log({ error });
-  }
+  // transactions.push(prisma.$executeRaw`SET FOREIGN_KEY_CHECKS = 1;`);
+  // try {
+  //   return prisma.$transaction(transactions);
+  // } catch (error) {
+  //   console.log({ error });
+  // }
 }
 
 function findDupes<T>(data: T) {
@@ -76,6 +76,13 @@ async function seedMembers() {
   const dbActions = members
     .filter(member => member.memberStatus === 'Life')
     .map(async member => {
+      const horses = member.horses.split(',');
+      const validHorses = await prisma.horse.findMany({
+        where: {
+          horseRN: { in: horses },
+        },
+      });
+
       const memberDB: Prisma.MemberCreateInput = {
         createdAt: new Date(),
         firstName: member.firstName,
@@ -99,6 +106,12 @@ async function seedMembers() {
       return await prisma.member.create({
         data: {
           ...memberDB,
+          Horse: {
+            connect:
+              validHorses.map(horse => {
+                return { horseRN: horse.horseRN };
+              }) || [],
+          },
         },
       });
     });
@@ -106,21 +119,16 @@ async function seedMembers() {
   return dbActions;
 }
 
-async function load() {
-  await seedHorses().catch(err => {
-    console.log(err);
-    process.exit(1);
+cleanUp()
+  .then(async () => {
+    await seedHorses().catch(err => {
+      console.log(err);
+      process.exit(1);
+    });
+  })
+  .then(async () => {
+    await seedMembers().catch(err => {
+      console.log(err);
+      process.exit(1);
+    });
   });
-
-  const newMembers = await seedMembers().catch(err => {
-    console.log(err);
-    process.exit(1);
-  });
-
-  console.log(newMembers.length);
-}
-
-cleanUp().then(res => {
-  console.log(res);
-  load();
-});
