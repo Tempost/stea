@@ -67,6 +67,12 @@ function MemberTable({ overRideDefaultCols, search }: MemberTableProps) {
             cell: info => info.getValue(),
             header: () => <span> Phone </span>,
           },
+          {
+            accessorKey: 'firstName',
+            id: 'firstName',
+            cell: info => info.getValue(),
+            header: () => <span> Contact </span>,
+          },
         ],
       },
     ],

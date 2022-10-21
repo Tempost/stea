@@ -3,17 +3,14 @@ import GoogleProvider from 'next-auth/providers/google';
 
 export default NextAuth({
   callbacks: {
-    session({ session, token }) {
-      session.access_token = token.access_token;
-      console.log('this is the current session.', session);
-      return session;
-    },
     jwt({ token, account }) {
-      console.log(account);
       if (account) {
         token.access_token = account.access_token;
       }
       return token;
+    },
+    session({ session, token }) {
+      return { ...session, access_token: token.access_token };
     },
   },
   providers: [
