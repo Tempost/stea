@@ -3,7 +3,7 @@ function EOYPlacing() {
     <>
       <h1 className='text-xl'>End of Year Placings</h1>
     </>
-  ): null;
+  ) : null;
 }
 
 export default EOYPlacing;

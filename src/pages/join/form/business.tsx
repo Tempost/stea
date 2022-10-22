@@ -15,7 +15,6 @@ import { FormLayout } from '@/components/layout';
 import { Type } from '@prisma/client';
 import phoneTypes from '@/utils/phoneTypes.json';
 import { MemberFormValues } from '@/utils/zodschemas';
-import triggerValidation from '@/utils/formvalidation';
 import { updateFormState } from '@/utils/atoms';
 
 function BusinessRegistration() {
@@ -42,13 +41,7 @@ function BusinessRegistration() {
   return (
     <FormProvider {...methods}>
       <form>
-        <Payment
-          showPayment={payment}
-          formValidation={() =>
-            triggerValidation<MemberFormValues>(methods, togglePayment, update)
-          }
-          mutation='member.add-member'
-        >
+        <Payment showPayment={payment}>
           <h2 className='divider'>Business Registration</h2>
 
           <h3 className='mb-2 rounded-2xl border border-solid border-gray-400 bg-gray-100 p-4 text-center'>

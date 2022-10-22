@@ -8,11 +8,9 @@ import { removeUndefined } from '../helpers';
 async function cleanUp() {
   // const transactions: PrismaPromise<any>[] = [];
   // transactions.push(prisma.$executeRaw`SET FOREIGN_KEY_CHECKS = 0;`);
-
   // const tableNames = await prisma.$queryRaw<
   //   Array<{ TABLE_NAME: string }>
   // >`SELECT TABLE_NAME from information_schema.TABLES WHERE TABLE_SCHEMA ='stea';`;
-
   // for (const { TABLE_NAME } of tableNames) {
   //   if (TABLE_NAME !== '_prisma_migrations') {
   //     try {
@@ -24,7 +22,6 @@ async function cleanUp() {
   //     }
   //   }
   // }
-
   // transactions.push(prisma.$executeRaw`SET FOREIGN_KEY_CHECKS = 1;`);
   // try {
   //   return prisma.$transaction(transactions);

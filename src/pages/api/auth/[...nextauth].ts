@@ -2,6 +2,11 @@ import NextAuth from 'next-auth/next';
 import GoogleProvider from 'next-auth/providers/google';
 
 export default NextAuth({
+  events: {
+    async signIn(message) {
+      console.info(`${message.user.name} signed in from ${message.user.email}`);
+    },
+  },
   callbacks: {
     jwt({ token, account }) {
       if (account) {

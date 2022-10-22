@@ -2,15 +2,15 @@ import { PropsWithChildren, ReactElement } from 'react';
 import { PublicLayout } from '@/components/layout';
 
 function ContactCard({ children }: PropsWithChildren) {
-  return <p className='rounded-md shadow-2xl w-fit p-5'>{children}</p>;
+  return <p className='w-fit rounded-md p-5 shadow-2xl'>{children}</p>;
 }
 function ContactUs() {
   return (
-    <section className='flex flex-col justify-center items-center h-full'>
-      <h1 className='text-lg md:text-2xl font-bold text-neutral mx-auto w-fit'>
+    <section className='flex h-full flex-col items-center justify-center'>
+      <h1 className='mx-auto w-fit text-lg font-bold text-neutral md:text-2xl'>
         Boardmember Contact Information
       </h1>
-      <div className='container mx-auto flex flex-row flex-wrap justify-center gap-10 m-10'>
+      <div className='container m-10 mx-auto flex flex-row flex-wrap justify-center gap-10'>
         <ContactCard>
           New Horizon Stables
           <br />

@@ -1,7 +1,6 @@
 import { PropsWithChildren } from 'react';
 import { useRouter } from 'next/router';
 import { useAtom } from 'jotai';
-import { FieldValues, useFormContext } from 'react-hook-form';
 import { PayPalButtons } from '@paypal/react-paypal-js';
 import {
   CreateOrderActions,
@@ -11,29 +10,22 @@ import {
 } from '@paypal/paypal-js';
 
 import { formState } from '@/utils/atoms';
-import { TMutation, trpc } from '@/utils/trpc';
+import Alert from './Alert';
 
 interface PaymentProps extends PropsWithChildren {
   showPayment: boolean;
-  mutation: TMutation;
-  formValidation: () => void;
+  queryStatus: { error: boolean; message?: string };
 }
 
-function Payment({
-  showPayment,
-  children,
-  mutation,
-  formValidation,
-}: PaymentProps) {
+function Payment({ showPayment, children, queryStatus }: PaymentProps) {
   const history = useRouter();
-  const mutator = trpc.useMutation([mutation]);
-  const { handleSubmit } = useFormContext();
+
   const [state] = useAtom(formState);
 
   const amountOwed =
     state.memberCost + state.horses.lifeCost + state.horses.annualCost;
 
-  function createOrder(data: CreateOrderData, actions: CreateOrderActions) {
+  function createOrder(_: CreateOrderData, actions: CreateOrderActions) {
     return actions.order.create({
       intent: 'CAPTURE',
       application_context: {
@@ -51,16 +43,12 @@ function Payment({
     });
   }
 
-  function onSubmit(values: FieldValues) {
-    mutator.mutate({ ...values });
-  }
-
-  async function onApprove(data: OnApproveData, actions: OnApproveActions) {
+  async function onApprove(_: OnApproveData, actions: OnApproveActions) {
     return actions.order!.capture().then(details => {
       const name = details.payer.name?.given_name;
       console.log(details);
       console.log(name);
-      handleSubmit(onSubmit)().then(() => history.push('/'));
+      history.push('/');
     });
   }
 
@@ -88,10 +76,10 @@ function Payment({
       ) : (
         <>
           {children}
+          {queryStatus.error && <Alert message={queryStatus.message ?? ''} />}
           <button
-            type='button'
+            type='submit'
             className='btn btn-primary w-full'
-            onClick={() => formValidation()}
           >
             Move to payment
           </button>

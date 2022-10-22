@@ -7,7 +7,6 @@ import { HorseFieldArray, Payment } from '@/components/forms';
 import useZodForm from '@/utils/usezodform';
 import { FormLayout } from '@/components/layout';
 import phoneTypes from '@/utils/phoneTypes.json';
-import triggerValidation from '@/utils/formvalidation';
 import { OwnerHorseFormValues } from '@/utils/zodschemas';
 import { updateFormState } from '@/utils/atoms';
 
@@ -24,21 +23,11 @@ function HorseRegistration() {
   } = methods;
 
   const update = useSetAtom(updateFormState);
-  console.log(errors);
+
   return (
     <FormProvider {...methods}>
       <form>
-        <Payment
-          showPayment={payment}
-          formValidation={() =>
-            triggerValidation<OwnerHorseFormValues>(
-              methods,
-              togglePayment,
-              update
-            )
-          }
-          mutation='nonMemberHorseOwner.add-owner-horse'
-        >
+        <Payment showPayment={payment}>
           <h2 className='divider'>Horse Registration</h2>
           <section className='flex flex-col gap-2'>
             <h3>Owner Information</h3>

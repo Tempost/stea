@@ -14,7 +14,7 @@ function UpcomingEvents() {
       {/* TODO: Grab shows happening in the next month and display here */}
       {/* TODO: Make some sort of event display component? */}
     </>
-  ): null;
+  ) : null;
 }
 
 export default UpcomingEvents;

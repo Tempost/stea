@@ -1,5 +1,6 @@
 import { ReactElement, useState } from 'react';
 import { FormProvider, useFormState } from 'react-hook-form';
+import { useSetAtom } from 'jotai';
 
 import {
   Checkbox,
@@ -20,12 +21,16 @@ import {
 import { FormLayout } from '@/components/layout';
 import phoneTypes from '@/utils/phoneTypes.json';
 import { MemberFormValues } from '@/utils/zodschemas';
-import triggerValidation from '@/utils/formvalidation';
-import { useSetAtom } from 'jotai';
 import { updateFormState } from '@/utils/atoms';
+import { trpc } from '@/utils/trpc';
 
 function IndividualRegistration() {
   const [payment, togglePayment] = useState(false);
+  const insert = trpc.useMutation(['member.add-member'], {
+    onSuccess() {
+      togglePayment(true);
+    },
+  });
 
   const methods = useZodForm({
     reValidateMode: 'onSubmit',
@@ -43,15 +48,33 @@ function IndividualRegistration() {
 
   setValue('member.memberType', 'Individual' as Type);
 
+  function onSubmit(formValues: MemberFormValues) {
+    if (formValues.horses) {
+      const lifeCount = formValues.horses.filter(
+        horse => horse.regType === 'Life'
+      ).length;
+
+      const annualCount = formValues.horses.filter(
+        horse => horse.regType === 'Annual'
+      ).length;
+
+      update({
+        type: 'HORSE',
+        payload: { lifeCount: lifeCount, annualCount: annualCount },
+      });
+    }
+    insert.mutate(formValues);
+  }
+
   return (
     <FormProvider {...methods}>
-      <form>
+      <form onSubmit={methods.handleSubmit(onSubmit)}>
         <Payment
           showPayment={payment}
-          mutation='member.add-member'
-          formValidation={() =>
-            triggerValidation<MemberFormValues>(methods, togglePayment, update)
-          }
+          queryStatus={{
+            error: insert.isError,
+            message: insert.error?.message,
+          }}
         >
           <h2 className='divider'>Individual Membership</h2>
 
