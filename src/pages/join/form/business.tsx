@@ -16,9 +16,16 @@ import { Type } from '@prisma/client';
 import phoneTypes from '@/utils/phoneTypes.json';
 import { MemberFormValues } from '@/utils/zodschemas';
 import { updateFormState } from '@/utils/atoms';
+import { trpc } from '@/utils/trpc';
 
 function BusinessRegistration() {
   const [payment, togglePayment] = useState(false);
+  const insert = trpc.useMutation(['member.add-member'], {
+    onSuccess() {
+      togglePayment(true);
+    },
+  });
+
   const methods = useZodForm({
     reValidateMode: 'onSubmit',
     shouldFocusError: true,
@@ -34,14 +41,38 @@ function BusinessRegistration() {
   const isRegHorse = watch('horseReg', false);
   const update = useSetAtom(updateFormState);
 
-  setValue('member.memberType', 'Individual' as Type);
+  function onSubmit(formValues: MemberFormValues) {
+    if (formValues.horses) {
+      const lifeCount = formValues.horses.filter(
+        horse => horse.regType === 'Life'
+      ).length;
+
+      const annualCount = formValues.horses.filter(
+        horse => horse.regType === 'Annual'
+      ).length;
+
+      update({
+        type: 'HORSE',
+        payload: { lifeCount: lifeCount, annualCount: annualCount },
+      });
+    }
+    insert.mutate(formValues);
+  }
+
+  setValue('member.memberType', 'Business' as Type);
   setValue('member.memberStatusType', 'Professional');
   setValue('member.currentUSEAMember', false);
 
   return (
     <FormProvider {...methods}>
-      <form>
-        <Payment showPayment={payment}>
+      <form onSubmit={methods.handleSubmit(onSubmit)}>
+        <Payment
+          showPayment={payment}
+          queryStatus={{
+            error: insert.isError,
+            message: insert.error?.message,
+          }}
+        >
           <h2 className='divider'>Business Registration</h2>
 
           <h3 className='mb-2 rounded-2xl border border-solid border-gray-400 bg-gray-100 p-4 text-center'>

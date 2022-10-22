@@ -9,9 +9,16 @@ import { FormLayout } from '@/components/layout';
 import phoneTypes from '@/utils/phoneTypes.json';
 import { OwnerHorseFormValues } from '@/utils/zodschemas';
 import { updateFormState } from '@/utils/atoms';
+import { trpc } from '@/utils/trpc';
 
 function HorseRegistration() {
   const [payment, togglePayment] = useState(false);
+  const insert = trpc.useMutation(['nonMemberHorseOwner.add-owner-horse'], {
+    onSuccess() {
+      togglePayment(true);
+    },
+  });
+
   const methods = useZodForm({
     reValidateMode: 'onSubmit',
     shouldFocusError: true,
@@ -24,10 +31,34 @@ function HorseRegistration() {
 
   const update = useSetAtom(updateFormState);
 
+  function onSubmit(formValues: OwnerHorseFormValues) {
+    if (formValues.horses) {
+      const lifeCount = formValues.horses.filter(
+        horse => horse.regType === 'Life'
+      ).length;
+
+      const annualCount = formValues.horses.filter(
+        horse => horse.regType === 'Annual'
+      ).length;
+
+      update({
+        type: 'HORSE',
+        payload: { lifeCount: lifeCount, annualCount: annualCount },
+      });
+    }
+    insert.mutate(formValues);
+  }
+
   return (
     <FormProvider {...methods}>
-      <form>
-        <Payment showPayment={payment}>
+      <form onSubmit={methods.handleSubmit(onSubmit)}>
+        <Payment
+          showPayment={payment}
+          queryStatus={{
+            error: insert.isError,
+            message: insert.error?.message,
+          }}
+        >
           <h2 className='divider'>Horse Registration</h2>
           <section className='flex flex-col gap-2'>
             <h3>Owner Information</h3>

@@ -97,21 +97,14 @@ export const riders = createRouter()
         });
       }
 
-      try {
-        return await prisma.riderCombo.delete({
-          where: {
-            uid: rider.uid,
-          },
-          select: {
-            memberName: true,
-            horseName: true,
-          },
-        });
-      } catch (err) {
-        console.error(
-          err,
-          `${input.memberName} riding ${input.horseName} not found.`
-        );
-      }
+      return await prisma.riderCombo.delete({
+        where: {
+          uid: rider.uid,
+        },
+        select: {
+          memberName: true,
+          horseName: true,
+        },
+      });
     },
   });

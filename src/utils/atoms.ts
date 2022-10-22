@@ -20,7 +20,7 @@ const costs = {
 };
 
 const initFormState: FormState = {
-  type: 'Individual',
+  type: undefined,
   memberCost: 0,
   horses: {
     lifeCost: 0,

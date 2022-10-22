@@ -4,6 +4,7 @@ import { createRouter } from './utils';
 import { prisma } from '@/backend/prisma';
 import { HorseModel, NonMemberHorseOwnerModel } from '@/backend/prisma/zod';
 import { TRPCError } from '@trpc/server';
+import { Prisma } from '@prisma/client';
 
 const addOwnerInput = z.object({
   owner: NonMemberHorseOwnerModel.omit({ fullName: true }),
@@ -14,9 +15,7 @@ type AddOwnerInput = z.infer<typeof addOwnerInput>;
 export const nonMemberHorseOwner = createRouter()
   .query('get-owners', {
     async resolve() {
-      const data = await prisma.nonMemberHorseOwner.findMany();
-
-      return data;
+      return await prisma.nonMemberHorseOwner.findMany();
     },
   })
   .query('get-owner', {
@@ -85,41 +84,71 @@ export const nonMemberHorseOwner = createRouter()
 
       if (existingMember !== null) {
         // Existing member, update their horses instead
-        return await prisma.member.update({
-          where: { fullName: `${owner.firstName} ${owner.lastName}` },
-          data: {
-            Horse: {
-              create: [...horses],
+        try {
+          return await prisma.member.update({
+            where: { fullName: `${owner.firstName} ${owner.lastName}` },
+            data: {
+              Horse: {
+                create: [...horses],
+              },
             },
-          },
-        });
+          });
+        } catch (error) {
+          if (error instanceof Prisma.PrismaClientKnownRequestError) {
+            if (error.code === 'P2002') {
+              throw new Error('Something went wrong, contact us for more details.');
+            }
+          }
+
+          throw error;
+        }
       } else {
-        // otherwise create/update an owner record
-        return await upsertOwner({ owner, horses });
+        try {
+          // otherwise create/update an owner record
+          return await upsertOwner({ owner, horses });
+        } catch (error) {
+          if (error instanceof Prisma.PrismaClientKnownRequestError) {
+            if (error.code === 'P2002') {
+              throw new Error('Something went wrong, contact us for more details.');
+            }
+          }
+
+          throw error;
+        }
       }
     },
   });
 
 async function upsertOwner({ owner, horses }: AddOwnerInput) {
-  const newOwner = await prisma.nonMemberHorseOwner.upsert({
-    where: { fullName: `${owner.firstName} ${owner.lastName}` },
-    create: {
-      fullName: `${owner.firstName} ${owner.lastName}`,
-      ...owner,
-      horses: {
-        createMany: {
-          data: [...horses],
+  try {
+    const newOwner = await prisma.nonMemberHorseOwner.upsert({
+      where: { fullName: `${owner.firstName} ${owner.lastName}` },
+      create: {
+        fullName: `${owner.firstName} ${owner.lastName}`,
+        ...owner,
+        horses: {
+          createMany: {
+            data: [...horses],
+          },
         },
       },
-    },
-    update: {
-      horses: {
-        createMany: {
-          data: [...horses],
+      update: {
+        horses: {
+          createMany: {
+            data: [...horses],
+          },
         },
       },
-    },
-  });
+    });
+    return newOwner;
+  } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === 'P2002') {
+        throw new Error('Something went wrong, contact us for more details.');
+      }
+    }
 
-  return newOwner;
+    throw error;
+  }
+
 }

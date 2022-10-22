@@ -52,7 +52,9 @@ function JoinStea() {
       <button
         className='btn btn-primary w-full'
         onClick={() => {
-          router.push(`${router.pathname}/form/${state.type?.toLowerCase()}`);
+          if (state.type) {
+            router.push(`${router.pathname}/form/${state.type?.toLowerCase()}`);
+          }
         }}
       >
         Next

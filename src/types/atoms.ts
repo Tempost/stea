@@ -2,7 +2,7 @@ import { Status, Type } from '@prisma/client';
 import { FormType, STATUS, TYPE } from './common';
 
 export interface FormState {
-  type: FormType;
+  type: FormType | undefined;
   memberCost: number;
   horses: {
     lifeCost: number;

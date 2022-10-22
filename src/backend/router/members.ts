@@ -4,7 +4,8 @@ import { createRouter } from './utils';
 import { prisma } from '@/backend/prisma';
 import { MemberModel } from '@/backend/prisma/zod';
 import { TRPCError } from '@trpc/server';
-import { Status } from '@prisma/client';
+import { MemberFormValues } from '@/utils/zodschemas';
+import { Prisma } from '@prisma/client';
 
 export const member = createRouter()
   .query('get-members', {
@@ -48,6 +49,7 @@ export const member = createRouter()
         throw new TRPCError({
           code: 'NOT_FOUND',
           message: `${fullName} not found.`,
+          cause: 'Tried to remove non-existing member',
         });
       }
 
@@ -59,34 +61,34 @@ export const member = createRouter()
     },
   })
   .mutation('add-member', {
-    input: z.object({
-      member: MemberModel.omit({
-        fullName: true,
-        boardMember: true,
-        confirmed: true,
-      }).required(),
-      horses: z
-        .object({
-          horseRN: z.string(),
-          horseAKA: z.string().optional(),
-          regType: z.nativeEnum(Status),
-        })
-        .array()
-        .optional(),
-    }),
+    input: MemberFormValues,
 
     async resolve({ input: { member, horses } }) {
       console.log(member);
-      return await prisma.member.create({
-        data: {
-          ...member,
-          fullName:
-            member.businessName ?? `${member.firstName} ${member.lastName}`,
-          Horse: {
-            create: horses && [...horses],
+      try {
+        const res = await prisma.member.create({
+          data: {
+            ...member,
+            fullName:
+              member.businessName ?? `${member.firstName} ${member.lastName}`,
+            Horse: {
+              create: horses && [...horses],
+            },
           },
-        },
-      });
+        });
+      } catch (error) {
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+          if (error.code === 'P2002') {
+            throw new TRPCError({
+              code: 'CONFLICT',
+              message: 'Something went wrong, contact us for more information.',
+              cause: error,
+            });
+          }
+        }
+
+        throw error;
+      }
     },
   })
   .mutation('update-member', {

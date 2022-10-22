@@ -117,8 +117,8 @@ model Horse {
   horseRN          String               @id @db.VarChar(255)
   /// Barn name of the horse
   horseAKA         String?              @db.VarChar(255)
-  ownerRec         NonMemberHorseOwner? @relation(fields: [owner], references: [fullName], onDelete: Cascade, onUpdate: Cascade)
-  memberOwner      Member?              @relation(fields: [memberName], references: [fullName], onDelete: Cascade, onUpdate: Cascade)
+  ownerRec         NonMemberHorseOwner? @relation(fields: [owner], references: [fullName], onUpdate: Cascade)
+  memberOwner      Member?              @relation(fields: [memberName], references: [fullName], onUpdate: Cascade)
   memberName       String?
   registrationDate DateTime?            @default(now())
   regType          Status
