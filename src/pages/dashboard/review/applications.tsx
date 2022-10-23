@@ -21,7 +21,14 @@ const applicantCols: ColumnDef<Member>[] = [
       {
         accessorKey: 'memberStatusType',
         id: 'memberStatusType',
-        cell: info => info.getValue(),
+        cell: info => {
+          const statusType = info.getValue();
+          if (statusType === 'AdultAmateur') {
+            return 'Adult Amateur';
+          }
+
+          return statusType;
+        },
         header: 'Member Type',
       },
       {
