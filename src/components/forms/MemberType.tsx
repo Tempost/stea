@@ -15,8 +15,8 @@ function MemberType({ register, onClick }: Props) {
     <section className='mt-3 w-fit'>
       <h3>Member Type*</h3>
       <Radio
-        label='Adult Amature'
-        value='AdultAmature'
+        label='Adult Amatuer'
+        value='AdultAmatuer'
         className='radio-primary'
         onClick={onClick}
         {...register}

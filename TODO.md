@@ -14,8 +14,8 @@
 
 # Bugs
 
-1. Check a Member or horse is already in the DB **BEFORE** paying
-   a. Alert user, call/email and check current member/horse list
+~~1. Check a Member or horse is already in the DB **BEFORE** paying~~
+   ~~a. Alert user, call/email and check current member/horse list~~
 
 2. If error after payment, invalidate payment and alert
 
@@ -28,7 +28,7 @@
 2. Welcome the user after signing up with the form
    a. Some kind of modal or tiny pop-up to inform the user
    that their form was submited succesfully
-   b. On the flipside also warn them if failed
+   ~~b. On the flipside also warn them if failed~~
 
 3. Point Submission (Look at email with the points spreadsheet)
    a. Should generate points for the show
@@ -39,4 +39,4 @@
 4. Better Logging
    a. Frontend
    I. Axiom package, log any errors
-   b. Backend, just use console.log and console.error
+   ~~b. Backend, just use console.log and console.error~~

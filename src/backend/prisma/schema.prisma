@@ -25,7 +25,7 @@ enum Status {
 }
 
 enum StatusType {
-  AdultAmature
+  AdultAmateur @map("Adult Amateur")
   Professional
   Junior
 }

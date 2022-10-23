@@ -88,7 +88,7 @@ async function seedMembers() {
         membershipDate: new Date(member.membershipDate),
         memberType: member.memberType as Type,
         memberStatus: member.memberStatus as Status,
-        memberStatusType: 'AdultAmature',
+        memberStatusType: 'AdultAmateur',
         boardMember: false,
         address: member.address,
         city: member.city,
