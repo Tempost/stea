@@ -186,6 +186,7 @@ function BusinessRegistration() {
 
               <RegType
                 register={register('member.memberStatus', { required: true })}
+                formType='Business'
               />
             </div>
 

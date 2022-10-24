@@ -173,6 +173,7 @@ function IndividualRegistration() {
             <div className='container flex-col'>
               <RegType
                 register={register('member.memberStatus', { required: true })}
+                formType='Individual'
               />
 
               <MemberType register={register('member.memberStatusType')} />

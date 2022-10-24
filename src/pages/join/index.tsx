@@ -21,7 +21,7 @@ function JoinStea() {
     <section>
       <h2 className='border-b-2 text-center text-2xl'>Join Online Below</h2>
       <div className='card-body grid place-items-center'>
-        <h2>Membership Application type:</h2>
+        <h3>Membership Application type:</h3>
         <div
           className='w-[75%]'
           onChange={handleRadioClick}

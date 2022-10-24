@@ -40,3 +40,5 @@
    a. Frontend
    I. Axiom package, log any errors
    ~~b. Backend, just use console.log and console.error~~
+
+5. After user pays, update the record saying if they paid or not

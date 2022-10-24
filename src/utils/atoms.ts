@@ -12,11 +12,10 @@ import { FormType, isFormType } from '@/types/common';
 
 const costs = {
   Individual: 55,
-  AnnualPerHorse: 20,
+  AnnualPerHorse: 25,
   Business: 65,
   Life: 500,
   LifePerHorse: 150,
-  Family: 0,
 };
 
 const initFormState: FormState = {

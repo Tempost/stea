@@ -50,6 +50,7 @@ export default function HorseFieldArray() {
               register={register(`horses.${index}.regType` as const, {
                 required: true,
               })}
+              formType='Horse'
             />
 
             <span className='flex flex-col gap-2'>

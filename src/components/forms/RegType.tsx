@@ -5,6 +5,7 @@ import { useSetAtom } from 'jotai';
 import { updateFormState } from '@/utils/atoms';
 import { Status } from '@prisma/client';
 import { ChangeEvent, DetailedHTMLProps, InputHTMLAttributes } from 'react';
+import { FormType } from '@/types/common';
 
 interface Props
   extends DetailedHTMLProps<
@@ -13,15 +14,32 @@ interface Props
   > {
   register: UseFormRegisterReturn;
   noAtomUpdate?: boolean;
+  formType: FormType;
 }
 
-function RegType({ register, noAtomUpdate, onClick }: Props) {
+const costs = {
+  life: {
+    Individual: 500,
+    Business: 500,
+    Horse: 150,
+  },
+  annual: {
+    Individual: 55,
+    Business: 65,
+    Horse: 25,
+  },
+};
+
+function RegType({ register, noAtomUpdate, onClick, formType }: Props) {
   const update = useSetAtom(updateFormState);
 
   function handleRadioClick(e: ChangeEvent<HTMLInputElement>) {
     !noAtomUpdate &&
       update({ type: 'STATUS', payload: e.target.value as Status });
   }
+
+  const annualLabel = `Annual ($${costs.annual[formType]})`;
+  const lifeLabel = `Life ($${costs.life[formType]})`;
 
   return (
     <section
@@ -30,7 +48,7 @@ function RegType({ register, noAtomUpdate, onClick }: Props) {
     >
       <h3>Registration Type*</h3>
       <Radio
-        label='Annual'
+        label={annualLabel}
         value='Annual'
         className='radio-primary'
         onClick={onClick}
@@ -38,7 +56,7 @@ function RegType({ register, noAtomUpdate, onClick }: Props) {
       />
 
       <Radio
-        label='Life'
+        label={lifeLabel}
         value='Life'
         className='radio-primary'
         onClick={onClick}
