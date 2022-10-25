@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { Analytics } from '@vercel/analytics/react';
 import { httpBatchLink } from '@trpc/client/links/httpBatchLink';
 import { loggerLink } from '@trpc/client/links/loggerLink';
 import { withTRPC } from '@trpc/next';
@@ -52,7 +53,12 @@ function MyApp({
       </Head>
       <AtomsDevTools>
         <SessionProvider session={session}>
-          {getLayout(<Component {...pageProps} />)}
+          {getLayout(
+            <>
+              <Component {...pageProps} />
+              <Analytics />
+            </>
+          )}
         </SessionProvider>
       </AtomsDevTools>
     </>

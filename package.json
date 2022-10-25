@@ -25,6 +25,7 @@
     "@trpc/react": "^9.27.4",
     "@trpc/server": "^9.27.4",
     "@types/react-datepicker": "^4.4.2",
+    "@vercel/analytics": "^0.1.1",
     "autoprefixer": "^10.4.12",
     "daisyui": "^2.33.0",
     "immer": "^9.0.16",
