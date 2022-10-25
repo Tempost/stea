@@ -3,7 +3,7 @@ import NextLink from 'next/link';
 import { PublicLayout } from '@/components/layout';
 
 import { ReactElement } from 'react';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import { BookIcon } from '@/components/icons';
 import NavCard from '@/components/navcard';
 import { EOYPlacing, UpcomingEvents } from '@/components/home';

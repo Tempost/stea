@@ -96,7 +96,9 @@ export const nonMemberHorseOwner = createRouter()
         } catch (error) {
           if (error instanceof Prisma.PrismaClientKnownRequestError) {
             if (error.code === 'P2002') {
-              throw new Error('Something went wrong, contact us for more details.');
+              throw new Error(
+                'Something went wrong, contact us for more details.'
+              );
             }
           }
 
@@ -109,7 +111,9 @@ export const nonMemberHorseOwner = createRouter()
         } catch (error) {
           if (error instanceof Prisma.PrismaClientKnownRequestError) {
             if (error.code === 'P2002') {
-              throw new Error('Something went wrong, contact us for more details.');
+              throw new Error(
+                'Something went wrong, contact us for more details.'
+              );
             }
           }
 
@@ -150,5 +154,4 @@ async function upsertOwner({ owner, horses }: AddOwnerInput) {
 
     throw error;
   }
-
 }

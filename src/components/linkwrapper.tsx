@@ -7,8 +7,11 @@ interface WrapperProps {
 
 function LinkWrapper({ href, children }: WrapperProps) {
   return (
-    <Link href={href ? href : ''}>
-      <a rel='noopener noreferrer'>{children}</a>
+    <Link
+      href={href ? href : ''}
+      rel='noopener noreferrer'
+    >
+      {children}
     </Link>
   );
 }

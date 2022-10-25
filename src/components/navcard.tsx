@@ -1,5 +1,5 @@
 import NextLink, { LinkProps } from 'next/link';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 
 export interface NavCardProps extends LinkProps {
   img: string;
@@ -9,7 +9,7 @@ export interface NavCardProps extends LinkProps {
 export default function NavCard({ img, bodyText, ...props }: NavCardProps) {
   return (
     <NextLink {...props}>
-      <a
+      <span
         className='
         container group card image-full h-[15em] w-[20em] shadow-lg
         transition-all delay-75 duration-300
@@ -30,7 +30,7 @@ export default function NavCard({ img, bodyText, ...props }: NavCardProps) {
         >
           <p>{bodyText}</p>
         </div>
-      </a>
+      </span>
     </NextLink>
   );
 }

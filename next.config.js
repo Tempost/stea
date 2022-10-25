@@ -13,7 +13,6 @@ const nextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
   },
-  swcMinify: true,
 };
 
 // @ts-ignore
