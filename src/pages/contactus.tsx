@@ -1,72 +1,51 @@
-import { PropsWithChildren, ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { PublicLayout } from '@/components/layout';
 
-function ContactCard({ children }: PropsWithChildren) {
-  return <p className='w-fit rounded-md p-5 shadow-2xl'>{children}</p>;
+interface ContactCardProps {
+  name?: string;
+  position: string;
+  email?: string;
 }
+
+function ContactCard({ name, position, email }: ContactCardProps) {
+  return (
+    <span className='w-fit rounded-md p-5 shadow-[0_20px_40px_-20px_rgba(0,0,0,0.3)]'>
+      <p className='text-lg font-semibold'>{position}</p>
+      <span className='w-full divider my-1' />
+      <p>{name ?? 'Open Position'}</p>
+      {email && <p className='underline'>{email}</p>}
+    </span>
+  );
+}
+
 function ContactUs() {
   return (
-    <section className='flex h-full flex-col items-center justify-center'>
+    <section>
       <h1 className='mx-auto w-fit text-lg font-bold text-neutral md:text-2xl'>
         Boardmember Contact Information
       </h1>
-      <div className='container m-10 mx-auto flex flex-row flex-wrap justify-center gap-10'>
-        <ContactCard>
-          New Horizon Stables
-          <br />
-          Lynette Diamond
-          <br />
-          25498 Macedonia Road
-          <br />
-          Hockley, TX 77447
-          <br />
-          (832) 766-8400
-          <br />
-          newhorizonstables@sbcglobal.net
-          <br />
-        </ContactCard>
-        <ContactCard>
-          Pine Hill
-          <br />
-          Ruth Swain
-          <br />
-          1720 Hwy. 159 East
-          <br />
-          Bellville, TX 77418
-          <br />
-          (979) 865-5591
-          <br />
-          pinehilltexas@sbcglobal.net
-          <br />
-        </ContactCard>
-        <ContactCard>
-          Meadow Creek Park
-          <br />
-          Kaitlyn Arnold
-          <br />
-          1342 State Hwy 14
-          <br />
-          Kosse, TX 76653
-          <br />
-          (512) 227-0678
-          <br />
-          meadowcreekparktexas@gmail.com
-          <br />
-        </ContactCard>
-        <ContactCard>
-          Snowdonia Sporthorse Complex
-          <br />
-          Jayne Lloyd
-          <br />
-          6714 Neiman Road
-          <br />
-          Brookshire, TX 77423
-          <br />
-          (281) 460-9107
-          <br />
-          snowdoniasporthc@yahoo.com
-          <br />
-        </ContactCard>
+      <div className='container m-10 mx-auto grid grid-cols-1 grid-rows-1 md:grid-cols-2 md:grid-rows-2 lg:grid-cols-3 lg:grid-rows-3 items-center place-content-center w-fit gap-10'>
+        <ContactCard
+          name={'Laura Sartwelle'}
+          position={'President'}
+          email={'President@steventing.net'}
+        />
+        <ContactCard
+          name={'Markie Owen'}
+          position={'Vice President'}
+          email={'VP@steventing.net'}
+        />
+        <ContactCard position={'Secretary'} />
+        <ContactCard
+          name={'Lynette Diamond'}
+          position={'Treasurer'}
+          email={'Stea@steventing.net'}
+        />
+        <ContactCard position={'Director'} />
+        <ContactCard position={'Junior Director'} />
+        <ContactCard position={'Membership'} />
+        <ContactCard position={'Points'} />
+        <ContactCard position={'Social Media Manager'} />
       </div>
     </section>
   );
