@@ -22,7 +22,7 @@ function ContactUs() {
   return (
     <section>
       <h1 className='mx-auto w-fit text-lg font-bold text-neutral md:text-2xl'>
-        Boardmember Contact Information
+        Board Member Contact Information
       </h1>
       <div className='container m-10 mx-auto grid grid-cols-1 grid-rows-1 md:grid-cols-2 md:grid-rows-2 lg:grid-cols-3 lg:grid-rows-3 items-center place-content-center w-fit gap-10'>
         <ContactCard
