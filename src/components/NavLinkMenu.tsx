@@ -1,5 +1,5 @@
 import { ChevDown } from './icons';
-import LinkWrapper from './linkwrapper';
+import LinkWrapper from './LinkWrapper';
 
 interface Link {
   href: string;

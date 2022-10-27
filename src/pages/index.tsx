@@ -5,8 +5,7 @@ import { PublicLayout } from '@/components/layout';
 import { ReactElement } from 'react';
 import Image from 'next/image';
 import { BookIcon } from '@/components/icons';
-import NavCard from '@/components/navcard';
-import { EOYPlacing, UpcomingEvents } from '@/components/home';
+import { EOYPlacing, UpcomingEvents, NavCard } from '@/components/home';
 
 function Home() {
   return (

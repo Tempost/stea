@@ -1,4 +1,4 @@
-import NavLinkSubMenu from './navlinkmenu';
+import NavLinkSubMenu from './NavLinkMenu';
 
 interface Menu {
   href?: string;

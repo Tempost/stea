@@ -1,8 +1,10 @@
-import MemberTable from './members';
-import HorseTable from './horses';
-import OwnerTable from './owners';
-import ShowsTable from './shows';
-import TableWithData from './tablewithdata';
+import MemberTable from './Members';
+import HorseTable from './Horses';
+import OwnerTable from './Owners';
+import ShowsTable from './Shows';
+import PlacingsTable from './Placings';
+import RidersTable from './RiderCombos';
+import TableWithData from './BaseTable';
 
 export type TableSelection =
   | 'members'
@@ -10,4 +12,13 @@ export type TableSelection =
   | 'riders'
   | 'owners'
   | 'shows';
-export { TableWithData, MemberTable, HorseTable, OwnerTable, ShowsTable };
+
+export {
+  TableWithData,
+  MemberTable,
+  HorseTable,
+  OwnerTable,
+  ShowsTable,
+  PlacingsTable,
+  RidersTable,
+};

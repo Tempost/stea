@@ -3,7 +3,7 @@ import { FormProvider } from 'react-hook-form';
 import { z } from 'zod';
 
 import { trpc } from '@/utils/trpc';
-import TableWithData from './tablewithdata';
+import TableWithData from './BaseTable';
 import type { Show } from '@prisma/client';
 import type { ColumnDef } from '@tanstack/react-table';
 import { ShowModel } from '@/backend/prisma/zod';

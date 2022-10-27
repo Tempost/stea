@@ -7,8 +7,8 @@ import {
   OwnerTable,
   ShowsTable,
   TableSelection,
+  RidersTable,
 } from '@/components/tables';
-import RidersTable from '@/components/tables/ridercombos';
 
 const activeBtn = 'btn btn-active';
 

@@ -1,4 +1,5 @@
-import UpcomingEvents from './events';
-import EOYPlacing from './placing';
+import UpcomingEvents from './Events';
+import EOYPlacing from './Placing';
+import NavCard from './NavCard';
 
-export { UpcomingEvents, EOYPlacing };
+export { UpcomingEvents, EOYPlacing, NavCard };

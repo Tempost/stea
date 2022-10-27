@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { ReactElement } from 'react';
 
 import { PublicLayout } from '@/components/layout';
-import PlacingsTable from '@/components/tables/placings';
+import { PlacingsTable } from '@/components/tables';
 
 function SteaPoints() {
   return (

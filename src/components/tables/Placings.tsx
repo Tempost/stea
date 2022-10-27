@@ -1,20 +1,33 @@
 import { useMemo } from 'react';
 import { inferQueryOutput, trpc } from '@/utils/trpc';
 
-import TableWithData from './tablewithdata';
+import TableWithData from './BaseTable';
 
 import type { ColumnDef } from '@tanstack/react-table';
 
 type RiderCombo = inferQueryOutput<'rider.get-riders'>[number];
-
-interface RidersTableProps {
+interface PlacingsTableProps {
   title?: string;
-  overRideDefaultCols?: ColumnDef<RiderCombo>[];
+  overrideDefaultCols?: ColumnDef<RiderCombo>[];
   search?: boolean;
 }
 
-function RidersTable({ title, overRideDefaultCols, search }: RidersTableProps) {
-  const riders = trpc.useQuery(['rider.get-riders']);
+function PlacingsTable({
+  title,
+  overrideDefaultCols,
+  search,
+}: PlacingsTableProps) {
+  const riders = trpc.useQuery([
+    'rider.get-riders',
+    {
+      selectFields: {
+        horse: true,
+        member: true,
+        totalPoints: true,
+        totalShows: true,
+      },
+    },
+  ]);
 
   const defaultCols = useMemo<ColumnDef<RiderCombo>[]>(
     () => [
@@ -45,12 +58,6 @@ function RidersTable({ title, overRideDefaultCols, search }: RidersTableProps) {
             cell: info => info.getValue(),
             header: () => <span> Shows Attended </span>,
           },
-          {
-            accessorKey: 'division',
-            id: 'division',
-            cell: info => info.getValue(),
-            header: () => <span> Divison </span>,
-          },
         ],
       },
     ],
@@ -59,7 +66,7 @@ function RidersTable({ title, overRideDefaultCols, search }: RidersTableProps) {
 
   return (
     <TableWithData
-      colDef={overRideDefaultCols ?? defaultCols}
+      colDef={overrideDefaultCols ?? defaultCols}
       query={riders}
       paginate={true}
       search={search}
@@ -67,4 +74,4 @@ function RidersTable({ title, overRideDefaultCols, search }: RidersTableProps) {
   );
 }
 
-export default RidersTable;
+export default PlacingsTable;

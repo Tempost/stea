@@ -2,7 +2,7 @@ import DatePicker from 'react-datepicker';
 // import DatePicker from 'react-date-picker/dist/entry.nostyle';
 import { Controller, useFormContext } from 'react-hook-form';
 
-import TextInput from './text-input';
+import TextInput from './TextInput';
 // import { CalenderIcon, TrashIcon } from '../icons';
 // calendarIcon = { CalenderIcon }
 // clearIcon = { TrashIcon }

@@ -1,9 +1,10 @@
-import Radio from './radio';
-import TextInput from './text-input';
-import Select from './select';
-import NumericInput from './numeric-input';
-import Checkbox from './checkbox';
-import ControlledDatePicker from './date';
+import Radio from './Radio';
+import TextInput from './TextInput';
+import Select from './Select';
+import NumericInput from './NumericInput';
+import Checkbox from './Checkbox';
+import ControlledDatePicker from './Date';
+import DebouncedInput from './DebouncedInput';
 
 export {
   Radio,
@@ -12,4 +13,5 @@ export {
   Select,
   NumericInput,
   ControlledDatePicker,
+  DebouncedInput,
 };

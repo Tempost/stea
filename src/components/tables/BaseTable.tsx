@@ -12,7 +12,7 @@ import {
 } from '@tanstack/react-table';
 import { useState } from 'react';
 import { UseQueryResult } from 'react-query';
-import DebouncedInput from '../data-entry/debouncedInput';
+import { DebouncedInput } from '@/components/data-entry';
 
 const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   // Rank the item

@@ -5,11 +5,11 @@ import {
   ReactPayPalScriptOptions,
 } from '@paypal/react-paypal-js';
 
-import { DashboardHeader, ResponsiveHeader } from './header';
-import Footer from './footer';
+import { DashboardHeader, ResponsiveHeader } from './Header';
+import Footer from './Footer';
 import { updateFormState } from '@/utils/atoms';
 import { LayoutProps } from '@/types/common';
-import IsAuth from '@/components/auth';
+import IsAuth from '@/components/Auth';
 
 function PublicLayout({ children }: LayoutProps) {
   const router = useRouter();

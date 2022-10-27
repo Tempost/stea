@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
 import { trpc } from '@/utils/trpc';
-import TableWithData from './tablewithdata';
+import TableWithData from './BaseTable';
 
 import type { Member } from '@prisma/client';
 import type { ColumnDef } from '@tanstack/react-table';
