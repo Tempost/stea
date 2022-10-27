@@ -38,7 +38,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
           <input
             ref={ref}
             id={`text-input${id}`}
-            className={`input input-bordered w-full md:input-sm ${
+            className={`input-bordered input w-full md:input-sm ${
               error && 'input-error border-2'
             } ${className}`}
             type='text'

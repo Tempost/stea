@@ -3,7 +3,7 @@ import NextLink from 'next/link';
 import { PublicLayout } from '@/components/layout';
 
 import { ReactElement } from 'react';
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import { BookIcon } from '@/components/icons';
 import NavCard from '@/components/navcard';
 import { EOYPlacing, UpcomingEvents } from '@/components/home';
@@ -20,9 +20,12 @@ function Home() {
               <Image
                 width={450}
                 height={250}
-                layout='intrinsic'
                 src='/stea_logo_no_horse_border.svg'
                 alt='STEA Logo'
+                style={{
+                  maxWidth: '100%',
+                  height: 'auto',
+                }}
               />
             </div>
 
@@ -34,7 +37,7 @@ function Home() {
               href={'/join'}
               prefetch={false}
             >
-              <button className='btn btn-primary btn-lg text-xl md:btn-xl md:text-2xl'>
+              <button className='btn-primary btn btn-lg text-xl md:text-2xl md:btn-xl'>
                 Join Today!
               </button>
             </NextLink>
@@ -72,7 +75,7 @@ function Home() {
             <p className='inline-grid place-content-center text-xl md:text-2xl'>
               Review rule changes for 2023
               <a
-                className='btn btn-primary btn-sm md:btn-xs'
+                className='btn-primary btn btn-sm md:btn-xs'
                 href='/stea_rule_book.pdf'
                 rel='noopener noreferrer'
                 target='_blank'

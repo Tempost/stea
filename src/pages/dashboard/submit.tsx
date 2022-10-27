@@ -35,7 +35,7 @@ function SubmitPoints() {
           </h3>
 
           <button
-            className='btn btn-primary btn-sm w-full'
+            className='btn-primary btn-sm btn w-full'
             type='submit'
           >
             Submit

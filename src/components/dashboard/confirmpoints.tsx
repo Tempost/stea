@@ -23,7 +23,7 @@ function ConfirmPoints({ uid }: CPProps) {
 
   return (
     <button
-      className='btn btn-primary btn-sm'
+      className='btn-primary btn-sm btn'
       onClick={onClick}
     >
       Confirm

@@ -79,7 +79,7 @@ function Payment({ showPayment, children, queryStatus }: PaymentProps) {
           {queryStatus.error && <Alert message={queryStatus.message ?? ''} />}
           <button
             type='submit'
-            className='btn btn-primary w-full'
+            className='btn-primary btn w-full'
           >
             Move to payment
           </button>

@@ -1,5 +1,5 @@
 import NextLink, { LinkProps } from 'next/link';
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 
 export interface NavCardProps extends LinkProps {
   img: string;
@@ -11,16 +11,17 @@ export default function NavCard({ img, bodyText, ...props }: NavCardProps) {
     <NextLink {...props}>
       <span
         className='
-        container group card image-full h-[15em] w-[20em] shadow-lg
+        group container image-full card h-[15em] w-[20em] shadow-lg
         transition-all delay-75 duration-300
         ease-in-out hover:scale-[1.05] hover:cursor-pointer hover:shadow-2xl
         '
       >
         <figure className='relative'>
           <Image
-            layout='fill'
             src={img}
             alt='Background image for card'
+            fill
+            sizes='100vw, 50vw'
           />
         </figure>
 

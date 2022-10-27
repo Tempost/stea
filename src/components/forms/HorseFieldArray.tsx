@@ -36,7 +36,7 @@ export default function HorseFieldArray() {
           <h2 className='card-title ml-3 mt-3'>
             Horse {index + 1}
             <button
-              className='btn btn-link btn-xs text-red-500'
+              className='btn-link btn-xs btn text-red-500'
               type='button'
               onClick={() => remove(index)}
             >
@@ -80,7 +80,7 @@ export default function HorseFieldArray() {
         {errors.horses?.message}
       </p>
       <button
-        className='btn btn-secondary btn-xs mb-5 w-full'
+        className='btn-secondary btn-xs btn mb-5 w-full'
         type='button'
         onClick={() =>
           append({

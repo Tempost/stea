@@ -88,7 +88,7 @@ function TableWithData<T>({
                           )}
                         {headerGroup.depth === 0 && search && (
                           <DebouncedInput
-                            className='input input-primary input-sm w-36'
+                            className='input-primary input input-sm w-36'
                             type='text'
                             placeholder='search'
                             value={globalFilter ?? ''}
@@ -132,7 +132,7 @@ function TableWithData<T>({
             <div className='flex w-full items-center justify-between gap-2'>
               <div className='flex gap-2'>
                 <button
-                  className='btn btn-secondary btn-xs'
+                  className='btn-secondary btn-xs btn'
                   onClick={() => table.previousPage()}
                   disabled={!table.getCanPreviousPage()}
                 >
@@ -140,7 +140,7 @@ function TableWithData<T>({
                 </button>
 
                 <button
-                  className='btn btn-primary btn-xs'
+                  className='btn-primary btn-xs btn'
                   onClick={() => table.nextPage()}
                   disabled={!table.getCanNextPage()}
                 >
@@ -150,7 +150,7 @@ function TableWithData<T>({
 
               <div className='flex flex-col items-center'>
                 <select
-                  className='select select-secondary select-xs lg:select-sm'
+                  className='select-secondary select select-xs lg:select-sm'
                   value={table.getState().pagination.pageSize}
                   onChange={e => {
                     table.setPageSize(Number(e.target.value));

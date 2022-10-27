@@ -28,21 +28,21 @@ function JoinStea() {
         >
           <Radio
             label='Individual'
-            className='radio radio-primary radio-md md:radio-sm'
+            className='radio-primary radio radio-md md:radio-sm'
             value='Individual'
             name='app-select'
           />
 
           <Radio
             label='Business'
-            className='radio radio-primary radio-md md:radio-sm'
+            className='radio-primary radio radio-md md:radio-sm'
             value='Business'
             name='app-select'
           />
 
           <Radio
             label='Horse'
-            className='radio radio-primary radio-md md:radio-sm'
+            className='radio-primary radio radio-md md:radio-sm'
             value='Horse'
             name='app-select'
           />
@@ -50,7 +50,7 @@ function JoinStea() {
       </div>
 
       <button
-        className='btn btn-primary w-full'
+        className='btn-primary btn w-full'
         onClick={() => {
           if (state.type) {
             router.push(`${router.pathname}/form/${state.type?.toLowerCase()}`);

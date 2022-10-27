@@ -192,7 +192,7 @@ function BusinessRegistration() {
 
             <Checkbox
               label='Do you plan to register your horse(s)?'
-              className='checkbox checkbox-primary checkbox-sm'
+              className='checkbox-primary checkbox checkbox-sm'
               {...register('horseReg')}
             />
 

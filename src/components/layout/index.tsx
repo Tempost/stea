@@ -61,7 +61,7 @@ function FormLayout({ children }: LayoutProps) {
 
   const returnButton = (
     <button
-      className='btn btn-link btn-sm self-end'
+      className='btn-link btn-sm btn self-end'
       onClick={() => {
         update({ type: 'RESET' });
         router.back();

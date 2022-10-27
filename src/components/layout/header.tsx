@@ -16,7 +16,7 @@ export const ResponsiveHeader = ({ children }: any) => {
           <div className='flex-none lg:hidden'>
             <label
               htmlFor='my-drawer-3'
-              className='btn btn-ghost btn-square'
+              className='btn-ghost btn-square btn'
             >
               {Hamburger}
             </label>

@@ -46,7 +46,7 @@ const Select = forwardRef<HTMLSelectElement, SelectInputProps>(
         <select
           ref={ref}
           id={`select-input${id}`}
-          className={`select select-bordered md:select-sm ${className}`}
+          className={`select-bordered select md:select-sm ${className}`}
           {...props}
         >
           {options.map(item => {

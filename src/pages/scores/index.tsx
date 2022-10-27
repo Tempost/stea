@@ -1,4 +1,4 @@
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import { ReactElement } from 'react';
 
 import { PublicLayout } from '@/components/layout';
@@ -15,11 +15,12 @@ function SteaPoints() {
       <div className='card w-[20em] shadow-2xl sm:w-[30em] md:w-[40em] lg:w-[45em]'>
         <figure className='relative h-[15em] sm:h-[25em] md:h-[30em] lg:h-[35em]'>
           <Image
-            layout='fill'
             src='/points.jpg'
             alt='Displaying show rewards inside of arena'
             placeholder='blur'
             blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mO8f+lAPQAH+wLyQ96hbgAAAABJRU5ErkJggg=='
+            fill
+            sizes='100vw'
           />
         </figure>
 
@@ -29,7 +30,7 @@ function SteaPoints() {
           </h2>
           <div className='card-actions justify-center'>
             <a
-              className='btn btn-primary btn-sm md:btn-md'
+              className='btn-primary btn btn-sm md:btn-md'
               href='/stea_points.pdf'
               rel='noopener noreferrer'
               target='_blank'

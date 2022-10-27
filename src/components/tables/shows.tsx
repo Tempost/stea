@@ -54,7 +54,7 @@ function AddNewShow() {
     <>
       <label
         htmlFor='my-modal-6'
-        className='modal-button btn btn-primary'
+        className='modal-button btn-primary btn'
       >
         Add Show
       </label>
@@ -102,7 +102,7 @@ function AddNewShow() {
 
               <div className='modal-action'>
                 <button
-                  className='btn btn-sm'
+                  className='btn-sm btn'
                   type='submit'
                 >
                   add
@@ -110,7 +110,7 @@ function AddNewShow() {
 
                 <label
                   htmlFor='my-modal-6'
-                  className='btn btn-sm'
+                  className='btn-sm btn'
                 >
                   cancel
                 </label>
