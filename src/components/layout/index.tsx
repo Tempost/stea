@@ -9,9 +9,9 @@ import { DashboardHeader, ResponsiveHeader } from './header';
 import Footer from './footer';
 import { updateFormState } from '@/utils/atoms';
 import { LayoutProps } from '@/types/common';
-import IsAuth from './auth';
+import IsAuth from '@/components/auth';
 
-export function PublicLayout({ children }: LayoutProps) {
+function PublicLayout({ children }: LayoutProps) {
   const router = useRouter();
   return (
     <div className='flex h-screen flex-col'>
@@ -32,7 +32,7 @@ export function PublicLayout({ children }: LayoutProps) {
   );
 }
 
-export function DashboardLayout({ children }: LayoutProps) {
+function DashboardLayout({ children }: LayoutProps) {
   return (
     <IsAuth>
       <div className='flex h-screen flex-col'>
@@ -53,7 +53,7 @@ const initOptions: ReactPayPalScriptOptions = {
   'data-react-paypal-script-id': 'paypal-button',
 };
 
-export function FormLayout({ children }: LayoutProps) {
+function FormLayout({ children }: LayoutProps) {
   const router = useRouter();
   const update = useSetAtom(updateFormState);
 
@@ -89,3 +89,5 @@ export function FormLayout({ children }: LayoutProps) {
     </div>
   );
 }
+
+export { PublicLayout, DashboardLayout, FormLayout };

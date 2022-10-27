@@ -1,4 +1,4 @@
-import Image from "next/legacy/image";
+import Image from 'next/legacy/image';
 import { ReactElement } from 'react';
 
 import { PublicLayout } from '@/components/layout';

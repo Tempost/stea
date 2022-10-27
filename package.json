@@ -51,7 +51,7 @@
     "@types/react": "^18.0.23",
     "@types/react-dom": "18.0.6",
     "eslint": "8.19.0",
-    "eslint-config-next": "12.2.2",
+    "eslint-config-next": "13.0.0",
     "eslint-plugin-prettier": "^4.2.1",
     "find-unused-exports": "^4.0.0",
     "jest": "^28.1.3",

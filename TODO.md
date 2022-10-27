@@ -1,4 +1,4 @@
-# Order of operations for sunday...LAUNCH DAY!
+~~# Order of operations for sunday...LAUNCH DAY!~~
 
 1. Calender
    a. Main Calender component for the calender page - Look into existing libraries (react-datepicker) - https://github.com/jquense/react-big-calendar
@@ -15,9 +15,9 @@
 # Bugs
 
 ~~1. Check a Member or horse is already in the DB **BEFORE** paying~~
-   ~~a. Alert user, call/email and check current member/horse list~~
+~~a. Alert user, call/email and check current member/horse list~~
 
-2. If error after payment, invalidate payment and alert
+~~2. If error after payment, invalidate payment and alert~~
 
 # Features
 

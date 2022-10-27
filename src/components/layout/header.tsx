@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
-import { Hamburger } from './icons';
-import LinkWrapper from './linkwrapper';
-import { publicMenuItems, dashMenuItems } from './menuitems';
+import { Hamburger } from '@/components/icons';
+import LinkWrapper from '@/components/linkwrapper';
+import { publicMenuItems, dashMenuItems } from '@/components/menuitems';
 
 export const ResponsiveHeader = ({ children }: any) => {
   return (
