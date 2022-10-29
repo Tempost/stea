@@ -3,6 +3,7 @@ import { prisma } from '@/backend/prisma';
 import { ShowModel } from '../prisma/zod';
 import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
+import { Prisma } from '@prisma/client';
 
 export const show = createRouter()
   .query('get-shows', {
@@ -53,9 +54,30 @@ export const show = createRouter()
     input: ShowModel.omit({ uid: true, reviewed: true }),
     async resolve({ input }) {
       console.log(input);
-      return await prisma.show.create({
-        data: input,
-      });
+
+      try {
+        return await prisma.show.create({
+          data: input,
+        });
+      } catch (error) {
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+          if (error.code === 'P2002') {
+            throw new TRPCError({
+              code: 'CONFLICT',
+              message: 'Show already exists, please check the table.',
+              cause: error,
+            });
+          } else {
+            throw new TRPCError({
+              code: 'CONFLICT',
+              message: 'Something went wrong adding the show.',
+              cause: error,
+            });
+          }
+        }
+
+        throw error;
+      }
     },
   })
   .mutation('update', {

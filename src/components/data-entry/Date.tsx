@@ -2,30 +2,30 @@ import DatePicker from 'react-datepicker';
 // import DatePicker from 'react-date-picker/dist/entry.nostyle';
 import { Controller, useFormContext } from 'react-hook-form';
 
-import TextInput from './TextInput';
+import TextInput, { TextInputProps } from './TextInput';
 // import { CalenderIcon, TrashIcon } from '../icons';
 // calendarIcon = { CalenderIcon }
 // clearIcon = { TrashIcon }
 import 'react-datepicker/dist/react-datepicker.css';
 
-interface DatePickerProps {
-  name: string;
+interface DatePickerProps extends TextInputProps {
   placeholderText?: string;
-  label?: string;
   hidden?: boolean;
 }
 
 function ControlledDatePicker({
-  label,
   placeholderText,
   name,
   hidden,
+  error,
+  label,
+  altLabel,
 }: DatePickerProps) {
   const { control } = useFormContext();
   return (
     <div className={`${hidden ? 'hidden' : ''} `}>
       <Controller
-        name={name}
+        name={name ?? ''}
         control={control}
         render={props => {
           return (
@@ -39,8 +39,9 @@ function ControlledDatePicker({
               customInput={
                 <TextInput
                   label={label}
-                  altLabel='Membership year runs from Dec 1st to Nov 30th of each show year.'
+                  altLabel={altLabel}
                   className='input-primary w-40'
+                  error={error}
                 />
               }
             />

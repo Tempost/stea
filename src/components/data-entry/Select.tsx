@@ -28,7 +28,7 @@ function capitalize(s: string) {
 }
 
 const Select = forwardRef<HTMLSelectElement, SelectInputProps>(
-  ({ className, label, labelStyle, options, ...props }, ref) => {
+  ({ className, label, labelStyle, options, error, ...props }, ref) => {
     const id = useId();
 
     return (
@@ -46,7 +46,9 @@ const Select = forwardRef<HTMLSelectElement, SelectInputProps>(
         <select
           ref={ref}
           id={`select-input${id}`}
-          className={`select-bordered select md:select-sm ${className}`}
+          className={`select-bordered select md:select-sm ${
+            error ? 'select-error' : ''
+          } ${className}`}
           {...props}
         >
           {options.map(item => {

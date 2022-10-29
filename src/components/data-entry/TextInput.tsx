@@ -2,7 +2,7 @@ import { forwardRef, useId } from 'react';
 import type { DetailedHTMLProps, InputHTMLAttributes } from 'react';
 import { FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
 
-interface TextInputProps
+export interface TextInputProps
   extends DetailedHTMLProps<
     InputHTMLAttributes<HTMLInputElement>,
     HTMLInputElement

@@ -39,6 +39,7 @@ function Under18({ dateName }: Props) {
           placeholderText='Date of Birth'
           name={dateName}
           hidden={Boolean(radioState)}
+          altLabel='Membership year runs from Dec 1st to Nov 30th of each show year.'
         />
       </div>
     </>

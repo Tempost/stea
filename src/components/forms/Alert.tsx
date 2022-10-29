@@ -1,6 +1,10 @@
-function Alert({ message }: { message: string }) {
+function Alert({ message, visible }: { message?: string; visible: boolean }) {
   return (
-    <div className='alert alert-error my-2 p-2 shadow-lg'>
+    <div
+      className={`alert alert-error my-2 p-2 shadow-lg ${
+        visible ? '' : 'hidden'
+      }`}
+    >
       <div>
         <svg
           xmlns='http://www.w3.org/2000/svg'

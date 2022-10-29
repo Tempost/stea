@@ -144,6 +144,8 @@ model RiderCombo {
   horseName   String
   points      Points[]
   shows       Show[]
+
+  @@unique([memberName, horseName, division])
 }
 
 model Points {
@@ -170,4 +172,6 @@ model Show {
   showDate  DateTime
   points    Points[]
   riders    RiderCombo[]
+
+  @@unique([showName, showDate])
 }

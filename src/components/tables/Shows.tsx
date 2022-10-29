@@ -9,6 +9,7 @@ import type { ColumnDef } from '@tanstack/react-table';
 import { ShowModel } from '@/backend/prisma/zod';
 import { ControlledDatePicker, Select, TextInput } from '../data-entry';
 import useZodForm from '@/utils/usezodform';
+import Alert from '../forms/Alert';
 
 interface ShowTableProps {
   overRideDefaultCols?: ColumnDef<Show>[];
@@ -42,8 +43,13 @@ function AddNewShow() {
     register,
     formState: { errors },
   } = methods;
+  const utils = trpc.useContext();
 
-  const addNew = trpc.useMutation(['shows.add']);
+  const addNew = trpc.useMutation(['shows.add'], {
+    onSuccess() {
+      utils.invalidateQueries(['shows.get-shows']);
+    },
+  });
 
   function submitForm(values: z.infer<typeof NewShowModel>) {
     console.log(values);
@@ -98,11 +104,22 @@ function AddNewShow() {
                 name='showDate'
                 label='Show Date*'
                 placeholderText='Show Date'
+                error={errors.showDate}
               />
 
+              <Alert
+                message={addNew.error?.message}
+                visible={addNew.isError}
+              />
               <div className='modal-action'>
                 <button
-                  className='btn-sm btn'
+                  className={`btn-sm btn ${
+                    addNew.isError
+                      ? 'btn-error'
+                      : addNew.isSuccess
+                      ? 'btn-success'
+                      : ''
+                  }`}
                   type='submit'
                 >
                   add
