@@ -20,7 +20,7 @@ import { trpc } from '@/utils/trpc';
 
 function BusinessRegistration() {
   const [payment, togglePayment] = useState(false);
-  const insert = trpc.useMutation(['member.add-member'], {
+  const checkExisting = trpc.useMutation(['member.exists'], {
     onSuccess() {
       togglePayment(true);
     },
@@ -56,7 +56,8 @@ function BusinessRegistration() {
         payload: { lifeCount: lifeCount, annualCount: annualCount },
       });
     }
-    insert.mutate(formValues);
+
+    checkExisting.mutate(formValues);
   }
 
   setValue('member.memberType', 'Business' as Type);
@@ -68,9 +69,10 @@ function BusinessRegistration() {
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         <Payment
           showPayment={payment}
-          queryStatus={{
-            error: insert.isError,
-            message: insert.error?.message,
+          query={{
+            error: checkExisting.isError,
+            message: checkExisting.error?.message,
+            mutation: 'member.add-member',
           }}
         >
           <h2 className='divider'>Business Registration</h2>

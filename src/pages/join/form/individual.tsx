@@ -26,7 +26,8 @@ import { trpc } from '@/utils/trpc';
 
 function IndividualRegistration() {
   const [payment, togglePayment] = useState(false);
-  const insert = trpc.useMutation(['member.add-member'], {
+
+  const checkExisting = trpc.useMutation(['member.exists'], {
     onSuccess() {
       togglePayment(true);
     },
@@ -63,7 +64,8 @@ function IndividualRegistration() {
         payload: { lifeCount: lifeCount, annualCount: annualCount },
       });
     }
-    insert.mutate(formValues);
+
+    checkExisting.mutate(formValues);
   }
 
   return (
@@ -71,9 +73,10 @@ function IndividualRegistration() {
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         <Payment
           showPayment={payment}
-          queryStatus={{
-            error: insert.isError,
-            message: insert.error?.message,
+          query={{
+            error: checkExisting.isError,
+            message: checkExisting.error?.message,
+            mutation: 'member.add-member',
           }}
         >
           <h2 className='divider'>Individual Membership</h2>

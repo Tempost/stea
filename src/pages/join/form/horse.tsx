@@ -46,7 +46,6 @@ function HorseRegistration() {
         payload: { lifeCount: lifeCount, annualCount: annualCount },
       });
     }
-    insert.mutate(formValues);
   }
 
   return (
@@ -54,9 +53,10 @@ function HorseRegistration() {
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         <Payment
           showPayment={payment}
-          queryStatus={{
+          query={{
             error: insert.isError,
             message: insert.error?.message,
+            mutation: 'nonMemberHorseOwner.add-owner-horse',
           }}
         >
           <h2 className='divider'>Horse Registration</h2>

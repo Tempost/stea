@@ -60,6 +60,21 @@ export const member = createRouter()
       return deletedMember;
     },
   })
+  .mutation('exists', {
+    input: MemberFormValues,
+    async resolve({ input }) {
+      const fullName =
+        input.member.businessName ??
+        `${input.member.firstName} ${input.member.lastName}`;
+
+      if (await checkForExistingMember(fullName)) {
+        throw new TRPCError({
+          code: 'CONFLICT',
+          message: `${fullName} is already a member`,
+        });
+      }
+    },
+  })
   .mutation('add-member', {
     input: MemberFormValues,
 
@@ -78,13 +93,11 @@ export const member = createRouter()
         });
       } catch (error) {
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
-          if (error.code === 'P2002') {
-            throw new TRPCError({
-              code: 'CONFLICT',
-              message: 'Something went wrong, contact us for more information.',
-              cause: error,
-            });
-          }
+          throw new TRPCError({
+            code: 'CONFLICT',
+            message: 'Something went wrong, contact us for more information.',
+            cause: error,
+          });
         }
 
         throw error;
@@ -104,3 +117,11 @@ export const member = createRouter()
       });
     },
   });
+
+async function checkForExistingMember(fullName: string) {
+  const member = await prisma.member.findUnique({ where: { fullName } });
+
+  if (member) return true;
+
+  return false;
+}
