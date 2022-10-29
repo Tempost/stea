@@ -15,18 +15,16 @@ function Home() {
 
         <div className='hero-content text-center text-neutral-content'>
           <div className='flex min-w-full flex-col items-center gap-5'>
-            <div className='w-[85%]'>
-              <Image
-                width={450}
-                height={250}
-                src='/stea_logo_no_horse_border.svg'
-                alt='STEA Logo'
-                style={{
-                  maxWidth: '100%',
-                  height: 'auto',
-                }}
-              />
-            </div>
+            <Image
+              width={450}
+              height={250}
+              src='/stea_logo_no_horse_border.svg'
+              alt='STEA Logo'
+              style={{
+                maxWidth: '100%',
+                height: 'auto',
+              }}
+            />
 
             <h2 className='text-2xl md:text-3xl lg:text-4xl'>
               Where Your Eventing Journey Begins
