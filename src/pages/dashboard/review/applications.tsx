@@ -58,7 +58,6 @@ const applicantCols: ColumnDef<Member>[] = [
 function Applications() {
   const members = trpc.useQuery(['member.applicants']);
 
-  console.log(members.data);
   return (
     <div className='grid w-full place-items-center pt-28'>
       {members.data && members.data.length < 0 ? (

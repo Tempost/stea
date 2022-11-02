@@ -55,10 +55,18 @@ function MembersAnHorses() {
             header: () => <span> Registered Name </span>,
           },
           {
-            accessorKey: 'horseAKA',
-            id: 'horseAKA',
+            accessorKey: 'regType',
+            id: 'regType',
             cell: info => info.getValue(),
-            header: () => <span> Barn Name </span>,
+            header: () => <span> Status </span>,
+          },
+          {
+            accessorFn: horseRec => {
+              return horseRec.memberName ?? horseRec.owner;
+            },
+            id: 'test',
+            cell: info => info.getValue(),
+            header: () => <span> Owner </span>,
           },
         ],
       },
