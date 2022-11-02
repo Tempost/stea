@@ -10,7 +10,17 @@ import { Prisma } from '@prisma/client';
 export const member = createRouter()
   .query('get-members', {
     async resolve() {
-      return await prisma.member.findMany();
+      return await prisma.member.findMany().catch(error => {
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+          throw new TRPCError({
+            code: 'INTERNAL_SERVER_ERROR',
+            message: 'Failed to fetch member list',
+            cause: error,
+          });
+        } else {
+          throw error;
+        }
+      });
     },
   })
   .query('get-member', {
@@ -19,16 +29,27 @@ export const member = createRouter()
     }),
     async resolve({ input }) {
       const { fullName } = input;
-      const member = await prisma.member.findUnique({ where: { fullName } });
-
-      if (!member) {
-        throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: `${fullName} not found.`,
+      return await prisma.member
+        .findUniqueOrThrow({ where: { fullName } })
+        .catch(error => {
+          if (error instanceof Prisma.PrismaClientKnownRequestError) {
+            if (error.code === 'P2001') {
+              throw new TRPCError({
+                code: 'NOT_FOUND',
+                message: `${fullName} not found.`,
+                cause: error,
+              });
+            } else {
+              throw new TRPCError({
+                code: 'INTERNAL_SERVER_ERROR',
+                message: `Something went wrong fetching ${fullName}`,
+                cause: error,
+              });
+            }
+          } else {
+            throw error;
+          }
         });
-      }
-
-      return member;
     },
   })
   .query('applicants', {
@@ -41,23 +62,37 @@ export const member = createRouter()
     async resolve({ input }) {
       const { fullName } = input;
 
-      const member = await prisma.member.findUnique({
-        where: { fullName },
-      });
+      console.info(`Removing member ${fullName}...`);
 
-      if (!member) {
-        throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: `${fullName} not found.`,
-          cause: 'Tried to remove non-existing member',
+      try {
+        const member = await prisma.member
+          .findUniqueOrThrow({
+            where: { fullName },
+          })
+
+        const deletedMember = await prisma.member.delete({
+          where: { fullName: member.fullName },
         });
+
+        return deletedMember;
       }
-
-      const deletedMember = await prisma.member.delete({
-        where: { fullName: member.fullName },
-      });
-
-      return deletedMember;
+      catch (error) {
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+          if (error.code === 'P2001') {
+            throw new TRPCError({
+              code: 'NOT_FOUND',
+              message: `${fullName} not found.`,
+              cause: error,
+            });
+          } else {
+            throw new TRPCError({
+              code: 'INTERNAL_SERVER_ERROR',
+              message: `unable to remove ${fullName}`,
+              cause: error,
+            });
+          }
+        }
+      }
     },
   })
   .mutation('exists', {
@@ -66,6 +101,8 @@ export const member = createRouter()
       const fullName =
         input.member.businessName ??
         `${input.member.firstName} ${input.member.lastName}`;
+
+      console.info(`Checking for ${fullName}...`);
 
       if (await checkForExistingMember(fullName)) {
         throw new TRPCError({
@@ -79,9 +116,11 @@ export const member = createRouter()
     input: MemberFormValues,
 
     async resolve({ input: { member, horses } }) {
-      console.log(member);
+      console.info('Member: ', member);
+      console.info('Horses: ', horses ?? 'Did not register horses');
+
       try {
-        const res = await prisma.member.create({
+        await prisma.member.create({
           data: {
             ...member,
             fullName:
@@ -94,7 +133,7 @@ export const member = createRouter()
       } catch (error) {
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
           throw new TRPCError({
-            code: 'CONFLICT',
+            code: 'INTERNAL_SERVER_ERROR',
             message: 'Something went wrong, contact us for more information.',
             cause: error,
           });
@@ -107,14 +146,36 @@ export const member = createRouter()
   .mutation('update-member', {
     input: MemberModel.deepPartial(),
     async resolve({ input: { fullName, ...others } }) {
-      return await prisma.member.update({
-        where: {
-          fullName: fullName,
-        },
-        data: {
-          ...others,
-        },
-      });
+      console.info(`Updating member.. ${fullName}`);
+
+      try {
+        return await prisma.member.update({
+          where: {
+            fullName: fullName,
+          },
+          data: {
+            ...others,
+          },
+        });
+      } catch (error) {
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+          if (error.code === 'P2001') {
+            throw new TRPCError({
+              code: 'NOT_FOUND',
+              message: `${fullName} not found.`,
+              cause: error,
+            });
+          } else {
+            throw new TRPCError({
+              code: 'INTERNAL_SERVER_ERROR',
+              message: 'Something went wrong, contact us for more information.',
+              cause: error,
+            });
+          }
+        }
+
+        throw error;
+      }
     },
   });
 

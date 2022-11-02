@@ -27,33 +27,42 @@ export const show = createRouter()
   .query('get-show', {
     input: z.object({ uid: z.string().cuid() }),
     async resolve({ input }) {
-      const shows = await prisma.show.findUnique({
-        where: {
-          uid: input.uid,
-        },
-        include: {
-          riders: {
-            include: {
-              points: true,
+      try {
+        return await prisma.show.findUniqueOrThrow({
+          where: {
+            uid: input.uid,
+          },
+          include: {
+            riders: {
+              include: {
+                points: true,
+              },
             },
           },
-        },
-      });
-
-      if (!shows) {
-        throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: `${input.uid} not found.`,
         });
+      } catch (error) {
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+          if (error.code === 'P2001') {
+            throw new TRPCError({
+              code: 'NOT_FOUND',
+              message: `${input.uid} not found.`,
+              cause: error,
+            });
+          } else {
+            throw new TRPCError({
+              code: 'INTERNAL_SERVER_ERROR',
+              message: `Something went wrong fetching ${input.uid}`,
+              cause: error,
+            });
+          }
+        }
       }
-
-      return shows;
     },
   })
   .mutation('add', {
     input: ShowModel.omit({ uid: true, reviewed: true }),
     async resolve({ input }) {
-      console.log(input);
+      console.info("Adding new show...", input);
 
       try {
         return await prisma.show.create({
@@ -62,15 +71,16 @@ export const show = createRouter()
       } catch (error) {
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
           if (error.code === 'P2002') {
+            const showDate = `${input.showDate.getMonth()}/${input.showDate.getDate()}/${input.showDate.getFullYear()}`;
             throw new TRPCError({
               code: 'CONFLICT',
-              message: 'Show already exists, please check the table.',
+              message: `A show at ${input.showName} on ${showDate} already exists, check the table and verify.`,
               cause: error,
             });
           } else {
             throw new TRPCError({
               code: 'CONFLICT',
-              message: 'Something went wrong adding the show.',
+              message: `Something went wrong adding show ${input.showName}.`,
               cause: error,
             });
           }

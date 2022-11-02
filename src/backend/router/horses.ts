@@ -14,8 +14,11 @@ export const horse = createRouter()
         .then(horses => {
           return horses;
         })
-        .catch(err => {
-          console.log(err);
+        .catch(error => {
+          throw new TRPCError({
+            code: 'INTERNAL_SERVER_ERROR',
+            message: 'Failed to fetch horses',
+          });
         });
 
       return horses as Horse[];

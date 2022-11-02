@@ -42,6 +42,8 @@ export const nonMemberHorseOwner = createRouter()
       patch: NonMemberHorseOwnerModel.deepPartial(),
     }),
     async resolve({ input }) {
+      console.info(`Updating owner ${input.ownerName}...`);
+
       return await prisma.nonMemberHorseOwner.update({
         where: {
           fullName: input.ownerName,
@@ -55,16 +57,16 @@ export const nonMemberHorseOwner = createRouter()
   .mutation('remove-owner', {
     input: z.object({ ownerName: z.string() }),
     async resolve({ input }) {
-      const { ownerName } = input;
+      console.log(`Removing owner ${input.ownerName}`);
 
       const owner = await prisma.nonMemberHorseOwner.findUnique({
-        where: { fullName: ownerName },
+        where: { fullName: input.ownerName },
       });
 
       if (!owner) {
         throw new TRPCError({
           code: 'NOT_FOUND',
-          message: `${ownerName} not found.`,
+          message: `${input.ownerName} not found.`,
         });
       }
 
@@ -84,6 +86,10 @@ export const nonMemberHorseOwner = createRouter()
 
       if (existingMember !== null) {
         // Existing member, update their horses instead
+        console.log(
+          `Member exists adding horses to ${owner.firstName} ${owner.lastName}...`
+        );
+
         try {
           return await prisma.member.update({
             where: { fullName: `${owner.firstName} ${owner.lastName}` },
@@ -107,6 +113,9 @@ export const nonMemberHorseOwner = createRouter()
       } else {
         try {
           // otherwise create/update an owner record
+          console.info(
+            `Adding new owner ${owner.firstName} ${owner.lastName}...`
+          );
           return await upsertOwner({ owner, horses });
         } catch (error) {
           if (error instanceof Prisma.PrismaClientKnownRequestError) {
