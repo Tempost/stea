@@ -1,7 +1,8 @@
+import { NextAuthOptions } from 'next-auth';
 import NextAuth from 'next-auth/next';
 import GoogleProvider from 'next-auth/providers/google';
 
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
   events: {
     async signIn(message) {
       console.info(`${message.user.name} signed in from ${message.user.email}`);
@@ -31,4 +32,6 @@ export default NextAuth({
       },
     }),
   ],
-});
+};
+
+export default NextAuth(authOptions);
