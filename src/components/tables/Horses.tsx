@@ -5,6 +5,7 @@ import TableWithData from './BaseTable';
 
 import type { Horse } from '@prisma/client';
 import type { ColumnDef } from '@tanstack/react-table';
+import { readableDateTime } from '@/utils/helpers';
 
 interface HorseTableProps {
   overRideDefaultCols?: ColumnDef<Horse>[];
@@ -26,9 +27,7 @@ function HorseTable({ overRideDefaultCols, search }: HorseTableProps) {
               const date: Date = info.getValue();
               if (date === null) return 'N/A';
 
-              return `${
-                date.getMonth() + 1
-              }/${date.getDate()}/${date.getFullYear()}`;
+              return readableDateTime(date);
             },
             header: () => <span> Registration Date </span>,
           },

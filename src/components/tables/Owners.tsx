@@ -5,6 +5,7 @@ import TableWithData from './BaseTable';
 import type { NonMemberHorseOwner } from '@prisma/client';
 import type { ColumnDef } from '@tanstack/react-table';
 import { useMemo } from 'react';
+import { readableDateTime } from '@/utils/helpers';
 
 interface OwnerTableProps {
   search?: boolean;
@@ -25,9 +26,7 @@ function OwnerTable({ search }: OwnerTableProps) {
               const date: Date = info.getValue();
               if (date === null) return 'N/A';
 
-              return `${
-                date.getMonth() + 1
-              }/${date.getDate()}/${date.getFullYear()}`;
+              return readableDateTime(date);
             },
             header: () => <span> Registration Date </span>,
           },

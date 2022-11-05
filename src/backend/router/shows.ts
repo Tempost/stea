@@ -4,6 +4,7 @@ import { ShowModel } from '../prisma/zod';
 import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
 import { Prisma } from '@prisma/client';
+import { readableDateTime } from '@/utils/helpers';
 
 export const show = createRouter()
   .query('get-shows', {
@@ -62,7 +63,7 @@ export const show = createRouter()
   .mutation('add', {
     input: ShowModel.omit({ uid: true, reviewed: true }),
     async resolve({ input }) {
-      console.info("Adding new show...", input);
+      console.info('Adding new show...', input);
 
       try {
         return await prisma.show.create({
@@ -71,7 +72,8 @@ export const show = createRouter()
       } catch (error) {
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
           if (error.code === 'P2002') {
-            const showDate = `${input.showDate.getMonth()}/${input.showDate.getDate()}/${input.showDate.getFullYear()}`;
+            const showDate = readableDateTime(input.showDate);
+
             throw new TRPCError({
               code: 'CONFLICT',
               message: `A show at ${input.showName} on ${showDate} already exists, check the table and verify.`,

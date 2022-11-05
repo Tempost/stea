@@ -10,6 +10,7 @@ import { ShowModel } from '@/backend/prisma/zod';
 import { ControlledDatePicker, Select, TextInput } from '../data-entry';
 import useZodForm from '@/utils/usezodform';
 import Alert from '../forms/Alert';
+import { readableDateTime } from '@/utils/helpers';
 
 interface ShowTableProps {
   overRideDefaultCols?: ColumnDef<Show>[];
@@ -155,9 +156,7 @@ function ShowsTable({ overRideDefaultCols, search }: ShowTableProps) {
               const date: Date = info.getValue();
               if (date === null) return 'N/A';
 
-              return `${
-                date.getMonth() + 1
-              }/${date.getDate()}/${date.getFullYear()}`;
+              return readableDateTime(date);
             },
             header: () => <span> Show Date </span>,
           },

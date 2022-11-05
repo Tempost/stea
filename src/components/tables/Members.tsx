@@ -5,6 +5,7 @@ import TableWithData from './BaseTable';
 
 import type { Member } from '@prisma/client';
 import type { ColumnDef } from '@tanstack/react-table';
+import { readableDateTime } from '@/utils/helpers';
 
 interface MemberTableProps {
   overRideDefaultCols?: ColumnDef<Member>[];
@@ -25,9 +26,7 @@ function MemberTable({ overRideDefaultCols, search }: MemberTableProps) {
             cell: info => {
               const date: Date = info.getValue();
 
-              return `${
-                date.getMonth() + 1
-              }/${date.getDate()}/${date.getFullYear()}`;
+              return readableDateTime(date);
             },
             header: () => <span> Join Date </span>,
           },
