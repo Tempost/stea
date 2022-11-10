@@ -43,4 +43,4 @@
 
 5. After user pays, update the record saying if they paid or not
 
-6. Ability to search horse table by owner name
+~~6. Ability to search horse table by owner name~~ <-- works in dev, check prod

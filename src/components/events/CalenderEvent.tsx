@@ -7,7 +7,7 @@ interface CalenderEventsProps {
 
 function CalenderEvents({ show }: CalenderEventsProps) {
   return (
-    <div className='flex flex-col m-4 shadow-xl rounded-lg p-2 border'>
+    <div className='m-4 flex flex-col rounded-lg border p-2 shadow-xl'>
       <h3 className='border-b-2'>{show.showName}</h3>
       <p className=''>{readableDateTime(show.showDate)}</p>
       <p className=''>{show.showType}</p>

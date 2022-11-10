@@ -64,7 +64,7 @@ function MembersAnHorses() {
             accessorFn: horseRec => {
               return horseRec.memberName ?? horseRec.owner;
             },
-            id: 'test',
+            id: 'owner',
             cell: info => info.getValue(),
             header: () => <span> Owner </span>,
           },

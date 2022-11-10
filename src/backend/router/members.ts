@@ -65,18 +65,16 @@ export const member = createRouter()
       console.info(`Removing member ${fullName}...`);
 
       try {
-        const member = await prisma.member
-          .findUniqueOrThrow({
-            where: { fullName },
-          })
+        const member = await prisma.member.findUniqueOrThrow({
+          where: { fullName },
+        });
 
         const deletedMember = await prisma.member.delete({
           where: { fullName: member.fullName },
         });
 
         return deletedMember;
-      }
-      catch (error) {
+      } catch (error) {
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
           if (error.code === 'P2001') {
             throw new TRPCError({
@@ -145,8 +143,8 @@ export const member = createRouter()
   })
   .mutation('update-member', {
     input: MemberModel.deepPartial(),
-    async resolve({ input: { fullName, ...others } }) {
-      console.info(`Updating member.. ${fullName}`);
+    async resolve({ input: { fullName, ...patch } }) {
+      console.info(`Updating member.. ${fullName} ${patch}`);
 
       try {
         return await prisma.member.update({
@@ -154,7 +152,7 @@ export const member = createRouter()
             fullName: fullName,
           },
           data: {
-            ...others,
+            ...patch,
           },
         });
       } catch (error) {

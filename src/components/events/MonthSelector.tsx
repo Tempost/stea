@@ -5,13 +5,13 @@ import { inferQueryOutput } from '@/utils/trpc';
 
 interface MonthState {
   month: number;
-};
+}
 
 type ValidDir = 'left' | 'right';
 
 interface MonthAction {
   dir: ValidDir;
-};
+}
 
 const MONTHS = [
   'January',
@@ -29,7 +29,7 @@ const MONTHS = [
 ];
 
 const initialState: MonthState = {
-  month: new Date().getMonth()
+  month: new Date().getMonth(),
 };
 
 function isValidDir(dir: any): dir is ValidDir {
@@ -41,13 +41,13 @@ function reducer(state: MonthState, action: MonthAction) {
   switch (action.dir) {
     case 'left':
       if (state.month < 1) {
-        return {month: 11}
+        return { month: 11 };
       }
 
       return { month: state.month - 1 };
     case 'right':
       if (state.month >= 11) {
-        return {month: 0}
+        return { month: 0 };
       }
       return { month: state.month + 1 };
     default:
@@ -55,13 +55,16 @@ function reducer(state: MonthState, action: MonthAction) {
   }
 }
 
-function filterMonths(shows: inferQueryOutput<'shows.get-shows'>, currMonth: number) {
+function filterMonths(
+  shows: inferQueryOutput<'shows.get-shows'>,
+  currMonth: number
+) {
   return shows.filter(show => {
     if (show.showDate.getMonth() === currMonth) {
-      return true
+      return true;
     }
-    return false
-  })
+    return false;
+  });
 }
 
 function MonthSelector() {
@@ -71,7 +74,7 @@ function MonthSelector() {
     e.preventDefault();
     const direction = e.currentTarget.id;
     if (isValidDir(direction)) {
-      dispatch({ dir: direction })
+      dispatch({ dir: direction });
     }
   }
 
@@ -85,9 +88,7 @@ function MonthSelector() {
         {ChevLeft}
       </button>
 
-      <h2 className='btn-secondary btn p-1'>
-        {MONTHS.at(state.month)}
-      </h2>
+      <h2 className='btn-secondary btn p-1'>{MONTHS.at(state.month)}</h2>
 
       <button
         className='btn-secondary btn p-1'

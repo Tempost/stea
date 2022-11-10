@@ -16,7 +16,7 @@ function SteaCalender() {
         Coming soon...
       </h1>
 
-      <div className='flex flex-col p-10 rounded-lg shadow-xl border'>
+      <div className='flex flex-col rounded-lg border p-10 shadow-xl'>
         <div className='flex'>
           <MonthSelector />
         </div>
@@ -32,7 +32,6 @@ function SteaCalender() {
     </section>
   );
 }
-
 
 SteaCalender.getLayout = (page: ReactElement) => {
   return <PublicLayout>{page}</PublicLayout>;
