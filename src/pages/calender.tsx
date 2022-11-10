@@ -1,28 +1,42 @@
 import { ReactElement } from 'react';
+import { useAtomValue } from 'jotai';
+
+import { selectedMonth } from '@/utils/atoms';
 import { PublicLayout } from '@/components/layout';
-import { trpc } from '@/utils/trpc';
-import { readableDateTime } from '@/utils/helpers';
+import { inferQueryOutput, trpc } from '@/utils/trpc';
 import CalenderEvents from '@/components/events/CalenderEvent';
 import MonthSelector from '@/components/events/MonthSelector';
 
+function filterByMonths(
+  shows: inferQueryOutput<'shows.get-shows'> | undefined,
+  currMonth: number
+) {
+  if (!shows) return;
+
+  return shows.filter(show => {
+    if (show.showDate.getMonth() === currMonth) {
+      return true;
+    }
+    return false;
+  });
+}
+
 function SteaCalender() {
   const shows = trpc.useQuery(['shows.get-shows']);
+  const monthState = useAtomValue(selectedMonth);
 
-  if (shows.data) console.log(readableDateTime(shows.data[0].showDate));
+  const filteredShows = filterByMonths(shows.data, monthState);
+  console.log(filteredShows);
 
   return (
     <section className='flex h-full flex-col items-center justify-center'>
-      <h1 className='mx-auto w-fit text-lg font-bold text-neutral md:text-2xl'>
-        Coming soon...
-      </h1>
-
-      <div className='flex flex-col rounded-lg border p-10 shadow-xl'>
-        <div className='flex'>
+      <div className='flex min-h-[45vmax] w-full flex-col rounded-lg border p-10 shadow-xl sm:w-96'>
+        <div className='flex w-full justify-between'>
           <MonthSelector />
         </div>
 
-        {shows.data &&
-          shows.data.map(show => (
+        {filteredShows &&
+          filteredShows.map(show => (
             <CalenderEvents
               key={show.uid}
               show={show}

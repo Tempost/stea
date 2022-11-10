@@ -10,7 +10,8 @@
     "studio": "dotenv -e .env.local -- prisma studio",
     "push": "dotenv -e .env.local -- prisma db push",
     "migrate-local": "dotenv -e .env.test -- prisma migrate dev --name test",
-    "lint": "next lint"
+    "lint": "next lint",
+    "style": "pnpm prettier -w . --plugin=prettier-plugin-tailwindcss"
   },
   "dependencies": {
     "@hookform/resolvers": "^2.9.10",

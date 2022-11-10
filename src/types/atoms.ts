@@ -22,6 +22,12 @@ export interface HorsePayload {
 
 export type MemberPayload = Type | Status;
 
+export type ValidDir = 'left' | 'right';
+
+export interface MonthAction {
+  dir: ValidDir;
+}
+
 export function isHorsePayload(o: any): o is HorsePayload {
   return o?.lifeCount !== undefined;
 }
@@ -32,4 +38,8 @@ export function isMemberPayload(o: any): o is Type | Status {
 
 export function isSignUpType(o: any): o is Type {
   return TYPE.includes(o);
+}
+
+export function isValidDir(dir: any): dir is ValidDir {
+  return dir === 'left' || dir === 'right';
 }
