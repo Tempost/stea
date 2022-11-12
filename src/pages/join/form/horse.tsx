@@ -13,7 +13,7 @@ import { trpc } from '@/utils/trpc';
 
 function HorseRegistration() {
   const [payment, togglePayment] = useState(false);
-  const insert = trpc.useMutation(['nonMemberHorseOwner.add-owner-horse'], {
+  const check = trpc.useMutation(['horse.exists'], {
     onSuccess() {
       togglePayment(true);
     },
@@ -33,6 +33,7 @@ function HorseRegistration() {
 
   function onSubmit(formValues: OwnerHorseFormValues) {
     if (formValues.horses) {
+      check.mutate(formValues);
       const lifeCount = formValues.horses.filter(
         horse => horse.regType === 'Life'
       ).length;
@@ -54,8 +55,8 @@ function HorseRegistration() {
         <Payment
           showPayment={payment}
           query={{
-            error: insert.isError,
-            message: insert.error?.message,
+            error: check.isError,
+            message: check.error?.message,
             mutation: 'nonMemberHorseOwner.add-owner-horse',
           }}
         >

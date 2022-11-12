@@ -17,6 +17,7 @@ export const MemberFormValues = z.object({
   horses: z.array(HorseModel).optional(),
 });
 
+// TODO: Strip any unneed key/values from models
 export const OwnerHorseFormValues = z.object({
   owner: NonMemberHorseOwnerModel.omit({ fullName: true }),
   horses: z.array(HorseModel).min(1, 'Horse is required'),

@@ -8,6 +8,7 @@ type Horses = {
   horses: Prisma.HorseCreateManyInput[];
 };
 
+// TODO: Add a check API for horses
 export default function HorseFieldArray() {
   const {
     register,
