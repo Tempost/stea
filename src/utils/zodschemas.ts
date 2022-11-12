@@ -23,5 +23,19 @@ export const OwnerHorseFormValues = z.object({
   horses: z.array(HorseModel).min(1, 'Horse is required'),
 });
 
+export const ShowQueryInput = z
+  .object({
+    dateRange: z.object({
+      curr: z.date(),
+      end: z.date(),
+    }),
+    includes: z.object({
+      riders: z.boolean(),
+      points: z.boolean(),
+    }),
+  })
+  .deepPartial()
+  .optional();
+
 export type MemberFormValues = z.infer<typeof MemberFormValues>;
 export type OwnerHorseFormValues = z.infer<typeof OwnerHorseFormValues>;

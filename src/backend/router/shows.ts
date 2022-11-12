@@ -5,22 +5,26 @@ import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
 import { Prisma } from '@prisma/client';
 import { readableDateTime } from '@/utils/helpers';
+import { ShowQueryInput } from '@/utils/zodschemas';
 
 export const show = createRouter()
   .query('get-shows', {
-    async resolve() {
+    input: ShowQueryInput,
+    async resolve({ input }) {
       const shows = await prisma.show
         .findMany({
-          include: {
-            points: true,
-            riders: {
-              include: {
-                points: true,
-              },
+          where: {
+            showDate: {
+              gte: input?.dateRange?.curr,
+              lte: input?.dateRange?.end,
             },
           },
+          include: input?.includes,
         })
-        .then(shows => shows);
+        .then(shows => shows)
+        .catch(err => {
+          throw err;
+        });
 
       return shows;
     },

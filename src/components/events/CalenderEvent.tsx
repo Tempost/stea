@@ -2,7 +2,7 @@ import { readableDateTime } from '@/utils/helpers';
 import { inferQueryOutput } from '@/utils/trpc';
 
 interface CalenderEventsProps {
-  show: NonNullable<inferQueryOutput<'shows.get-show'>>;
+  show: NonNullable<inferQueryOutput<'shows.get-shows'>[number]>;
 }
 
 function CalenderEvents({ show }: CalenderEventsProps) {

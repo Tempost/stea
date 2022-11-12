@@ -13,6 +13,7 @@ export const ShowModel = z.object({
    */
   reviewed: z.boolean(),
   showDate: z.date(),
+  url: z.string().url({ message: "Must be a valid URL" }).nullish(),
 })
 
 export interface CompleteShow extends z.infer<typeof ShowModel> {
