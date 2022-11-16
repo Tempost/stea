@@ -161,19 +161,20 @@ model Points {
 
 model Show {
   /// @zod.cuid({ message: "Invalid cuid"})
-  uid       String       @id @default(cuid())
-  createdAt DateTime?    @default(now())
-  updatedAt DateTime?    @updatedAt
+  uid         String       @id @default(cuid())
+  createdAt   DateTime?    @default(now())
+  updatedAt   DateTime?    @updatedAt
   /// @zod.min(1, { message: "Show name is required" })
-  showName  String       @db.VarChar(150)
-  showType  ShowType
+  showName    String       @db.VarChar(150)
+  showType    ShowType
   /// Submitted points have yet to be review by board member
-  reviewed  Boolean      @default(false)
-  showDate  DateTime
-  points    Points[]
-  riders    RiderCombo[]
+  reviewed    Boolean      @default(false)
+  showDate    DateTime
+  showEndDate DateTime?
+  points      Points[]
+  riders      RiderCombo[]
   /// @zod.url({ message: "Must be a valid URL" })
-  url       String?
+  url         String?
 
   @@unique([showName, showDate])
 }

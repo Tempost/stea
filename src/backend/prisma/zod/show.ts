@@ -13,6 +13,7 @@ export const ShowModel = z.object({
    */
   reviewed: z.boolean(),
   showDate: z.date(),
+  showEndDate: z.date().nullish(),
   url: z.string().url({ message: "Must be a valid URL" }).nullish(),
 })
 

@@ -32,7 +32,7 @@ function Tables() {
   return (
     <>
       <div
-        className='btn-group grid grid-flow-col place-content-center pb-10'
+        className='btn-group mx-auto mb-10 grid w-fit grid-flow-col place-content-center'
         //@ts-ignore
         onClick={e => setTable(e.target.value)}
       >

@@ -1,18 +1,26 @@
 import { readableDateTime } from '@/utils/helpers';
 import { inferQueryOutput } from '@/utils/trpc';
+import Link from 'next/link';
 
 interface CalenderEventsProps {
   show: NonNullable<inferQueryOutput<'shows.get-shows'>[number]>;
 }
 
 function CalenderEvents({ show }: CalenderEventsProps) {
-  return (
-    <div className='m-4 flex flex-col rounded-lg border p-2 shadow-xl'>
-      <h3 className='border-b-2'>{show.showName}</h3>
-      <p className=''>{readableDateTime(show.showDate)}</p>
-      <p className=''>{show.showType}</p>
+  const date = show.showEndDate
+    ? `${readableDateTime(show.showDate)} - ${readableDateTime(
+      show.showEndDate
+    )}`
+    : readableDateTime(show.showDate);
 
-      <button className='btn-primary btn-sm btn'>Register</button>
+  return (
+    <div className='m-4 flex flex-col rounded-lg border p-2 text-center text-lg shadow-xl'>
+      <h3 className='border-b-2'>
+        {show.showName} ({show.showType})
+      </h3>
+      <p className='m-2 text-lg'>{date}</p>
+
+      {show.url && <Link href={show.url} className='btn-primary btn-sm btn'>Register</Link>}
     </div>
   );
 }

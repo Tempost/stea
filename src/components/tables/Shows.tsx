@@ -2,10 +2,10 @@ import { useMemo } from 'react';
 
 import { trpc } from '@/utils/trpc';
 import TableWithData from './BaseTable';
-import type { Show } from '@prisma/client';
-import type { ColumnDef } from '@tanstack/react-table';
 import { readableDateTime } from '@/utils/helpers';
 import AddNewShow from './AddNewShow';
+import type { Show } from '@prisma/client';
+import type { ColumnDef } from '@tanstack/react-table';
 
 interface ShowTableProps {
   overRideDefaultCols?: ColumnDef<Show>[];
@@ -40,6 +40,17 @@ function ShowsTable({ overRideDefaultCols, search }: ShowTableProps) {
             header: () => <span> Show Date </span>,
           },
           {
+            accessorKey: 'showEndDate',
+            id: 'showEndDate',
+            cell: info => {
+              const date: Date = info.getValue();
+              if (date === null) return '';
+
+              return readableDateTime(date);
+            },
+            header: () => <span> End Date </span>,
+          },
+          {
             accessorKey: 'showName',
             id: 'showName',
             cell: info => info.getValue(),
@@ -50,13 +61,7 @@ function ShowsTable({ overRideDefaultCols, search }: ShowTableProps) {
             id: 'showType',
             cell: info => info.getValue(),
             header: () => <span> Type </span>,
-          },
-          {
-            accessorKey: 'riders',
-            id: 'riders',
-            cell: info => info.getValue().length,
-            header: () => <span> Attendee count </span>,
-          },
+          }
         ],
       },
     ],

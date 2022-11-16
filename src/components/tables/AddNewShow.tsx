@@ -29,7 +29,11 @@ function AddNewShow() {
     shouldFocusError: true,
     shouldUnregister: true,
     schema: NewShowModel,
+    defaultValues: {
+      url: null,
+    },
   });
+
   const {
     register,
     formState: { errors },
@@ -39,6 +43,8 @@ function AddNewShow() {
   const addNew = trpc.useMutation(['shows.add'], {
     onSuccess() {
       utils.invalidateQueries(['shows.get-shows']);
+      methods.reset();
+      methods.clearErrors();
     },
   });
 
@@ -60,6 +66,7 @@ function AddNewShow() {
         id='my-modal-6'
         className='modal-toggle'
         onClick={() => {
+          methods.clearErrors();
           methods.reset();
         }}
       />
@@ -91,17 +98,35 @@ function AddNewShow() {
                 />
               </div>
 
-              <ControlledDatePicker
-                name='showDate'
-                label='Show Date*'
-                placeholderText='Show Date'
-                error={errors.showDate}
+              <div className='grid grid-flow-col'>
+                <ControlledDatePicker
+                  name='showDate'
+                  label='Show Date*'
+                  placeholderText='Show Date'
+                  error={errors.showDate}
+                />
+
+                <ControlledDatePicker
+                  name='showEndDate'
+                  label='Ending Date'
+                  placeholderText='Ending Date'
+                  error={errors.showEndDate}
+                />
+              </div>
+
+              <TextInput
+                className='input-primary'
+                placeholder='Registration Link'
+                label='Registration Link'
+                error={errors.url}
+                {...register('url', { required: false })}
               />
 
               <Alert
                 message={addNew.error?.message}
                 visible={addNew.isError}
               />
+
               <div className='modal-action'>
                 <button
                   className={`btn-sm btn ${
