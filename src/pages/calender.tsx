@@ -33,13 +33,13 @@ function SteaCalender() {
       <div className='flex min-h-[45vmax] w-full flex-col rounded-lg border p-10 shadow-xl sm:w-96'>
         <MonthSelector />
 
-        {filteredShows &&
+        {filteredShows ?
           filteredShows.map(show => (
             <CalenderEvents
               key={show.uid}
               show={show}
             />
-          ))}
+          )) : <span className='my-12 text-center'>Loading...</span>}
       </div>
     </section>
   );

@@ -24,13 +24,16 @@ function UpcomingEvents() {
   return process.env.NODE_ENV !== 'production' ? (
     <div className='flex w-full flex-col rounded-lg border p-5 shadow-xl sm:w-96'>
       <h2 className='border-b-2 text-center text-xl'>Upcoming Events</h2>
-      {shows.data &&
+      {shows.data ? (
         shows.data.map(show => (
           <CalenderEvents
             key={show.uid}
             show={show}
           />
-        ))}
+        ))
+      ) : (
+        <span className='my-12 text-center'>Loading...</span>
+      )}
       <NextLink
         href='/calender'
         className='self-center'

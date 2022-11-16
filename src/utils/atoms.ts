@@ -1,5 +1,4 @@
 import { atom } from 'jotai';
-import { atomWithReducer } from 'jotai/utils';
 import produce from 'immer';
 import {
   FormState,
@@ -86,7 +85,7 @@ const updateFormState = atom(null, (_get, set, action: ReducerAction) => {
   }
 });
 
-const currMonth = new Date().getMonth() + 1;
+const currMonth = new Date().getMonth();
 const month = atom(currMonth);
 const selectedMonth = atom(get => get(month));
 
