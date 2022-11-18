@@ -10,8 +10,6 @@ import {
   RidersTable,
 } from '@/components/tables';
 
-const activeBtn = 'btn btn-active';
-
 function Tables() {
   const [table, setTable] = useState<TableSelection>('members');
 
@@ -32,36 +30,36 @@ function Tables() {
   return (
     <>
       <div
-        className='btn-group mx-auto mb-10 grid w-fit grid-flow-col place-content-center'
+        className='btn-group  mx-auto mb-10 grid w-fit grid-flow-col place-content-center'
         //@ts-ignore
         onClick={e => setTable(e.target.value)}
       >
         <button
-          className={memberSelected ? activeBtn : 'btn'}
+          className={`btn btn-sm p-1 lg:btn-md ${memberSelected && 'btn-active'}`}
           value='members'
         >
           Members
         </button>
         <button
-          className={horseSelected ? activeBtn : 'btn'}
+          className={`btn btn-sm p-1 lg:btn-md ${horseSelected && 'btn-active'}`}
           value='horses'
         >
           Horses
         </button>
         <button
-          className={ownersSelected ? activeBtn : 'btn'}
+          className={`btn btn-sm p-1 lg:btn-md ${ownersSelected && 'btn-active'}`}
           value='owners'
         >
           Owners
         </button>
         <button
-          className={combosSelected ? activeBtn : 'btn'}
+          className={`btn btn-sm p-1 lg:btn-md ${combosSelected && 'btn-active'}`}
           value='riders'
         >
           Riders
         </button>
         <button
-          className={showsSelected ? activeBtn : 'btn'}
+          className={`btn btn-sm p-1 lg:btn-md ${showsSelected && 'btn-active'}`}
           value='shows'
         >
           Shows

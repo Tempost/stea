@@ -71,7 +71,7 @@ function AddNewShow() {
         }}
       />
 
-      <div className='modal modal-bottom sm:modal-middle'>
+      <div className='modal modal-bottom sm:modal-middle transition-all delay-75'>
         <div className='modal-box overflow-visible'>
           <h3 className='text-lg font-bold'>Enter Show Information</h3>
 
@@ -79,7 +79,7 @@ function AddNewShow() {
             <form onSubmit={methods.handleSubmit(submitForm)}>
               <div className='flex flex-row gap-5'>
                 <TextInput
-                  className='input-primary'
+                  className='input-primary input-sm'
                   placeholder='Enter show name'
                   label='Show Name*'
                   error={errors.showName}
@@ -89,7 +89,7 @@ function AddNewShow() {
                 />
 
                 <Select
-                  className='select-primary w-32'
+                  className='select-primary select-sm w-32'
                   label='Show Type*'
                   options={showTypes}
                   {...register('showType', {

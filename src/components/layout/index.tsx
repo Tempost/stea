@@ -5,7 +5,7 @@ import {
   ReactPayPalScriptOptions,
 } from '@paypal/react-paypal-js';
 
-import { DashboardHeader, ResponsiveHeader } from './Header';
+import { ResponsiveDashboardHeader, ResponsiveHeader } from './Header';
 import Footer from './Footer';
 import { updateFormState } from '@/utils/atoms';
 import { LayoutProps } from '@/types/common';
@@ -34,7 +34,7 @@ function PublicLayout({ children }: LayoutProps) {
 function DashboardLayout({ children }: LayoutProps) {
   return (
     <div className='flex h-screen flex-col'>
-      <DashboardHeader />
+      <ResponsiveDashboardHeader />
       <main className='flex-grow bg-neutral-content p-4 sm:p-8 md:p-10 lg:p-16'>
         {children}
       </main>
