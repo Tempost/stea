@@ -4,7 +4,7 @@ import { useAtomValue } from 'jotai';
 import { selectedMonth } from '@/utils/atoms';
 import { PublicLayout } from '@/components/layout';
 import { inferQueryOutput, trpc } from '@/utils/trpc';
-import CalenderEvents from '@/components/events/CalenderEvent';
+import CalendarEvents from '@/components/events/CalendarEvent';
 import MonthSelector from '@/components/events/MonthSelector';
 
 function filterByMonths(
@@ -21,7 +21,7 @@ function filterByMonths(
   });
 }
 
-function SteaCalender() {
+function SteaCalendar() {
   const shows = trpc.useQuery(['shows.get-shows']);
   const monthState = useAtomValue(selectedMonth);
 
@@ -35,7 +35,7 @@ function SteaCalender() {
 
         {filteredShows ?
           filteredShows.map(show => (
-            <CalenderEvents
+            <CalendarEvents
               key={show.uid}
               show={show}
             />
@@ -45,8 +45,8 @@ function SteaCalender() {
   );
 }
 
-SteaCalender.getLayout = (page: ReactElement) => {
+SteaCalendar.getLayout = (page: ReactElement) => {
   return <PublicLayout>{page}</PublicLayout>;
 };
 
-export default SteaCalender;
+export default SteaCalendar;

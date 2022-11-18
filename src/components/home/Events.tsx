@@ -1,7 +1,7 @@
 import { trpc } from '@/utils/trpc';
 import NextLink from 'next/link';
-import CalenderEvents from '../events/CalenderEvent';
-import { CalenderIcon } from '../icons';
+import CalendarEvents from '../events/CalendarEvent';
+import { CalendarIcon } from '../icons';
 
 const CURR_MONTH = new Date();
 const MONTH_FROM_CURR = new Date(
@@ -26,7 +26,7 @@ function UpcomingEvents() {
       <h2 className='border-b-2 text-center text-xl'>Upcoming Events</h2>
       {shows.data ? (
         shows.data.map(show => (
-          <CalenderEvents
+          <CalendarEvents
             key={show.uid}
             show={show}
           />
@@ -35,11 +35,11 @@ function UpcomingEvents() {
         <span className='my-12 text-center'>Loading...</span>
       )}
       <NextLink
-        href='/calender'
+        href='/calendar'
         className='self-center'
       >
         <button className='btn-primary btn-md btn grid grid-flow-col place-content-center gap-2'>
-          {CalenderIcon} View Full Calender
+          {CalendarIcon} View Full Calendar
         </button>
       </NextLink>
 

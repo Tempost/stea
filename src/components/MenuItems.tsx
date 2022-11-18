@@ -21,8 +21,8 @@ export const publicMenuItems: Menu[] = [
     name: 'Points',
   },
   {
-    href: '/calender',
-    name: 'Calender',
+    href: '/calendar',
+    name: 'Calendar',
   },
   {
     name: 'Join',

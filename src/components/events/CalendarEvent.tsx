@@ -2,11 +2,11 @@ import { readableDateTime } from '@/utils/helpers';
 import { inferQueryOutput } from '@/utils/trpc';
 import Link from 'next/link';
 
-interface CalenderEventsProps {
+interface CalendarEventsProps {
   show: NonNullable<inferQueryOutput<'shows.get-shows'>[number]>;
 }
 
-function CalenderEvents({ show }: CalenderEventsProps) {
+function CalendarEvents({ show }: CalendarEventsProps) {
   const date = show.showEndDate
     ? `${readableDateTime(show.showDate)} - ${readableDateTime(
       show.showEndDate
@@ -25,4 +25,4 @@ function CalenderEvents({ show }: CalenderEventsProps) {
   );
 }
 
-export default CalenderEvents;
+export default CalendarEvents;
