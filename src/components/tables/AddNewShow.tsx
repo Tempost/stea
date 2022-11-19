@@ -49,7 +49,6 @@ function AddNewShow() {
   });
 
   function submitForm(values: z.infer<typeof NewShowModel>) {
-    console.log(values);
     addNew.mutate(values);
   }
 

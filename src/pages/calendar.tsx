@@ -13,7 +13,6 @@ function SteaCalendar() {
   const monthState = useAtomValue(selectedMonth);
 
   const filteredShows = filterByMonths(shows.data, monthState);
-  console.log(filteredShows);
 
   return (
     <section className='flex h-full flex-col items-center justify-center'>
