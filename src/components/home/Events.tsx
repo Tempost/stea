@@ -21,7 +21,7 @@ function UpcomingEvents() {
     },
   ]);
 
-  return process.env.NODE_ENV !== 'production' ? (
+  return (
     <div className='flex w-full flex-col rounded-lg border p-5 shadow-xl sm:w-96'>
       <h2 className='border-b-2 text-center text-xl'>Upcoming Events</h2>
       {shows.data ? (
@@ -43,10 +43,8 @@ function UpcomingEvents() {
         </button>
       </NextLink>
 
-      {/* TODO: Grab shows happening in the next month and display here */}
-      {/* TODO: Make some sort of event display component? */}
     </div>
-  ) : null;
+  );
 }
 
 export default UpcomingEvents;

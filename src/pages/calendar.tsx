@@ -3,23 +3,10 @@ import { useAtomValue } from 'jotai';
 
 import { selectedMonth } from '@/utils/atoms';
 import { PublicLayout } from '@/components/layout';
-import { inferQueryOutput, trpc } from '@/utils/trpc';
+import { trpc } from '@/utils/trpc';
 import CalendarEvents from '@/components/events/CalendarEvent';
 import MonthSelector from '@/components/events/MonthSelector';
-
-function filterByMonths(
-  shows: inferQueryOutput<'shows.get-shows'> | undefined,
-  currMonth: number
-) {
-  if (!shows) return;
-
-  return shows.filter(show => {
-    if (show.showDate.getMonth() === currMonth) {
-      return true;
-    }
-    return false;
-  });
-}
+import { filterByMonths } from '@/utils/filterByMonths';
 
 function SteaCalendar() {
   const shows = trpc.useQuery(['shows.get-shows']);

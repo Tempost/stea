@@ -27,7 +27,7 @@ import { trpc } from '@/utils/trpc';
 function IndividualRegistration() {
   const [payment, togglePayment] = useState(false);
 
-  const checkExisting = trpc.useMutation(['member.exists'], {
+  const checkMember = trpc.useMutation(['member.exists'], {
     onSuccess() {
       togglePayment(true);
     },
@@ -65,7 +65,7 @@ function IndividualRegistration() {
       });
     }
 
-    checkExisting.mutate(formValues);
+    checkMember.mutate(formValues);
   }
 
   return (
@@ -74,8 +74,8 @@ function IndividualRegistration() {
         <Payment
           showPayment={payment}
           query={{
-            error: checkExisting.isError,
-            message: checkExisting.error?.message,
+            error: checkMember.isError,
+            message: checkMember.error?.message,
             mutation: 'member.add-member',
           }}
         >
