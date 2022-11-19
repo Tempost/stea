@@ -1,4 +1,8 @@
-import { ContactCardProps } from './contactus';
+export interface ContactCardProps {
+  name?: string;
+  position: string;
+  email?: string;
+}
 
 export function ContactCard({ name, position, email }: ContactCardProps) {
     return (

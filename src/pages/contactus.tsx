@@ -2,12 +2,6 @@ import { ReactElement } from 'react';
 import { PublicLayout } from '@/components/layout';
 import { ContactCard } from '@/components/ContactCard';
 
-export interface ContactCardProps {
-  name?: string;
-  position: string;
-  email?: string;
-}
-
 function ContactUs() {
   return (
     <section>
