@@ -50,7 +50,7 @@ export const ResponsiveHeader = ({ children }: any) => {
           htmlFor='my-drawer-3'
           className='drawer-overlay'
         />
-        <ul className='menu w-40 p-1 font-semibold text-sm'>
+        <ul className='menu w-40 p-1 text-sm font-semibold'>
           {publicMenuItems.map(({ href, name, render }) => (
             <Fragment key={name}>
               {render ? (
@@ -121,7 +121,12 @@ export const ResponsiveDashboardHeader = () => (
           ))}
         </ul>
       </div>
-      <Link href='/' className='btn-ghost btn text-xl normal-case'>Home</Link>
+      <Link
+        href='/'
+        className='btn-ghost btn text-xl normal-case'
+      >
+        Home
+      </Link>
     </div>
     <div className='navbar-start hidden lg:flex'>
       <ul className='menu menu-horizontal p-0'>

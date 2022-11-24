@@ -70,7 +70,7 @@ function AddNewShow() {
         }}
       />
 
-      <div className='modal modal-bottom sm:modal-middle transition-all delay-75'>
+      <div className='modal modal-bottom transition-all delay-75 sm:modal-middle'>
         <div className='modal-box overflow-visible'>
           <h3 className='text-lg font-bold'>Enter Show Information</h3>
 

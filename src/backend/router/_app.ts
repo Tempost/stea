@@ -6,9 +6,11 @@ import { show } from './shows';
 import { riders } from './combos';
 import { nonMemberHorseOwner } from './nonmemberhorseowner';
 import { createRouter } from './utils';
+import { mail } from './mail';
 
 export const appRouter = createRouter()
   .transformer(transformer)
+  .merge('mail.', mail)
   .merge('member.', member)
   .merge('nonMemberHorseOwner.', nonMemberHorseOwner)
   .merge('horse.', horse)

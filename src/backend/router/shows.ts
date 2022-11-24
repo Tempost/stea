@@ -21,8 +21,8 @@ export const show = createRouter()
           },
           include: input?.includes,
           orderBy: {
-            showDate: 'asc'
-          }
+            showDate: 'asc',
+          },
         })
         .then(shows => shows)
         .catch(err => {

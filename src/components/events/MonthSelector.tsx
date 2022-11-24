@@ -33,7 +33,7 @@ function MonthSelector() {
   }
 
   return (
-    <div className='grid grid-flow-col border-b-2 pb-2 place-content-between'>
+    <div className='grid grid-flow-col place-content-between border-b-2 pb-2'>
       <button
         className='btn-secondary btn-sm btn p-1'
         id='left'

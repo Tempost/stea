@@ -42,7 +42,6 @@ function UpcomingEvents() {
           {CalendarIcon} View Full Calendar
         </button>
       </NextLink>
-
     </div>
   );
 }

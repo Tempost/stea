@@ -9,8 +9,8 @@ interface CalendarEventsProps {
 function CalendarEvents({ show }: CalendarEventsProps) {
   const date = show.showEndDate
     ? `${readableDateTime(show.showDate)} - ${readableDateTime(
-      show.showEndDate
-    )}`
+        show.showEndDate
+      )}`
     : readableDateTime(show.showDate);
 
   return (
@@ -20,7 +20,14 @@ function CalendarEvents({ show }: CalendarEventsProps) {
       </h3>
       <p className='m-2 text-lg'>{date}</p>
 
-      {show.url && <Link href={show.url} className='btn-primary btn-sm btn'>Register</Link>}
+      {show.url && (
+        <Link
+          href={show.url}
+          className='btn-primary btn-sm btn'
+        >
+          Register
+        </Link>
+      )}
     </div>
   );
 }

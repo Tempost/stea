@@ -26,7 +26,9 @@ export default function NavLinkSubMenu({
         {name} {ChevDown}
       </span>
       <ul
-        className={`bg-primary text-xs lg:text-sm shadow-2xl ${drawer ? '' : 'right-0'}`}
+        className={`bg-primary text-xs shadow-2xl lg:text-sm ${
+          drawer ? '' : 'right-0'
+        }`}
       >
         {subLinks.map(({ href, text }) => (
           <li key={`${href}${text}`}>

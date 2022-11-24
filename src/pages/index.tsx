@@ -61,7 +61,7 @@ function Home() {
           />
         </div>
 
-        <section className='border card-compact container card mx-auto w-fit shadow-2xl'>
+        <section className='card-compact container card mx-auto w-fit border shadow-2xl'>
           <h2 className='text-center text-xl font-bold text-red-600 md:text-2xl lg:text-3xl'>
             Notice
           </h2>
