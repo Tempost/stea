@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { createRouter } from './utils';
+import { createRouter, sendMail } from './utils';
 import { prisma } from '@/backend/prisma';
 import { MemberModel } from '@/backend/prisma/zod';
 import { TRPCError } from '@trpc/server';
@@ -139,6 +139,8 @@ export const member = createRouter()
 
         throw error;
       }
+
+      sendMail(member.firstName, member.email);
     },
   })
   .mutation('update-member', {

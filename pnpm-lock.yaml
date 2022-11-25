@@ -79,7 +79,6 @@ dependencies:
   react-query: 3.39.2_biqbaboplfbrettd7655fr4n2y
   superjson: 1.11.0
   tailwindcss: 3.2.1_neo3lunb2qpadwxplzw7r2isgm
-  ts-node: 10.9.1_dgno4xsjymjawxegj6pp2jkoe4
   zod: 3.19.1
   zod-prisma: 0.5.4_prisma@4.5.0+zod@3.19.1
 
@@ -100,6 +99,7 @@ devDependencies:
   prettier-plugin-tailwindcss: 0.1.13_prettier@2.7.1
   prisma: 4.5.0
   ts-jest: 28.0.8_bi2kohzqnxavgozw3csgny5hju
+  ts-node: 10.9.1_dgno4xsjymjawxegj6pp2jkoe4
   typescript: 4.7.4
 
 packages:

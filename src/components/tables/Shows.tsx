@@ -13,8 +13,6 @@ interface ShowTableProps {
 }
 
 function ShowsTable({ overRideDefaultCols, search }: ShowTableProps) {
-  const mail = trpc.useMutation(['mail.send']);
-
   const shows = trpc.useQuery([
     'shows.get-shows',
     {
@@ -73,18 +71,6 @@ function ShowsTable({ overRideDefaultCols, search }: ShowTableProps) {
   return (
     <>
       <AddNewShow />
-      <button
-        className='btn'
-        onClick={() =>
-          mail.mutate({
-            name: 'Lynette',
-            email: 'newhorizonstables@sbcglobal.net',
-          })
-        }
-      >
-        {' '}
-        Test Mail
-      </button>
       <TableWithData
         colDef={overRideDefaultCols ?? defaultCols}
         query={shows}

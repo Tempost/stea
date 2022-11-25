@@ -8,8 +8,6 @@ import type { Session } from 'next-auth';
 
 import { transformer } from '@/utils/trpc';
 import '../styles/globals.css';
-import '../styles/Calendar.css';
-import '../styles/DatePicker.css';
 
 import type { AppRouter } from '@/backend/router/_app';
 import type { NextComponentType, NextPage } from 'next';
