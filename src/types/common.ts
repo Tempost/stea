@@ -19,5 +19,15 @@ export function isFormType(o: any): o is FormType {
   return FORMTYPE.includes(o as FormType);
 }
 
+export const Divisions = {
+  Prelim: 'Prelim',
+  Train: 'Train',
+  Novice: 'Novice',
+  BGN: 'BGN',
+  GOLD: 'GOLD',
+  GAG: 'GAG',
+};
+export type Divisions = typeof Divisions[keyof typeof Divisions];
+
 export type LayoutProps = React.PropsWithChildren;
 export interface HeaderProps extends React.PropsWithChildren {}

@@ -4,6 +4,7 @@ import LinkWrapper from '@/components/LinkWrapper';
 import { publicMenuItems, dashMenuItems } from '@/components/MenuItems';
 import Link from 'next/link';
 
+// TODO: Please type my props
 export const ResponsiveHeader = ({ children }: any) => {
   return (
     <div className='drawer'>

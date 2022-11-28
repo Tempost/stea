@@ -3,9 +3,20 @@ import {
   MemberModel,
   NonMemberHorseOwnerModel,
 } from '@/backend/prisma/zod';
+import { ShowType } from '@prisma/client';
+import { Divisions } from '@/types/common';
 import { z } from 'zod';
 
-export const PointsUploadModel = z.object({});
+export const PointsUploadModel = z.object({
+  firstName: z.string(),
+  lastName: z.string(),
+  horseName: z.string(),
+  showType: z.nativeEnum(ShowType),
+  division: z.nativeEnum(Divisions),
+  group: z.enum(['A', 'B', 'C', 'D']),
+  finalScore: z.number(),
+  placing: z.enum(['1', '2', '3', '4', '5', '6', 'W', 'E', 'RF']),
+});
 
 export const MemberFormValues = z.object({
   member: MemberModel.omit({
