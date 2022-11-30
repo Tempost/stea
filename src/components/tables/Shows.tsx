@@ -32,10 +32,9 @@ function ShowsTable({ overRideDefaultCols, search }: ShowTableProps) {
             accessorKey: 'showDate',
             id: 'showDate',
             cell: info => {
-              const date: Date = info.getValue();
-              if (date === null) return 'N/A';
+              const date: Date | undefined = info.getValue();
 
-              return readableDateTime(date);
+              return date ? readableDateTime(date) : '';
             },
             header: () => <span> Show Date </span>,
           },
@@ -43,10 +42,9 @@ function ShowsTable({ overRideDefaultCols, search }: ShowTableProps) {
             accessorKey: 'showEndDate',
             id: 'showEndDate',
             cell: info => {
-              const date: Date = info.getValue();
-              if (date === null) return '';
+              const date: Date | undefined = info.getValue();
 
-              return readableDateTime(date);
+              return date ? readableDateTime(date) : '';
             },
             header: () => <span> End Date </span>,
           },

@@ -24,10 +24,9 @@ function HorseTable({ overRideDefaultCols, search }: HorseTableProps) {
             accessorKey: 'registrationDate',
             id: 'registrationDate',
             cell: info => {
-              const date: Date = info.getValue();
-              if (date === null) return 'N/A';
+              const date: Date | undefined = info.getValue();
 
-              return readableDateTime(date);
+              return date ? readableDateTime(date) : '';
             },
             header: () => <span> Registration Date </span>,
           },

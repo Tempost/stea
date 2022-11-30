@@ -153,10 +153,11 @@ model Points {
   uid        String     @id @default(cuid())
   /// @zod.min(1, { message: "Member Name is required" })
   riderUid   String
-  showUid    String
-  Show       Show       @relation(fields: [showUid], references: [uid], onDelete: Cascade, onUpdate: Cascade)
   RiderCombo RiderCombo @relation(fields: [riderUid], references: [uid], onDelete: Cascade, onUpdate: Cascade)
   points     Float
+  place      Int
+  show       Show       @relation(fields: [showUid], references: [uid], onDelete: Cascade, onUpdate: Cascade)
+  showUid    String
 }
 
 model Show {
@@ -171,10 +172,10 @@ model Show {
   reviewed    Boolean      @default(false)
   showDate    DateTime
   showEndDate DateTime?
-  points      Points[]
   riders      RiderCombo[]
   /// @zod.url({ message: "Must be a valid URL" })
   url         String?
+  Points      Points[]
 
   @@unique([showName, showDate])
 }

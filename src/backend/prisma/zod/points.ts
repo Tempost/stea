@@ -1,16 +1,17 @@
 import * as z from "zod"
-import { CompleteShow, RelatedShowModel, CompleteRiderCombo, RelatedRiderComboModel } from "./index"
+import { CompleteRiderCombo, RelatedRiderComboModel, CompleteShow, RelatedShowModel } from "./index"
 
 export const PointsModel = z.object({
   uid: z.string().cuid({ message: "Invalid cuid" }),
   riderUid: z.string().min(1, { message: "Member Name is required" }),
-  showUid: z.string(),
   points: z.number(),
+  place: z.number().int(),
+  showUid: z.string(),
 })
 
 export interface CompletePoints extends z.infer<typeof PointsModel> {
-  Show: CompleteShow
   RiderCombo: CompleteRiderCombo
+  show: CompleteShow
 }
 
 /**
@@ -19,6 +20,6 @@ export interface CompletePoints extends z.infer<typeof PointsModel> {
  * NOTE: Lazy required in case of potential circular dependencies within schema
  */
 export const RelatedPointsModel: z.ZodSchema<CompletePoints> = z.lazy(() => PointsModel.extend({
-  Show: RelatedShowModel,
   RiderCombo: RelatedRiderComboModel,
+  show: RelatedShowModel,
 }))

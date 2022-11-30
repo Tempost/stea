@@ -1,6 +1,6 @@
 import * as z from "zod"
 import { ShowType } from "@prisma/client"
-import { CompletePoints, RelatedPointsModel, CompleteRiderCombo, RelatedRiderComboModel } from "./index"
+import { CompleteRiderCombo, RelatedRiderComboModel, CompletePoints, RelatedPointsModel } from "./index"
 
 export const ShowModel = z.object({
   uid: z.string().cuid({ message: "Invalid cuid" }),
@@ -18,8 +18,8 @@ export const ShowModel = z.object({
 })
 
 export interface CompleteShow extends z.infer<typeof ShowModel> {
-  points: CompletePoints[]
   riders: CompleteRiderCombo[]
+  Points: CompletePoints[]
 }
 
 /**
@@ -28,6 +28,6 @@ export interface CompleteShow extends z.infer<typeof ShowModel> {
  * NOTE: Lazy required in case of potential circular dependencies within schema
  */
 export const RelatedShowModel: z.ZodSchema<CompleteShow> = z.lazy(() => ShowModel.extend({
-  points: RelatedPointsModel.array(),
   riders: RelatedRiderComboModel.array(),
+  Points: RelatedPointsModel.array(),
 }))

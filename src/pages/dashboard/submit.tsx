@@ -12,7 +12,7 @@ function SubmitPoints() {
         headers: headers,
         method: 'POST',
         mode: 'cors',
-        body: event.target.files[0]
+        body: event.target.files[0],
       };
 
       fetch('/api/dashboard/submit/points', opts).then(console.log);

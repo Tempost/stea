@@ -24,9 +24,9 @@ function MemberTable({ overRideDefaultCols, search }: MemberTableProps) {
             accessorKey: 'membershipDate',
             id: 'membershipDate',
             cell: info => {
-              const date: Date = info.getValue();
+              const date: Date | undefined = info.getValue();
 
-              return readableDateTime(date);
+              return date ? readableDateTime(date) : '';
             },
             header: () => <span> Join Date </span>,
           },

@@ -7,7 +7,7 @@ import { ShowType } from '@prisma/client';
 import { Divisions } from '@/types/common';
 import { z } from 'zod';
 
-export const PointsUploadModel = z.object({
+export const EntryModel = z.object({
   firstName: z.string(),
   lastName: z.string(),
   horseName: z.string(),
@@ -50,3 +50,4 @@ export const ShowQueryInput = z
 
 export type MemberFormValues = z.infer<typeof MemberFormValues>;
 export type OwnerHorseFormValues = z.infer<typeof OwnerHorseFormValues>;
+export type Entry = z.infer<typeof EntryModel>;
