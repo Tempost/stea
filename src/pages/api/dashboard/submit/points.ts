@@ -1,13 +1,11 @@
 import { getToken } from 'next-auth/jwt';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Entry, EntryModel } from '@/utils/zodschemas';
-import { HEADER_NAMES, isEntry, isHeadingNames } from '@/types/common';
-import { RiderComboModel, PointsModel, ShowModel } from '@/backend/prisma/zod';
+import { HEADER_NAMES, isEntry, isHeadingNames, isZodFielError } from '@/types/common';
 import { prisma } from '@/backend/prisma';
-import { z } from 'zod';
-import { Prisma } from '@prisma/client';
+import { NotFoundError, PrismaClientKnownRequestError } from '@prisma/client/runtime';
 
-class ParseError extends Error {}
+class ParseError extends Error { }
 
 // Upload .csv file to this API
 // Convert .csv file into zod objects?
@@ -22,14 +20,16 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+
   if (req.method !== 'POST') {
-    return res.status(405).end();
+    return res.status(405).json({ message: 'Method Not Allowed.' });
   }
 
   const token = await getToken({ req });
   if (!token) {
     console.warn('Attempted to access api protected by auth.');
-    return res.status(401).end();
+    return res.status(401).json({ message: 'Access Not Allowed.' });
   }
 
   try {
@@ -43,25 +43,23 @@ export default async function handler(
         })
         .filter(isEntry);
 
-      uploadPoints(parsedEntries);
+      await uploadPoints(parsedEntries);
       return res.status(200).json({ success: true });
     }
 
     // NOTE: Crappy type here...
     const parseErrors = entries
-      .filter(entry => !entry.success)
       .map(entry => {
         if (!entry.success) {
           return entry.error.flatten().fieldErrors;
         }
-      });
+      }).filter(isZodFielError<Entry>);
 
-    return res.status(500).json(parseErrors);
+    return res.status(500).json({ message: parseErrors });
   } catch (err) {
-    if (err instanceof ParseError) {
+    if (err instanceof Error) {
       console.error(err);
-
-      return res.status(500).json({ error: { message: err.message } });
+      return res.status(500).json({ message: err.message });
     }
   }
 }
@@ -78,11 +76,12 @@ async function uploadPoints(entries: Entry[]) {
     });
 
     const riderName = `${entry.firstName} ${entry.lastName}`;
-    const horseExists = await prisma.horse.findUniqueOrThrow({
+    const horseExists = await prisma.horse.findUnique({
       where: { horseRN: entry.horseName },
     });
-    const memberExists = await prisma.member.findUniqueOrThrow({
-      where: { fullName: riderName },
+
+    const memberExists = await prisma.member.findUnique({
+      where: { fullName: 'Taco' },
     });
 
     const riderCombo = {

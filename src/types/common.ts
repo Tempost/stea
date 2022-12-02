@@ -1,5 +1,6 @@
 import { Entry } from '@/utils/zodschemas';
 import { Status } from '@prisma/client';
+import { typeToFlattenedError, ZodError } from 'zod';
 
 export const FORMTYPE = ['Individual', 'Business', 'Horse'] as const;
 export type FormType = typeof FORMTYPE[number];
@@ -38,6 +39,11 @@ export function isHeadingNames(a: any[]): a is UnMappedHeaderNames[] {
 export const isEntry = (o: Entry | undefined): o is Entry => {
   return !!o;
 };
+
+export type ZodFieldErrors<T> = typeToFlattenedError<T, string>['fieldErrors'];
+export function isZodFielError<T>(o: ZodFieldErrors<T> | undefined):o is ZodFieldErrors<T> {
+  return !!o;
+}
 
 export const Divisions = {
   Prelim: 'Prelim',

@@ -1,4 +1,6 @@
-function Alert({ message, visible }: { message?: string; visible: boolean }) {
+import { ZodFieldErrors } from "@/types/common";
+
+function Alert<T>({ message, visible }: { message?: string | ZodFieldErrors<T>; visible: boolean }) {
   return (
     <div
       className={`alert alert-error my-2 p-2 shadow-lg ${
@@ -19,7 +21,7 @@ function Alert({ message, visible }: { message?: string; visible: boolean }) {
             d='M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z'
           />
         </svg>
-        <span className='text-sm'>Error! {message}</span>
+        <span className='text-sm'>Error! {typeof message === 'string' ? message : 'Fancy Errors soon'}</span>
       </div>
     </div>
   );

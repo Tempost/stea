@@ -1,11 +1,29 @@
+import { useState } from 'react';
+import { ZodError } from 'zod';
+
 import type { ChangeEvent, ReactElement } from 'react';
 
 import { DashboardLayout } from '@/components/layout';
+import Alert from '@/components/forms/Alert';
+import { Entry } from '@/utils/zodschemas';
+import { ZodFieldErrors, isZodFielError } from '@/types/common';
+
+
+interface SubmitError {
+  message: string | ZodFieldErrors<Entry>;
+}
+
+export function isSubmitError(o: any): o is SubmitError {
+  return o.message;
+}
 
 function SubmitPoints() {
+  const [error, setError] = useState<string | ZodFieldErrors<Entry>>();
+
   function handleUpload(event: ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files.length > 0) {
       const headers = new Headers();
+      headers.set('Accept', '*/*');
       headers.set('Content-Type', 'text/csv');
 
       const opts: RequestInit = {
@@ -15,7 +33,29 @@ function SubmitPoints() {
         body: event.target.files[0],
       };
 
-      fetch('/api/dashboard/submit/points', opts).then(console.log);
+      const res = fetch('/api/dashboard/submit/points', opts).then(
+        async res => {
+          if (!res.ok) {
+            const error = await res.json().then(data => data);
+            if (!isSubmitError(error)) {
+              setError('Something unxpected happend trying to parse the csv.');
+              return;
+            }
+
+            if (typeof error.message === 'string') {
+              setError(error.message);
+              return;
+            }
+            
+            setError(error.message);
+            console.log(error.message);
+            return;
+          }
+
+          setError(undefined);
+          return res.json();
+        }
+      );
     }
   }
 
@@ -29,6 +69,10 @@ function SubmitPoints() {
           Otherwise points might not get correctly added
         </h3>
 
+        <Alert
+          visible={!!error}
+          message={error}
+        />
         <input
           type='file'
           accept='.csv'
