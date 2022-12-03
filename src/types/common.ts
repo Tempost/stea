@@ -1,6 +1,6 @@
 import { Entry } from '@/utils/zodschemas';
 import { Status } from '@prisma/client';
-import { typeToFlattenedError, ZodError } from 'zod';
+import { typeToFlattenedError } from 'zod';
 
 export const FORMTYPE = ['Individual', 'Business', 'Horse'] as const;
 export type FormType = typeof FORMTYPE[number];
@@ -41,7 +41,9 @@ export const isEntry = (o: Entry | undefined): o is Entry => {
 };
 
 export type ZodFieldErrors<T> = typeToFlattenedError<T, string>['fieldErrors'];
-export function isZodFielError<T>(o: ZodFieldErrors<T> | undefined):o is ZodFieldErrors<T> {
+export function isZodFieldError<T>(
+  o: ZodFieldErrors<T> | undefined
+): o is ZodFieldErrors<T> {
   return !!o;
 }
 
@@ -55,5 +57,10 @@ export const Divisions = {
 };
 export type Divisions = typeof Divisions[keyof typeof Divisions];
 
+export type UploadPointsQueryParams = { showUID: string };
+export function isShowUniqueArgs(o: any): o is UploadPointsQueryParams {
+  return o?.showUID !== undefined;
+}
+
 export type LayoutProps = React.PropsWithChildren;
-export interface HeaderProps extends React.PropsWithChildren {}
+export interface HeaderProps extends React.PropsWithChildren { }

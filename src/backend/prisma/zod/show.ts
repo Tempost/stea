@@ -19,7 +19,7 @@ export const ShowModel = z.object({
 
 export interface CompleteShow extends z.infer<typeof ShowModel> {
   riders: CompleteRiderCombo[]
-  Points: CompletePoints[]
+  points: CompletePoints[]
 }
 
 /**
@@ -29,5 +29,5 @@ export interface CompleteShow extends z.infer<typeof ShowModel> {
  */
 export const RelatedShowModel: z.ZodSchema<CompleteShow> = z.lazy(() => ShowModel.extend({
   riders: RelatedRiderComboModel.array(),
-  Points: RelatedPointsModel.array(),
+  points: RelatedPointsModel.array(),
 }))

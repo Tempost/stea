@@ -88,7 +88,7 @@ export const dashMenuItems: Menu[] = [
         name={name}
         subLinks={[
           {
-            href: '',
+            href: '/STEA_Show_Results_Form_A.xlsx',
             text: 'Point submission form',
           },
           {

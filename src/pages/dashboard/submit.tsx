@@ -1,13 +1,16 @@
 import { useState } from 'react';
-import { ZodError } from 'zod';
 
-import type { ChangeEvent, ReactElement } from 'react';
+import type { ReactElement } from 'react';
 
 import { DashboardLayout } from '@/components/layout';
 import Alert from '@/components/forms/Alert';
 import { Entry } from '@/utils/zodschemas';
-import { ZodFieldErrors, isZodFielError } from '@/types/common';
-
+import { ZodFieldErrors } from '@/types/common';
+import useZodForm from '@/utils/usezodform';
+import { z } from 'zod';
+import { Select } from '@/components/data-entry';
+import { trpc } from '@/utils/trpc';
+import { createSelectOpts } from '@/utils/helpers';
 
 interface SubmitError {
   message: string | ZodFieldErrors<Entry>;
@@ -17,46 +20,65 @@ export function isSubmitError(o: any): o is SubmitError {
   return o.message;
 }
 
+const ShowSubmitFormValue = z.object({
+  showUID: z.string().cuid(),
+  file: z.any().refine(file => {
+  return file[0]?.type === 'text/csv'
+  }, {message: 'Only csv files are allowed.'}),
+});
+
+type FormValues = z.infer<typeof ShowSubmitFormValue>;
+
 function SubmitPoints() {
   const [error, setError] = useState<string | ZodFieldErrors<Entry>>();
+  const [success, setSuccess] = useState(false);
+  const shows = trpc.useQuery(['shows.get-shows']);
 
-  function handleUpload(event: ChangeEvent<HTMLInputElement>) {
-    if (event.target.files && event.target.files.length > 0) {
-      const headers = new Headers();
-      headers.set('Accept', '*/*');
-      headers.set('Content-Type', 'text/csv');
+  const methods = useZodForm({
+    reValidateMode: 'onSubmit',
+    shouldFocusError: true,
+    schema: ShowSubmitFormValue,
+  });
 
-      const opts: RequestInit = {
-        headers: headers,
-        method: 'POST',
-        mode: 'cors',
-        body: event.target.files[0],
-      };
+  function handleUpload(formValues: FormValues) {
+    const headers = new Headers();
+    headers.set('Accept', '*/*');
+    headers.set('Content-Type', 'text/csv');
 
-      const res = fetch('/api/dashboard/submit/points', opts).then(
-        async res => {
-          if (!res.ok) {
-            const error = await res.json().then(data => data);
-            if (!isSubmitError(error)) {
-              setError('Something unxpected happend trying to parse the csv.');
-              return;
-            }
+    const opts: RequestInit = {
+      headers: headers,
+      method: 'POST',
+      mode: 'cors',
+      body: formValues.file[0],
+    };
 
-            if (typeof error.message === 'string') {
-              setError(error.message);
-              return;
-            }
-            
-            setError(error.message);
-            console.log(error.message);
-            return;
-          }
-
-          setError(undefined);
-          return res.json();
+    fetch(
+      '/api/dashboard/submit/points?' +
+      new URLSearchParams({
+        showUID: formValues.showUID,
+      }),
+      opts
+    ).then(async res => {
+      if (!res.ok) {
+        const error = await res.json().then(data => data);
+        if (!isSubmitError(error)) {
+          setError('Something unexpected happened trying to parse the csv.');
+          return;
         }
-      );
-    }
+
+        if (typeof error.message === 'string') {
+          setError(error.message);
+          return;
+        }
+
+        setError(error.message);
+        console.log(error.message);
+        return;
+      }
+
+      setError(undefined);
+      setSuccess(true);
+    });
   }
 
   return (
@@ -73,12 +95,32 @@ function SubmitPoints() {
           visible={!!error}
           message={error}
         />
-        <input
-          type='file'
-          accept='.csv'
-          className='file-input-bordered file-input-primary file-input file-input-xs mt-5 w-full max-w-xs lg:file-input-md'
-          onChange={e => handleUpload(e)}
-        />
+
+        <form onSubmit={methods.handleSubmit(handleUpload)}>
+          <div className='mx-auto flex flex-col items-center gap-5'>
+            {shows.isSuccess && (
+              <Select
+                className='select-primary select select-sm lg:select-md'
+                options={createSelectOpts(shows.data)}
+                {...methods.register('showUID', { required: true })}
+              />
+            )}
+
+            <input
+              type='file'
+              accept='text/csv'
+              className='file-input-bordered file-input-primary file-input file-input-xs mt-5 w-fit max-w-xs lg:file-input-md'
+              {...methods.register('file', { required: true })}
+            />
+
+            <button
+              type='submit'
+              className={`btn-primary btn mt-5 w-fit normal-case ${success ? 'bg-green-600' : ''}`}
+            >
+              Upload
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );

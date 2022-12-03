@@ -6,7 +6,7 @@ import {
 } from 'react';
 import { FieldError } from 'react-hook-form';
 
-interface SelectOption {
+export interface SelectOption {
   label: string;
   value: string;
 }
@@ -57,7 +57,7 @@ const Select = forwardRef<HTMLSelectElement, SelectInputProps>(
                 key={item.label}
                 value={item.value}
               >
-                {capitalize(item.value)}
+                {capitalize(item.label)}
               </option>
             );
           })}

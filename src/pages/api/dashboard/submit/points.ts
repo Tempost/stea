@@ -1,9 +1,8 @@
 import { getToken } from 'next-auth/jwt';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Entry, EntryModel } from '@/utils/zodschemas';
-import { HEADER_NAMES, isEntry, isHeadingNames, isZodFielError } from '@/types/common';
+import { HEADER_NAMES, isEntry, isHeadingNames, isShowUniqueArgs, isZodFieldError } from '@/types/common';
 import { prisma } from '@/backend/prisma';
-import { NotFoundError, PrismaClientKnownRequestError } from '@prisma/client/runtime';
 
 class ParseError extends Error { }
 
@@ -43,7 +42,11 @@ export default async function handler(
         })
         .filter(isEntry);
 
-      await uploadPoints(parsedEntries);
+      const params = req.query;
+      if (isShowUniqueArgs(params)) {
+        await uploadPoints(parsedEntries, params.showUID);
+      }
+
       return res.status(200).json({ success: true });
     }
 
@@ -53,7 +56,7 @@ export default async function handler(
         if (!entry.success) {
           return entry.error.flatten().fieldErrors;
         }
-      }).filter(isZodFielError<Entry>);
+      }).filter(isZodFieldError<Entry>);
 
     return res.status(500).json({ message: parseErrors });
   } catch (err) {
@@ -64,46 +67,54 @@ export default async function handler(
   }
 }
 
-async function uploadPoints(entries: Entry[]) {
-  for (const entry of entries) {
-    const show = await prisma.show.findUniqueOrThrow({
-      where: {
-        showName_showDate: {
-          showName: 'Pine Hill',
-          showDate: '2022-12-04T06:00:00.000Z',
-        },
-      },
-    });
+async function uploadPoints(entries: Entry[], showUID: string) {
+  const showExists = await prisma.show.findUnique({
+    where: {
+      uid: showUID,
+    },
+  });
 
-    const riderName = `${entry.firstName} ${entry.lastName}`;
+  if (!showExists) {
+    throw new ParseError('Failed to find matching show.');
+  }
+
+  for (const entry of entries) {
     const horseExists = await prisma.horse.findUnique({
       where: { horseRN: entry.horseName },
     });
 
+    if (!horseExists) {
+      continue
+    }
+
     const memberExists = await prisma.member.findUnique({
-      where: { fullName: 'Taco' },
+      where: { fullName: `${entry.firstName} ${entry.lastName}` },
     });
+
+    if (!memberExists) {
+      continue
+    }
 
     const riderCombo = {
       division: entry.division,
       member: {
         connect: {
-          fullName: riderName,
+          fullName: memberExists.fullName,
         },
       },
       horse: {
         connect: {
-          horseRN: entry.horseName,
+          horseRN: horseExists.horseRN,
         },
       },
       shows: {
         connect: {
-          uid: show.uid,
+          uid: showExists.uid,
         },
       },
       totalPoints: { increment: entry.finalScore },
       totalShows: { increment: 1 },
-      completedHT: show.showType === 'HT',
+      completedHT: showExists.showType === 'HT',
     };
 
     const points = {
@@ -113,7 +124,7 @@ async function uploadPoints(entries: Entry[]) {
           place: parseInt(entry.placing),
           show: {
             connect: {
-              uid: show.uid,
+              uid: showExists.uid,
             },
           },
         },
@@ -123,8 +134,8 @@ async function uploadPoints(entries: Entry[]) {
     await prisma.riderCombo.upsert({
       where: {
         memberName_horseName_division: {
-          memberName: riderName,
-          horseName: entry.horseName,
+          memberName: memberExists.fullName,
+          horseName: horseExists.horseRN,
           division: riderCombo.division,
         },
       },
