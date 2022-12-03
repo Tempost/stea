@@ -1,15 +1,11 @@
 import Head from 'next/head';
 import { Analytics } from '@vercel/analytics/react';
-import { httpBatchLink } from '@trpc/client/links/httpBatchLink';
-import { loggerLink } from '@trpc/client/links/loggerLink';
-import { withTRPC } from '@trpc/next';
 import { useAtomsDevtools } from 'jotai/devtools';
 import type { Session } from 'next-auth';
 
-import { transformer } from '@/utils/trpc';
+import { trpc } from '@/utils/trpc';
 import '../styles/globals.css';
 
-import type { AppRouter } from '@/backend/router/_app';
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import type { ReactElement, ReactNode } from 'react';
@@ -63,51 +59,4 @@ function MyApp({
   );
 }
 
-export default withTRPC<AppRouter>({
-  config() {
-    const QUART_DAY_SECONDS = 60 * 60 * 6;
-    if (typeof window !== 'undefined') {
-      // during client requests
-      return {
-        transformer, // optional - adds superjson serialization
-        url: '/api/trpc',
-        queryClientConfig: {
-          defaultOptions: {
-            queries: {
-              staleTime: QUART_DAY_SECONDS,
-              refetchOnWindowFocus: true,
-            },
-          },
-        },
-      };
-    }
-
-    const url = process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}/api/trpc`
-      : 'http://localhost:3000/api/trpc';
-
-    return {
-      transformer,
-      url,
-      queryClientConfig: {
-        defaultOptions: {
-          queries: {
-            staleTime: QUART_DAY_SECONDS,
-            refetchOnWindowFocus: false,
-          },
-        },
-      },
-      links: [
-        loggerLink({
-          enabled: opts =>
-            process.env.NODE_ENV === 'development' ||
-            (opts.direction === 'down' && opts.result instanceof Error),
-        }),
-        httpBatchLink({
-          url: `${url}`,
-        }),
-      ],
-    };
-  },
-  ssr: false,
-})(MyApp);
+export default trpc.withTRPC(MyApp);

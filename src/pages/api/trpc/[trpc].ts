@@ -1,5 +1,5 @@
-import { createContext } from '@/backend/context';
-import { appRouter } from '@/backend/router/_app';
+import { createContext } from '@/server/context';
+import { appRouter } from '@/server/router/_app';
 import * as trpcNext from '@trpc/server/adapters/next';
 
 const HOUR_SECONDS = 60 * 60;
@@ -9,9 +9,6 @@ const THIRTY_MINS = 60 * 30;
 export default trpcNext.createNextApiHandler({
   router: appRouter,
   createContext,
-  batching: {
-    enabled: true,
-  },
   onError({ error }) {
     console.error('Something went wrong', error);
   },

@@ -1,11 +1,11 @@
-import { prisma } from '@/backend/prisma';
+import { prisma } from '@/server/prisma';
 import { z } from 'zod';
 import { faker } from '@faker-js/faker';
 
-import { createContextInner } from '../../backend/prisma';
-import { appRouter } from '../../backend/router/_app';
+import { createContextInner } from '../../server/prisma';
+import { appRouter } from '../../server/router/_app';
 import { inferMutationInput, inferQueryInput } from '../../utils/trpc';
-import { HorseModel, NonMemberHorseOwnerModel } from '@/backend/prisma/zod';
+import { HorseModel, NonMemberHorseOwnerModel } from '@/server/prisma/zod';
 import { PrismaPromise, Status } from '@prisma/client';
 
 describe('tRPC router tests', () => {

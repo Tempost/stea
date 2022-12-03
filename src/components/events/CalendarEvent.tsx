@@ -1,9 +1,9 @@
 import { readableDateTime } from '@/utils/helpers';
-import { inferQueryOutput } from '@/utils/trpc';
+import { Show } from '@prisma/client';
 import Link from 'next/link';
 
 interface CalendarEventsProps {
-  show: NonNullable<inferQueryOutput<'shows.get-shows'>[number]>;
+  show: Show;
 }
 
 function CalendarEvents({ show }: CalendarEventsProps) {

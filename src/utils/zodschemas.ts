@@ -2,7 +2,7 @@ import {
   HorseModel,
   MemberModel,
   NonMemberHorseOwnerModel,
-} from '@/backend/prisma/zod';
+} from '@/server/prisma/zod';
 import { ShowType } from '@prisma/client';
 import { z } from 'zod';
 

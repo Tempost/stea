@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 import useZodForm from '@/utils/usezodform';
 import { trpc } from '@/utils/trpc';
-import { ShowModel } from '@/backend/prisma/zod';
+import { ShowModel } from '@/server/prisma/zod';
 import { ControlledDatePicker, Select, TextInput } from '../data-entry';
 import Alert from '../forms/Alert';
 

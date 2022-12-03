@@ -13,7 +13,7 @@ import {
   isZodFieldError,
   ParseError,
 } from '@/types/common';
-import { prisma } from '@/backend/prisma';
+import { prisma } from '@/server/prisma';
 
 export default async function handler(
   req: NextApiRequest,

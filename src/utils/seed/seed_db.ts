@@ -1,6 +1,6 @@
 import { Prisma, PrismaPromise, Status, Type } from '@prisma/client';
 
-import { prisma } from '../../backend/prisma';
+import { prisma } from '../../server/prisma';
 import members from './members.json';
 import horses from './horses.json';
 import { removeUndefined } from '../helpers';

@@ -1,11 +1,5 @@
-import * as trpc from '@trpc/server';
 import { Prisma } from '@prisma/client';
-import { TrpcContext } from '../context';
 import { prisma } from '../prisma';
-
-export const createRouter = () => {
-  return trpc.router<TrpcContext>();
-};
 
 export function prepareCombos(
   combos: Prisma.RiderComboCreateManyInput[] | undefined

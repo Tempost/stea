@@ -1,20 +1,44 @@
-import { createReactQueryHooks } from '@trpc/react';
 import superjson from 'superjson';
+import { inferProcedureInput, inferProcedureOutput } from "@trpc/server";
+import { httpBatchLink, loggerLink } from '@trpc/client';
+import { createTRPCNext } from "@trpc/next";
 
-import type { inferProcedureInput, inferProcedureOutput } from '@trpc/server';
-import type { AppRouter } from '@/backend/router/_app';
+import { AppRouter } from "@/server/router/_app";
 
-/**
- * A set of strongly-typed React hooks from your `AppRouter` type signature with `createReactQueryHooks`.
- * @link https://trpc.io/docs/react#3-create-trpc-hooks
- */
-export const trpc = createReactQueryHooks<AppRouter>();
 export const transformer = superjson;
+export const trpc = createTRPCNext<AppRouter>({
+  config() {
+    const QUART_DAY_SECONDS = 60 * 60 * 6;
 
-/**
- * This is a helper method to infer the output of a query resolver
- * @example type HelloOutput = inferQueryOutput<'hello'>
- */
+    const url = process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : 'http://localhost:3000';
+
+    return {
+      transformer,
+      url,
+      defaultOptions: {
+        queries: {
+          staleTime: QUART_DAY_SECONDS,
+          refetchOnWindowFocus: false,
+        },
+      },
+      links: [
+        loggerLink({
+          enabled: opts =>
+            process.env.NODE_ENV === 'development' ||
+            (opts.direction === 'down' && opts.result instanceof Error),
+        }),
+        httpBatchLink({
+          url: `${url}/api/trpc/`,
+        }),
+      ],
+    };
+  },
+  ssr: false,
+});
+
+// TODO: Fix these to match the new v10 inferences
 export type AppQueries = AppRouter['_def']['queries'];
 export type TQuery = keyof AppQueries;
 export type inferQueryOutput<TRouteKey extends TQuery> = inferProcedureOutput<

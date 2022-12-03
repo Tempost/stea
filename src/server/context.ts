@@ -1,5 +1,5 @@
 import { CreateNextContextOptions } from '@trpc/server/adapters/next';
-import { prisma } from '@/backend/prisma';
+import { prisma } from '@/server/prisma';
 import { inferAsyncReturnType } from '@trpc/server';
 import { getToken } from 'next-auth/jwt';
 
