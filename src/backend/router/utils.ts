@@ -1,9 +1,9 @@
 import * as trpc from '@trpc/server';
-import type { Context } from '@/backend/prisma';
 import { Prisma } from '@prisma/client';
+import { TrpcContext } from '../context';
 
 export const createRouter = () => {
-  return trpc.router<Context>();
+  return trpc.router<TrpcContext>();
 };
 
 export function prepareCombos(

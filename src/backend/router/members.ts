@@ -57,42 +57,6 @@ export const member = createRouter()
       return await prisma.member.findMany({ where: { confirmed: false } });
     },
   })
-  .mutation('remove-member', {
-    input: z.object({ fullName: z.string() }),
-    async resolve({ input }) {
-      const { fullName } = input;
-
-      console.info(`Removing member ${fullName}...`);
-
-      try {
-        const member = await prisma.member.findUniqueOrThrow({
-          where: { fullName },
-        });
-
-        const deletedMember = await prisma.member.delete({
-          where: { fullName: member.fullName },
-        });
-
-        return deletedMember;
-      } catch (error) {
-        if (error instanceof Prisma.PrismaClientKnownRequestError) {
-          if (error.code === 'P2001') {
-            throw new TRPCError({
-              code: 'NOT_FOUND',
-              message: `${fullName} not found.`,
-              cause: error,
-            });
-          } else {
-            throw new TRPCError({
-              code: 'INTERNAL_SERVER_ERROR',
-              message: `unable to remove ${fullName}`,
-              cause: error,
-            });
-          }
-        }
-      }
-    },
-  })
   .mutation('exists', {
     input: MemberFormValues,
     async resolve({ input }) {
@@ -138,6 +102,48 @@ export const member = createRouter()
         }
 
         throw error;
+      }
+    },
+  })
+  .middleware(async ({ ctx, next }) => {
+    if (!ctx.token) {
+      throw new TRPCError({ code: 'UNAUTHORIZED' });
+    }
+    return next();
+  })
+  .mutation('remove-member', {
+    input: z.object({ fullName: z.string() }),
+    async resolve({ input }) {
+      const { fullName } = input;
+
+      console.info(`Removing member ${fullName}...`);
+
+      try {
+        const member = await prisma.member.findUniqueOrThrow({
+          where: { fullName },
+        });
+
+        const deletedMember = await prisma.member.delete({
+          where: { fullName: member.fullName },
+        });
+
+        return deletedMember;
+      } catch (error) {
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+          if (error.code === 'P2001') {
+            throw new TRPCError({
+              code: 'NOT_FOUND',
+              message: `${fullName} not found.`,
+              cause: error,
+            });
+          } else {
+            throw new TRPCError({
+              code: 'INTERNAL_SERVER_ERROR',
+              message: `unable to remove ${fullName}`,
+              cause: error,
+            });
+          }
+        }
       }
     },
   })

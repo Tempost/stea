@@ -67,6 +67,12 @@ export const show = createRouter()
       }
     },
   })
+  .middleware(async ({ ctx, next }) => {
+    if (!ctx.token) {
+      throw new TRPCError({ code: 'UNAUTHORIZED' });
+    }
+    return next();
+  })
   .mutation('add', {
     input: ShowModel.omit({ uid: true, reviewed: true }),
     async resolve({ input }) {

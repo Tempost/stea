@@ -10,7 +10,7 @@ import { transformer } from '@/utils/trpc';
 import '../styles/globals.css';
 
 import type { AppRouter } from '@/backend/router/_app';
-import type { NextComponentType, NextPage } from 'next';
+import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import type { ReactElement, ReactNode } from 'react';
 import { SessionProvider } from 'next-auth/react';
@@ -64,24 +64,21 @@ function MyApp({
 }
 
 export default withTRPC<AppRouter>({
-  config({ ctx }) {
+  config() {
+    const QUART_DAY_SECONDS = 60 * 60 * 6;
     if (typeof window !== 'undefined') {
       // during client requests
       return {
         transformer, // optional - adds superjson serialization
         url: '/api/trpc',
+        defaultOptions: {
+          queries: {
+            staleTime: QUART_DAY_SECONDS,
+            refetchOnWindowFocus: false,
+          },
+        },
       };
     }
-
-    /**
-     * If you want to use SSR, you need to use the server's full URL
-     * @link https://trpc.io/docs/ssr
-     */
-    const QUART_DAY_SECONDS = 60 * 60 * 6;
-    ctx?.res?.setHeader(
-      'Cache-Control',
-      `s-maxage=1, stale-while-revalidate=${QUART_DAY_SECONDS}`
-    );
 
     const url = process.env.VERCEL_URL
       ? `https://${process.env.VERCEL_URL}/api/trpc`
@@ -90,17 +87,12 @@ export default withTRPC<AppRouter>({
     return {
       transformer,
       url,
-      headers: {
-        'x-ssr': '1',
-      },
-      /**
-       * @link https://react-query.tanstack.com/reference/QueryClient
-       */
-      queryClientConfig: {
-        defaultOptions: {
-          queries: {
-            staleTime: QUART_DAY_SECONDS,
-          },
+      // NOTE: Still unsure why this never works globally
+      // Works just fine adding indivdually
+      defaultOptions: {
+        queries: {
+          staleTime: QUART_DAY_SECONDS,
+          refetchOnWindowFocus: false,
         },
       },
       links: [
@@ -115,8 +107,5 @@ export default withTRPC<AppRouter>({
       ],
     };
   },
-  /**
-   * @link https://trpc.io/docs/ssr
-   */
   ssr: false,
-})(MyApp as NextComponentType);
+})(MyApp);

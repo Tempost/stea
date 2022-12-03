@@ -63,4 +63,4 @@ export function isShowUniqueArgs(o: any): o is UploadPointsQueryParams {
 }
 
 export type LayoutProps = React.PropsWithChildren;
-export interface HeaderProps extends React.PropsWithChildren { }
+export interface HeaderProps extends React.PropsWithChildren {}

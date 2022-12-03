@@ -74,6 +74,12 @@ export const riders = createRouter()
       return riders;
     },
   })
+  .middleware(async ({ ctx, next }) => {
+    if (!ctx.token) {
+      throw new TRPCError({ code: 'UNAUTHORIZED' });
+    }
+    return next();
+  })
   .mutation('remove-rider', {
     input: z.object({
       memberName: z.string().optional(),

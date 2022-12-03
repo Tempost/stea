@@ -22,9 +22,12 @@ export function isSubmitError(o: any): o is SubmitError {
 
 const ShowSubmitFormValue = z.object({
   showUID: z.string().cuid(),
-  file: z.any().refine(file => {
-  return file[0]?.type === 'text/csv'
-  }, {message: 'Only csv files are allowed.'}),
+  file: z.any().refine(
+    file => {
+      return file[0]?.type === 'text/csv';
+    },
+    { message: 'Only csv files are allowed.' }
+  ),
 });
 
 type FormValues = z.infer<typeof ShowSubmitFormValue>;
@@ -54,9 +57,9 @@ function SubmitPoints() {
 
     fetch(
       '/api/dashboard/submit/points?' +
-      new URLSearchParams({
-        showUID: formValues.showUID,
-      }),
+        new URLSearchParams({
+          showUID: formValues.showUID,
+        }),
       opts
     ).then(async res => {
       if (!res.ok) {
@@ -115,7 +118,9 @@ function SubmitPoints() {
 
             <button
               type='submit'
-              className={`btn-primary btn mt-5 w-fit normal-case ${success ? 'bg-green-600' : ''}`}
+              className={`btn-primary btn mt-5 w-fit normal-case ${
+                success ? 'bg-green-600' : ''
+              }`}
             >
               Upload
             </button>

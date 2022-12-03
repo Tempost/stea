@@ -1,5 +1,5 @@
-import { SelectOption } from "@/components/data-entry/Select";
-import { inferQueryOutput } from "./trpc";
+import { SelectOption } from '@/components/data-entry/Select';
+import { inferQueryOutput } from './trpc';
 
 export function removeUndefined<T>(data: (T | undefined)[]) {
   return data.filter((item: any): item is T => item !== undefined);

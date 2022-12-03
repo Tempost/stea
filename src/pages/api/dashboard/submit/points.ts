@@ -1,10 +1,16 @@
 import { getToken } from 'next-auth/jwt';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Entry, EntryModel } from '@/utils/zodschemas';
-import { HEADER_NAMES, isEntry, isHeadingNames, isShowUniqueArgs, isZodFieldError } from '@/types/common';
+import {
+  HEADER_NAMES,
+  isEntry,
+  isHeadingNames,
+  isShowUniqueArgs,
+  isZodFieldError,
+} from '@/types/common';
 import { prisma } from '@/backend/prisma';
 
-class ParseError extends Error { }
+class ParseError extends Error {}
 
 // Upload .csv file to this API
 // Convert .csv file into zod objects?
@@ -56,7 +62,8 @@ export default async function handler(
         if (!entry.success) {
           return entry.error.flatten().fieldErrors;
         }
-      }).filter(isZodFieldError<Entry>);
+      })
+      .filter(isZodFieldError<Entry>);
 
     return res.status(500).json({ message: parseErrors });
   } catch (err) {
@@ -84,7 +91,7 @@ async function uploadPoints(entries: Entry[], showUID: string) {
     });
 
     if (!horseExists) {
-      continue
+      continue;
     }
 
     const memberExists = await prisma.member.findUnique({
@@ -92,7 +99,7 @@ async function uploadPoints(entries: Entry[], showUID: string) {
     });
 
     if (!memberExists) {
-      continue
+      continue;
     }
 
     const riderCombo = {

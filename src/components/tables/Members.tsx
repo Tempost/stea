@@ -13,7 +13,9 @@ interface MemberTableProps {
 }
 
 function MemberTable({ overRideDefaultCols, search }: MemberTableProps) {
-  const members = trpc.useQuery(['member.get-members']);
+  const members = trpc.useQuery(['member.get-members'], {
+    refetchOnWindowFocus: false,
+  });
 
   const defaultCols = useMemo<ColumnDef<Member>[]>(
     () => [

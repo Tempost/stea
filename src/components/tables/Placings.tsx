@@ -17,17 +17,20 @@ function PlacingsTable({
   overrideDefaultCols,
   search,
 }: PlacingsTableProps) {
-  const riders = trpc.useQuery([
-    'rider.get-riders',
-    {
-      selectFields: {
-        horse: true,
-        member: true,
-        totalPoints: true,
-        totalShows: true,
+  const riders = trpc.useQuery(
+    [
+      'rider.get-riders',
+      {
+        selectFields: {
+          horse: true,
+          member: true,
+          totalPoints: true,
+          totalShows: true,
+        },
       },
-    },
-  ]);
+    ],
+    { refetchOnWindowFocus: false }
+  );
 
   const defaultCols = useMemo<ColumnDef<RiderCombo>[]>(
     () => [

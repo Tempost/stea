@@ -17,9 +17,13 @@ const PointsSubmission = z.object({
   showUID: z.string().cuid(),
 });
 
-async function assignPoints(riderPlacing: z.infer<typeof PointsSubmission>) {}
-
 export const points = createRouter()
+  .middleware(async ({ ctx, next }) => {
+    if (!ctx.token) {
+      throw new TRPCError({ code: 'UNAUTHORIZED' });
+    }
+    return next();
+  })
   .mutation('add-points', {
     input: PointsSubmission.array(),
     async resolve({ input }) {},

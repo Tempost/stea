@@ -36,47 +36,6 @@ export const nonMemberHorseOwner = createRouter()
       return owner;
     },
   })
-  .mutation('update-owner', {
-    input: z.object({
-      ownerName: z.string(),
-      patch: NonMemberHorseOwnerModel.deepPartial(),
-    }),
-    async resolve({ input }) {
-      console.info(`Updating owner ${input.ownerName}...`);
-
-      return await prisma.nonMemberHorseOwner.update({
-        where: {
-          fullName: input.ownerName,
-        },
-        data: {
-          ...input.patch,
-        },
-      });
-    },
-  })
-  .mutation('remove-owner', {
-    input: z.object({ ownerName: z.string() }),
-    async resolve({ input }) {
-      console.log(`Removing owner ${input.ownerName}`);
-
-      const owner = await prisma.nonMemberHorseOwner.findUnique({
-        where: { fullName: input.ownerName },
-      });
-
-      if (!owner) {
-        throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: `${input.ownerName} not found.`,
-        });
-      }
-
-      const deletedOwner = await prisma.nonMemberHorseOwner.delete({
-        where: { fullName: owner.fullName },
-      });
-
-      return deletedOwner;
-    },
-  })
   .mutation('add-owner-horse', {
     input: addOwnerInput,
     async resolve({ input: { owner, horses } }) {
@@ -129,6 +88,53 @@ export const nonMemberHorseOwner = createRouter()
           throw error;
         }
       }
+    },
+  })
+  .middleware(async ({ ctx, next }) => {
+    if (!ctx.token) {
+      throw new TRPCError({ code: 'UNAUTHORIZED' });
+    }
+    return next();
+  })
+  .mutation('update-owner', {
+    input: z.object({
+      ownerName: z.string(),
+      patch: NonMemberHorseOwnerModel.deepPartial(),
+    }),
+    async resolve({ input }) {
+      console.info(`Updating owner ${input.ownerName}...`);
+
+      return await prisma.nonMemberHorseOwner.update({
+        where: {
+          fullName: input.ownerName,
+        },
+        data: {
+          ...input.patch,
+        },
+      });
+    },
+  })
+  .mutation('remove-owner', {
+    input: z.object({ ownerName: z.string() }),
+    async resolve({ input }) {
+      console.log(`Removing owner ${input.ownerName}`);
+
+      const owner = await prisma.nonMemberHorseOwner.findUnique({
+        where: { fullName: input.ownerName },
+      });
+
+      if (!owner) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: `${input.ownerName} not found.`,
+        });
+      }
+
+      const deletedOwner = await prisma.nonMemberHorseOwner.delete({
+        where: { fullName: owner.fullName },
+      });
+
+      return deletedOwner;
     },
   });
 
