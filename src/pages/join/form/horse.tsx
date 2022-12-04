@@ -13,7 +13,7 @@ import { trpc } from '@/utils/trpc';
 
 function HorseRegistration() {
   const [payment, togglePayment] = useState(false);
-  const check = trpc.useMutation(['horse.exists'], {
+  const check = trpc.horses.exists.useMutation({
     onSuccess() {
       togglePayment(true);
     },

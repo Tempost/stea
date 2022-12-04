@@ -56,7 +56,7 @@ const applicantCols: ColumnDef<Member>[] = [
 ];
 
 function Applications() {
-  const members = trpc.useQuery(['member.applicants']);
+  const members = trpc.members.applicants.useQuery();
 
   return (
     <>

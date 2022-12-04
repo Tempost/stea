@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
-import { inferQueryOutput, trpc } from '@/utils/trpc';
+import { RouterOutputs, trpc } from '@/utils/trpc';
 
 import TableWithData from './BaseTable';
 
 import type { ColumnDef } from '@tanstack/react-table';
 
-type RiderCombo = inferQueryOutput<'rider.get-riders'>[number];
+type RiderCombo = RouterOutputs['riders']['all'];
 
 interface RidersTableProps {
   title?: string;
@@ -14,7 +14,7 @@ interface RidersTableProps {
 }
 
 function RidersTable({ title, overRideDefaultCols, search }: RidersTableProps) {
-  const riders = trpc.useQuery(['rider.get-riders']);
+  const riders = trpc.riders.all.useQuery();
 
   const defaultCols = useMemo<ColumnDef<RiderCombo>[]>(
     () => [

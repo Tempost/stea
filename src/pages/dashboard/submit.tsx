@@ -35,7 +35,7 @@ type FormValues = z.infer<typeof ShowSubmitFormValue>;
 function SubmitPoints() {
   const [error, setError] = useState<string | ZodFieldErrors<Entry>>();
   const [success, setSuccess] = useState(false);
-  const shows = trpc.useQuery(['shows.get-shows']);
+  const shows = trpc.shows.all.useQuery();
 
   const methods = useZodForm({
     reValidateMode: 'onSubmit',

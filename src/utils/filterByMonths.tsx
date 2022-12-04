@@ -1,7 +1,7 @@
-import { inferQueryOutput } from '@/utils/trpc';
+import { RouterOutputs } from '@/utils/trpc';
 
 export function filterByMonths(
-  shows: inferQueryOutput<'shows.get-shows'> | undefined,
+  shows: RouterOutputs['shows']['all'] | undefined,
   currMonth: number
 ) {
   if (!shows) return;

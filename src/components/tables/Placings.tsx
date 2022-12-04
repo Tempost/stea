@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
-import { inferQueryOutput, trpc } from '@/utils/trpc';
+import { RouterOutputs, trpc } from '@/utils/trpc';
 
 import TableWithData from './BaseTable';
 
 import type { ColumnDef } from '@tanstack/react-table';
 
-type RiderCombo = inferQueryOutput<'rider.get-riders'>[number];
+type RiderCombo = RouterOutputs['riders']['all'];
 interface PlacingsTableProps {
   title?: string;
   overrideDefaultCols?: ColumnDef<RiderCombo>[];
@@ -17,17 +17,14 @@ function PlacingsTable({
   overrideDefaultCols,
   search,
 }: PlacingsTableProps) {
-  const riders = trpc.useQuery([
-    'rider.get-riders',
-    {
-      selectFields: {
-        horse: true,
-        member: true,
-        totalPoints: true,
-        totalShows: true,
-      },
+  const riders = trpc.riders.all.useQuery({
+    selectFields: {
+      horse: true,
+      member: true,
+      totalPoints: true,
+      totalShows: true,
     },
-  ]);
+  });
 
   const defaultCols = useMemo<ColumnDef<RiderCombo>[]>(
     () => [

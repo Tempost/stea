@@ -23,41 +23,53 @@ export const horses = router({
     return horses as Horse[];
   }),
 
-  get: procedure.input(z.object({ horseRN: z.string() })).query(async ({ input, ctx }) => {
-    const { horseRN } = input;
-    const horse = await ctx.prisma.horse.findUnique({
-      where: { horseRN: horseRN },
-    });
-
-    if (!horse) {
-      throw new TRPCError({
-        code: 'NOT_FOUND',
-        message: `${horseRN} not found.`,
+  get: procedure
+    .input(z.object({ horseRN: z.string() }))
+    .query(async ({ input, ctx }) => {
+      const { horseRN } = input;
+      const horse = await ctx.prisma.horse.findUnique({
+        where: { horseRN: horseRN },
       });
-    }
 
-    return horse;
-  }),
-  exists: procedure.input(OwnerHorseFormValues.omit({ owner: true })).mutation(async ({ input, ctx }) => {
-    console.log(`Checking for horses... ${horseNames(input.horses)}`);
-    const existingHorses = await checkExistingHorses(input.horses, ctx.prisma);
+      if (!horse) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: `${horseRN} not found.`,
+        });
+      }
 
-    if (existingHorses) {
-      const message = `${existingHorses} ${existingHorses.length > 1 ? 'have' : 'has'
+      return horse;
+    }),
+
+  exists: procedure
+    .input(OwnerHorseFormValues.omit({ owner: true }))
+    .mutation(async ({ input, ctx }) => {
+      console.log(`Checking for horses... ${horseNames(input.horses)}`);
+      const existingHorses = await checkExistingHorses(
+        input.horses,
+        ctx.prisma
+      );
+
+      if (existingHorses) {
+        const message = `${existingHorses} ${
+          existingHorses.length > 1 ? 'have' : 'has'
         } already been registered.`;
 
-      throw new TRPCError({
-        code: 'CONFLICT',
-        message: message,
-      });
-    }
-  }),
+        throw new TRPCError({
+          code: 'CONFLICT',
+          message: message,
+        });
+      }
+    }),
 });
 
 const horseNames = (horses: OwnerHorseFormValues['horses']) =>
   horses.map(horse => horse.horseRN);
 
-async function checkExistingHorses(horses: OwnerHorseFormValues['horses'], db: MyPrismaClient) {
+async function checkExistingHorses(
+  horses: OwnerHorseFormValues['horses'],
+  db: MyPrismaClient
+) {
   const matches = await db.horse.findMany({
     where: {
       horseRN: {

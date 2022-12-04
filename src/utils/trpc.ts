@@ -1,9 +1,9 @@
 import superjson from 'superjson';
-import { inferProcedureInput, inferProcedureOutput } from "@trpc/server";
 import { httpBatchLink, loggerLink } from '@trpc/client';
-import { createTRPCNext } from "@trpc/next";
+import { createTRPCNext } from '@trpc/next';
+import type { inferRouterInputs, inferRouterOutputs, inferRouterDef } from '@trpc/server';
 
-import { AppRouter } from "@/server/router/_app";
+import { AppRouter } from '@/server/router/_app';
 
 export const transformer = superjson;
 export const trpc = createTRPCNext<AppRouter>({
@@ -30,7 +30,7 @@ export const trpc = createTRPCNext<AppRouter>({
             (opts.direction === 'down' && opts.result instanceof Error),
         }),
         httpBatchLink({
-          url: `${url}/api/trpc/`,
+          url: `${url}/api/trpc`,
         }),
       ],
     };
@@ -38,22 +38,31 @@ export const trpc = createTRPCNext<AppRouter>({
   ssr: false,
 });
 
-// TODO: Fix these to match the new v10 inferences
-export type AppQueries = AppRouter['_def']['queries'];
-export type TQuery = keyof AppQueries;
-export type inferQueryOutput<TRouteKey extends TQuery> = inferProcedureOutput<
-  AppQueries[TRouteKey]
->;
+export type RouterInput = inferRouterInputs<AppRouter>;
+export type RouterOutputs = inferRouterOutputs<AppRouter>;
+export type RouterSomething = inferRouterDef<AppRouter>;
 
-export type inferQueryInput<TRouteKey extends TQuery> = inferProcedureInput<
-  AppQueries[TRouteKey]
->;
+export type AppQueries = AppRouter['_def']['procedures'];
 
-export type AppMutations = AppRouter['_def']['mutations'];
-export type TMutation = keyof AppMutations;
+// Name the different routers available
+export type TRouters = keyof AppQueries;
 
-export type inferMutationOutput<TRouteKey extends TMutation> =
-  inferProcedureOutput<AppMutations[TRouteKey]>;
+export type FormMutation = AppQueries['members']['add'];
 
-export type inferMutationInput<TRouteKey extends TMutation> =
-  inferProcedureInput<AppMutations[TRouteKey]>;
+// export type TQuery = keyof AppQueries;
+// export type inferQueryOutput<TRouteKey extends TQuery> = inferProcedureOutput<
+//   AppQueries[TRouteKey]
+// >;
+
+// export type inferQueryInput<TRouteKey extends TQuery> = inferProcedureInput<
+//   AppQueries[TRouteKey]
+// >;
+
+// export type AppMutations = AppRouter['_def']['mutations'];
+// export type TMutation = keyof AppMutations;
+
+// export type inferMutationOutput<TRouteKey extends TMutation> =
+//   inferProcedureOutput<AppMutations[TRouteKey]>;
+
+// export type inferMutationInput<TRouteKey extends TMutation> =
+//   inferProcedureInput<AppMutations[TRouteKey]>;

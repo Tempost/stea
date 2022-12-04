@@ -9,7 +9,7 @@ import MonthSelector from '@/components/events/MonthSelector';
 import { filterByMonths } from '@/utils/filterByMonths';
 
 function SteaCalendar() {
-  const shows = trpc.useQuery(['shows.get-shows']);
+  const shows = trpc.shows.all.useQuery();
   const monthState = useAtomValue(selectedMonth);
 
   const filteredShows = filterByMonths(shows.data, monthState);

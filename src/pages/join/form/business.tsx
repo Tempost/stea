@@ -20,7 +20,7 @@ import { trpc } from '@/utils/trpc';
 
 function BusinessRegistration() {
   const [payment, togglePayment] = useState(false);
-  const checkMember = trpc.useMutation(['member.exists'], {
+  const checkMember = trpc.members.exists.useMutation({
     onSuccess() {
       togglePayment(true);
     },

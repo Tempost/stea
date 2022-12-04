@@ -27,7 +27,7 @@ import { trpc } from '@/utils/trpc';
 function IndividualRegistration() {
   const [payment, togglePayment] = useState(false);
 
-  const checkMember = trpc.useMutation(['member.exists'], {
+  const checkMember = trpc.members.exists.useMutation({
     onSuccess() {
       togglePayment(true);
     },

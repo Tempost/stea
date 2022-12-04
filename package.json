@@ -11,8 +11,7 @@
     "push": "dotenv -e .env.local -- prisma db push",
     "migrate-local": "dotenv -e .env.test -- prisma migrate dev --name test",
     "lint": "next lint",
-    "fmt-all": "pnpm prettier -w . --plugin=prettier-plugin-tailwindcss",
-    "fmt": "pnpm prettier -w % --plugin=prettier-plugin-tailwindcss"
+    "fmt-all": "pnpm prettier -w . --plugin=prettier-plugin-tailwindcss"
   },
   "dependencies": {
     "@hookform/resolvers": "^2.9.10",
@@ -66,7 +65,7 @@
     "typescript": "4.7.4"
   },
   "prisma": {
-    "schema": "./src/backend/prisma/schema.prisma",
+    "schema": "./src/server/prisma/schema.prisma",
     "seed": "dotenv -e .env.local -- ts-node --project src/utils/seed/tsconfig.json src/utils/seed/seed_db.ts"
   }
 }

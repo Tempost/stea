@@ -6,9 +6,9 @@ interface CPProps {
 
 function ConfirmPoints({ uid }: CPProps) {
   const utils = trpc.useContext();
-  const mutation = trpc.useMutation(['shows.update'], {
-    onSuccess(input) {
-      utils.invalidateQueries(['shows.get-shows']);
+  const mutation = trpc.shows.update.useMutation({
+    onSuccess() {
+      utils.shows.invalidate();
     },
   });
 

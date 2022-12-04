@@ -18,35 +18,39 @@ const PointsSubmission = z.object({
 });
 
 export const points = router({
-  add: dashboardProcedure.input(PointsSubmission).mutation(async ({ input, ctx }) => { }),
-  update: dashboardProcedure.input(RequestForUpdate).mutation(async ({ input, ctx }) => {
-    const { riderUID, showUID, ammendPoints } = input;
-    const riderPoints = await ctx.prisma.riderCombo.findUnique({
-      where: { uid: riderUID },
-      select: {
-        points: true,
-      },
-    });
-    console.log(riderPoints);
-
-    if (!riderPoints) {
-      throw new TRPCError({
-        code: 'NOT_FOUND',
-        message: `${riderUID} not found.`,
+  add: dashboardProcedure
+    .input(PointsSubmission)
+    .mutation(async ({ input, ctx }) => {}),
+  update: dashboardProcedure
+    .input(RequestForUpdate)
+    .mutation(async ({ input, ctx }) => {
+      const { riderUID, showUID, ammendPoints } = input;
+      const riderPoints = await ctx.prisma.riderCombo.findUnique({
+        where: { uid: riderUID },
+        select: {
+          points: true,
+        },
       });
-    }
+      console.log(riderPoints);
 
-    const validShow = await ctx.prisma.show.findUnique({
-      where: { uid: showUID },
-    });
-    console.log(validShow);
+      if (!riderPoints) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: `${riderUID} not found.`,
+        });
+      }
 
-    if (!validShow) {
-      throw new TRPCError({
-        code: 'NOT_FOUND',
-        message: `${showUID} not found.`,
+      const validShow = await ctx.prisma.show.findUnique({
+        where: { uid: showUID },
       });
-    }
-  }),
+      console.log(validShow);
+
+      if (!validShow) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: `${showUID} not found.`,
+        });
+      }
+    }),
   // remove: dashboardProcedure.input().mutation(),
 });

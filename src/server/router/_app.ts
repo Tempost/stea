@@ -12,7 +12,7 @@ export const appRouter = router({
   horses,
   points,
   shows,
-  riders
+  riders,
 });
 
 export type AppRouter = typeof appRouter;

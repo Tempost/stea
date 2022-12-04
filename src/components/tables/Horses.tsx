@@ -13,7 +13,7 @@ interface HorseTableProps {
 }
 
 function HorseTable({ overRideDefaultCols, search }: HorseTableProps) {
-  const horses = trpc.useQuery(['horse.get-horses']);
+  const horses = trpc.horses.all.useQuery();
 
   const defaultCols = useMemo<ColumnDef<Horse>[]>(
     () => [

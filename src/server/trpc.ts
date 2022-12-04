@@ -4,7 +4,7 @@ import { transformer } from '@/utils/trpc';
 
 const t = initTRPC.context<TrpcContext>().create({
   transformer,
-  isDev: process.env.NODE_ENV === 'development'
+  isDev: process.env.NODE_ENV === 'development',
 });
 
 export const router = t.router;
@@ -18,8 +18,8 @@ export const isBoardMember = t.middleware(async ({ ctx, next }) => {
   return next({
     ctx: {
       token: ctx.token,
-      prisma: ctx.prisma
-    }
+      prisma: ctx.prisma,
+    },
   });
 });
 

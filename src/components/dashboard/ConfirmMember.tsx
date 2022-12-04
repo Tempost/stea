@@ -6,9 +6,9 @@ interface CMProps {
 
 function ConfirmMember({ fullName }: CMProps) {
   const utils = trpc.useContext();
-  const mutation = trpc.useMutation(['member.update-member'], {
-    onSuccess(input) {
-      utils.invalidateQueries(['member.applicants']);
+  const mutation = trpc.members.update.useMutation({
+    onSuccess() {
+      utils.members.invalidate();
     },
   });
 

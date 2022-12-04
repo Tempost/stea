@@ -40,9 +40,9 @@ function AddNewShow() {
   } = methods;
   const utils = trpc.useContext();
 
-  const addNew = trpc.useMutation(['shows.add'], {
+  const addNew = trpc.shows.add.useMutation({
     onSuccess() {
-      utils.invalidateQueries(['shows.get-shows']);
+      utils.shows.invalidate();
       methods.reset();
       methods.clearErrors();
     },

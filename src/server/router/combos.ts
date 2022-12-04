@@ -50,57 +50,65 @@ export const riders = router({
     return riders;
   }),
 
-  get: procedure.input(z.object({
-    memberName: z.string().optional(),
-    horseName: z.string().optional(),
-  })).query(async ({ input, ctx }) => {
-    const riders = await ctx.prisma.riderCombo.findFirst({
-      where: {
-        memberName: input?.memberName,
-        horseName: input?.horseName,
-      },
-      select: selectFields,
-    });
-
-    if (!riders) {
-      throw new TRPCError({
-        code: 'NOT_FOUND',
-        message: `${input.memberName} riding ${input.horseName} not found.`,
+  get: procedure
+    .input(
+      z.object({
+        memberName: z.string().optional(),
+        horseName: z.string().optional(),
+      })
+    )
+    .query(async ({ input, ctx }) => {
+      const riders = await ctx.prisma.riderCombo.findFirst({
+        where: {
+          memberName: input?.memberName,
+          horseName: input?.horseName,
+        },
+        select: selectFields,
       });
-    }
 
-    return riders;
-  }),
+      if (!riders) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: `${input.memberName} riding ${input.horseName} not found.`,
+        });
+      }
 
-  remove: dashboardProcedure.input(z.object({
-    memberName: z.string().optional(),
-    horseName: z.string().optional(),
-  })).mutation(async ({ input, ctx }) => {
-    const rider = await ctx.prisma.riderCombo.findFirst({
-      where: {
-        memberName: input?.memberName,
-        horseName: input?.horseName,
-      },
-      select: {
-        uid: true,
-      },
-    });
+      return riders;
+    }),
 
-    if (!rider) {
-      throw new TRPCError({
-        code: 'NOT_FOUND',
-        message: `${input.memberName} riding ${input.horseName} not found.`,
+  remove: dashboardProcedure
+    .input(
+      z.object({
+        memberName: z.string().optional(),
+        horseName: z.string().optional(),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      const rider = await ctx.prisma.riderCombo.findFirst({
+        where: {
+          memberName: input?.memberName,
+          horseName: input?.horseName,
+        },
+        select: {
+          uid: true,
+        },
       });
-    }
 
-    return await prisma.riderCombo.delete({
-      where: {
-        uid: rider.uid,
-      },
-      select: {
-        memberName: true,
-        horseName: true,
-      },
-    });
-  }),
+      if (!rider) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: `${input.memberName} riding ${input.horseName} not found.`,
+        });
+      }
+
+      return await prisma.riderCombo.delete({
+        where: {
+          uid: rider.uid,
+        },
+        select: {
+          memberName: true,
+          horseName: true,
+        },
+      });
+    }),
 });
