@@ -39,3 +39,6 @@
 ~~6. Ability to search horse table by owner name~~ <-- works in dev, check prod
 
 ## MIGRATE TO TRPC v10 BAAAYYYBEEE
+
+Find out why vercel won't cache my requests/responses
+will improve snappyness greatly

@@ -2,6 +2,9 @@ import { createContext } from '@/backend/context';
 import { appRouter } from '@/backend/router/_app';
 import * as trpcNext from '@trpc/server/adapters/next';
 
+const HOUR_SECONDS = 60 * 60;
+const THIRTY_MINS = 60 * 30;
+
 // export API handler
 export default trpcNext.createNextApiHandler({
   router: appRouter,
@@ -17,10 +20,9 @@ export default trpcNext.createNextApiHandler({
     const isQuery = type === 'query';
 
     if (ctx?.res && allOk && isQuery) {
-      const QUART_DAY_SECONDS = 60 * 60 * 6;
       return {
         headers: {
-          'cache-control': `s-maxage=1, stale-while-revalidate=${QUART_DAY_SECONDS}`,
+          'Cache-Control': `public, max-age=${THIRTY_MINS}, s-maxage=1, stale-while-revalidate`,
         },
       };
     }
