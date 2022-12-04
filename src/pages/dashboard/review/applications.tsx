@@ -59,7 +59,7 @@ function Applications() {
   const members = trpc.useQuery(['member.applicants']);
 
   return (
-    <div className='grid w-full place-items-center pt-28'>
+    <>
       {members.data && members.data.length < 0 ? (
         <div className='rounded-lg p-5 shadow-xl'>No New Members...</div>
       ) : (
@@ -68,7 +68,7 @@ function Applications() {
           query={members}
         />
       )}
-    </div>
+    </>
   );
 }
 

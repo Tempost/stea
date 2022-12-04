@@ -94,6 +94,13 @@ function Home() {
         <section className='flex flex-col items-center gap-2'>
           <h1 className='text-2xl font-bold'>Recognized vendors</h1>
           {/* TODO: List of vendors w/ photos */}
+          <Image
+            src='/riding_warehouse.jpg'
+            width={500}
+            height={500}
+            sizes='100vw, 50vw'
+            alt='Logo for riding warehouse, two horses jumping towards a horseshoe.'
+          />
         </section>
       </div>
     </>

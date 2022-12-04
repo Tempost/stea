@@ -78,7 +78,7 @@ function TableWithData<T>({
                     <th
                       key={header.id}
                       colSpan={header.colSpan}
-                      className='select-none px-3 py-2 text-center text-xs font-medium text-gray-900 lg:text-sm'
+                      className='select-none px-2 py-2 text-center text-xs font-medium text-gray-900 lg:text-sm'
                     >
                       <div className='flex flex-row justify-between'>
                         {!header.isPlaceholder &&
@@ -113,7 +113,7 @@ function TableWithData<T>({
                       <td
                         key={cell.id}
                         className={
-                          'whitespace-nowrap px-3 py-2 text-xs font-normal text-gray-900 md:px-4 md:py-3 lg:text-sm'
+                          'whitespace-nowrap px-2 py-2 text-xs font-normal text-gray-900 md:px-2 md:py-2 lg:text-sm'
                         }
                       >
                         {flexRender(

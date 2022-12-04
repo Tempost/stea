@@ -32,7 +32,7 @@ function Points() {
   const memberPoints = trpc.useQuery(['shows.get-shows']);
 
   return (
-    <div className='grid w-full place-items-center pt-28'>
+    <div className='grid w-full place-items-center'>
       {memberPoints.data && memberPoints.data.length < 0 ? (
         <div className='rounded-lg p-5 shadow-xl'>
           No new shows to review...
