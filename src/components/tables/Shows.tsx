@@ -13,17 +13,15 @@ interface ShowTableProps {
 }
 
 function ShowsTable({ overRideDefaultCols, search }: ShowTableProps) {
-  const shows = trpc.useQuery(
-    [
-      'shows.get-shows',
-      {
-        includes: {
-          riders: true,
-          points: true,
-        },
+  const shows = trpc.useQuery([
+    'shows.get-shows',
+    {
+      includes: {
+        riders: true,
+        points: true,
       },
-    ],
-  );
+    },
+  ]);
 
   const defaultCols = useMemo<ColumnDef<Show>[]>(
     () => [

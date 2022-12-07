@@ -4,7 +4,6 @@ import {
   NonMemberHorseOwnerModel,
 } from '@/backend/prisma/zod';
 import { ShowType } from '@prisma/client';
-import { Divisions } from '@/types/common';
 import { z } from 'zod';
 
 export const EntryModel = z.object({
@@ -12,10 +11,24 @@ export const EntryModel = z.object({
   lastName: z.string(),
   horseName: z.string(),
   showType: z.nativeEnum(ShowType),
-  division: z.nativeEnum(Divisions),
+  division: z.enum(['Prelim', 'Train', 'Novice', 'BGN', 'GOLD', 'GAG']),
   group: z.enum(['A', 'B', 'C', 'D']),
   finalScore: z.number(),
-  placing: z.enum(['HC', 'R', 'C', '1', '2', '3', '4', '5', '6', 'W', 'E', 'RF']),
+  placing: z.enum([
+    'HC',
+    'R',
+    'C',
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    'W',
+    'E',
+    'RF',
+  ]),
+  divisionCount: z.number().optional(),
 });
 
 export const MemberFormValues = z.object({

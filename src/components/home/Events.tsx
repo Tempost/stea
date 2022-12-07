@@ -11,17 +11,15 @@ const MONTH_FROM_CURR = new Date(
 );
 
 function UpcomingEvents() {
-  const shows = trpc.useQuery(
-    [
-      'shows.get-shows',
-      {
-        dateRange: {
-          curr: CURR_MONTH,
-          end: MONTH_FROM_CURR,
-        },
+  const shows = trpc.useQuery([
+    'shows.get-shows',
+    {
+      dateRange: {
+        curr: CURR_MONTH,
+        end: MONTH_FROM_CURR,
       },
-    ],
-  );
+    },
+  ]);
 
   return (
     <div className='flex w-full flex-col rounded-lg border p-5 shadow-xl sm:w-96'>

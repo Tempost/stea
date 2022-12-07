@@ -2,6 +2,8 @@ import { Entry } from '@/utils/zodschemas';
 import { Status } from '@prisma/client';
 import { typeToFlattenedError } from 'zod';
 
+export class ParseError extends Error {}
+
 export const FORMTYPE = ['Individual', 'Business', 'Horse'] as const;
 export type FormType = typeof FORMTYPE[number];
 export function isFormType(o: any): o is FormType {
@@ -47,19 +49,18 @@ export function isZodFieldError<T>(
   return !!o;
 }
 
-export const Divisions = {
-  Prelim: 'Prelim',
-  Train: 'Train',
-  Novice: 'Novice',
-  BGN: 'BGN',
-  GOLD: 'GOLD',
-  GAG: 'GAG',
-};
-export type Divisions = typeof Divisions[keyof typeof Divisions];
-
 export type UploadPointsQueryParams = { showUID: string };
 export function isShowUniqueArgs(o: any): o is UploadPointsQueryParams {
   return o?.showUID !== undefined;
+}
+
+type SubDivisions = { [k in Entry['group']]?: Entry[] };
+export type GroupedByDivision = { [k in Entry['division']]: Entry[] };
+export type GroupedEntries = { [k in Entry['division']]?: SubDivisions };
+export function isIntermediateGrouping(o: any): o is GroupedByDivision {
+  return Object.keys(o).every(
+    key => key in ['Prelim', 'Train', 'Novice', 'BGN', 'GOLD', 'GAG']
+  );
 }
 
 export type LayoutProps = React.PropsWithChildren;

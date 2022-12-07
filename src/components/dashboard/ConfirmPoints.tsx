@@ -23,7 +23,9 @@ function ConfirmPoints({ uid }: CPProps) {
 
   return (
     <button
-      className={`btn-primary btn-sm btn ${mutation.error ? 'btn-error' : ''} ${mutation.isSuccess ? 'btn-success' : ''}`}
+      className={`btn-primary btn-sm btn ${mutation.error ? 'btn-error' : ''} ${
+        mutation.isSuccess ? 'btn-success' : ''
+      }`}
       onClick={onClick}
     >
       Confirm
