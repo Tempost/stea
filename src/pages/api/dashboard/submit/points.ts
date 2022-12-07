@@ -1,7 +1,7 @@
 import { getToken } from 'next-auth/jwt';
 import { ShowType } from '@prisma/client';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getKeys, groupByFunc } from '@/utils/helpers';
+import { getKeys, groupByFunc, horseExists, memberExists } from '@/backend/router/utils';
 import { Entry, EntryModel } from '@/utils/zodschemas';
 import {
   GroupedByDivision,
@@ -15,15 +15,6 @@ import {
 } from '@/types/common';
 import { prisma } from '@/backend/prisma';
 
-// Upload .csv file to this API
-// Convert .csv file into zod objects?
-// Which ever method will get me a ridercombo w/ points
-//
-// After processing is finished, respond to client saying job complete
-// respond with any errors if found
-
-// TODO: Figure out why out of no where it started to throw validation errors?
-// Started reading the final new line of the file, probably since i saved it in unix....
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -44,34 +35,34 @@ export default async function handler(
     const entries = parseCSV(req.body);
 
     // No Errors found when parsing, we can start inserting into db
-    if (entries.every(entry => entry.success)) {
-      const parsedEntries = entries
+    if (!entries.every(entry => entry.success)) {
+      const parseErrors = entries
         .map(entry => {
-          if (entry.success) return entry.data;
+          if (!entry.success) {
+            return entry.error.flatten().fieldErrors;
+          }
         })
-        .filter(isEntry);
+        .filter(isZodFieldError<Entry>);
 
-      const grouped = groupEntries(parsedEntries);
+      return res.status(500).json({ message: parseErrors });
+    }
+     
+    const parsedEntries = entries
+      .map(entry => {
+        if (entry.success) return entry.data;
+      })
+      .filter(isEntry);
 
-      const params = req.query;
-      if (isShowUniqueArgs(params)) {
-        // return res.status(200).json({ message: 'Blocking here' });
-        await uploadPoints(grouped, params.showUID);
-      }
+    const grouped = groupEntries(parsedEntries);
 
-      return res.status(200).json({ success: true });
+    const params = req.query;
+    if (!isShowUniqueArgs(params)) {
+      return res.status(500).json({ message: 'Invalid query param passed.' });
     }
 
-    // NOTE: Crappy type here...
-    const parseErrors = entries
-      .map(entry => {
-        if (!entry.success) {
-          return entry.error.flatten().fieldErrors;
-        }
-      })
-      .filter(isZodFieldError<Entry>);
+    await uploadPoints(grouped, params.showUID);
 
-    return res.status(500).json({ message: parseErrors });
+    return res.status(200).json({ success: true });
   } catch (err) {
     if (err instanceof Error) {
       console.error(err);
@@ -91,7 +82,6 @@ function groupEntries(entries: Entry[]) {
     finalGrouping[key] = groupByFunc(divisionGroup[key], e => e.group);
   }
 
-  console.log(JSON.stringify(finalGrouping, null, 2));
   return finalGrouping;
 }
 
@@ -155,14 +145,6 @@ function calculatePoints(
   }
 }
 
-// TODO: Create Error array, append member/horses not found and return.
-// Need to report these to the frontend
-// Combine each into {
-//  "DIVISON_NAME": {
-//    "GROUPS (A,B,C)": ENTRYIES
-//  }
-// }
-// Loop over and calc points
 async function uploadPoints(entries: GroupedEntries, showUID: string) {
   const showExists = await prisma.show.findUnique({
     where: {
@@ -176,85 +158,88 @@ async function uploadPoints(entries: GroupedEntries, showUID: string) {
 
   // Loop Through Divisions
   // Loop Through Groups
-  for (const entry of entries) {
-    const horseExists = await prisma.horse.findUnique({
-      where: { horseRN: entry.horseName },
-    });
+  let promises = new Array();
+  for (const [_, subGroup] of Object.entries(entries)) {
+    for (const [_, entryList] of Object.entries(subGroup)) {
+      for (const entry of entryList) {
+        const entryName = `${entry.firstName} ${entry.lastName}`;
 
-    if (!horseExists) {
-      continue;
-    }
+        if (!await horseExists(entry.horseName)) {
+          continue;
+        }
 
-    const memberExists = await prisma.member.findUnique({
-      where: { fullName: `${entry.firstName} ${entry.lastName}` },
-    });
 
-    if (!memberExists) {
-      continue;
-    }
+        if (!await memberExists(entryName)) {
+          continue;
+        }
 
-    const riderFinalPoints = calculatePoints(
-      entry.placing,
-      showExists.showType,
-      1
-    );
+        const riderFinalPoints = calculatePoints(
+          entry.placing,
+          showExists.showType,
+          entryList.length
+        );
 
-    const riderCombo = {
-      division: entry.division,
-      member: {
-        connect: {
-          fullName: memberExists.fullName,
-        },
-      },
-      horse: {
-        connect: {
-          horseRN: horseExists.horseRN,
-        },
-      },
-      shows: {
-        connect: {
-          uid: showExists.uid,
-        },
-      },
-      totalPoints: { increment: riderFinalPoints },
-      totalShows: { increment: 1 },
-      completedHT: showExists.showType === 'HT',
-    };
-
-    const points = {
-      points: {
-        create: {
-          points: riderFinalPoints,
-          place: entry.placing,
-          show: {
+        const riderCombo = {
+          division: entry.division,
+          member: {
+            connect: {
+              fullName: entryName,
+            },
+          },
+          horse: {
+            connect: {
+              horseRN: entry.horseName,
+            },
+          },
+          shows: {
             connect: {
               uid: showExists.uid,
             },
           },
-        },
-      },
-    };
+          totalPoints: { increment: riderFinalPoints },
+          totalShows: { increment: 1 },
+          completedHT: showExists.showType === 'HT',
+        };
 
-    await prisma.riderCombo.upsert({
-      where: {
-        memberName_horseName_division: {
-          memberName: memberExists.fullName,
-          horseName: horseExists.horseRN,
-          division: riderCombo.division,
-        },
-      },
-      update: {
-        ...riderCombo,
-        ...points,
-      },
-      create: {
-        ...riderCombo,
-        totalPoints: riderFinalPoints,
-        totalShows: 1,
-        ...points,
-      },
-    });
+        const points = {
+          points: {
+            create: {
+              points: riderFinalPoints,
+              place: entry.placing,
+              show: {
+                connect: {
+                  uid: showExists.uid,
+                },
+              },
+            },
+          },
+        };
+
+
+        promises.push(prisma.riderCombo.upsert({
+          where: {
+            memberName_horseName_division: {
+              memberName: entryName,
+              horseName: entry.horseName,
+              division: riderCombo.division,
+            },
+          },
+          update: {
+            ...riderCombo,
+            ...points,
+          },
+          create: {
+            ...riderCombo,
+            totalPoints: riderFinalPoints,
+            totalShows: 1,
+            ...points,
+          },
+        }));
+      }
+    }
   }
+
+  await Promise.all(promises)
 }
 
 function parseCSV(csv: string) {

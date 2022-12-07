@@ -1,6 +1,17 @@
 Rider First Name,Rider Last Name,Horse Name,HT/CT/Derby,Division,Group,Final Score,Placing
-Bobby,Diamond,Ricky,HT,GAG,A,65,1
-Cody,Diamond,Rock,HT,GAG,A,55.5,RF
-Dakkk,Diamond,Rupert,HT,Train,A,20,W
-Danny,Diamond,Rocky,CT,Novice,B,45.1,1
-Donnie,Darko,Ricky,CT,BGN,B,32,E
+Dakkk,Diamond,Rupert,HT,Train,A,0,W
+Test3,Diamond,Ricky,HT,Train,A,30,2
+Test5,Diamond,Ricky,HT,Train,A,65,1
+Danny,Diamond,Rocky,CT,Novice,A,45.1,1
+Donnie,Darko,Ricky,CT,BGN,A,32,E
+Bobby,Diamond,Ricky,HT,GAG,A,65,W
+Cody,Diamond,Rock,HT,GAG,A,55.5,6
+Test,Diamond,Ricky,HT,GAG,A,65,5
+Test2,Diamond,Ricky,HT,GAG,A,65,1
+Test6,Diamond,Ricky,HT,GAG,A,65,2
+Test7,Diamond,Ricky,HT,GAG,A,65,3
+Test8,Diamond,Ricky,HT,GAG,B,65,C
+Erin,Harrelson,Ricky,HT,GAG,B,65,2
+Johnny,Silverhands,Ricky,HT,GAG,B,65,1
+Jack,Diamond,Ricky,HT,GAG,B,65,3
+John,Diamond,Ricky,HT,GAG,A,65,4
