@@ -9,6 +9,7 @@ import {
   isZodFieldError,
 } from '@/types/common';
 import { prisma } from '@/backend/prisma';
+import { ShowType } from '@prisma/client';
 
 class ParseError extends Error {}
 
@@ -74,9 +75,77 @@ export default async function handler(
   }
 }
 
+const POINTS: { [p_key in ShowType]: { [c_key in Entry['placing']]: number } } =
+  {
+    CT: {
+      '1': 3,
+      '2': 2.5,
+      '3': 2,
+      '4': 1.5,
+      '5': 1,
+      '6': 0.5,
+      C: 0,
+      HC: 0,
+      R: 0,
+      E: 0,
+      W: 0,
+      RF: 0,
+    },
+    Derby: {
+      '1': 4.5,
+      '2': 3.75,
+      '3': 3,
+      '4': 2.75,
+      '5': 1.5,
+      '6': 0.75,
+      C: 0,
+      HC: 0,
+      R: 0,
+      E: 0,
+      W: 0,
+      RF: 0,
+    },
+    HT: {
+      '1': 6,
+      '2': 5,
+      '3': 4,
+      '4': 3,
+      '5': 2,
+      '6': 1,
+      C: 0,
+      HC: 0,
+      R: 0,
+      E: 0,
+      W: 0,
+      RF: 0,
+    },
+  };
+
+function calculatePoints(
+  placing: Entry['placing'],
+  showType: ShowType,
+  countInDivison: number
+): number {
+  if (countInDivison >= 5) {
+    return POINTS[showType][placing];
+  } else {
+    return POINTS[showType][placing] * 2;
+  }
+}
+
 // TODO: Create Error array, append member/horses not found and return.
 // Need to report these to the frontend
-async function uploadPoints(entries: Entry[], showUID: string) {
+// Combine each into {
+//  "DIVISON_NAME": {
+//    "GROUPS (A,B,C)": ENTRYIES
+//  }
+// }
+// Loop over and calc points
+async function uploadPoints(
+  entries: Entry[],
+  showUID: string,
+  divisionCounts: any
+) {
   const showExists = await prisma.show.findUnique({
     where: {
       uid: showUID,
@@ -104,9 +173,11 @@ async function uploadPoints(entries: Entry[], showUID: string) {
       continue;
     }
 
-    const riderFinalPoints = ['0', 'W', 'E', 'RF'].includes(entry.placing)
-      ? 0
-      : entry.finalScore;
+    const riderFinalPoints = calculatePoints(
+      entry.placing,
+      showExists.showType,
+      1
+    );
 
     const riderCombo = {
       division: entry.division,
