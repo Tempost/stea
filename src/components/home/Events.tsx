@@ -21,7 +21,6 @@ function UpcomingEvents() {
         },
       },
     ],
-    { refetchOnWindowFocus: false }
   );
 
   return (

@@ -74,6 +74,8 @@ export default async function handler(
   }
 }
 
+// TODO: Create Error array, append member/horses not found and return.
+// Need to report these to the frontend
 async function uploadPoints(entries: Entry[], showUID: string) {
   const showExists = await prisma.show.findUnique({
     where: {
@@ -102,6 +104,8 @@ async function uploadPoints(entries: Entry[], showUID: string) {
       continue;
     }
 
+    const riderFinalPoints = ["W", "E", "RF"].includes(entry.placing) ? 0 : entry.finalScore;
+
     const riderCombo = {
       division: entry.division,
       member: {
@@ -119,7 +123,7 @@ async function uploadPoints(entries: Entry[], showUID: string) {
           uid: showExists.uid,
         },
       },
-      totalPoints: { increment: entry.finalScore },
+      totalPoints: { increment:  riderFinalPoints},
       totalShows: { increment: 1 },
       completedHT: showExists.showType === 'HT',
     };
@@ -127,8 +131,8 @@ async function uploadPoints(entries: Entry[], showUID: string) {
     const points = {
       points: {
         create: {
-          points: entry.finalScore,
-          place: parseInt(entry.placing),
+          points: riderFinalPoints,
+          place: entry.placing,
           show: {
             connect: {
               uid: showExists.uid,
@@ -152,7 +156,7 @@ async function uploadPoints(entries: Entry[], showUID: string) {
       },
       create: {
         ...riderCombo,
-        totalPoints: entry.finalScore,
+        totalPoints: riderFinalPoints,
         totalShows: 1,
         ...points,
       },

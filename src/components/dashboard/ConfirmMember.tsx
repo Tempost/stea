@@ -21,7 +21,7 @@ function ConfirmMember({ fullName }: CMProps) {
 
   return (
     <button
-      className='btn-primary btn-sm btn'
+      className={`btn-primary btn-sm btn ${mutation.error ? 'btn-error' : ''} ${mutation.isSuccess ? 'btn-success' : ''}`}
       onClick={onClick}
     >
       Confirm

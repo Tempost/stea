@@ -12,9 +12,7 @@ interface OwnerTableProps {
 }
 
 function OwnerTable({ search }: OwnerTableProps) {
-  const owners = trpc.useQuery(['nonMemberHorseOwner.get-owners'], {
-    refetchOnWindowFocus: false,
-  });
+  const owners = trpc.useQuery(['nonMemberHorseOwner.get-owners']);
 
   const ownerCols = useMemo<ColumnDef<NonMemberHorseOwner>[]>(
     () => [

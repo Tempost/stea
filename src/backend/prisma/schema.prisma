@@ -155,7 +155,7 @@ model Points {
   riderUid   String
   RiderCombo RiderCombo @relation(fields: [riderUid], references: [uid], onDelete: Cascade, onUpdate: Cascade)
   points     Float
-  place      Int
+  place      String
   show       Show       @relation(fields: [showUid], references: [uid], onDelete: Cascade, onUpdate: Cascade)
   showUid    String
 }

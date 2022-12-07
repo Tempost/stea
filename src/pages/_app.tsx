@@ -71,10 +71,12 @@ export default withTRPC<AppRouter>({
       return {
         transformer, // optional - adds superjson serialization
         url: '/api/trpc',
-        defaultOptions: {
-          queries: {
-            staleTime: QUART_DAY_SECONDS,
-            refetchOnWindowFocus: false,
+        queryClientConfig: {
+          defaultOptions: {
+            queries: {
+              staleTime: QUART_DAY_SECONDS,
+              refetchOnWindowFocus: true,
+            },
           },
         },
       };
@@ -87,12 +89,12 @@ export default withTRPC<AppRouter>({
     return {
       transformer,
       url,
-      // NOTE: Still unsure why this never works globally
-      // Works just fine adding indivdually
-      defaultOptions: {
-        queries: {
-          staleTime: QUART_DAY_SECONDS,
-          refetchOnWindowFocus: false,
+      queryClientConfig: {
+        defaultOptions: {
+          queries: {
+            staleTime: QUART_DAY_SECONDS,
+            refetchOnWindowFocus: false,
+          },
         },
       },
       links: [
@@ -102,7 +104,7 @@ export default withTRPC<AppRouter>({
             (opts.direction === 'down' && opts.result instanceof Error),
         }),
         httpBatchLink({
-          url: `${url}/api/trpc`,
+          url: `${url}`,
         }),
       ],
     };

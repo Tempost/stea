@@ -5,7 +5,7 @@ export const PointsModel = z.object({
   uid: z.string().cuid({ message: "Invalid cuid" }),
   riderUid: z.string().min(1, { message: "Member Name is required" }),
   points: z.number(),
-  place: z.number().int(),
+  place: z.string(),
   showUid: z.string(),
 })
 

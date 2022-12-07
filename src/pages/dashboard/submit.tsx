@@ -119,7 +119,7 @@ function SubmitPoints() {
             <button
               type='submit'
               className={`btn-primary btn mt-5 w-fit normal-case ${
-                success ? 'bg-green-600' : ''
+                success ? 'bg-success' : error ? 'btn-error' : ''
               }`}
             >
               Upload

@@ -14,9 +14,7 @@ interface RidersTableProps {
 }
 
 function RidersTable({ title, overRideDefaultCols, search }: RidersTableProps) {
-  const riders = trpc.useQuery(['rider.get-riders'], {
-    refetchOnWindowFocus: false,
-  });
+  const riders = trpc.useQuery(['rider.get-riders']);
 
   const defaultCols = useMemo<ColumnDef<RiderCombo>[]>(
     () => [

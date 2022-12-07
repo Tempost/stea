@@ -23,7 +23,6 @@ function ShowsTable({ overRideDefaultCols, search }: ShowTableProps) {
         },
       },
     ],
-    { refetchOnWindowFocus: false }
   );
 
   const defaultCols = useMemo<ColumnDef<Show>[]>(

@@ -29,7 +29,6 @@ function PlacingsTable({
         },
       },
     ],
-    { refetchOnWindowFocus: false }
   );
 
   const defaultCols = useMemo<ColumnDef<RiderCombo>[]>(
