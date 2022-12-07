@@ -1,7 +1,11 @@
 import superjson from 'superjson';
 import { httpBatchLink, loggerLink } from '@trpc/client';
 import { createTRPCNext } from '@trpc/next';
-import type { inferRouterInputs, inferRouterOutputs, inferRouterDef } from '@trpc/server';
+import type {
+  inferRouterInputs,
+  inferRouterOutputs,
+  inferRouterDef,
+} from '@trpc/server';
 
 import { AppRouter } from '@/server/router/_app';
 

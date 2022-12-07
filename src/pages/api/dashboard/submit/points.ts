@@ -1,7 +1,12 @@
 import { getToken } from 'next-auth/jwt';
 import { ShowType } from '@prisma/client';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getKeys, groupByFunc, horseExists, memberExists } from '@/backend/router/utils';
+import {
+  getKeys,
+  groupByFunc,
+  horseExists,
+  memberExists,
+} from '@/backend/router/utils';
 import { Entry, EntryModel } from '@/utils/zodschemas';
 import {
   GroupedByDivision,
@@ -46,7 +51,7 @@ export default async function handler(
 
       return res.status(500).json({ message: parseErrors });
     }
-     
+
     const parsedEntries = entries
       .map(entry => {
         if (entry.success) return entry.data;
@@ -164,12 +169,11 @@ async function uploadPoints(entries: GroupedEntries, showUID: string) {
       for (const entry of entryList) {
         const entryName = `${entry.firstName} ${entry.lastName}`;
 
-        if (!await horseExists(entry.horseName)) {
+        if (!(await horseExists(entry.horseName))) {
           continue;
         }
 
-
-        if (!await memberExists(entryName)) {
+        if (!(await memberExists(entryName))) {
           continue;
         }
 
@@ -215,31 +219,32 @@ async function uploadPoints(entries: GroupedEntries, showUID: string) {
           },
         };
 
-
-        promises.push(prisma.riderCombo.upsert({
-          where: {
-            memberName_horseName_division: {
-              memberName: entryName,
-              horseName: entry.horseName,
-              division: riderCombo.division,
+        promises.push(
+          prisma.riderCombo.upsert({
+            where: {
+              memberName_horseName_division: {
+                memberName: entryName,
+                horseName: entry.horseName,
+                division: riderCombo.division,
+              },
             },
-          },
-          update: {
-            ...riderCombo,
-            ...points,
-          },
-          create: {
-            ...riderCombo,
-            totalPoints: riderFinalPoints,
-            totalShows: 1,
-            ...points,
-          },
-        }));
+            update: {
+              ...riderCombo,
+              ...points,
+            },
+            create: {
+              ...riderCombo,
+              totalPoints: riderFinalPoints,
+              totalShows: 1,
+              ...points,
+            },
+          })
+        );
       }
     }
   }
 
-  await Promise.all(promises)
+  await Promise.all(promises);
 }
 
 function parseCSV(csv: string) {
