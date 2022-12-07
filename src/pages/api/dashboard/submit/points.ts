@@ -104,7 +104,9 @@ async function uploadPoints(entries: Entry[], showUID: string) {
       continue;
     }
 
-    const riderFinalPoints = ["W", "E", "RF"].includes(entry.placing) ? 0 : entry.finalScore;
+    const riderFinalPoints = ['0', 'W', 'E', 'RF'].includes(entry.placing)
+      ? 0
+      : entry.finalScore;
 
     const riderCombo = {
       division: entry.division,
@@ -123,7 +125,7 @@ async function uploadPoints(entries: Entry[], showUID: string) {
           uid: showExists.uid,
         },
       },
-      totalPoints: { increment:  riderFinalPoints},
+      totalPoints: { increment: riderFinalPoints },
       totalShows: { increment: 1 },
       completedHT: showExists.showType === 'HT',
     };

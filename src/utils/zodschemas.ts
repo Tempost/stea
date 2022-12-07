@@ -15,7 +15,7 @@ export const EntryModel = z.object({
   division: z.nativeEnum(Divisions),
   group: z.enum(['A', 'B', 'C', 'D']),
   finalScore: z.number(),
-  placing: z.enum(['1', '2', '3', '4', '5', '6', 'W', 'E', 'RF']),
+  placing: z.enum(['0', '1', '2', '3', '4', '5', '6', 'W', 'E', 'RF']),
 });
 
 export const MemberFormValues = z.object({
