@@ -1,5 +1,5 @@
 import { SelectOption } from '@/components/data-entry/Select';
-import { inferQueryOutput } from './trpc';
+import { RouterOutputs } from './trpc';
 
 export function removeUndefined<T>(data: (T | undefined)[]) {
   return data.filter((item: any): item is T => item !== undefined);
@@ -10,7 +10,7 @@ export function readableDateTime(date: Date) {
 }
 
 export function createSelectOpts(
-  shows: inferQueryOutput<'shows.get-shows'>
+  shows: RouterOutputs['shows']['all']
 ): SelectOption[] {
   return shows.map(show => {
     return {

@@ -11,8 +11,8 @@ import {
   getFacetedRowModel,
 } from '@tanstack/react-table';
 import { useState } from 'react';
-import { UseQueryResult } from 'react-query';
 import { DebouncedInput } from '@/components/data-entry';
+import { UseTRPCQueryResult } from '@trpc/react-query/shared';
 
 const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   // Rank the item
@@ -27,23 +27,23 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   return itemRank.passed;
 };
 
-interface TableWithDataProps<T> {
-  colDef: ColumnDef<T>[];
-  query: UseQueryResult<T[] | T>;
+interface TableWithDataProps<TData, TError> {
+  colDef: ColumnDef<TData>[];
+  query: UseTRPCQueryResult<TData[] | TData, TError>;
   paginate?: boolean;
   search?: boolean;
 }
 
-function TableWithData<T>({
+function TableWithData<TData, TError>({
   colDef,
   query,
   paginate,
   search,
-}: TableWithDataProps<T>) {
+}: TableWithDataProps<TData, TError>) {
   const [globalFilter, setGlobalFilter] = useState('');
 
-  const tableOpts: TableOptions<T> = {
-    data: query.data as T[],
+  const tableOpts: TableOptions<TData> = {
+    data: query.data as TData[],
     columns: colDef,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: paginate ? getPaginationRowModel() : undefined,

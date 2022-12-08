@@ -1,3 +1,4 @@
+import { RouterOutputs } from '@/utils/trpc';
 import { Entry } from '@/utils/zodschemas';
 import { Status } from '@prisma/client';
 import { typeToFlattenedError } from 'zod';
