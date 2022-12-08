@@ -26,6 +26,8 @@ function BusinessRegistration() {
     },
   });
 
+  const insert = trpc.members.add.useMutation();
+
   const methods = useZodForm({
     reValidateMode: 'onSubmit',
     shouldFocusError: true,
@@ -69,10 +71,10 @@ function BusinessRegistration() {
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         <Payment
           showPayment={payment}
-          query={{
+          formMutation={{
             error: checkMember.isError,
             message: checkMember.error?.message,
-            mutation: 'member.add-member',
+            mutateFn: () => insert.mutate(methods.getValues()),
           }}
         >
           <h2 className='divider'>Business Registration</h2>

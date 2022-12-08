@@ -11,23 +11,18 @@ import {
 
 import { formState } from '@/utils/atoms';
 import Alert from './Alert';
-import { TMutation, trpc } from '@/utils/trpc';
-import { useFormContext } from 'react-hook-form';
 
 interface PaymentProps extends PropsWithChildren {
   showPayment: boolean;
-  query: {
+  formMutation: {
     error: boolean;
     message?: string;
-    mutation: TMutation;
+    mutateFn: () => void;
   };
 }
 
-function Payment({ showPayment, children, query }: PaymentProps) {
+function Payment({ showPayment, children, formMutation }: PaymentProps) {
   const history = useRouter();
-  const insert = trpc.useMutation([query.mutation], {});
-
-  const { getValues } = useFormContext();
 
   const [state] = useAtom(formState);
 
@@ -52,11 +47,11 @@ function Payment({ showPayment, children, query }: PaymentProps) {
     });
   }
 
-  async function onApprove(_: OnApproveData, actions: OnApproveActions) {
+  async function onApprove(_data: OnApproveData, actions: OnApproveActions) {
     return actions.order!.capture().then(details => {
       const name = details.payer.name?.given_name;
 
-      insert.mutate(getValues());
+      formMutation.mutateFn();
       history.push('/');
     });
   }
@@ -86,8 +81,8 @@ function Payment({ showPayment, children, query }: PaymentProps) {
         <>
           {children}
           <Alert
-            message={query.message ?? ''}
-            visible={query.error}
+            message={formMutation.message ?? ''}
+            visible={formMutation.error}
           />
           <button
             type='submit'

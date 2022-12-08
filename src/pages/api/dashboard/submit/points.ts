@@ -6,7 +6,7 @@ import {
   groupByFunc,
   horseExists,
   memberExists,
-} from '@/backend/router/utils';
+} from '@/server/router/utils';
 import { Entry, EntryModel } from '@/utils/zodschemas';
 import {
   GroupedByDivision,
@@ -30,11 +30,11 @@ export default async function handler(
     return res.status(405).json({ message: 'Method Not Allowed.' });
   }
 
-  // const token = await getToken({ req });
-  // if (!token) {
-  //   console.warn('Attempted to access api protected by auth.');
-  //   return res.status(401).json({ message: 'Access Not Allowed.' });
-  // }
+  const token = await getToken({ req });
+  if (!token) {
+    console.warn('Attempted to access api protected by auth.');
+    return res.status(401).json({ message: 'Access Not Allowed.' });
+  }
 
   try {
     const entries = parseCSV(req.body);
@@ -161,8 +161,6 @@ async function uploadPoints(entries: GroupedEntries, showUID: string) {
     throw new ParseError('Failed to find matching show.');
   }
 
-  // Loop Through Divisions
-  // Loop Through Groups
   let promises = new Array();
   for (const [_, subGroup] of Object.entries(entries)) {
     for (const [_, entryList] of Object.entries(subGroup)) {
@@ -202,7 +200,7 @@ async function uploadPoints(entries: GroupedEntries, showUID: string) {
           },
           totalPoints: { increment: riderFinalPoints },
           totalShows: { increment: 1 },
-          completedHT: showExists.showType === 'HT',
+          completedHT: entry.showType === 'HT',
         };
 
         const points = {
@@ -267,22 +265,19 @@ function parseCSV(csv: string) {
 
   const entries = lines
     .map(line => {
-      return (
-        line
-          .split(',')
-          .map((value, index) => {
-            if (mappedNames[index].includes('finalScore')) {
-              const finalScore = parseFloat(value);
-              return { [mappedNames[index]]: finalScore };
-            }
+      return line
+        .split(',')
+        .map((value, index) => {
+          if (mappedNames[index].includes('finalScore')) {
+            const finalScore = parseFloat(value);
+            return { [mappedNames[index]]: finalScore };
+          }
 
-            return { [mappedNames[index]]: value.trim() };
-          })
-          // NOTE: Better way to type this?
-          .reduce<{ [x: string]: string | number } | {}[]>((prev, curr) => {
-            return { ...prev, ...curr };
-          }, {}) as Entry
-      );
+          return { [mappedNames[index]]: value.trim() };
+        })
+        .reduce<{ [x: string]: string | number } | {}[]>((prev, curr) => {
+          return { ...prev, ...curr };
+        }, {}) as Entry;
     })
     .map(entry => EntryModel.safeParse(entry));
 

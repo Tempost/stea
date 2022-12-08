@@ -19,6 +19,8 @@ function HorseRegistration() {
     },
   });
 
+  const insert = trpc.nonMemberHorseOwners.add.useMutation();
+
   const methods = useZodForm({
     reValidateMode: 'onSubmit',
     shouldFocusError: true,
@@ -54,10 +56,10 @@ function HorseRegistration() {
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         <Payment
           showPayment={payment}
-          query={{
+          formMutation={{
             error: check.isError,
             message: check.error?.message,
-            mutation: 'nonMemberHorseOwner.add-owner-horse',
+            mutateFn: () => insert.mutate(methods.getValues()),
           }}
         >
           <h2 className='divider'>Horse Registration</h2>
