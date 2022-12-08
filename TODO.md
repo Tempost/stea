@@ -23,22 +23,29 @@
    that their form was submited succesfully
    ~~b. On the flipside also warn them if failed~~
 
-3. Point Submission (Look at email with the points spreadsheet)
-   a. Should generate points for the show
-   b. 1-6 placings, ignore non placed attendes
-   c. Rider-combos get the points linked to record
-   d. Be sure the show has relations with the points/Rider-combos
+~~3. Point Submission (Look at email with the points spreadsheet)~~
+   ~~a. Should generate points for the show~~
+   ~~b. 1-6 placings, ignore non placed attendes~~
+   ~~c. Rider-combos get the points linked to record~~
+   ~~d. Be sure the show has relations with the points/Rider-combos~~
 
-4. Better Logging
-   a. Frontend
-   I. Axiom package, log any errors
+~~4. Better Logging~~
+   ~~a. Frontend~~
+   ~~I. Axiom package, log any errors~~
    ~~b. Backend, just use console.log and console.error~~
 
 5. After user pays, update the record saying if they paid or not
 
 ~~6. Ability to search horse table by owner name~~ <-- works in dev, check prod
 
-## MIGRATE TO TRPC v10 BAAAYYYBEEE
+~~## MIGRATE TO TRPC v10 BAAAYYYBEEE~~
 
-Find out why vercel won't cache my requests/responses
-will improve snappyness greatly
+    ## Paypal Rework
+
+    1. Create API routes(either next handlers or TRPC procedures)
+        a. createOrder
+        b. captureOrder
+
+    2. The handler/procedures will add the new records to the DB after finishing w/ paypal
+
+    ### Will create single source of truth for Paypal, allow for better logging and error handling
