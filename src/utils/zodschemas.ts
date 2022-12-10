@@ -7,9 +7,9 @@ import { ShowType } from '@prisma/client';
 import { z } from 'zod';
 
 export const EntryModel = z.object({
-  firstName: z.string(),
-  lastName: z.string(),
-  horseName: z.string(),
+  firstName: z.string().trim(),
+  lastName: z.string().trim(),
+  horseName: z.string().trim(),
   showType: z.nativeEnum(ShowType),
   division: z.enum(['Prelim', 'Train', 'Novice', 'BGN', 'GOLD', 'GAG']),
   group: z.enum(['A', 'B', 'C', 'D']),

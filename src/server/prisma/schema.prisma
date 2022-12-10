@@ -51,14 +51,15 @@ enum PhoneType {
 model NonMemberHorseOwner {
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
-  /// @zod.min(1, { message: "First Name is required" })
+  /// @zod.trim().min(1, { message: "First Name is required" })
   firstName String    @db.VarChar(255)
-  /// @zod.min(1, { message: "Last Name is required" })
+  /// @zod.trim().min(1, { message: "Last Name is required" })
   lastName  String    @db.VarChar(255)
+  /// @zod.trim() 
   fullName  String    @db.VarChar(255)
-  /// @zod.email({ message: "Invalid email address" })
+  /// @zod.trim().email({ message: "Invalid email address" })
   email     String    @db.VarChar(100)
-  /// @zod.min(1, { message: "Phone number is required" })
+  /// @zod.trim().min(1, { message: "Phone number is required" })
   phone     String    @db.VarChar(15)
   phoneType PhoneType @default(Mobile)
   /// List of Horses that are linked to a member
@@ -70,29 +71,30 @@ model NonMemberHorseOwner {
 model Member {
   createdAt         DateTime?    @default(now())
   updatedAt         DateTime?    @updatedAt
-  /// @zod.min(1, { message: "First Name is required" })
+  /// @zod.trim().min(1, { message: "First Name is required" })
   firstName         String       @db.VarChar(255)
-  /// @zod.min(1, { message: "Last Name is required" })
+  /// @zod.trim().min(1, { message: "Last Name is required" })
   lastName          String       @db.VarChar(255)
+  /// @zod.trim()
   fullName          String       @db.VarChar(255)
   /// Field to determine who is a board member, very few
   boardMember       Boolean      @default(false)
-  /// @zod.min(1, { message: "Address is required" })
+  /// @zod.trim().min(1, { message: "Address is required" })
   address           String       @db.VarChar(255)
-  /// @zod.min(1, { message: "City is required" })
+  /// @zod.trim().min(1, { message: "City is required" })
   city              String       @db.VarChar(25)
-  /// @zod.min(1, { message: "State is required" })
+  /// @zod.trim().min(1, { message: "State is required" })
   state             String       @db.VarChar(25)
-  /// @zod.min(1, { message: "Phone Number is required" })
+  /// @zod.trim().min(1, { message: "Phone Number is required" })
   phone             String       @db.VarChar(15)
   phoneType         PhoneType    @default(Mobile)
-  /// @zod.email({ message: "Invalid email address" })
+  /// @zod.trim().email({ message: "Invalid email address" })
   email             String       @db.VarChar(100)
   comments          String?      @db.VarChar(4000)
   /// Member needs to be confirmed by boardmember from dashboard
   confirmed         Boolean      @default(false)
   currentUSEAMember Boolean      @default(false)
-  /// @zod.min(1, { message: "Business name is required" })
+  /// @zod.trim().min(1, { message: "Business name is required" })
   businessName      String?      @db.VarChar(100)
   membershipDate    DateTime?    @default(now())
   memberType        Type
@@ -112,10 +114,11 @@ model Member {
 model Horse {
   createdAt        DateTime?            @default(now())
   updatedAt        DateTime?            @updatedAt
-  /// @zod.min(1, { message: "Registered horse name is required" })
+  /// @zod.trim().min(1, { message: "Registered horse name is required" })
   /// Registered name of the horse, unique
   horseRN          String               @id @db.VarChar(255)
   /// Barn name of the horse
+  /// @zod.trim()
   horseAKA         String?              @db.VarChar(255)
   ownerRec         NonMemberHorseOwner? @relation(fields: [owner], references: [fullName], onUpdate: Cascade)
   memberOwner      Member?              @relation(fields: [memberName], references: [fullName], onUpdate: Cascade)
@@ -131,6 +134,7 @@ model RiderCombo {
   uid         String    @id @default(cuid())
   createdAt   DateTime? @default(now())
   updatedAt   DateTime? @updatedAt
+  /// @zod.trim()
   division    String    @db.VarChar(20)
   totalPoints Float     @default(0)
   totalShows  Int       @default(0)
@@ -138,9 +142,9 @@ model RiderCombo {
   multiVenue  Boolean   @default(false)
   member      Member    @relation(fields: [memberName], references: [fullName], onDelete: Cascade, onUpdate: Cascade)
   horse       Horse     @relation(fields: [horseName], references: [horseRN], onDelete: Cascade, onUpdate: Cascade)
-  /// @zod.min(1, { message: "Member Name is required" })
+  /// @zod.trim().min(1, { message: "Member Name is required" })
   memberName  String
-  /// @zod.min(1, { message: "Horse Name is required" })
+  /// @zod.trim().min(1, { message: "Horse Name is required" })
   horseName   String
   points      Points[]
   shows       Show[]
@@ -151,10 +155,11 @@ model RiderCombo {
 model Points {
   /// @zod.cuid({ message: "Invalid cuid"})
   uid        String     @id @default(cuid())
-  /// @zod.min(1, { message: "Member Name is required" })
+  /// @zod.trim().min(1, { message: "Member Name is required" })
   riderUid   String
   RiderCombo RiderCombo @relation(fields: [riderUid], references: [uid], onDelete: Cascade, onUpdate: Cascade)
   points     Float
+  /// @zod.trim()
   place      String
   show       Show       @relation(fields: [showUid], references: [uid], onDelete: Cascade, onUpdate: Cascade)
   showUid    String
@@ -165,7 +170,7 @@ model Show {
   uid         String       @id @default(cuid())
   createdAt   DateTime?    @default(now())
   updatedAt   DateTime?    @updatedAt
-  /// @zod.min(1, { message: "Show name is required" })
+  /// @zod.trim().min(1, { message: "Show name is required" })
   showName    String       @db.VarChar(150)
   showType    ShowType
   /// Submitted points have yet to be review by board member
@@ -173,7 +178,7 @@ model Show {
   showDate    DateTime
   showEndDate DateTime?
   riders      RiderCombo[]
-  /// @zod.url({ message: "Must be a valid URL" })
+  /// @zod.trim().url({ message: "Must be a valid URL" })
   url         String?
   points      Points[]
 

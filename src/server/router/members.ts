@@ -79,9 +79,14 @@ export const members = router({
           data: {
             ...member,
             fullName:
-              member.businessName ?? `${member.firstName} ${member.lastName}`,
+              member.businessName ??
+              `${member.firstName.trim()} ${member.lastName.trim()}`,
             Horse: {
-              create: horses && [...horses],
+              create: horses && [
+                ...horses.map(horse => {
+                  return { ...horse, horseRN: horse.horseRN.trim() };
+                }),
+              ],
             },
           },
         });
@@ -103,11 +108,11 @@ export const members = router({
     .mutation(async ({ input, ctx }) => {
       const { fullName } = input;
 
-      console.info(`Removing member ${fullName}...`);
+      console.info(`Removing member ${fullName.trim()}...`);
 
       try {
         const member = await ctx.prisma.member.findUniqueOrThrow({
-          where: { fullName },
+          where: { fullName: fullName.trim() },
         });
 
         const deletedMember = await ctx.prisma.member.delete({
@@ -142,7 +147,7 @@ export const members = router({
       try {
         return await ctx.prisma.member.update({
           where: {
-            fullName: fullName,
+            fullName,
           },
           data: {
             ...patch,
