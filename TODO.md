@@ -39,13 +39,3 @@
 ~~6. Ability to search horse table by owner name~~ <-- works in dev, check prod
 
 ~~## MIGRATE TO TRPC v10 BAAAYYYBEEE~~
-
-    ## Paypal Rework
-
-    1. Create API routes(either next handlers or TRPC procedures)
-        a. createOrder
-        b. captureOrder
-
-    2. The handler/procedures will add the new records to the DB after finishing w/ paypal
-
-    ### Will create single source of truth for Paypal, allow for better logging and error handling

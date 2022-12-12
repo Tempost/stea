@@ -10,7 +10,7 @@ export const EntryModel = z.object({
   firstName: z.string().trim(),
   lastName: z.string().trim(),
   horseName: z.string().trim(),
-  showType: z.nativeEnum(ShowType),
+  rideType: z.nativeEnum(ShowType),
   division: z.enum(['Prelim', 'Train', 'Novice', 'BGN', 'GOLD', 'GAG']),
   group: z.enum(['A', 'B', 'C', 'D']),
   finalScore: z.number(),

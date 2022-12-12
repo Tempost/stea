@@ -55,14 +55,13 @@ export function isShowUniqueArgs(o: any): o is UploadPointsQueryParams {
   return o?.showUID !== undefined;
 }
 
-type SubDivisions = { [k in Entry['group']]?: Entry[] };
-export type GroupedByDivision = { [k in Entry['division']]: Entry[] };
-export type GroupedEntries = { [k in Entry['division']]?: SubDivisions };
-export function isIntermediateGrouping(o: any): o is GroupedByDivision {
-  return Object.keys(o).every(
-    key => key in ['Prelim', 'Train', 'Novice', 'BGN', 'GOLD', 'GAG']
-  );
-}
+export type EntriesRideType = { [k in Entry['rideType']]: Entry[] };
+type TempGrouping = { [k in Entry['division']]?: Entry[] };
+export type EntriesRideTypeDivison = { [k in Entry['rideType']]: TempGrouping };
+type SubGrouping = { [k in Entry['group']]?: Entry[] };
+export type GroupedEntries = {
+  [k in Entry['rideType']]: { [k in Entry['division']]?: SubGrouping };
+};
 
 export type LayoutProps = React.PropsWithChildren;
 export interface HeaderProps extends React.PropsWithChildren {}

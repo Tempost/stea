@@ -40,9 +40,9 @@ export function groupBy<TObj>(arr: TObj[], fn: (item: TObj) => any) {
 
 export function groupByFunc<
   RetType extends PropertyKey,
-  T, // no longer need any requirements on T since the grouper can do w/e it wants
-  Func extends (arg: T) => RetType
->(arr: T[], mapper: Func): Record<RetType, T[]> {
+  TObj,
+  Func extends (arg: TObj) => RetType
+>(arr: TObj[], mapper: Func): Record<RetType, TObj[]> {
   return arr.reduce((accumulator, val) => {
     const groupedKey = mapper(val);
     if (!accumulator[groupedKey]) {
@@ -50,7 +50,7 @@ export function groupByFunc<
     }
     accumulator[groupedKey].push(val);
     return accumulator;
-  }, {} as Record<RetType, T[]>);
+  }, {} as Record<RetType, TObj[]>);
 }
 
 // Get Keys and assert correct key types instead of just string
