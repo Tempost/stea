@@ -1,4 +1,3 @@
-import { RouterOutputs } from '@/utils/trpc';
 import { Entry } from '@/utils/zodschemas';
 import { Status } from '@prisma/client';
 import { typeToFlattenedError } from 'zod';
@@ -26,7 +25,7 @@ export const HEADER_NAMES = {
   'Rider First Name': 'firstName',
   'Rider Last Name': 'lastName',
   'Horse Name': 'horseName',
-  'HT/CT/Derby': 'showType',
+  'HT/CT/Derby': 'rideType',
   Division: 'division',
   Group: 'group',
   'Final Score': 'finalScore',

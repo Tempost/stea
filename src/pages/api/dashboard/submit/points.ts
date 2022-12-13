@@ -100,10 +100,7 @@ function groupEntries(entries: Entry[]) {
         continue;
       }
 
-      finalGrouping[key][subKey] = groupByFunc(
-        inner_entries,
-        e => e.group
-      );
+      finalGrouping[key][subKey] = groupByFunc(inner_entries, e => e.group);
     }
   }
 
@@ -198,7 +195,7 @@ async function uploadPoints(entries: GroupedEntries, showUID: string) {
 
           const riderFinalPoints = calculatePoints(
             entry.placing,
-            showExists.showType,
+            entry.rideType,
             entryList.length
           );
 
