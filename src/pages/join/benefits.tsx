@@ -5,7 +5,7 @@ function SteaBeneifits() {
       <div className='hero min-h-screen bg-[url(/membersandhorses.jpg)] bg-fixed '>
         <div className='hero-overlay bg-opacity-50'></div>
       
-        <div className=' rounded-2xl hero-content text-center text-neutral-content flex-col  w-auto bg-slate-500 bg-opacity-50 h-auto'>
+        <div className=' rounded-2xl hero-content text-center text-neutral-content flex-col  w-auto bg-blue-500 bg-opacity-30 h-auto'>
           <h1 className=' text-Black-100 text-center lg:text-7xl sm:text-5xl'>Rewards:</h1>
           <h1 className=' text-Black-100 text-center text-9xl'> </h1>
           <h1 className='text-amber-500 text-center lg:text-5xl font-bold font-mono sm:text-3xl md:text-4xl'>
@@ -35,34 +35,19 @@ function SteaBeneifits() {
             4: PHYSICAL 'volunteer form' must be signed by the show Secretary
           </h1>
           <h1 className='text-black-200 text-center lg:text-2xl md:text-xl sm:text-lg'>
-            5: submit your form online for approval 'Here'
+            5: submit your form online for approval{' '}
+            <a
+              href='#'
+              class='font-medium text-lime-300 underline dark:text-lime-200 hover:no-underline'
+            >
+              Here
+            </a>
           </h1>
         </div>
         <div className=' rounded-3xl  h-80 w-5/6 flex-col'></div>
       </div>
-      <h1 className='text-black-200 text-center text-2xl font-bold'>
-        Submit your volunteer form Here
-      </h1>
-      <form
-        action='placeholder'
-        encType='multipart/form-data'
-      >
-        <input
-          type='file'
-          accept='image/*'
-          name='uploadVolunteerForm'
-          className=''
-        ></input>
-        <input
-          type='submit'
-          value='upload'
-        ></input>
-      </form>
     </div>
   )
-    
-  
-
 }
 import { ReactElement } from 'react';
 SteaBeneifits.getLayout = (page: ReactElement) => {
