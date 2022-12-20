@@ -23,24 +23,60 @@ function SteaBeneifits() {
             IMPORTANT
           </h1>
           <h1 className='text-black-200 text-center lg:text-2xl md:text-xl sm:text-lg'>
-            1: Must be a current Stea member to cache in hours
-          </h1>
-          <h1 className='text-black-200 text-center lg:text-2xl md:text-xl sm:text-lg'>
-            2: May only earn 5 hours per day, per event
-          </h1>
-          <h1 className='text-black-200 text-center lg:text-2xl md:text-xl sm:text-lg'>
-            3: may only cache hours once per year, per member
-          </h1>
-          <h1 className='text-black-200 text-center lg:text-2xl md:text-xl sm:text-lg'>
-            4: PHYSICAL 'volunteer form' must be signed by the show Secretary
-          </h1>
-          <h1 className='text-black-200 text-center lg:text-2xl md:text-xl sm:text-lg'>
-            5: submit your form online for approval{' '}
             <a
               href='#'
-              class='font-medium text-lime-300 underline dark:text-lime-200 hover:no-underline'
+              className='font-bold'
             >
-              Here
+              1:
+            </a>{' '}
+            Must be a current Stea member to cache in hours
+          </h1>
+          <h1 className='text-black-200 text-center lg:text-2xl md:text-xl sm:text-lg'>
+            <a
+              href='#'
+              className='font-bold'
+            >
+              2:
+            </a>{' '}
+            May only earn 5 hours per day, per event
+          </h1>
+          <h1 className='text-black-200 text-center lg:text-2xl md:text-xl sm:text-lg'>
+            <a
+              href='#'
+              className='font-bold'
+            >
+              3:
+            </a>{' '}
+            may only cache hours once per year, per member
+          </h1>
+          <h1 className='text-black-200 text-center lg:text-2xl md:text-xl sm:text-lg'> 
+            <a
+              href='#'
+              className='font-bold'
+            >
+              4:
+            </a>{' '}
+            PHYSICAL 'volunteer form' must be signed by the show Secretary
+          </h1>
+          <h1 className='text-black-200 text-center lg:text-2xl md:text-xl sm:text-lg'>
+            <a
+              href='#'
+              className='font-bold'
+            >
+              5:
+            </a>{' '}
+            send a picture of the form and name of volunteer to{' '}
+            <a className='font-medium text-lime-400 dark:text-lime-300'>
+              {' '}
+              stea@steventing.net
+            </a>{' '}
+            or submit this{' '}
+            <a
+              href='#'
+              className='font-medium text-lime-300 underline dark:text-lime-200'
+            >
+              {' '}
+              form
             </a>
           </h1>
         </div>
