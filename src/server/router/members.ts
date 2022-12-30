@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { MyPrismaClient } from '@/server/prisma';
 import { MemberModel } from '@/server/prisma/zod';
 import { TRPCError } from '@trpc/server';
-import { MemberFormValues } from '@/utils/zodschemas';
+import { memberFormSchema } from '@/utils/zodschemas';
 import { Prisma } from '@prisma/client';
 import { dashboardProcedure, procedure, router } from '@/server/trpc';
 
@@ -53,7 +53,7 @@ export const members = router({
     return await ctx.prisma.member.findMany({ where: { confirmed: false } });
   }),
 
-  exists: procedure.input(MemberFormValues).mutation(async ({ input, ctx }) => {
+  exists: procedure.input(memberFormSchema).mutation(async ({ input, ctx }) => {
     const fullName =
       input.member.businessName ??
       `${input.member.firstName} ${input.member.lastName}`;
@@ -69,7 +69,7 @@ export const members = router({
   }),
 
   add: procedure
-    .input(MemberFormValues)
+    .input(memberFormSchema)
     .mutation(async ({ input: { member, horses }, ctx }) => {
       console.info('Member: ', member);
       console.info('Horses: ', horses ?? 'Did not register horses');

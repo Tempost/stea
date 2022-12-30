@@ -4,6 +4,7 @@ import { members } from './members';
 import { points } from './points';
 import { shows } from './shows';
 import { riders } from './combos';
+import { mail } from './mail';
 import { nonMemberHorseOwners } from './nonmemberhorseowners';
 
 export const appRouter = router({
@@ -13,6 +14,7 @@ export const appRouter = router({
   points,
   shows,
   riders,
+  mail,
 });
 
 export type AppRouter = typeof appRouter;

@@ -11,7 +11,7 @@ declare global {
       GOOGLE_CLIENT_SECRET: string;
       GOOGLE_CLIENT_ID: string;
       NEXTAUTH_URL: string;
-      SANDBOX_ACCOUNT: string;
+      SENDGRID_API_KEY: string;
     }
   }
 }

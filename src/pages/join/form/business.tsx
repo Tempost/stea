@@ -14,7 +14,7 @@ import { HorseFieldArray, RegType, Payment } from '@/components/forms';
 import { FormLayout } from '@/components/layout';
 import { Type } from '@prisma/client';
 import phoneTypes from '@/utils/phoneTypes.json';
-import { MemberFormValues } from '@/utils/zodschemas';
+import { MemberForm, memberFormSchema } from '@/utils/zodschemas';
 import { updateFormState } from '@/utils/atoms';
 import { trpc } from '@/utils/trpc';
 
@@ -31,7 +31,7 @@ function BusinessRegistration() {
   const methods = useZodForm({
     reValidateMode: 'onSubmit',
     shouldFocusError: true,
-    schema: MemberFormValues,
+    schema: memberFormSchema,
   });
   const {
     register,
@@ -43,7 +43,7 @@ function BusinessRegistration() {
   const isRegHorse = watch('horseReg', false);
   const update = useSetAtom(updateFormState);
 
-  function onSubmit(formValues: MemberFormValues) {
+  function onSubmit(formValues: MemberForm) {
     if (formValues.horses) {
       const lifeCount = formValues.horses.filter(
         horse => horse.regType === 'Life'

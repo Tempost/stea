@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
 import { Prisma } from '@prisma/client';
 import { readableDateTime } from '@/utils/helpers';
-import { ShowQueryInput } from '@/utils/zodschemas';
+import { showQueryInputSchema } from '@/utils/zodschemas';
 import { dashboardProcedure, procedure, router } from '@/server/trpc';
 
 const ShowPatch = z.object({
@@ -16,7 +16,7 @@ const ShowPatch = z.object({
 });
 
 export const shows = router({
-  all: procedure.input(ShowQueryInput).query(async ({ input, ctx }) => {
+  all: procedure.input(showQueryInputSchema).query(async ({ input, ctx }) => {
     const shows = await ctx.prisma.show
       .findMany({
         where: {

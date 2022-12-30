@@ -1,8 +1,8 @@
 import { initTRPC, TRPCError } from '@trpc/server';
-import { TrpcContext } from '@/server/context';
+import { Context } from '@/server/context';
 import { transformer } from '@/utils/trpc';
 
-const t = initTRPC.context<TrpcContext>().create({
+const t = initTRPC.context<Context>().create({
   transformer,
   isDev: process.env.NODE_ENV === 'development',
 });

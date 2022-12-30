@@ -7,7 +7,7 @@ import {
   horseExists,
   memberExists,
 } from '@/server/router/utils';
-import { Entry, EntryModel } from '@/utils/zodschemas';
+import { Entry, entryModelSchema } from '@/utils/zodschemas';
 import {
   EntriesRideTypeDivison,
   EntriesRideType,
@@ -298,7 +298,7 @@ function parseCSV(csv: string) {
           return { ...prev, ...curr };
         }, {}) as Entry;
     })
-    .map(entry => EntryModel.safeParse(entry));
+    .map(entry => entryModelSchema.safeParse(entry));
 
   return entries;
 }

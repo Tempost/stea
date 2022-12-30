@@ -1,10 +1,10 @@
 import { ReducerAction } from '@/types/atoms';
 import { Dispatch, SetStateAction } from 'react';
 import { UseFormReturn } from 'react-hook-form';
-import { MemberFormValues, OwnerHorseFormValues } from './zodschemas';
+import type { MemberForm, OwnerHorseForm } from './zodschemas';
 
 export default function triggerValidation<
-  T extends OwnerHorseFormValues | MemberFormValues
+  T extends OwnerHorseForm | MemberForm
 >(
   methods: UseFormReturn<T>,
   toPayment: Dispatch<SetStateAction<boolean>>,

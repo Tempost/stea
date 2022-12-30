@@ -16,12 +16,14 @@ export default trpcNext.createNextApiHandler({
     const allOk = errors.length === 0;
     const isQuery = type === 'query';
 
-    if (ctx?.res && allOk && isQuery) {
-      return {
-        headers: {
-          'Cache-Control': `public, max-age=10, s-maxage=1, stale-while-revalidate`,
-        },
-      };
+    if (ctx) {
+      if (ctx?.res && allOk && isQuery) {
+        return {
+          headers: {
+            'Cache-Control': `public, max-age=10, s-maxage=1, stale-while-revalidate`,
+          },
+        };
+      }
     }
 
     return {};

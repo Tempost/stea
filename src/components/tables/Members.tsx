@@ -12,6 +12,25 @@ interface MemberTableProps {
   search?: true;
 }
 
+interface EmailListProps {
+  emails: string[];
+}
+
+function EmailList({ emails }: EmailListProps) {
+  const noDupes = emails.filter(
+    (item, idx, self) => idx === self.indexOf(item)
+  );
+
+  return (
+    <button
+      className='btn btn-primary btn-sm'
+      onClick={() => navigator.clipboard.writeText(noDupes.join('\n'))}
+    >
+      Email List
+    </button>
+  );
+}
+
 function MemberTable({ overRideDefaultCols, search }: MemberTableProps) {
   const members = trpc.members.all.useQuery();
 
@@ -85,13 +104,24 @@ function MemberTable({ overRideDefaultCols, search }: MemberTableProps) {
     []
   );
 
+  // TODO: Show tooltip only when the items has been copied
   return (
-    <TableWithData
-      colDef={overRideDefaultCols ?? defaultCols}
-      query={members}
-      paginate={true}
-      search={search}
-    />
+    <>
+      <div
+        className='tooltip'
+        data-tip='Copied!'
+      >
+        <EmailList
+          emails={members.data ? members.data?.map(member => member.email) : []}
+        />
+      </div>
+      <TableWithData
+        colDef={overRideDefaultCols ?? defaultCols}
+        query={members}
+        paginate={true}
+        search={search}
+      />
+    </>
   );
 }
 

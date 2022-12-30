@@ -6,7 +6,7 @@ import {
 import { ShowType } from '@prisma/client';
 import { z } from 'zod';
 
-export const EntryModel = z.object({
+export const entryModelSchema = z.object({
   firstName: z.string().trim(),
   lastName: z.string().trim(),
   horseName: z.string().trim(),
@@ -31,7 +31,7 @@ export const EntryModel = z.object({
   divisionCount: z.number().optional(),
 });
 
-export const MemberFormValues = z.object({
+export const memberFormSchema = z.object({
   member: MemberModel.omit({
     fullName: true,
     boardMember: true,
@@ -42,12 +42,12 @@ export const MemberFormValues = z.object({
 });
 
 // TODO: Strip any unneed key/values from models
-export const OwnerHorseFormValues = z.object({
+export const ownerHorseFormSchema = z.object({
   owner: NonMemberHorseOwnerModel.omit({ fullName: true }),
   horses: z.array(HorseModel).min(1, 'Horse is required'),
 });
 
-export const ShowQueryInput = z
+export const showQueryInputSchema = z
   .object({
     dateRange: z.object({
       curr: z.date(),
@@ -61,6 +61,6 @@ export const ShowQueryInput = z
   .deepPartial()
   .optional();
 
-export type MemberFormValues = z.infer<typeof MemberFormValues>;
-export type OwnerHorseFormValues = z.infer<typeof OwnerHorseFormValues>;
-export type Entry = z.infer<typeof EntryModel>;
+export type MemberForm = z.infer<typeof memberFormSchema>;
+export type OwnerHorseForm = z.infer<typeof ownerHorseFormSchema>;
+export type Entry = z.infer<typeof entryModelSchema>;

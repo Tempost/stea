@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 import { Horse } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
-import { OwnerHorseFormValues } from '@/utils/zodschemas';
+import { ownerHorseFormSchema, OwnerHorseForm } from '@/utils/zodschemas';
 import { procedure, router } from '@/server/trpc';
 import { MyPrismaClient } from '../prisma';
 
@@ -42,7 +42,7 @@ export const horses = router({
     }),
 
   exists: procedure
-    .input(OwnerHorseFormValues.omit({ owner: true }))
+    .input(ownerHorseFormSchema.omit({ owner: true }))
     .mutation(async ({ input, ctx }) => {
       console.log(`Checking for horses... ${horseNames(input.horses)}`);
       const existingHorses = await checkExistingHorses(
@@ -63,11 +63,11 @@ export const horses = router({
     }),
 });
 
-const horseNames = (horses: OwnerHorseFormValues['horses']) =>
+const horseNames = (horses: OwnerHorseForm['horses']) =>
   horses.map(horse => horse.horseRN);
 
 async function checkExistingHorses(
-  horses: OwnerHorseFormValues['horses'],
+  horses: OwnerHorseForm['horses'],
   db: MyPrismaClient
 ) {
   const matches = await db.horse.findMany({

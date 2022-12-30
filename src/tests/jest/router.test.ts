@@ -2,7 +2,7 @@ import { prisma } from '@/server/prisma';
 import { z } from 'zod';
 import { faker } from '@faker-js/faker';
 
-import { createContextInner } from '../../server/prisma';
+import { createInnerContext } from '../../server/context';
 import { appRouter } from '../../server/router/_app';
 import { inferMutationInput, inferQueryInput } from '../../utils/trpc';
 import { HorseModel, NonMemberHorseOwnerModel } from '@/server/prisma/zod';
@@ -50,7 +50,7 @@ describe('tRPC router tests', () => {
     };
 
     it('Add/Get member', async () => {
-      const ctx = await createContextInner({});
+      const ctx = await createInnerContext({});
       const caller = appRouter.createCaller(ctx);
 
       const member: inferMutationInput<'member.add-member'>['member'] = {
@@ -92,7 +92,7 @@ describe('tRPC router tests', () => {
     });
 
     it('update member horses', async () => {
-      const ctx = await createContextInner({});
+      const ctx = await createInnerContext({});
       const caller = appRouter.createCaller(ctx);
 
       const member: z.infer<typeof NonMemberHorseOwnerModel> = {
@@ -117,7 +117,7 @@ describe('tRPC router tests', () => {
     });
 
     it('update member', async () => {
-      const ctx = await createContextInner({});
+      const ctx = await createInnerContext({});
       const caller = appRouter.createCaller(ctx);
 
       const mutationInput: inferMutationInput<'member.update-member'> = {
@@ -134,7 +134,7 @@ describe('tRPC router tests', () => {
     });
 
     it('delete member', async () => {
-      const ctx = await createContextInner({});
+      const ctx = await createInnerContext({});
       const caller = appRouter.createCaller(ctx);
 
       const queryInput: inferQueryInput<'member.get-member'> = {
@@ -167,7 +167,7 @@ describe('tRPC router tests', () => {
       regType: 'Life',
     };
     it('Add/Get owner', async () => {
-      const ctx = await createContextInner({});
+      const ctx = await createInnerContext({});
       const caller = appRouter.createCaller(ctx);
 
       const owner: z.infer<typeof NonMemberHorseOwnerModel> = {
@@ -197,7 +197,7 @@ describe('tRPC router tests', () => {
     });
 
     it('Update owner', async () => {
-      const ctx = await createContextInner({});
+      const ctx = await createInnerContext({});
       const caller = appRouter.createCaller(ctx);
 
       const newFirstName = faker.name.firstName();
@@ -232,7 +232,7 @@ describe('tRPC router tests', () => {
     });
 
     it('Delete owner', async () => {
-      const ctx = await createContextInner({});
+      const ctx = await createInnerContext({});
       const caller = appRouter.createCaller(ctx);
 
       const queryInput: inferQueryInput<'nonMemberHorseOwner.get-owner'> = {
@@ -265,7 +265,7 @@ describe('tRPC router tests', () => {
     let showUid: string;
 
     it('add/get show', async () => {
-      const ctx = await createContextInner({});
+      const ctx = await createInnerContext({});
       const caller = appRouter.createCaller(ctx);
 
       const mutationInput: inferMutationInput<'shows.add'> = {
@@ -286,7 +286,7 @@ describe('tRPC router tests', () => {
     });
 
     it('Update show', async () => {
-      const ctx = await createContextInner({});
+      const ctx = await createInnerContext({});
       const caller = appRouter.createCaller(ctx);
 
       const mutationInput: inferMutationInput<'shows.update'> = {
@@ -309,7 +309,7 @@ describe('tRPC router tests', () => {
     });
 
     it('Delete show', async () => {
-      const ctx = await createContextInner({});
+      const ctx = await createInnerContext({});
       const caller = appRouter.createCaller(ctx);
 
       const mutationInput: inferMutationInput<'shows.remove-show'> = {
@@ -346,7 +346,7 @@ describe('tRPC router tests', () => {
     };
 
     beforeAll(async () => {
-      const ctx = await createContextInner({});
+      const ctx = await createInnerContext({});
       const caller = appRouter.createCaller(ctx);
 
       const member: inferMutationInput<'member.add-member'>['member'] = {
@@ -383,7 +383,7 @@ describe('tRPC router tests', () => {
     });
 
     it('Get combo', async () => {
-      const ctx = await createContextInner({});
+      const ctx = await createInnerContext({});
       const caller = appRouter.createCaller(ctx);
 
       const combo: inferQueryInput<'rider.get-rider'> = {
@@ -399,7 +399,7 @@ describe('tRPC router tests', () => {
 
     it('Request for points change', async () => {
       // NOTE: Takes memberName, horseName, showDate/ShowName, new points to ammend
-      const ctx = await createContextInner({});
+      const ctx = await createInnerContext({});
       const caller = appRouter.createCaller(ctx);
 
       const requestUpdate: inferMutationInput<'points.update-points'> = {
@@ -411,7 +411,7 @@ describe('tRPC router tests', () => {
     });
 
     it('Delete combo', async () => {
-      const ctx = await createContextInner({});
+      const ctx = await createInnerContext({});
       const caller = appRouter.createCaller(ctx);
 
       const combo: inferMutationInput<'rider.remove-rider'> = {

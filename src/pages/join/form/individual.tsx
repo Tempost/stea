@@ -20,7 +20,7 @@ import {
 } from '@/components/forms';
 import { FormLayout } from '@/components/layout';
 import phoneTypes from '@/utils/phoneTypes.json';
-import { MemberFormValues } from '@/utils/zodschemas';
+import { MemberForm, memberFormSchema } from '@/utils/zodschemas';
 import { updateFormState } from '@/utils/atoms';
 import { trpc } from '@/utils/trpc';
 
@@ -38,7 +38,7 @@ function IndividualRegistration() {
   const methods = useZodForm({
     reValidateMode: 'onSubmit',
     shouldFocusError: true,
-    schema: MemberFormValues,
+    schema: memberFormSchema,
   });
 
   const { setValue, watch, register, control } = methods;
@@ -51,7 +51,7 @@ function IndividualRegistration() {
 
   setValue('member.memberType', 'Individual' as Type);
 
-  function onSubmit(formValues: MemberFormValues) {
+  function onSubmit(formValues: MemberForm) {
     if (formValues.horses) {
       const lifeCount = formValues.horses.filter(
         horse => horse.regType === 'Life'
@@ -78,7 +78,9 @@ function IndividualRegistration() {
           formMutation={{
             error: checkMember.isError,
             message: checkMember.error?.message,
-            mutateFn: () => insert.mutate(methods.getValues()),
+            mutateFn: () => {
+              insert.mutate(methods.getValues());
+            },
           }}
         >
           <h2 className='divider'>Individual Membership</h2>

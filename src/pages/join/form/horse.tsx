@@ -7,7 +7,7 @@ import { HorseFieldArray, Payment } from '@/components/forms';
 import useZodForm from '@/utils/usezodform';
 import { FormLayout } from '@/components/layout';
 import phoneTypes from '@/utils/phoneTypes.json';
-import { OwnerHorseFormValues } from '@/utils/zodschemas';
+import { ownerHorseFormSchema, OwnerHorseForm } from '@/utils/zodschemas';
 import { updateFormState } from '@/utils/atoms';
 import { trpc } from '@/utils/trpc';
 
@@ -24,7 +24,7 @@ function HorseRegistration() {
   const methods = useZodForm({
     reValidateMode: 'onSubmit',
     shouldFocusError: true,
-    schema: OwnerHorseFormValues,
+    schema: ownerHorseFormSchema,
   });
   const {
     register,
@@ -33,7 +33,7 @@ function HorseRegistration() {
 
   const update = useSetAtom(updateFormState);
 
-  function onSubmit(formValues: OwnerHorseFormValues) {
+  function onSubmit(formValues: OwnerHorseForm) {
     if (formValues.horses) {
       check.mutate(formValues);
       const lifeCount = formValues.horses.filter(
