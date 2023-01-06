@@ -1,16 +1,35 @@
 import { UseFormProps, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+import type { ZodSchema, TypeOf } from 'zod';
 
-export default function useZodForm<TSchema extends z.ZodType>(
-  props: Omit<UseFormProps<TSchema['_input']>, 'resolver'> & {
-    schema: TSchema;
-  }
-) {
-  const form = useForm<TSchema['_input']>({
-    ...props,
-    resolver: zodResolver(props.schema, undefined, { rawValues: true }),
-  });
-
-  return form;
+/*
+ * TSchema is the type of the zod schema for the form
+ * This will be passed to the base UseFormProps type, omitting
+ * the resolver field.
+ */
+export interface UseZodFormProps<TSchema extends ZodSchema>
+  extends Exclude<UseFormProps<TypeOf<TSchema>>, 'resolver'> {
+  schema: TSchema;
 }
+
+const useZodForm = <TSchema extends ZodSchema>({
+  schema,
+  ...formProps
+}: UseZodFormProps<TSchema>) =>
+  useForm({ ...formProps, resolver: zodResolver(schema) });
+
+export default useZodForm;
+
+// -- Old before refactor --
+// export default function useZodForm<TSchema extends z.ZodType>(
+//   props: Omit<UseFormProps<TSchema['_input']>, 'resolver'> & {
+//     schema: TSchema;
+//   }
+// ) {
+//   const form = useForm<TSchema['_input']>({
+//     ...props,
+//     resolver: zodResolver(props.schema, undefined, { rawValues: true }),
+//   });
+
+//   return form;
+// }

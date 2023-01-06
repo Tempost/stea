@@ -1,6 +1,6 @@
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { Prisma, Status } from '@prisma/client';
-import { TextInput } from '../data-entry';
+import { Input } from '../data-entry';
 import RegType from './RegType';
 import { AddIcon, TrashIcon } from '../icons';
 
@@ -54,21 +54,20 @@ export default function HorseFieldArray() {
             />
 
             <span className='flex flex-col gap-2'>
-              <TextInput
+              <Input
                 label='Registered Name*'
-                inputMode='text'
+                type='text'
                 altLabel='Horses registered name must be used when entering a show.'
-                className='input-primary input-sm'
-                error={Array.isArray(errors.horses) && errors.horses.at(index)}
+                className='input-primary input-bordered input w-full input-sm'
                 {...register(`horses.${index}.horseRN` as const, {
                   required: true,
                 })}
               />
 
-              <TextInput
+              <Input
                 label='Barn Name'
-                inputMode='text'
-                className='input-primary input-sm'
+                type='text'
+                className='input-primary input-bordered input w-full input-sm'
                 {...register(`horses.${index}.horseAKA` as const)}
               />
             </span>

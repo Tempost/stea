@@ -1,21 +1,17 @@
+import { useSetAtom } from 'jotai';
 import { ReactElement, useState } from 'react';
 import { FormProvider } from 'react-hook-form';
-import { useSetAtom } from 'jotai';
 
-import {
-  TextInput,
-  Select,
-  NumericInput,
-  Checkbox,
-} from '@/components/data-entry';
-import states from '@/utils/states.json';
-import useZodForm from '@/utils/usezodform';
-import { HorseFieldArray, RegType, Payment } from '@/components/forms';
+import { Checkbox, Input, Select } from '@/components/data-entry';
+import { HorseFieldArray, Payment, RegType } from '@/components/forms';
 import { FormLayout } from '@/components/layout';
-import phoneTypes from '@/utils/phoneTypes.json';
 import { MemberForm, memberFormSchema } from '@/utils/zodschemas';
 import { updateFormState } from '@/utils/atoms';
+import { capitalize } from '@/utils/helpers';
+import states from '@/utils/states.json';
 import { trpc } from '@/utils/trpc';
+import useZodForm from '@/utils/usezodform';
+import { PhoneType } from '@prisma/client';
 
 function BusinessRegistration() {
   const [payment, togglePayment] = useState(false);
@@ -40,11 +36,7 @@ function BusinessRegistration() {
     },
   });
 
-  const {
-    register,
-    watch,
-    formState: { errors },
-  } = methods;
+  const { register, watch } = methods;
 
   const isRegHorse = watch('horseReg', false);
   const update = useSetAtom(updateFormState);
@@ -91,52 +83,54 @@ function BusinessRegistration() {
 
           <div className='flex flex-col gap-2'>
             <h3 className='text-sm'>Name of Business*</h3>
-            <TextInput
-              inputMode='text'
-              className='input-primary input-sm'
-              error={errors.member?.businessName}
+            <Input
+              type='text'
+              className='input input-primary input-bordered input-sm w-full'
               {...register('member.businessName', { required: true })}
             />
 
             <h3 className='text-sm'>Business Address*</h3>
             <div className='flex flex-col gap-2'>
-              <TextInput
-                inputMode='text'
-                className='input-primary input-sm'
+              <Input
+                type='text'
+                className='input input-primary input-bordered input-sm w-full'
                 placeholder='Address Line 1'
-                error={errors.member?.address}
                 {...register('member.address', { required: true })}
               />
 
-              <TextInput
-                inputMode='text'
-                className='input-primary input-sm'
+              <Input
+                type='text'
+                className='input input-primary input-bordered input-sm w-full'
                 placeholder='Address Line 2'
                 name='temp'
               />
 
               <div className='flex gap-1'>
-                <TextInput
-                  inputMode='text'
-                  className='input-primary input-sm'
+                <Input
+                  type='text'
+                  className='input input-primary input-bordered input-sm w-full'
                   placeholder='City'
-                  error={errors.member?.city}
                   {...register('member.city', { required: true })}
                 />
 
                 <Select
-                  className='select-primary select-sm'
-                  options={states}
-                  error={errors.member?.state}
+                  className='select-bordered select select-primary md:select-sm w-full lg:w-fit'
                   {...register('member.state', { required: true })}
-                />
+                >
+                  {states.map(state => (
+                    <option
+                      key={state.value}
+                      value={state.value}
+                    >
+                      {capitalize(state.label)}
+                    </option>
+                  ))}
+                </Select>
 
-                <NumericInput
-                  inputMode='numeric'
-                  className='input-primary input-sm'
+                <Input
+                  type='numeric'
+                  className='input input-primary input-bordered input-sm w-full'
                   placeholder='Zip Code'
-                  inputSize='w-fit'
-                  error={errors.member?.zip}
                   {...register('member.zip', {
                     required: true,
                     valueAsNumber: true,
@@ -148,44 +142,48 @@ function BusinessRegistration() {
             <h3 className='mt-3 font-semibold'>Point of Contact</h3>
             <div>
               <div className='flex gap-5'>
-                <TextInput
-                  inputMode='text'
+                <Input
+                  type='text'
                   label='First Name*'
-                  className='input-primary input-sm'
-                  error={errors.member?.firstName}
+                  className='input input-primary input-bordered input-sm w-full'
                   {...register('member.firstName', { required: true })}
                 />
 
-                <TextInput
-                  inputMode='text'
+                <Input
+                  type='text'
                   label='Last Name*'
-                  className='input-primary input-sm'
-                  error={errors.member?.lastName}
+                  className='input input-primary input-bordered input-sm w-full'
                   {...register('member.lastName', { required: true })}
                 />
               </div>
               <div className='flex gap-2'>
                 <Select
                   label='Phone Type*'
-                  className='select-primary select-sm'
-                  options={phoneTypes}
+                  className='select-bordered select select-primary md:select-sm'
                   {...register('member.phoneType', { required: true })}
-                />
+                >
+                  {Object.keys(PhoneType).map(type => (
+                    <option
+                      key={type}
+                      value={type}
+                    >
+                      {PhoneType[type as PhoneType]}
+                    </option>
+                  ))}
+                </Select>
 
-                <TextInput
+                <Input
                   label='Phone Number*'
-                  inputMode='tel'
-                  className='input-primary input-sm'
-                  error={errors.member?.phone}
+                  type='tel'
+                  className='input input-primary input-bordered input-sm w-full'
                   {...register('member.phone', { required: true })}
                 />
               </div>
 
-              <TextInput
+              <Input
                 label='Email*'
-                inputMode='text'
-                className='input-primary input-sm'
-                error={errors.member?.email}
+                type='text'
+                className='input input-primary input-bordered input-sm w-full'
                 altLabel={'This will be the primary method of contact.'}
                 {...register('member.email', { required: true })}
               />

@@ -4,7 +4,7 @@ import { z } from 'zod';
 import useZodForm from '@/utils/usezodform';
 import { trpc } from '@/utils/trpc';
 import { ShowModel } from '@/server/prisma/zod';
-import { ControlledDatePicker, Select, TextInput } from '../data-entry';
+import { ControlledDatePicker, Select, Input } from '../data-entry';
 import Alert from '../forms/Alert';
 
 const NewShowModel = ShowModel.omit({ uid: true, reviewed: true });
@@ -77,7 +77,7 @@ function AddNewShow() {
           <FormProvider {...methods}>
             <form onSubmit={methods.handleSubmit(submitForm)}>
               <div className='flex flex-row gap-5'>
-                <TextInput
+                <Input
                   className='input-primary input-sm'
                   placeholder='Enter show name'
                   label='Show Name*'
@@ -113,7 +113,7 @@ function AddNewShow() {
                 />
               </div>
 
-              <TextInput
+              <Input
                 className='input-primary'
                 placeholder='Registration Link'
                 label='Registration Link'

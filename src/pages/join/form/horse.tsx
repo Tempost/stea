@@ -1,15 +1,15 @@
+import { useSetAtom } from 'jotai';
 import { ReactElement, useState } from 'react';
 import { FormProvider } from 'react-hook-form';
-import { useSetAtom } from 'jotai';
 
-import { TextInput, Select } from '@/components/data-entry';
+import { Input, Select } from '@/components/data-entry';
 import { HorseFieldArray, Payment } from '@/components/forms';
-import useZodForm from '@/utils/usezodform';
 import { FormLayout } from '@/components/layout';
-import phoneTypes from '@/utils/phoneTypes.json';
 import { ownerHorseFormSchema, OwnerHorseForm } from '@/utils/zodschemas';
 import { updateFormState } from '@/utils/atoms';
 import { trpc } from '@/utils/trpc';
+import useZodForm from '@/utils/usezodform';
+import { PhoneType } from '@prisma/client';
 
 function HorseRegistration() {
   const [payment, togglePayment] = useState(false);
@@ -26,10 +26,7 @@ function HorseRegistration() {
     shouldFocusError: true,
     schema: ownerHorseFormSchema,
   });
-  const {
-    register,
-    formState: { errors },
-  } = methods;
+  const { register } = methods;
 
   const update = useSetAtom(updateFormState);
 
@@ -67,29 +64,26 @@ function HorseRegistration() {
             <h3>Owner Information</h3>
 
             <div className='flex gap-5'>
-              <TextInput
-                inputMode='text'
+              <Input
+                type='text'
                 label='First Name*'
-                className='input-primary input-sm'
-                error={errors.owner?.firstName}
+                className='input-primary input-bordered input w-full input-sm'
                 {...register('owner.firstName', { required: true })}
               />
 
-              <TextInput
-                inputMode='text'
+              <Input
+                type='text'
                 label='Last Name*'
-                className='input-primary input-sm'
-                error={errors.owner?.lastName}
+                className='input-primary input-bordered input w-full input-sm'
                 {...register('owner.lastName', { required: true })}
               />
             </div>
 
             <div className='flex flex-col gap-2'>
-              <TextInput
+              <Input
                 label='Email'
-                inputMode='text'
-                className='input-primary input-sm'
-                error={errors.owner?.email}
+                type='text'
+                className='input-primary input-bordered input w-full input-sm'
                 altLabel='This will be the primary method of contact.'
                 {...register('owner.email', { required: true })}
               />
@@ -97,16 +91,23 @@ function HorseRegistration() {
               <span className='flex gap-2'>
                 <Select
                   label='Phone Type*'
-                  className='input-primary select-sm'
-                  options={phoneTypes}
+                  className='select-bordered select select-primary md:select-sm'
                   {...register('owner.phoneType', { required: true })}
-                />
+                >
+                  {Object.keys(PhoneType).map(type => (
+                    <option
+                      key={type}
+                      value={type}
+                    >
+                      {PhoneType[type as PhoneType]}
+                    </option>
+                  ))}
+                </Select>
 
-                <TextInput
+                <Input
                   label='Phone Number*'
-                  inputMode='tel'
-                  className='input-primary input-sm'
-                  error={errors.owner?.phone}
+                  type='tel'
+                  className='input-primary input-bordered input w-full input-sm'
                   {...register('owner.phone', { required: true })}
                 />
               </span>

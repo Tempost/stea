@@ -1,14 +1,10 @@
 import DatePicker from 'react-datepicker';
-// import DatePicker from 'react-date-picker/dist/entry.nostyle';
 import { Controller, useFormContext } from 'react-hook-form';
 
-import TextInput, { TextInputProps } from './TextInput';
-// import { CalenderIcon, TrashIcon } from '../icons';
-// calendarIcon = { CalenderIcon }
-// clearIcon = { TrashIcon }
+import Input from './Input';
 import 'react-datepicker/dist/react-datepicker.css';
 
-interface DatePickerProps extends TextInputProps {
+interface DatePickerProps {
   placeholderText?: string;
   hidden?: boolean;
 }
@@ -37,7 +33,7 @@ function ControlledDatePicker({
               }}
               selected={props.field.value}
               customInput={
-                <TextInput
+                <Input
                   label={label}
                   altLabel={altLabel}
                   className='input-primary w-40'

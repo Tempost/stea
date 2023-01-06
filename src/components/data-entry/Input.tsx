@@ -1,16 +1,16 @@
 import { ComponentProps, forwardRef } from 'react';
 import FormField, { useFormField, UseFormFieldProps } from './FormField';
 
-interface Props extends UseFormFieldProps, ComponentProps<'select'> {
+interface Props extends UseFormFieldProps, ComponentProps<'input'> {
   name: string;
 }
 
-const Select = forwardRef<HTMLSelectElement, Props>((props, ref) => {
+const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
   const { formFieldProps, childProps } = useFormField(props);
 
   return (
     <FormField {...formFieldProps}>
-      <select
+      <input
         ref={ref}
         {...childProps}
       />
@@ -18,5 +18,5 @@ const Select = forwardRef<HTMLSelectElement, Props>((props, ref) => {
   );
 });
 
-Select.displayName = 'Select';
-export default Select;
+Input.displayName = 'Input';
+export default Input;
