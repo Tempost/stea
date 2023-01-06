@@ -1,5 +1,5 @@
 import { ComponentProps, forwardRef } from 'react';
-import FormField, { useFormField, UseFormFieldProps } from './FormField';
+import { FormField, useFormField, UseFormFieldProps } from './FormField';
 
 interface Props extends UseFormFieldProps, ComponentProps<'input'> {
   name: string;

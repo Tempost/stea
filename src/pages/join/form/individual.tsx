@@ -1,6 +1,5 @@
 import { useSetAtom } from 'jotai';
 import { ReactElement, useState } from 'react';
-import { FormProvider } from 'react-hook-form';
 
 import { Checkbox, Input, Select } from '@/components/data-entry';
 import {
@@ -18,6 +17,7 @@ import states from '@/utils/states.json';
 import { trpc } from '@/utils/trpc';
 import useZodForm from '@/utils/usezodform';
 import { PhoneType } from '@prisma/client';
+import Form from '@/components/forms/Form';
 
 function IndividualRegistration() {
   const [payment, togglePayment] = useState(false);
@@ -30,14 +30,14 @@ function IndividualRegistration() {
 
   const insert = trpc.members.add.useMutation();
 
-  const methods = useZodForm({
+  const form = useZodForm({
     reValidateMode: 'onSubmit',
     shouldFocusError: true,
     schema: memberFormSchema,
     defaultValues: { member: { memberType: 'Individual' } },
   });
 
-  const { watch, register } = methods;
+  const { watch, register } = form;
 
   const isUSEAMember = watch('member.currentUSEAMember', false);
   const isRegHorse = watch('horseReg', false);
@@ -63,159 +63,158 @@ function IndividualRegistration() {
   }
 
   return (
-    <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>
-        <Payment
-          showPayment={payment}
-          formMutation={{
-            error: checkMember.isError,
-            message: checkMember.error?.message,
-            mutateFn: () => {
-              insert.mutate(methods.getValues());
-            },
-          }}
-        >
-          <h2 className='divider'>Individual Membership</h2>
+    <Form
+      form={form}
+      onSubmit={onSubmit}
+    >
+      <Payment
+        showPayment={payment}
+        formMutation={{
+          error: checkMember.isError,
+          message: checkMember.error?.message,
+          mutateFn: () => insert.mutate(form.getValues()),
+        }}
+      >
+        <h2 className='divider'>Individual Membership</h2>
 
-          <div className='flex gap-1 md:gap-5'>
+        <div className='flex gap-1 md:gap-5'>
+          <Input
+            type='text'
+            label='First Name*'
+            className='input-primary input-bordered input w-full md:input-sm'
+            {...register('member.firstName', { required: true })}
+          />
+
+          <Input
+            type='text'
+            label='Last Name*'
+            className='input-primary input-bordered input w-full md:input-sm'
+            {...register('member.lastName', { required: true })}
+          />
+        </div>
+
+        <h3 className='mt-3 pb-2 text-sm'>Address*</h3>
+        <div className='flex flex-col gap-2'>
+          <Input
+            type='text'
+            className='input-primary input-bordered input w-full md:input-sm'
+            placeholder='Address Line 1'
+            {...register('member.address', { required: true })}
+          />
+
+          <Input
+            type='text'
+            className='input-primary input-bordered input w-full md:input-sm'
+            placeholder='Address Line 2'
+            name='temp'
+          />
+
+          <div className='flex flex-col gap-1 md:flex-row'>
             <Input
               type='text'
-              label='First Name*'
               className='input-primary input-bordered input w-full md:input-sm'
-              {...register('member.firstName', { required: true })}
+              placeholder='City'
+              {...register('member.city', { required: true })}
             />
 
+            <Select
+              className='select-bordered select select-primary md:select-sm w-full lg:w-fit'
+              {...register('member.state', { required: true })}
+            >
+              {states.map(state => (
+                <option
+                  key={state.value}
+                  value={state.value}
+                >
+                  {capitalize(state.label)}
+                </option>
+              ))}
+            </Select>
+
             <Input
-              type='text'
-              label='Last Name*'
+              type='numeric'
               className='input-primary input-bordered input w-full md:input-sm'
-              {...register('member.lastName', { required: true })}
+              placeholder='Zip Code'
+              {...register('member.zip', {
+                required: true,
+                valueAsNumber: true,
+              })}
             />
           </div>
 
-          <h3 className='mt-3 pb-2 text-sm'>Address*</h3>
           <div className='flex flex-col gap-2'>
-            <Input
-              type='text'
-              className='input-primary input-bordered input w-full md:input-sm'
-              placeholder='Address Line 1'
-              {...register('member.address', { required: true })}
-            />
-
-            <Input
-              type='text'
-              className='input-primary input-bordered input w-full md:input-sm'
-              placeholder='Address Line 2'
-              name='temp'
-            />
-
-            <div className='flex flex-col gap-1 md:flex-row'>
-              <Input
-                type='text'
-                className='input-primary input-bordered input w-full md:input-sm'
-                placeholder='City'
-                {...register('member.city', { required: true })}
-              />
-
+            <div className='flex gap-2'>
               <Select
-                className='select-bordered select select-primary md:select-sm w-full lg:w-fit'
-                {...register('member.state', { required: true })}
+                label='Phone Type*'
+                className='select-bordered select select-primary md:select-sm'
+                {...register('member.phoneType', { required: true })}
               >
-                {states.map(state => (
+                {Object.keys(PhoneType).map(type => (
                   <option
-                    key={state.value}
-                    value={state.value}
+                    key={type}
+                    value={type}
                   >
-                    {capitalize(state.label)}
+                    {PhoneType[type as PhoneType]}
                   </option>
                 ))}
               </Select>
 
               <Input
+                label='Phone Number*'
+                type='tel'
+                className='input-primary input-bordered input w-full md:input-sm'
+                {...register('member.phone', { required: true })}
+              />
+            </div>
+
+            <Input
+              label='Email*'
+              type='text'
+              className='input-primary input-bordered input w-full md:input-sm'
+              altLabel={'This will be the primary method of contact.'}
+              {...register('member.email', { required: true })}
+            />
+          </div>
+
+          <div className='container flex-col'>
+            <RegType
+              register={register('member.memberStatus', { required: true })}
+              formType='Individual'
+            />
+
+            <MemberType register={register('member.memberStatusType')} />
+
+            <Under18 dateName='member.dateOfBirth' />
+          </div>
+
+          <div className='flex gap-2'>
+            <Checkbox
+              label='Current USEA Member?'
+              {...register('member.currentUSEAMember')}
+            />
+
+            {isUSEAMember && (
+              <Input
                 type='numeric'
                 className='input-primary input-bordered input w-full md:input-sm'
-                placeholder='Zip Code'
-                {...register('member.zip', {
+                placeholder='USEA Member ID'
+                {...register('member.useaMemberID', {
                   required: true,
                   valueAsNumber: true,
                 })}
               />
-            </div>
-
-            <div className='flex flex-col gap-2'>
-              <div className='flex gap-2'>
-                <Select
-                  label='Phone Type*'
-                  className='select-bordered select select-primary md:select-sm'
-                  {...register('member.phoneType', { required: true })}
-                >
-                  {Object.keys(PhoneType).map(type => (
-                    <option
-                      key={type}
-                      value={type}
-                    >
-                      {PhoneType[type as PhoneType]}
-                    </option>
-                  ))}
-                </Select>
-
-                <Input
-                  label='Phone Number*'
-                  type='tel'
-                  className='input-primary input-bordered input w-full md:input-sm'
-                  {...register('member.phone', { required: true })}
-                />
-              </div>
-
-              <Input
-                label='Email*'
-                type='text'
-                className='input-primary input-bordered input w-full md:input-sm'
-                altLabel={'This will be the primary method of contact.'}
-                {...register('member.email', { required: true })}
-              />
-            </div>
-
-            <div className='container flex-col'>
-              <RegType
-                register={register('member.memberStatus', { required: true })}
-                formType='Individual'
-              />
-
-              <MemberType register={register('member.memberStatusType')} />
-
-              <Under18 dateName='member.dateOfBirth' />
-            </div>
-
-            <div className='flex gap-2'>
-              <Checkbox
-                label='Current USEA Member?'
-                {...register('member.currentUSEAMember')}
-              />
-
-              {isUSEAMember && (
-                <Input
-                  type='numeric'
-                  className='input-primary input-bordered input w-full md:input-sm'
-                  placeholder='USEA Member ID'
-                  {...register('member.useaMemberID', {
-                    required: true,
-                    valueAsNumber: true,
-                  })}
-                />
-              )}
-            </div>
-
-            <Checkbox
-              label='Do you plan to register your horse(s)?'
-              {...register('horseReg')}
-            />
-
-            {isRegHorse && <HorseFieldArray />}
+            )}
           </div>
-        </Payment>
-      </form>
-    </FormProvider>
+
+          <Checkbox
+            label='Do you plan to register your horse(s)?'
+            {...register('horseReg')}
+          />
+
+          {isRegHorse && <HorseFieldArray />}
+        </div>
+      </Payment>
+    </Form>
   );
 }
 

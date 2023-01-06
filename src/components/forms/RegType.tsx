@@ -50,7 +50,7 @@ function RegType({ register, noAtomUpdate, onClick, formType }: Props) {
       <Radio
         label={annualLabel}
         value='Annual'
-        className='radio-primary'
+        className='radio md:radio-sm radio-primary align-middle'
         onClick={onClick}
         {...register}
       />
@@ -58,7 +58,7 @@ function RegType({ register, noAtomUpdate, onClick, formType }: Props) {
       <Radio
         label={lifeLabel}
         value='Life'
-        className='radio-primary'
+        className='radio md:radio-sm radio-primary align-middle'
         onClick={onClick}
         {...register}
       />

@@ -17,7 +17,7 @@ function MemberType({ register, onClick }: Props) {
       <Radio
         label='Adult Amateur'
         value='AdultAmateur'
-        className='radio-primary'
+        className='radio md:radio-sm radio-primary align-middle'
         onClick={onClick}
         {...register}
       />
@@ -25,7 +25,7 @@ function MemberType({ register, onClick }: Props) {
       <Radio
         label='Professional'
         value='Professional'
-        className='radio-primary'
+        className='radio md:radio-sm radio-primary align-middle'
         onClick={onClick}
         {...register}
       />
@@ -33,7 +33,7 @@ function MemberType({ register, onClick }: Props) {
       <Radio
         label='Junior'
         value='Junior'
-        className='radio-primary'
+        className='radio md:radio-sm radio-primary align-middle'
         onClick={onClick}
         {...register}
       />

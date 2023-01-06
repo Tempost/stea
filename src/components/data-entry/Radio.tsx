@@ -1,37 +1,23 @@
-import { forwardRef, useId } from 'react';
-import type { DetailedHTMLProps, InputHTMLAttributes } from 'react';
+import { ComponentProps, forwardRef } from 'react';
+import { RadioFormField, useFormField, UseFormFieldProps } from './FormField';
 
-interface RadioProps
-  extends DetailedHTMLProps<
-    InputHTMLAttributes<HTMLInputElement>,
-    HTMLInputElement
-  > {
-  label: string | JSX.Element;
+interface Props extends UseFormFieldProps, ComponentProps<'input'> {
+  name: string;
 }
 
-const Radio = forwardRef<HTMLInputElement, RadioProps>(
-  ({ className, label, ...props }, ref) => {
-    const id = useId();
-    return (
-      <div className='flex items-center justify-between'>
-        <label
-          className='label pr-5'
-          htmlFor={`radio-input${id}`}
-        >
-          <span className='label-text'>{label}</span>
-        </label>
+const Radio = forwardRef<HTMLInputElement, Props>((props, ref) => {
+  const { formFieldProps, childProps } = useFormField(props);
 
-        <input
-          ref={ref}
-          id={`radio-input${id}`}
-          type='radio'
-          className={`radio md:radio-sm ${className}`}
-          {...props}
-        />
-      </div>
-    );
-  }
-);
+  return (
+    <RadioFormField {...formFieldProps}>
+      <input
+        type='radio'
+        ref={ref}
+        {...childProps}
+      />
+    </RadioFormField>
+  );
+});
 
 Radio.displayName = 'Radio';
 export default Radio;

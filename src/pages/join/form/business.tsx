@@ -1,6 +1,5 @@
 import { useSetAtom } from 'jotai';
 import { ReactElement, useState } from 'react';
-import { FormProvider } from 'react-hook-form';
 
 import { Checkbox, Input, Select } from '@/components/data-entry';
 import { HorseFieldArray, Payment, RegType } from '@/components/forms';
@@ -12,6 +11,7 @@ import states from '@/utils/states.json';
 import { trpc } from '@/utils/trpc';
 import useZodForm from '@/utils/usezodform';
 import { PhoneType } from '@prisma/client';
+import Form from '@/components/forms/Form';
 
 function BusinessRegistration() {
   const [payment, togglePayment] = useState(false);
@@ -23,7 +23,7 @@ function BusinessRegistration() {
 
   const insert = trpc.members.add.useMutation();
 
-  const methods = useZodForm({
+  const form = useZodForm({
     reValidateMode: 'onSubmit',
     shouldFocusError: true,
     schema: memberFormSchema,
@@ -36,7 +36,7 @@ function BusinessRegistration() {
     },
   });
 
-  const { register, watch } = methods;
+  const { register, watch } = form;
 
   const isRegHorse = watch('horseReg', false);
   const update = useSetAtom(updateFormState);
@@ -61,150 +61,151 @@ function BusinessRegistration() {
   }
 
   return (
-    <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>
-        <Payment
-          showPayment={payment}
-          formMutation={{
-            error: checkMember.isError,
-            message: checkMember.error?.message,
-            mutateFn: () => insert.mutate(methods.getValues()),
-          }}
-        >
-          <h2 className='divider'>Business Registration</h2>
+    <Form
+      form={form}
+      onSubmit={onSubmit}
+    >
+      <Payment
+        showPayment={payment}
+        formMutation={{
+          error: checkMember.isError,
+          message: checkMember.error?.message,
+          mutateFn: () => insert.mutate(form.getValues()),
+        }}
+      >
+        <h2 className='divider'>Business Registration</h2>
 
-          <h3 className='mb-2 rounded-2xl border border-solid border-gray-400 bg-gray-100 p-4 text-center'>
-            As part of the membership you can submit
-            <br />
-            your company logo for our home page!
-            <br />
-            Submit to stea@stevening.net
-          </h3>
+        <h3 className='mb-2 rounded-2xl border border-solid border-gray-400 bg-gray-100 p-4 text-center'>
+          As part of the membership you can submit
+          <br />
+          your company logo for our home page!
+          <br />
+          Submit to stea@stevening.net
+        </h3>
 
+        <div className='flex flex-col gap-2'>
+          <h3 className='text-sm'>Name of Business*</h3>
+          <Input
+            type='text'
+            className='input input-primary input-bordered input-sm w-full'
+            {...register('member.businessName', { required: true })}
+          />
+
+          <h3 className='text-sm'>Business Address*</h3>
           <div className='flex flex-col gap-2'>
-            <h3 className='text-sm'>Name of Business*</h3>
             <Input
               type='text'
               className='input input-primary input-bordered input-sm w-full'
-              {...register('member.businessName', { required: true })}
+              placeholder='Address Line 1'
+              {...register('member.address', { required: true })}
             />
 
-            <h3 className='text-sm'>Business Address*</h3>
-            <div className='flex flex-col gap-2'>
-              <Input
-                type='text'
-                className='input input-primary input-bordered input-sm w-full'
-                placeholder='Address Line 1'
-                {...register('member.address', { required: true })}
-              />
-
-              <Input
-                type='text'
-                className='input input-primary input-bordered input-sm w-full'
-                placeholder='Address Line 2'
-                name='temp'
-              />
-
-              <div className='flex gap-1'>
-                <Input
-                  type='text'
-                  className='input input-primary input-bordered input-sm w-full'
-                  placeholder='City'
-                  {...register('member.city', { required: true })}
-                />
-
-                <Select
-                  className='select-bordered select select-primary md:select-sm w-full lg:w-fit'
-                  {...register('member.state', { required: true })}
-                >
-                  {states.map(state => (
-                    <option
-                      key={state.value}
-                      value={state.value}
-                    >
-                      {capitalize(state.label)}
-                    </option>
-                  ))}
-                </Select>
-
-                <Input
-                  type='numeric'
-                  className='input input-primary input-bordered input-sm w-full'
-                  placeholder='Zip Code'
-                  {...register('member.zip', {
-                    required: true,
-                    valueAsNumber: true,
-                  })}
-                />
-              </div>
-            </div>
-
-            <h3 className='mt-3 font-semibold'>Point of Contact</h3>
-            <div>
-              <div className='flex gap-5'>
-                <Input
-                  type='text'
-                  label='First Name*'
-                  className='input input-primary input-bordered input-sm w-full'
-                  {...register('member.firstName', { required: true })}
-                />
-
-                <Input
-                  type='text'
-                  label='Last Name*'
-                  className='input input-primary input-bordered input-sm w-full'
-                  {...register('member.lastName', { required: true })}
-                />
-              </div>
-              <div className='flex gap-2'>
-                <Select
-                  label='Phone Type*'
-                  className='select-bordered select select-primary md:select-sm'
-                  {...register('member.phoneType', { required: true })}
-                >
-                  {Object.keys(PhoneType).map(type => (
-                    <option
-                      key={type}
-                      value={type}
-                    >
-                      {PhoneType[type as PhoneType]}
-                    </option>
-                  ))}
-                </Select>
-
-                <Input
-                  label='Phone Number*'
-                  type='tel'
-                  className='input input-primary input-bordered input-sm w-full'
-                  {...register('member.phone', { required: true })}
-                />
-              </div>
-
-              <Input
-                label='Email*'
-                type='text'
-                className='input input-primary input-bordered input-sm w-full'
-                altLabel={'This will be the primary method of contact.'}
-                {...register('member.email', { required: true })}
-              />
-
-              <RegType
-                register={register('member.memberStatus', { required: true })}
-                formType='Business'
-              />
-            </div>
-
-            <Checkbox
-              label='Do you plan to register your horse(s)?'
-              className='checkbox-primary checkbox checkbox-sm'
-              {...register('horseReg')}
+            <Input
+              type='text'
+              className='input input-primary input-bordered input-sm w-full'
+              placeholder='Address Line 2'
+              name='temp'
             />
 
-            {isRegHorse && <HorseFieldArray />}
+            <div className='flex gap-1'>
+              <Input
+                type='text'
+                className='input input-primary input-bordered input-sm w-full'
+                placeholder='City'
+                {...register('member.city', { required: true })}
+              />
+
+              <Select
+                className='select-bordered select select-primary md:select-sm w-full lg:w-fit'
+                {...register('member.state', { required: true })}
+              >
+                {states.map(state => (
+                  <option
+                    key={state.value}
+                    value={state.value}
+                  >
+                    {capitalize(state.label)}
+                  </option>
+                ))}
+              </Select>
+
+              <Input
+                type='numeric'
+                className='input input-primary input-bordered input-sm w-full'
+                placeholder='Zip Code'
+                {...register('member.zip', {
+                  required: true,
+                  valueAsNumber: true,
+                })}
+              />
+            </div>
           </div>
-        </Payment>
-      </form>
-    </FormProvider>
+
+          <h3 className='mt-3 font-semibold'>Point of Contact</h3>
+          <div>
+            <div className='flex gap-5'>
+              <Input
+                type='text'
+                label='First Name*'
+                className='input input-primary input-bordered input-sm w-full'
+                {...register('member.firstName', { required: true })}
+              />
+
+              <Input
+                type='text'
+                label='Last Name*'
+                className='input input-primary input-bordered input-sm w-full'
+                {...register('member.lastName', { required: true })}
+              />
+            </div>
+            <div className='flex gap-2'>
+              <Select
+                label='Phone Type*'
+                className='select-bordered select select-primary md:select-sm'
+                {...register('member.phoneType', { required: true })}
+              >
+                {Object.keys(PhoneType).map(type => (
+                  <option
+                    key={type}
+                    value={type}
+                  >
+                    {PhoneType[type as PhoneType]}
+                  </option>
+                ))}
+              </Select>
+
+              <Input
+                label='Phone Number*'
+                type='tel'
+                className='input input-primary input-bordered input-sm w-full'
+                {...register('member.phone', { required: true })}
+              />
+            </div>
+
+            <Input
+              label='Email*'
+              type='text'
+              className='input input-primary input-bordered input-sm w-full'
+              altLabel={'This will be the primary method of contact.'}
+              {...register('member.email', { required: true })}
+            />
+
+            <RegType
+              register={register('member.memberStatus', { required: true })}
+              formType='Business'
+            />
+          </div>
+
+          <Checkbox
+            label='Do you plan to register your horse(s)?'
+            className='checkbox-primary checkbox checkbox-sm'
+            {...register('horseReg')}
+          />
+
+          {isRegHorse && <HorseFieldArray />}
+        </div>
+      </Payment>
+    </Form>
   );
 }
 
