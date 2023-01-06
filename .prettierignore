@@ -1,2 +1,4 @@
 .next/
-src/backend/prisma/zod/
+src/server/prisma/zod/
+public/
+*.md
