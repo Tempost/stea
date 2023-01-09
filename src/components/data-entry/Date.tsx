@@ -1,21 +1,23 @@
 import DatePicker from 'react-datepicker';
 import { Controller, useFormContext } from 'react-hook-form';
 
-import Input from './Input';
+import Input from '@/components/styled-ui/Input';
 import 'react-datepicker/dist/react-datepicker.css';
 
 interface DatePickerProps {
+  name: string;
   placeholderText?: string;
   hidden?: boolean;
+  label?: string;
+  labelAlt?: string;
 }
 
 function ControlledDatePicker({
-  placeholderText,
   name,
+  placeholderText,
   hidden,
-  error,
   label,
-  altLabel,
+  labelAlt,
 }: DatePickerProps) {
   const { control } = useFormContext();
   return (
@@ -25,21 +27,25 @@ function ControlledDatePicker({
         control={control}
         render={props => {
           return (
-            <DatePicker
-              showPopperArrow={false}
-              placeholderText={placeholderText}
-              onChange={(date: Date) => {
-                props.field.onChange(date);
-              }}
-              selected={props.field.value}
-              customInput={
-                <Input
-                  label={label}
-                  altLabel={altLabel}
-                  className='input-primary input-bordered input w-full md:input-sm'
-                />
-              }
-            />
+            <>
+              <label className='label'>
+                <span className='label-text'>{label}</span>
+              </label>
+              <DatePicker
+                showPopperArrow={false}
+                placeholderText={placeholderText}
+                onChange={(date: Date) => {
+                  props.field.onChange(date);
+                }}
+                selected={props.field.value}
+                customInput={
+                  <Input className='input-primary input-bordered input w-fit md:input-sm' />
+                }
+              />
+              <label className='label'>
+                <span className='label-text-alt'>{labelAlt}</span>
+              </label>
+            </>
           );
         }}
       />

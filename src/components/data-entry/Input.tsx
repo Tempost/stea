@@ -1,7 +1,8 @@
-import { ComponentProps, forwardRef } from 'react';
+import { forwardRef } from 'react';
+import Root, { Props as RootProps } from '@/components/styled-ui/Input';
 import { FormField, useFormField, UseFormFieldProps } from './FormField';
 
-interface Props extends UseFormFieldProps, ComponentProps<'input'> {
+interface Props extends UseFormFieldProps, RootProps {
   name: string;
 }
 
@@ -10,13 +11,13 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
 
   return (
     <FormField {...formFieldProps}>
-      <input
-        ref={ref}
+      <Root
         {...childProps}
+        ref={ref}
       />
     </FormField>
   );
 });
 
-Input.displayName = 'Input';
+Input.displayName = 'Form-Input';
 export default Input;

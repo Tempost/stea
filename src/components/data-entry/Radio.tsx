@@ -1,7 +1,9 @@
-import { ComponentProps, forwardRef } from 'react';
+import { forwardRef } from 'react';
+
+import Root, { Props as RootProps } from '@/components/styled-ui/Radio';
 import { RadioFormField, useFormField, UseFormFieldProps } from './FormField';
 
-interface Props extends UseFormFieldProps, ComponentProps<'input'> {
+interface Props extends UseFormFieldProps, RootProps {
   name: string;
 }
 
@@ -10,14 +12,13 @@ const Radio = forwardRef<HTMLInputElement, Props>((props, ref) => {
 
   return (
     <RadioFormField {...formFieldProps}>
-      <input
-        type='radio'
-        ref={ref}
+      <Root
         {...childProps}
+        ref={ref}
       />
     </RadioFormField>
   );
 });
 
-Radio.displayName = 'Radio';
+Radio.displayName = 'Form-Radio';
 export default Radio;

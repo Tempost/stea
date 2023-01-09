@@ -36,10 +36,10 @@ function Under18({ dateName }: Props) {
 
       <div className='w-fit'>
         <ControlledDatePicker
-          placeholderText='Date of Birth'
           name={dateName}
           hidden={Boolean(radioState)}
-          altLabel='Membership year runs from Dec 1st to Nov 30th of each show year.'
+          placeholderText='Date of Birth'
+          labelAlt='Membership year runs from Dec 1st to Nov 30th of each show year.'
         />
       </div>
     </>

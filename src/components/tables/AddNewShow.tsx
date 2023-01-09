@@ -6,22 +6,9 @@ import { trpc } from '@/utils/trpc';
 import { ShowModel } from '@/server/prisma/zod';
 import { ControlledDatePicker, Select, Input } from '../data-entry';
 import Alert from '../forms/Alert';
+import { ShowType } from '@prisma/client';
 
 const NewShowModel = ShowModel.omit({ uid: true, reviewed: true });
-const showTypes = [
-  {
-    label: 'CT',
-    value: 'CT',
-  },
-  {
-    label: 'HT',
-    value: 'HT',
-  },
-  {
-    label: 'Derby',
-    value: 'Derby',
-  },
-];
 
 function AddNewShow() {
   const methods = useZodForm({
@@ -34,10 +21,7 @@ function AddNewShow() {
     },
   });
 
-  const {
-    register,
-    formState: { errors },
-  } = methods;
+  const { register } = methods;
   const utils = trpc.useContext();
 
   const addNew = trpc.shows.add.useMutation({
@@ -81,7 +65,6 @@ function AddNewShow() {
                   className='input-primary input-sm'
                   placeholder='Enter show name'
                   label='Show Name*'
-                  error={errors.showName}
                   {...register('showName', {
                     required: true,
                   })}
@@ -90,11 +73,19 @@ function AddNewShow() {
                 <Select
                   className='select-primary select-sm w-32'
                   label='Show Type*'
-                  options={showTypes}
                   {...register('showType', {
                     required: true,
                   })}
-                />
+                >
+                  {Object.keys(ShowType).map(type => (
+                    <option
+                      key={type}
+                      value={type}
+                    >
+                      {ShowType[type as ShowType]}
+                    </option>
+                  ))}
+                </Select>
               </div>
 
               <div className='grid grid-flow-col'>
@@ -102,14 +93,11 @@ function AddNewShow() {
                   name='showDate'
                   label='Show Date*'
                   placeholderText='Show Date'
-                  error={errors.showDate}
                 />
 
                 <ControlledDatePicker
                   name='showEndDate'
-                  label='Ending Date'
                   placeholderText='Ending Date'
-                  error={errors.showEndDate}
                 />
               </div>
 
@@ -117,7 +105,6 @@ function AddNewShow() {
                 className='input-primary'
                 placeholder='Registration Link'
                 label='Registration Link'
-                error={errors.url}
                 {...register('url', { required: false })}
               />
 

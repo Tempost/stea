@@ -10,7 +10,7 @@ import useZodForm from '@/utils/usezodform';
 import { z } from 'zod';
 import { Select } from '@/components/data-entry';
 import { trpc } from '@/utils/trpc';
-import { createSelectOpts } from '@/utils/helpers';
+import { readableDateTime } from '@/utils/helpers';
 
 interface SubmitError {
   message: string | ZodFieldErrors<Entry>;
@@ -106,9 +106,17 @@ function SubmitPoints() {
             {shows.isSuccess && (
               <Select
                 className='select-primary select select-sm lg:select-md'
-                options={createSelectOpts(shows.data)}
                 {...methods.register('showUID', { required: true })}
-              />
+              >
+                {shows.data.map(show => (
+                  <option
+                    key={show.uid}
+                    value={show.uid}
+                  >
+                    {show.showName + ' ' + readableDateTime(show.showDate)}
+                  </option>
+                ))}
+              </Select>
             )}
 
             <input

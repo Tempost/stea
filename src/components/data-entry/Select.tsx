@@ -1,7 +1,9 @@
-import { ComponentProps, forwardRef } from 'react';
+import { forwardRef } from 'react';
+
+import Root, { Props as RootProps } from '@/components/styled-ui/Select';
 import { FormField, useFormField, UseFormFieldProps } from './FormField';
 
-interface Props extends UseFormFieldProps, ComponentProps<'select'> {
+interface Props extends UseFormFieldProps, RootProps {
   name: string;
 }
 
@@ -10,13 +12,13 @@ const Select = forwardRef<HTMLSelectElement, Props>((props, ref) => {
 
   return (
     <FormField {...formFieldProps}>
-      <select
-        ref={ref}
+      <Root
         {...childProps}
+        ref={ref}
       />
     </FormField>
   );
 });
 
-Select.displayName = 'Select';
+Select.displayName = 'Form-Select';
 export default Select;
