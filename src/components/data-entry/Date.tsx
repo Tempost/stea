@@ -36,8 +36,7 @@ function ControlledDatePicker({
                 <Input
                   label={label}
                   altLabel={altLabel}
-                  className='input-primary w-40'
-                  error={error}
+                  className='input-primary input-bordered input w-full md:input-sm'
                 />
               }
             />

@@ -11,3 +11,5 @@
 3. After user pays, update the record saying if they paid or not
 
 4. Still need to fix Radio comonent to respect when not using a form or react-hook-form
+
+5. Write seperate styled components that will be wrapped by the FormField component in ANOTHER component
