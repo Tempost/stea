@@ -24,15 +24,15 @@
    ~~b. On the flipside also warn them if failed~~
 
 ~~3. Point Submission (Look at email with the points spreadsheet)~~
-   ~~a. Should generate points for the show~~
-   ~~b. 1-6 placings, ignore non placed attendes~~
-   ~~c. Rider-combos get the points linked to record~~
-   ~~d. Be sure the show has relations with the points/Rider-combos~~
+~~a. Should generate points for the show~~
+~~b. 1-6 placings, ignore non placed attendes~~
+~~c. Rider-combos get the points linked to record~~
+~~d. Be sure the show has relations with the points/Rider-combos~~
 
 ~~4. Better Logging~~
-   ~~a. Frontend~~
-   ~~I. Axiom package, log any errors~~
-   ~~b. Backend, just use console.log and console.error~~
+~~a. Frontend~~
+~~I. Axiom package, log any errors~~
+~~b. Backend, just use console.log and console.error~~
 
 5. After user pays, update the record saying if they paid or not
 

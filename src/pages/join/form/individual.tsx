@@ -10,7 +10,6 @@ import {
 } from '@/components/data-entry';
 import states from '@/utils/states.json';
 import useZodForm from '@/utils/usezodform';
-import { Type } from '@prisma/client';
 import {
   RegType,
   MemberType,
@@ -39,17 +38,16 @@ function IndividualRegistration() {
     reValidateMode: 'onSubmit',
     shouldFocusError: true,
     schema: memberFormSchema,
+    defaultValues: { member: { memberType: 'Individual' } },
   });
 
-  const { setValue, watch, register, control } = methods;
+  const { watch, register, control } = methods;
 
   const inputState = useFormState({ control });
 
   const isUSEAMember = watch('member.currentUSEAMember', false);
   const isRegHorse = watch('horseReg', false);
   const update = useSetAtom(updateFormState);
-
-  setValue('member.memberType', 'Individual' as Type);
 
   function onSubmit(formValues: MemberForm) {
     if (formValues.horses) {

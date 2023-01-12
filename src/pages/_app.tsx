@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { Analytics } from '@vercel/analytics/react';
-import { useAtomsDevtools } from 'jotai/devtools';
+import { useAtomsDevtools } from 'jotai-devtools';
 import type { Session } from 'next-auth';
 
 import { trpc } from '@/utils/trpc';

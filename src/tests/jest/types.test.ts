@@ -10,7 +10,7 @@ function isFormType(o: any): o is FormType {
 }
 
 const FORMTYPE = ['Individual', 'Business', 'Horse', undefined] as const;
-type FormType = typeof FORMTYPE[number];
+type FormType = (typeof FORMTYPE)[number];
 
 const STATUS = ['Life', 'Annual', 'Renew'] as const;
 

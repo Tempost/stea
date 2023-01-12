@@ -23,6 +23,7 @@ function PlacingsTable({
       member: true,
       totalPoints: true,
       totalShows: true,
+      division: true,
     },
   });
 
@@ -54,6 +55,12 @@ function PlacingsTable({
             id: 'totalShows',
             cell: info => info.getValue(),
             header: () => <span> Shows Attended </span>,
+          },
+          {
+            accessorKey: 'division',
+            id: 'division',
+            cell: info => info.getValue(),
+            header: () => <span> Divison </span>,
           },
         ],
       },

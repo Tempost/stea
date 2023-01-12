@@ -12,7 +12,6 @@ import states from '@/utils/states.json';
 import useZodForm from '@/utils/usezodform';
 import { HorseFieldArray, RegType, Payment } from '@/components/forms';
 import { FormLayout } from '@/components/layout';
-import { Type } from '@prisma/client';
 import phoneTypes from '@/utils/phoneTypes.json';
 import { MemberForm, memberFormSchema } from '@/utils/zodschemas';
 import { updateFormState } from '@/utils/atoms';
@@ -32,11 +31,18 @@ function BusinessRegistration() {
     reValidateMode: 'onSubmit',
     shouldFocusError: true,
     schema: memberFormSchema,
+    defaultValues: {
+      member: {
+        memberType: 'Business',
+        memberStatusType: 'Professional',
+        currentUSEAMember: false,
+      },
+    },
   });
+
   const {
     register,
     watch,
-    setValue,
     formState: { errors },
   } = methods;
 
@@ -61,10 +67,6 @@ function BusinessRegistration() {
 
     checkMember.mutate(formValues);
   }
-
-  setValue('member.memberType', 'Business' as Type);
-  setValue('member.memberStatusType', 'Professional');
-  setValue('member.currentUSEAMember', false);
 
   return (
     <FormProvider {...methods}>
