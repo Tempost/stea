@@ -3,9 +3,11 @@ import { useRouter } from 'next/router';
 import { useAtomValue, useSetAtom } from 'jotai';
 
 import { FormLayout } from '@/components/layout';
-import { Radio } from '@/components/data-entry';
+import Radio from '@/components/styled-ui/Radio';
 import { formState, updateFormState } from '@/utils/atoms';
 import { FormType } from '@/types/common';
+
+const radioSelections = ['Individual', 'Business', 'Horse'];
 
 function JoinStea() {
   const update = useSetAtom(updateFormState);
@@ -26,26 +28,20 @@ function JoinStea() {
           className='w-[75%]'
           onChange={handleRadioClick}
         >
-          <Radio
-            label='Individual'
-            className='radio-primary radio radio-md md:radio-sm'
-            value='Individual'
-            name='app-select'
-          />
-
-          <Radio
-            label='Business'
-            className='radio-primary radio radio-md md:radio-sm'
-            value='Business'
-            name='app-select'
-          />
-
-          <Radio
-            label='Horse'
-            className='radio-primary radio radio-md md:radio-sm'
-            value='Horse'
-            name='app-select'
-          />
+          {radioSelections.map(selection => (
+            <label
+              aria-label='Individual'
+              className='label'
+              key={selection}
+            >
+              <span className='label-text'>{selection}</span>
+              <Radio
+                className='radio-primary radio radio-md md:radio-sm'
+                value={selection}
+                name='app-select'
+              />
+            </label>
+          ))}
         </div>
       </div>
 

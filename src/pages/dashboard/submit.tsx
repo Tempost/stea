@@ -8,7 +8,7 @@ import { Entry } from '@/utils/zodschemas';
 import { ZodFieldErrors } from '@/types/common';
 import useZodForm from '@/utils/usezodform';
 import { z } from 'zod';
-import { Select } from '@/components/data-entry';
+import Select from '@/components/styled-ui/Select';
 import { trpc } from '@/utils/trpc';
 import { readableDateTime } from '@/utils/helpers';
 
