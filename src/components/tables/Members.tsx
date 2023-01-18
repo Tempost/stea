@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 
 import { trpc } from '@/utils/trpc';
 import TableWithData from './BaseTable';
@@ -33,6 +34,8 @@ function EmailList({ emails }: EmailListProps) {
 
 function MemberTable({ overRideDefaultCols, search }: MemberTableProps) {
   const members = trpc.members.all.useQuery();
+  const router = useRouter();
+  const isDashboard = router.asPath.includes('dashboard');
 
   const defaultCols = useMemo<ColumnDef<Member>[]>(
     () => [
@@ -107,14 +110,18 @@ function MemberTable({ overRideDefaultCols, search }: MemberTableProps) {
   // TODO: Show tooltip only when the items has been copied
   return (
     <>
-      <div
-        className='tooltip'
-        data-tip='Copied!'
-      >
-        <EmailList
-          emails={members.data ? members.data?.map(member => member.email) : []}
-        />
-      </div>
+      {isDashboard && (
+        <div
+          className='tooltip'
+          data-tip='Copied!'
+        >
+          <EmailList
+            emails={
+              members.data ? members.data?.map(member => member.email) : []
+            }
+          />
+        </div>
+      )}
       <TableWithData
         colDef={overRideDefaultCols ?? defaultCols}
         query={members}

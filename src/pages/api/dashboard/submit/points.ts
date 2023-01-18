@@ -28,7 +28,7 @@ export default async function handler(
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
 
   if (req.method !== 'POST') {
-    console.log('Attempted to access via unsupported method');
+    console.warn('Attempted to access via unsupported method');
     return res.status(405).json({ message: 'Method Not Allowed.' });
   }
 
@@ -43,6 +43,7 @@ export default async function handler(
 
     // No Errors found when parsing, we can start inserting into db
     if (!entries.every(entry => entry.success)) {
+      console.log(JSON.stringify(entries, null, 2));
       const parseErrors = entries
         .map(entry => {
           if (!entry.success) {
@@ -272,12 +273,12 @@ function parseCSV(csv: string) {
   const heading = lines.shift();
 
   if (!heading) {
-    throw new ParseError('Failed to parse csv file.');
+    throw new ParseError('Failed to find column headings.');
   }
 
-  const headingNames = heading.split(',');
+  const headingNames = heading.split(',').filter(colName => !!colName);
   if (!isHeadingNames(headingNames)) {
-    throw new ParseError('Failed to parse csv file.');
+    throw new ParseError('Invalid column headings.');
   }
 
   const mappedNames = headingNames.map(head => HEADER_NAMES[head]);
@@ -286,13 +287,13 @@ function parseCSV(csv: string) {
     .map(line => {
       return line
         .split(',')
-        .map((value, index) => {
-          if (mappedNames[index].includes('finalScore')) {
+        .map((value, column) => {
+          if (mappedNames[column].includes('finalScore')) {
             const finalScore = parseFloat(value);
-            return { [mappedNames[index]]: finalScore };
+            return { [mappedNames[column]]: finalScore };
           }
 
-          return { [mappedNames[index]]: value.trim() };
+          return { [mappedNames[column]]: value.trim() };
         })
         .reduce<{ [x: string]: string | number } | {}[]>((prev, curr) => {
           return { ...prev, ...curr };
