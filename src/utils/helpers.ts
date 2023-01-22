@@ -12,6 +12,9 @@ export function readableDateTime(date: Date) {
 export function createSelectOpts(
   shows: RouterOutputs['shows']['all']
 ): SelectOption[] {
+  if (shows.length === 0) {
+    return [{ value: '', label: 'No Shows' }];
+  }
   return shows.map(show => {
     return {
       value: show.uid,

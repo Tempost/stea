@@ -55,22 +55,8 @@ export const publicMenuItems: Menu[] = [
 
 export const dashMenuItems: Menu[] = [
   {
-    name: 'Review',
-    render: ({ name: navText }) => (
-      <NavLinkSubMenu
-        name={navText}
-        subLinks={[
-          {
-            href: '/dashboard/review/points',
-            text: 'Points',
-          },
-          {
-            href: '/dashboard/review/applications',
-            text: 'Applications',
-          },
-        ]}
-      />
-    ),
+    name: 'Applications',
+    href: '/dashboard/review/applications',
   },
   {
     href: '/dashboard/tables',
@@ -92,7 +78,6 @@ export const dashMenuItems: Menu[] = [
             text: 'Point submission form',
           },
           {
-            // TODO: Create Doc link wrapper
             href: '/stea_org_packet.pdf',
             text: 'Organizer Pack',
           },

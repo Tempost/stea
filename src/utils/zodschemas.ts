@@ -47,20 +47,6 @@ export const ownerHorseFormSchema = z.object({
   horses: z.array(HorseModel).min(1, 'Horse is required'),
 });
 
-export const showQueryInputSchema = z
-  .object({
-    dateRange: z.object({
-      curr: z.date(),
-      end: z.date(),
-    }),
-    includes: z.object({
-      riders: z.boolean(),
-      points: z.boolean(),
-    }),
-  })
-  .deepPartial()
-  .optional();
-
 export type MemberForm = z.infer<typeof memberFormSchema>;
 export type OwnerHorseForm = z.infer<typeof ownerHorseFormSchema>;
 export type Entry = z.infer<typeof entryModelSchema>;

@@ -3,7 +3,6 @@ import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
 import { Prisma } from '@prisma/client';
 import { readableDateTime } from '@/utils/helpers';
-import { showQueryInputSchema } from '@/utils/zodschemas';
 import { dashboardProcedure, procedure, router } from '@/server/trpc';
 
 const ShowPatch = z.object({
@@ -15,6 +14,21 @@ const ShowPatch = z.object({
   }).deepPartial(),
 });
 
+const showQueryInputSchema = z
+  .object({
+    dateRange: z.object({
+      curr: z.date(),
+      end: z.date(),
+    }),
+    reviewed: z.boolean().optional(),
+    includes: z.object({
+      riders: z.boolean(),
+      points: z.boolean(),
+    }),
+  })
+  .deepPartial()
+  .optional();
+
 export const shows = router({
   all: procedure.input(showQueryInputSchema).query(async ({ input, ctx }) => {
     const shows = await ctx.prisma.show
@@ -24,6 +38,7 @@ export const shows = router({
             gte: input?.dateRange?.curr,
             lte: input?.dateRange?.end,
           },
+          reviewed: input?.reviewed,
         },
         include: input?.includes,
         orderBy: {

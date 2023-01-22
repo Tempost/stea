@@ -262,7 +262,9 @@ async function uploadPoints(entries: GroupedEntries, showUID: string) {
     }
   }
 
-  await Promise.all(promises);
+  await Promise.all(promises).then(() =>
+    prisma.show.update({ where: { uid: showUID }, data: { reviewed: true } })
+  );
 }
 
 function parseCSV(csv: string) {
