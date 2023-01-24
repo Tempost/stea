@@ -87,7 +87,7 @@ function BusinessRegistration() {
           <h3 className='text-sm'>Name of Business*</h3>
           <Input
             type='text'
-            className='input input-primary input-bordered input-sm w-full'
+            className='input-bordered input-primary input w-full md:input-sm'
             {...register('member.businessName', { required: true })}
           />
 
@@ -95,14 +95,14 @@ function BusinessRegistration() {
           <div className='flex flex-col gap-2'>
             <Input
               type='text'
-              className='input input-primary input-bordered input-sm w-full'
+              className='input-bordered input-primary input w-full md:input-sm'
               placeholder='Address Line 1'
               {...register('member.address', { required: true })}
             />
 
             <Input
               type='text'
-              className='input input-primary input-bordered input-sm w-full'
+              className='input-bordered input-primary input w-full md:input-sm'
               placeholder='Address Line 2'
               name='temp'
             />
@@ -110,13 +110,13 @@ function BusinessRegistration() {
             <div className='flex gap-1'>
               <Input
                 type='text'
-                className='input input-primary input-bordered input-sm w-full'
+                className='input-bordered input-primary input w-full md:input-sm'
                 placeholder='City'
                 {...register('member.city', { required: true })}
               />
 
               <Select
-                className='select-bordered select select-primary md:select-sm w-full lg:w-fit'
+                className='select-bordered select-primary select w-full md:select-sm'
                 {...register('member.state', { required: true })}
               >
                 {states.map(state => (
@@ -131,7 +131,7 @@ function BusinessRegistration() {
 
               <Input
                 type='numeric'
-                className='input input-primary input-bordered input-sm w-full'
+                className='input-bordered input-primary input w-full md:input-sm'
                 placeholder='Zip Code'
                 {...register('member.zip', {
                   required: true,
@@ -147,21 +147,21 @@ function BusinessRegistration() {
               <Input
                 type='text'
                 label='First Name*'
-                className='input input-primary input-bordered input-sm w-full'
+                className='input-bordered input-primary input w-full md:input-sm'
                 {...register('member.firstName', { required: true })}
               />
 
               <Input
                 type='text'
                 label='Last Name*'
-                className='input input-primary input-bordered input-sm w-full'
+                className='input-bordered input-primary input w-full md:input-sm'
                 {...register('member.lastName', { required: true })}
               />
             </div>
             <div className='flex gap-2'>
               <Select
                 label='Phone Type*'
-                className='select-bordered select select-primary md:select-sm'
+                className='select-bordered select-primary select md:select-sm'
                 {...register('member.phoneType', { required: true })}
               >
                 {Object.keys(PhoneType).map(type => (
@@ -177,7 +177,7 @@ function BusinessRegistration() {
               <Input
                 label='Phone Number*'
                 type='tel'
-                className='input input-primary input-bordered input-sm w-full'
+                className='input-bordered input-primary input w-full md:input-sm'
                 {...register('member.phone', { required: true })}
               />
             </div>
@@ -185,7 +185,7 @@ function BusinessRegistration() {
             <Input
               label='Email*'
               type='text'
-              className='input input-primary input-bordered input-sm w-full'
+              className='input-bordered input-primary input w-full md:input-sm'
               altLabel={'This will be the primary method of contact.'}
               {...register('member.email', { required: true })}
             />
@@ -198,7 +198,7 @@ function BusinessRegistration() {
 
           <Checkbox
             label='Do you plan to register your horse(s)?'
-            className='checkbox-primary checkbox checkbox-sm'
+            className='checkbox-primary checkbox md:checkbox-sm'
             {...register('horseReg')}
           />
 

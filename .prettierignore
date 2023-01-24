@@ -1,4 +1,9 @@
 .next/
 src/server/prisma/zod/
+src/utils/seed/*
+src/tests/*
 public/
 *.md
+*.yml
+*.yaml
+*.json

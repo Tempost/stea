@@ -21,7 +21,7 @@ function Under18({ dateName }: Props) {
           name='age'
           label='Yes'
           value='true'
-          className='radio md:radio-sm radio-primary align-middle'
+          className='radio-primary radio align-middle md:radio-sm'
           onChange={handleRadioChange}
         />
 
@@ -29,7 +29,7 @@ function Under18({ dateName }: Props) {
           name='age'
           label='No'
           value='false'
-          className='radio md:radio-sm radio-primary align-middle'
+          className='radio-primary radio align-middle md:radio-sm'
           onChange={handleRadioChange}
         />
       </div>

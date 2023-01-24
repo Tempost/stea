@@ -70,14 +70,14 @@ function HorseRegistration() {
             <Input
               type='text'
               label='First Name*'
-              className='input-primary input-bordered input w-full input-sm'
+              className='input-bordered input-primary input input-sm w-full'
               {...register('owner.firstName', { required: true })}
             />
 
             <Input
               type='text'
               label='Last Name*'
-              className='input-primary input-bordered input w-full input-sm'
+              className='input-bordered input-primary input input-sm w-full'
               {...register('owner.lastName', { required: true })}
             />
           </div>
@@ -86,7 +86,7 @@ function HorseRegistration() {
             <Input
               label='Email'
               type='text'
-              className='input-primary input-bordered input w-full input-sm'
+              className='input-bordered input-primary input input-sm w-full'
               altLabel='This will be the primary method of contact.'
               {...register('owner.email', { required: true })}
             />
@@ -94,7 +94,7 @@ function HorseRegistration() {
             <span className='flex gap-2'>
               <Select
                 label='Phone Type*'
-                className='select-bordered select select-primary md:select-sm'
+                className='select-bordered select-primary select md:select-sm'
                 {...register('owner.phoneType', { required: true })}
               >
                 {Object.keys(PhoneType).map(type => (
@@ -110,7 +110,7 @@ function HorseRegistration() {
               <Input
                 label='Phone Number*'
                 type='tel'
-                className='input-primary input-bordered input w-full input-sm'
+                className='input-bordered input-primary input input-sm w-full'
                 {...register('owner.phone', { required: true })}
               />
             </span>

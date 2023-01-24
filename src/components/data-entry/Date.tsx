@@ -39,7 +39,7 @@ function ControlledDatePicker({
                 }}
                 selected={props.field.value}
                 customInput={
-                  <Input className='input-primary input-bordered input w-fit md:input-sm' />
+                  <Input className='input-bordered input-primary input w-fit md:input-sm' />
                 }
               />
               <label className='label'>

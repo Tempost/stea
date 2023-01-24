@@ -90,7 +90,7 @@ function TableWithData<TData, TError>({
                           <DebouncedInput
                             className='input-primary input input-sm w-36'
                             type='text'
-                            placeholder='search'
+                            placeholder='Search'
                             value={globalFilter ?? ''}
                             onChange={value => setGlobalFilter(String(value))}
                           />

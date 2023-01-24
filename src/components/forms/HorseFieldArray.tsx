@@ -58,7 +58,7 @@ export default function HorseFieldArray() {
                 label='Registered Name*'
                 type='text'
                 altLabel='Horses registered name must be used when entering a show.'
-                className='input-primary input-bordered input w-full input-sm'
+                className='input-bordered input-primary input input-sm w-full'
                 {...register(`horses.${index}.horseRN` as const, {
                   required: true,
                 })}
@@ -67,7 +67,7 @@ export default function HorseFieldArray() {
               <Input
                 label='Barn Name'
                 type='text'
-                className='input-primary input-bordered input w-full input-sm'
+                className='input-bordered input-primary input input-sm w-full'
                 {...register(`horses.${index}.horseAKA` as const)}
               />
             </span>

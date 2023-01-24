@@ -6,7 +6,7 @@ export interface Props extends ComponentProps<'input'> {
 
 const Radio = forwardRef<HTMLInputElement, Props>(({ id, ...props }, ref) => (
   <input
-    className='radio radio-primary'
+    className='radio-primary radio'
     {...props}
     id={id}
     ref={ref}

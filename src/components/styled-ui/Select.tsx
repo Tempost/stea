@@ -4,7 +4,7 @@ export interface Props extends ComponentProps<'select'> {}
 
 const Select = forwardRef<HTMLSelectElement, Props>((props, ref) => (
   <select
-    className='select select-bordered'
+    className='select-bordered select'
     {...props}
     ref={ref}
   />

@@ -4,7 +4,7 @@ export interface Props extends ComponentProps<'input'> {}
 
 const Input = forwardRef<HTMLInputElement, Props>(({ id, ...props }, ref) => (
   <input
-    className='input input-bordered'
+    className='input-bordered input'
     {...props}
     id={id}
     ref={ref}

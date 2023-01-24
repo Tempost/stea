@@ -36,7 +36,7 @@ export const FormField = ({
   const state = ctx.getFieldState(name);
 
   return (
-    <div className='form-control w-full max-w-xs'>
+    <div className='form-control w-full'>
       {label && (
         <label
           htmlFor={id}
@@ -52,9 +52,9 @@ export const FormField = ({
         <label
           htmlFor={id}
           aria-label={altLabel}
-          className={`label-text-alt w-fit rounded-md bg-info/25 p-0.5 ${labelStyle}`}
+          className={`w-fill label-text-alt rounded-md bg-info/25 p-0.5 ${labelStyle}`}
         >
-          <span className='label-text-alt'>{altLabel}</span>
+          <span className='label-text-alt text-sm md:text-xs'>{altLabel}</span>
         </label>
       )}
     </div>

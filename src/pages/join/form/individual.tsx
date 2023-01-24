@@ -62,7 +62,6 @@ function IndividualRegistration() {
     checkMember.mutate(formValues);
   }
 
-  console.log(form.formState.errors);
   return (
     <Form
       form={form}
@@ -82,14 +81,14 @@ function IndividualRegistration() {
           <Input
             type='text'
             label='First Name*'
-            className='input-primary input-bordered input w-full md:input-sm'
+            className='input-bordered input-primary input w-full md:input-sm'
             {...register('member.firstName', { required: true })}
           />
 
           <Input
             type='text'
             label='Last Name*'
-            className='input-primary input-bordered input w-full md:input-sm'
+            className='input-bordered input-primary input w-full md:input-sm'
             {...register('member.lastName', { required: true })}
           />
         </div>
@@ -98,14 +97,14 @@ function IndividualRegistration() {
         <div className='flex flex-col gap-2'>
           <Input
             type='text'
-            className='input-primary input-bordered input w-full md:input-sm'
+            className='input-bordered input-primary input w-full md:input-sm'
             placeholder='Address Line 1'
             {...register('member.address', { required: true })}
           />
 
           <Input
             type='text'
-            className='input-primary input-bordered input w-full md:input-sm'
+            className='input-bordered input-primary input w-full md:input-sm'
             placeholder='Address Line 2'
             name='temp'
           />
@@ -113,13 +112,13 @@ function IndividualRegistration() {
           <div className='flex flex-col gap-1 md:flex-row'>
             <Input
               type='text'
-              className='input-primary input-bordered input w-full md:input-sm'
+              className='input-bordered input-primary input w-full md:input-sm'
               placeholder='City'
               {...register('member.city', { required: true })}
             />
 
             <Select
-              className='select-bordered select select-primary md:select-sm w-full lg:w-fit'
+              className='select-bordered select-primary select w-full md:select-sm'
               {...register('member.state', { required: true })}
             >
               {states.map(state => (
@@ -134,7 +133,7 @@ function IndividualRegistration() {
 
             <Input
               type='numeric'
-              className='input-primary input-bordered input w-full md:input-sm'
+              className='input-bordered input-primary input w-full md:input-sm'
               placeholder='Zip Code'
               {...register('member.zip', {
                 required: true,
@@ -147,7 +146,7 @@ function IndividualRegistration() {
             <div className='flex gap-2'>
               <Select
                 label='Phone Type*'
-                className='select-bordered select select-primary md:select-sm'
+                className='select-bordered select-primary select md:select-sm'
                 {...register('member.phoneType', { required: true })}
               >
                 {Object.keys(PhoneType).map(type => (
@@ -163,7 +162,7 @@ function IndividualRegistration() {
               <Input
                 label='Phone Number*'
                 type='tel'
-                className='input-primary input-bordered input w-full md:input-sm'
+                className='input-bordered input-primary input w-full md:input-sm'
                 {...register('member.phone', { required: true })}
               />
             </div>
@@ -171,7 +170,7 @@ function IndividualRegistration() {
             <Input
               label='Email*'
               type='text'
-              className='input-primary input-bordered input w-full md:input-sm'
+              className='input-bordered input-primary input w-full md:input-sm'
               altLabel={'This will be the primary method of contact.'}
               {...register('member.email', { required: true })}
             />
@@ -197,7 +196,7 @@ function IndividualRegistration() {
             {isUSEAMember && (
               <Input
                 type='numeric'
-                className='input-primary input-bordered input w-full md:input-sm'
+                className='input-bordered input-primary input w-full md:input-sm'
                 placeholder='USEA Member ID'
                 {...register('member.useaMemberID', {
                   required: true,
