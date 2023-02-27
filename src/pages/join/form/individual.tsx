@@ -1,26 +1,29 @@
 import { useSetAtom } from 'jotai';
 import { ReactElement, useState } from 'react';
 
-import { Checkbox, Input, Select } from '@/components/data-entry';
-import {
-  HorseFieldArray,
-  MemberType,
-  Payment,
-  RegType,
-  Under18,
-} from '@/components/forms';
-import { FormLayout } from '@/components/layout';
-import { MemberForm, memberFormSchema } from '@/utils/zodschemas';
+import { FormLayout } from '@/components/layout/FormLayout';
+import { MemberForm, MemberFormSchema } from '@/utils/zodschemas';
 import { updateFormState } from '@/utils/atoms';
 import { capitalize } from '@/utils/helpers';
 import states from '@/utils/states.json';
 import { trpc } from '@/utils/trpc';
 import useZodForm from '@/utils/usezodform';
-import { PhoneType } from '@prisma/client';
 import Form from '@/components/forms/Form';
+import { PhoneTypeSchema } from '@/server/prisma/zod-generated/inputTypeSchemas/PhoneTypeSchema';
+import Payment from '@/components/forms/Payment';
+import Input from '@/components/data-entry/Input';
+import Select from '@/components/data-entry/Select';
+import RegType from '@/components/forms/RegType';
+import MemberType from '@/components/forms/MemberType';
+import Under18 from '@/components/forms/Under18';
+import Checkbox from '@/components/data-entry/Checkbox';
+import HorseFieldArray from '@/components/forms/HorseFieldArray';
 
 function IndividualRegistration() {
   const [payment, togglePayment] = useState(false);
+  const [isRegHorse, toggleRegHorse] = useState(false);
+  const [isUSEAMember, toggleUSEAInput] = useState(false);
+  const update = useSetAtom(updateFormState);
 
   const checkMember = trpc.members.exists.useMutation({
     onSuccess() {
@@ -33,15 +36,18 @@ function IndividualRegistration() {
   const form = useZodForm({
     reValidateMode: 'onSubmit',
     shouldFocusError: true,
-    schema: memberFormSchema,
-    defaultValues: { member: { memberType: 'Individual' } },
+    schema: MemberFormSchema,
+    defaultValues: {
+      member: {
+        businessName: null,
+        useaMemberID: null,
+        dateOfBirth: null,
+        memberType: 'Individual',
+      },
+    },
   });
 
-  const { watch, register } = form;
-
-  const isUSEAMember = watch('member.currentUSEAMember', false);
-  const isRegHorse = watch('horseReg', false);
-  const update = useSetAtom(updateFormState);
+  const { register } = form;
 
   function onSubmit(formValues: MemberForm) {
     if (formValues.horses) {
@@ -60,6 +66,14 @@ function IndividualRegistration() {
     }
 
     checkMember.mutate(formValues);
+  }
+
+  function handleCheck() {
+    toggleRegHorse(curr => !curr);
+  }
+
+  function handleUSEACheck() {
+    toggleUSEAInput(curr => !curr);
   }
 
   return (
@@ -82,14 +96,14 @@ function IndividualRegistration() {
             type='text'
             label='First Name*'
             className='input-bordered input-primary input w-full md:input-sm'
-            {...register('member.firstName', { required: true })}
+            {...register('member.firstName')}
           />
 
           <Input
             type='text'
             label='Last Name*'
             className='input-bordered input-primary input w-full md:input-sm'
-            {...register('member.lastName', { required: true })}
+            {...register('member.lastName')}
           />
         </div>
 
@@ -99,7 +113,7 @@ function IndividualRegistration() {
             type='text'
             className='input-bordered input-primary input w-full md:input-sm'
             placeholder='Address Line 1'
-            {...register('member.address', { required: true })}
+            {...register('member.address')}
           />
 
           <Input
@@ -114,12 +128,12 @@ function IndividualRegistration() {
               type='text'
               className='input-bordered input-primary input w-full md:input-sm'
               placeholder='City'
-              {...register('member.city', { required: true })}
+              {...register('member.city')}
             />
 
             <Select
               className='select-bordered select-primary select w-full md:select-sm'
-              {...register('member.state', { required: true })}
+              {...register('member.state')}
             >
               {states.map(state => (
                 <option
@@ -135,10 +149,7 @@ function IndividualRegistration() {
               type='numeric'
               className='input-bordered input-primary input w-full md:input-sm'
               placeholder='Zip Code'
-              {...register('member.zip', {
-                required: true,
-                valueAsNumber: true,
-              })}
+              {...register('member.zip', { valueAsNumber: true })}
             />
           </div>
 
@@ -147,14 +158,14 @@ function IndividualRegistration() {
               <Select
                 label='Phone Type*'
                 className='select-bordered select-primary select md:select-sm'
-                {...register('member.phoneType', { required: true })}
+                {...register('member.phoneType')}
               >
-                {Object.keys(PhoneType).map(type => (
+                {Object.keys(PhoneTypeSchema.enum).map(type => (
                   <option
                     key={type}
                     value={type}
                   >
-                    {PhoneType[type as PhoneType]}
+                    {type}
                   </option>
                 ))}
               </Select>
@@ -163,7 +174,7 @@ function IndividualRegistration() {
                 label='Phone Number*'
                 type='tel'
                 className='input-bordered input-primary input w-full md:input-sm'
-                {...register('member.phone', { required: true })}
+                {...register('member.phone')}
               />
             </div>
 
@@ -172,13 +183,13 @@ function IndividualRegistration() {
               type='text'
               className='input-bordered input-primary input w-full md:input-sm'
               altLabel={'This will be the primary method of contact.'}
-              {...register('member.email', { required: true })}
+              {...register('member.email')}
             />
           </div>
 
           <div className='container flex-col'>
             <RegType
-              register={register('member.memberStatus', { required: true })}
+              register={register('member.memberStatus')}
               formType='Individual'
             />
 
@@ -190,7 +201,8 @@ function IndividualRegistration() {
           <div className='flex gap-2'>
             <Checkbox
               label='Current USEA Member?'
-              {...register('member.currentUSEAMember')}
+              checked={isUSEAMember}
+              onChange={handleUSEACheck}
             />
 
             {isUSEAMember && (
@@ -198,17 +210,16 @@ function IndividualRegistration() {
                 type='numeric'
                 className='input-bordered input-primary input w-full md:input-sm'
                 placeholder='USEA Member ID'
-                {...register('member.useaMemberID', {
-                  required: true,
-                  valueAsNumber: true,
-                })}
+                {...register('member.useaMemberID')}
               />
             )}
           </div>
 
           <Checkbox
             label='Do you plan to register your horse(s)?'
-            {...register('horseReg')}
+            className='checkbox-primary checkbox md:checkbox-sm'
+            checked={isRegHorse}
+            onChange={handleCheck}
           />
 
           {isRegHorse && <HorseFieldArray />}

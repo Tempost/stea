@@ -1,6 +1,6 @@
 import NextLink from 'next/link';
 
-import { PublicLayout } from '@/components/layout';
+import { PublicLayout } from '@/components/layout/PublicLayout';
 
 import { ReactElement } from 'react';
 import Image from 'next/image';

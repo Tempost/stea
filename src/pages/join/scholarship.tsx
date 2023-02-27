@@ -1,4 +1,4 @@
-import { PublicLayout } from '@/components/layout';
+import { PublicLayout } from '@/components/layout/PublicLayout';
 function SteaScholarship() {}
 import { ReactElement } from 'react';
 SteaScholarship.getLayout = (page: ReactElement) => {

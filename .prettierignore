@@ -1,5 +1,5 @@
 .next/
-src/server/prisma/zod/
+src/server/prisma/zod-generated/
 src/utils/seed/*
 src/tests/*
 public/

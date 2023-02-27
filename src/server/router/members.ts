@@ -1,45 +1,48 @@
-import { z } from 'zod';
-
 import { MyPrismaClient } from '@/server/prisma';
-import { MemberModel } from '@/server/prisma/zod';
+import { MemberPartialSchema } from '@/server/prisma/zod-generated/modelSchema/MemberSchema';
 import { TRPCError } from '@trpc/server';
-import { memberFormSchema } from '@/utils/zodschemas';
+import { MemberFormSchema } from '@/utils/zodschemas';
 import { Prisma } from '@prisma/client';
 import { dashboardProcedure, procedure, router } from '@/server/trpc';
+import {
+  MemberFindManyArgsSchema,
+  MemberWhereUniqueInputSchema,
+} from '../prisma/zod-generated';
 
 export const members = router({
-  all: procedure.query(async ({ ctx }) => {
-    return await ctx.prisma.member.findMany().catch(error => {
-      if (error instanceof Prisma.PrismaClientKnownRequestError) {
-        throw new TRPCError({
-          code: 'INTERNAL_SERVER_ERROR',
-          message: 'Failed to fetch member list',
-          cause: error,
-        });
-      } else {
-        throw error;
-      }
-    });
-  }),
+  all: procedure
+    .input(MemberFindManyArgsSchema.optional())
+    .query(async ({ input, ctx }) => {
+      return await ctx.prisma.member.findMany(input).catch(error => {
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+          throw new TRPCError({
+            code: 'INTERNAL_SERVER_ERROR',
+            message: 'Failed to fetch member list',
+            cause: error,
+          });
+        } else {
+          throw error;
+        }
+      });
+    }),
 
   get: procedure
-    .input(z.object({ fullName: z.string() }))
+    .input(MemberWhereUniqueInputSchema)
     .query(async ({ input, ctx }) => {
-      const { fullName } = input;
       return await ctx.prisma.member
-        .findUniqueOrThrow({ where: { fullName } })
+        .findUniqueOrThrow({ where: input })
         .catch(error => {
           if (error instanceof Prisma.PrismaClientKnownRequestError) {
             if (error.code === 'P2001') {
               throw new TRPCError({
                 code: 'NOT_FOUND',
-                message: `${fullName} not found.`,
+                message: `${input.fullName} not found.`,
                 cause: error,
               });
             } else {
               throw new TRPCError({
                 code: 'INTERNAL_SERVER_ERROR',
-                message: `Something went wrong fetching ${fullName}`,
+                message: `Something went wrong fetching ${input.fullName}`,
                 cause: error,
               });
             }
@@ -49,11 +52,7 @@ export const members = router({
         });
     }),
 
-  applicants: procedure.query(async ({ ctx }) => {
-    return await ctx.prisma.member.findMany({ where: { confirmed: false } });
-  }),
-
-  exists: procedure.input(memberFormSchema).mutation(async ({ input, ctx }) => {
+  exists: procedure.input(MemberFormSchema).mutation(async ({ input, ctx }) => {
     const fullName =
       input.member.businessName ??
       `${input.member.firstName} ${input.member.lastName}`;
@@ -69,10 +68,12 @@ export const members = router({
   }),
 
   add: procedure
-    .input(memberFormSchema)
+    .input(MemberFormSchema)
     .mutation(async ({ input: { member, horses }, ctx }) => {
-      console.info('Member: ', member);
-      console.info('Horses: ', horses ?? 'Did not register horses');
+      console.info(`Member: ${member}`);
+      console.info(
+        `Horses: ${JSON.stringify(horses)}` ?? 'Did not register horses'
+      );
 
       try {
         await ctx.prisma.member.create({
@@ -104,15 +105,15 @@ export const members = router({
     }),
 
   remove: procedure
-    .input(z.object({ fullName: z.string() }))
+    .input(MemberWhereUniqueInputSchema)
     .mutation(async ({ input, ctx }) => {
       const { fullName } = input;
 
-      console.info(`Removing member ${fullName.trim()}...`);
+      console.info(`Removing member ${fullName}...`);
 
       try {
         const member = await ctx.prisma.member.findUniqueOrThrow({
-          where: { fullName: fullName.trim() },
+          where: { fullName: fullName },
         });
 
         const deletedMember = await ctx.prisma.member.delete({
@@ -140,18 +141,18 @@ export const members = router({
     }),
 
   update: dashboardProcedure
-    .input(MemberModel.deepPartial())
-    .mutation(async ({ input: { fullName, ...patch }, ctx }) => {
-      console.info(`Updating member.. ${fullName} ${patch}`);
+    .input(MemberPartialSchema)
+    .mutation(async ({ input: { fullName, ...data }, ctx }) => {
+      console.info(
+        `Updating member ${fullName}...\n${JSON.stringify(data, null, 2)}`
+      );
 
       try {
         return await ctx.prisma.member.update({
           where: {
             fullName,
           },
-          data: {
-            ...patch,
-          },
+          data,
         });
       } catch (error) {
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
@@ -176,9 +177,5 @@ export const members = router({
 });
 
 async function checkForExistingMember(fullName: string, db: MyPrismaClient) {
-  const member = await db.member.findUnique({ where: { fullName } });
-
-  if (member) return true;
-
-  return false;
+  return !!(await db.member.findUnique({ where: { fullName } }));
 }

@@ -1,14 +1,26 @@
+import dynamic from 'next/dynamic';
 import { ReactElement, useState } from 'react';
 
-import { DashboardLayout } from '@/components/layout';
-import {
-  HorseTable,
-  MemberTable,
-  OwnerTable,
-  ShowsTable,
-  TableSelection,
-  RidersTable,
-} from '@/components/tables';
+import { DashboardLayout } from '@/components/layout/DashboardLayout';
+import type { TableSelection } from '@/components/tables';
+
+const DynamicShowsTable = dynamic(() => import('@/components/tables/Shows'));
+
+const DynamicHorsesTable = dynamic(
+  () => import('@/components/dashboard/tables/Horses')
+);
+
+const DynamicMembersTable = dynamic(
+  () => import('@/components/dashboard/tables/Members')
+);
+
+const DynamicOwnersTable = dynamic(
+  () => import('@/components/dashboard/tables/Owners')
+);
+
+const DynamicRidersTable = dynamic(
+  () => import('@/components/dashboard/tables/Riders')
+);
 
 function Tables() {
   const [table, setTable] = useState<TableSelection>('members');
@@ -20,11 +32,11 @@ function Tables() {
   const showsSelected = table === 'shows';
 
   const tables = {
-    members: <MemberTable search={true} />,
-    horses: <HorseTable search={true} />,
-    owners: <OwnerTable search={true} />,
-    riders: <RidersTable search={true} />,
-    shows: <ShowsTable search={true} />,
+    members: <DynamicMembersTable />,
+    horses: <DynamicHorsesTable />,
+    owners: <DynamicOwnersTable />,
+    riders: <DynamicRidersTable />,
+    shows: <DynamicShowsTable />,
   };
 
   return (

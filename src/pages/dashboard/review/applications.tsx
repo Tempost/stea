@@ -1,8 +1,8 @@
 import { trpc } from '@/utils/trpc';
 import { ColumnDef } from '@tanstack/react-table';
 
-import { DashboardLayout } from '@/components/layout';
-import { TableWithData } from '@/components/tables';
+import { DashboardLayout } from '@/components/layout/DashboardLayout';
+import TableWithData from '@/components/tables/BaseTable';
 import { ConfirmMember } from '@/components/dashboard';
 
 import type { Member } from '@prisma/client';
@@ -56,7 +56,7 @@ const applicantCols: ColumnDef<Member>[] = [
 ];
 
 function Applications() {
-  const members = trpc.members.applicants.useQuery();
+  const members = trpc.members.all.useQuery({ where: { confirmed: false } });
 
   return (
     <>

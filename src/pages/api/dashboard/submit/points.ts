@@ -7,7 +7,7 @@ import {
   horseExists,
   memberExists,
 } from '@/server/router/utils';
-import { Entry, entryModelSchema } from '@/utils/zodschemas';
+import { Entry, EntrySchema } from '@/server/utils';
 import {
   EntriesRideTypeDivison,
   EntriesRideType,
@@ -187,10 +187,12 @@ async function uploadPoints(entries: GroupedEntries, showUID: string) {
           const entryName = `${entry.firstName} ${entry.lastName}`;
 
           if (!(await horseExists(entry.horseName))) {
+            console.log(`${entry.horseName} does not exist, skipping`);
             continue;
           }
 
           if (!(await memberExists(entryName))) {
+            console.log(`${entryName} does not exist, skipping`);
             continue;
           }
 
@@ -200,8 +202,7 @@ async function uploadPoints(entries: GroupedEntries, showUID: string) {
             entryList.length
           );
 
-          const riderCombo = {
-            division: entry.division,
+          const relations = {
             member: {
               connect: {
                 fullName: entryName,
@@ -217,12 +218,6 @@ async function uploadPoints(entries: GroupedEntries, showUID: string) {
                 uid: showExists.uid,
               },
             },
-            totalPoints: { increment: riderFinalPoints },
-            totalShows: { increment: 1 },
-            completedHT: entry.rideType === 'HT',
-          };
-
-          const points = {
             points: {
               create: {
                 points: riderFinalPoints,
@@ -242,18 +237,21 @@ async function uploadPoints(entries: GroupedEntries, showUID: string) {
                 memberName_horseName_division: {
                   memberName: entryName,
                   horseName: entry.horseName,
-                  division: riderCombo.division,
+                  division: entry.division,
                 },
               },
               update: {
-                ...riderCombo,
-                ...points,
+                division: entry.division,
+                totalPoints: { increment: riderFinalPoints },
+                totalShows: { increment: 1 },
+                completedHT: entry.rideType === 'HT',
+                ...relations,
               },
               create: {
-                ...riderCombo,
+                division: entry.division,
                 totalPoints: riderFinalPoints,
                 totalShows: 1,
-                ...points,
+                ...relations,
               },
             })
           );
@@ -301,7 +299,7 @@ function parseCSV(csv: string) {
           return { ...prev, ...curr };
         }, {}) as Entry;
     })
-    .map(entry => entryModelSchema.safeParse(entry));
+    .map(entry => EntrySchema.safeParse(entry));
 
   return entries;
 }

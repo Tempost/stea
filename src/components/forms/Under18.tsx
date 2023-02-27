@@ -13,6 +13,7 @@ function Under18({ dateName }: Props) {
     setRadioState(!isTrue);
   }
 
+  // TODO: Change from radio to checkbox
   return (
     <>
       <div className='mt-3 w-fit'>

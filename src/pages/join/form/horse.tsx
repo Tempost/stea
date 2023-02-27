@@ -2,14 +2,15 @@ import { useSetAtom } from 'jotai';
 import { ReactElement, useState } from 'react';
 
 import { Input, Select } from '@/components/data-entry';
-import { HorseFieldArray, Payment } from '@/components/forms';
-import { FormLayout } from '@/components/layout';
-import { ownerHorseFormSchema, OwnerHorseForm } from '@/utils/zodschemas';
+import { FormLayout } from '@/components/layout/FormLayout';
+import { OwnerHorseFormSchema, OwnerHorseForm } from '@/utils/zodschemas';
 import { updateFormState } from '@/utils/atoms';
 import { trpc } from '@/utils/trpc';
 import useZodForm from '@/utils/usezodform';
-import { PhoneType } from '@prisma/client';
 import Form from '@/components/forms/Form';
+import { PhoneTypeSchema } from '@/server/prisma/zod-generated/inputTypeSchemas/PhoneTypeSchema';
+import Payment from '@/components/forms/Payment';
+import HorseFieldArray from '@/components/forms/HorseFieldArray';
 
 function HorseRegistration() {
   const [payment, togglePayment] = useState(false);
@@ -24,7 +25,7 @@ function HorseRegistration() {
   const form = useZodForm({
     reValidateMode: 'onSubmit',
     shouldFocusError: true,
-    schema: ownerHorseFormSchema,
+    schema: OwnerHorseFormSchema,
   });
 
   const { register } = form;
@@ -33,7 +34,6 @@ function HorseRegistration() {
 
   function onSubmit(formValues: OwnerHorseForm) {
     if (formValues.horses) {
-      check.mutate(formValues);
       const lifeCount = formValues.horses.filter(
         horse => horse.regType === 'Life'
       ).length;
@@ -46,6 +46,8 @@ function HorseRegistration() {
         type: 'HORSE',
         payload: { lifeCount: lifeCount, annualCount: annualCount },
       });
+
+      check.mutate(formValues.horses);
     }
   }
 
@@ -71,14 +73,14 @@ function HorseRegistration() {
               type='text'
               label='First Name*'
               className='input-bordered input-primary input input-sm w-full'
-              {...register('owner.firstName', { required: true })}
+              {...register('owner.firstName')}
             />
 
             <Input
               type='text'
               label='Last Name*'
               className='input-bordered input-primary input input-sm w-full'
-              {...register('owner.lastName', { required: true })}
+              {...register('owner.lastName')}
             />
           </div>
 
@@ -88,21 +90,21 @@ function HorseRegistration() {
               type='text'
               className='input-bordered input-primary input input-sm w-full'
               altLabel='This will be the primary method of contact.'
-              {...register('owner.email', { required: true })}
+              {...register('owner.email')}
             />
 
             <span className='flex gap-2'>
               <Select
                 label='Phone Type*'
                 className='select-bordered select-primary select md:select-sm'
-                {...register('owner.phoneType', { required: true })}
+                {...register('owner.phoneType')}
               >
-                {Object.keys(PhoneType).map(type => (
+                {Object.keys(PhoneTypeSchema.enum).map(type => (
                   <option
                     key={type}
                     value={type}
                   >
-                    {PhoneType[type as PhoneType]}
+                    {type}
                   </option>
                 ))}
               </Select>
@@ -111,7 +113,7 @@ function HorseRegistration() {
                 label='Phone Number*'
                 type='tel'
                 className='input-bordered input-primary input input-sm w-full'
-                {...register('owner.phone', { required: true })}
+                {...register('owner.phone')}
               />
             </span>
           </div>

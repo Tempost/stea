@@ -2,15 +2,15 @@ import { useState } from 'react';
 
 import type { ReactElement } from 'react';
 
-import { DashboardLayout } from '@/components/layout';
+import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import Alert from '@/components/forms/Alert';
-import { Entry } from '@/utils/zodschemas';
 import { ZodFieldErrors } from '@/types/common';
 import useZodForm from '@/utils/usezodform';
 import { z } from 'zod';
 import Select from '@/components/styled-ui/Select';
 import { trpc } from '@/utils/trpc';
 import { readableDateTime } from '@/utils/helpers';
+import { Entry } from '@/server/utils';
 
 interface SubmitError {
   message: string | ZodFieldErrors<Entry>;
@@ -35,7 +35,7 @@ type FormValues = z.infer<typeof ShowSubmitFormValue>;
 function SubmitPoints() {
   const [error, setError] = useState<string | ZodFieldErrors<Entry>>();
   const [success, setSuccess] = useState(false);
-  const shows = trpc.shows.all.useQuery({ reviewed: false });
+  const shows = trpc.shows.all.useQuery({ where: { reviewed: false } });
   const utils = trpc.useContext().shows;
 
   const methods = useZodForm({

@@ -1,20 +1,26 @@
 import { useSetAtom } from 'jotai';
 import { ReactElement, useState } from 'react';
 
-import { Checkbox, Input, Select } from '@/components/data-entry';
-import { HorseFieldArray, Payment, RegType } from '@/components/forms';
-import { FormLayout } from '@/components/layout';
-import { MemberForm, memberFormSchema } from '@/utils/zodschemas';
+import { FormLayout } from '@/components/layout/FormLayout';
+import { MemberForm, MemberFormSchema } from '@/utils/zodschemas';
 import { updateFormState } from '@/utils/atoms';
 import { capitalize } from '@/utils/helpers';
 import states from '@/utils/states.json';
 import { trpc } from '@/utils/trpc';
 import useZodForm from '@/utils/usezodform';
-import { PhoneType } from '@prisma/client';
 import Form from '@/components/forms/Form';
+import { PhoneTypeSchema } from '@/server/prisma/zod-generated/inputTypeSchemas/PhoneTypeSchema';
+import Payment from '@/components/forms/Payment';
+import Input from '@/components/data-entry/Input';
+import Select from '@/components/data-entry/Select';
+import RegType from '@/components/forms/RegType';
+import Checkbox from '@/components/data-entry/Checkbox';
+import HorseFieldArray from '@/components/forms/HorseFieldArray';
 
 function BusinessRegistration() {
   const [payment, togglePayment] = useState(false);
+  const [isRegHorse, toggleRegHorse] = useState(false);
+
   const checkMember = trpc.members.exists.useMutation({
     onSuccess() {
       togglePayment(true);
@@ -26,19 +32,19 @@ function BusinessRegistration() {
   const form = useZodForm({
     reValidateMode: 'onSubmit',
     shouldFocusError: true,
-    schema: memberFormSchema,
+    schema: MemberFormSchema,
     defaultValues: {
       member: {
+        useaMemberID: null,
+        dateOfBirth: null,
         memberType: 'Business',
         memberStatusType: 'Professional',
-        currentUSEAMember: false,
       },
     },
   });
 
-  const { register, watch } = form;
+  const { register } = form;
 
-  const isRegHorse = watch('horseReg', false);
   const update = useSetAtom(updateFormState);
 
   function onSubmit(formValues: MemberForm) {
@@ -58,6 +64,11 @@ function BusinessRegistration() {
     }
 
     checkMember.mutate(formValues);
+  }
+
+  function handleCheck(e: any) {
+    e.preventDefault;
+    toggleRegHorse(curr => !curr);
   }
 
   return (
@@ -88,7 +99,7 @@ function BusinessRegistration() {
           <Input
             type='text'
             className='input-bordered input-primary input w-full md:input-sm'
-            {...register('member.businessName', { required: true })}
+            {...register('member.businessName')}
           />
 
           <h3 className='text-sm'>Business Address*</h3>
@@ -97,7 +108,7 @@ function BusinessRegistration() {
               type='text'
               className='input-bordered input-primary input w-full md:input-sm'
               placeholder='Address Line 1'
-              {...register('member.address', { required: true })}
+              {...register('member.address')}
             />
 
             <Input
@@ -112,12 +123,12 @@ function BusinessRegistration() {
                 type='text'
                 className='input-bordered input-primary input w-full md:input-sm'
                 placeholder='City'
-                {...register('member.city', { required: true })}
+                {...register('member.city')}
               />
 
               <Select
                 className='select-bordered select-primary select w-full md:select-sm'
-                {...register('member.state', { required: true })}
+                {...register('member.state')}
               >
                 {states.map(state => (
                   <option
@@ -133,10 +144,7 @@ function BusinessRegistration() {
                 type='numeric'
                 className='input-bordered input-primary input w-full md:input-sm'
                 placeholder='Zip Code'
-                {...register('member.zip', {
-                  required: true,
-                  valueAsNumber: true,
-                })}
+                {...register('member.zip', { valueAsNumber: true })}
               />
             </div>
           </div>
@@ -148,28 +156,28 @@ function BusinessRegistration() {
                 type='text'
                 label='First Name*'
                 className='input-bordered input-primary input w-full md:input-sm'
-                {...register('member.firstName', { required: true })}
+                {...register('member.firstName')}
               />
 
               <Input
                 type='text'
                 label='Last Name*'
                 className='input-bordered input-primary input w-full md:input-sm'
-                {...register('member.lastName', { required: true })}
+                {...register('member.lastName')}
               />
             </div>
             <div className='flex gap-2'>
               <Select
                 label='Phone Type*'
                 className='select-bordered select-primary select md:select-sm'
-                {...register('member.phoneType', { required: true })}
+                {...register('member.phoneType')}
               >
-                {Object.keys(PhoneType).map(type => (
+                {Object.keys(PhoneTypeSchema.enum).map(type => (
                   <option
                     key={type}
                     value={type}
                   >
-                    {PhoneType[type as PhoneType]}
+                    {type}
                   </option>
                 ))}
               </Select>
@@ -178,7 +186,7 @@ function BusinessRegistration() {
                 label='Phone Number*'
                 type='tel'
                 className='input-bordered input-primary input w-full md:input-sm'
-                {...register('member.phone', { required: true })}
+                {...register('member.phone')}
               />
             </div>
 
@@ -187,11 +195,11 @@ function BusinessRegistration() {
               type='text'
               className='input-bordered input-primary input w-full md:input-sm'
               altLabel={'This will be the primary method of contact.'}
-              {...register('member.email', { required: true })}
+              {...register('member.email')}
             />
 
             <RegType
-              register={register('member.memberStatus', { required: true })}
+              register={register('member.memberStatus')}
               formType='Business'
             />
           </div>
@@ -199,7 +207,8 @@ function BusinessRegistration() {
           <Checkbox
             label='Do you plan to register your horse(s)?'
             className='checkbox-primary checkbox md:checkbox-sm'
-            {...register('horseReg')}
+            checked={isRegHorse}
+            onChange={handleCheck}
           />
 
           {isRegHorse && <HorseFieldArray />}

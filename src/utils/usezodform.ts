@@ -19,17 +19,3 @@ const useZodForm = <TSchema extends ZodSchema>({
   useForm({ ...formProps, resolver: zodResolver(schema) });
 
 export default useZodForm;
-
-// -- Old before refactor --
-// export default function useZodForm<TSchema extends z.ZodType>(
-//   props: Omit<UseFormProps<TSchema['_input']>, 'resolver'> & {
-//     schema: TSchema;
-//   }
-// ) {
-//   const form = useForm<TSchema['_input']>({
-//     ...props,
-//     resolver: zodResolver(props.schema, undefined, { rawValues: true }),
-//   });
-
-//   return form;
-// }

@@ -3,12 +3,13 @@ import { z } from 'zod';
 
 import useZodForm from '@/utils/usezodform';
 import { trpc } from '@/utils/trpc';
-import { ShowModel } from '@/server/prisma/zod';
+import { ShowCreateInputSchema } from '@/server/prisma/zod-generated/inputTypeSchemas/ShowCreateInputSchema';
+import { ShowSchema } from '@/server/prisma/zod-generated/modelSchema/ShowSchema';
 import { ControlledDatePicker, Select, Input } from '../data-entry';
 import Alert from '../forms/Alert';
 import { ShowType } from '@prisma/client';
 
-const NewShowModel = ShowModel.omit({ uid: true, reviewed: true });
+const NewShowModel = ShowSchema.omit({ uid: true, reviewed: true });
 
 function AddNewShow() {
   const methods = useZodForm({
@@ -32,7 +33,7 @@ function AddNewShow() {
     },
   });
 
-  function submitForm(values: z.infer<typeof NewShowModel>) {
+  function submitForm(values: z.infer<typeof ShowCreateInputSchema>) {
     addNew.mutate(values);
   }
 
@@ -62,7 +63,7 @@ function AddNewShow() {
             <form onSubmit={methods.handleSubmit(submitForm)}>
               <div className='flex flex-row gap-5'>
                 <Input
-                  className='input-primary input-sm'
+                  className='input-bordered input-primary input w-full md:input-sm'
                   placeholder='Enter show name'
                   label='Show Name*'
                   {...register('showName', {
@@ -71,11 +72,9 @@ function AddNewShow() {
                 />
 
                 <Select
-                  className='select-primary select-sm w-32'
+                  className='select-bordered select-primary select w-fit md:select-sm'
                   label='Show Type*'
-                  {...register('showType', {
-                    required: true,
-                  })}
+                  {...register('showType', { required: true })}
                 >
                   {Object.keys(ShowType).map(type => (
                     <option
@@ -92,17 +91,17 @@ function AddNewShow() {
                 <ControlledDatePicker
                   name='showDate'
                   label='Show Date*'
-                  placeholderText='Show Date'
+                  placeholderText='Start Date'
                 />
 
                 <ControlledDatePicker
                   name='showEndDate'
-                  placeholderText='Ending Date'
+                  placeholderText='End Date'
                 />
               </div>
 
               <Input
-                className='input-primary'
+                className='input-bordered input-primary input w-full md:input-sm'
                 placeholder='Registration Link'
                 label='Registration Link'
                 {...register('url', { required: false })}

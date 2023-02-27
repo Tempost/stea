@@ -1,86 +1,50 @@
-import { ShowModel } from '../prisma/zod';
 import { z } from 'zod';
+import { ShowCreateInputSchema } from '@/server/prisma/zod-generated/inputTypeSchemas/ShowCreateInputSchema';
 import { TRPCError } from '@trpc/server';
 import { Prisma } from '@prisma/client';
 import { readableDateTime } from '@/utils/helpers';
 import { dashboardProcedure, procedure, router } from '@/server/trpc';
-
-const ShowPatch = z.object({
-  uid: z.string().cuid(),
-  patch: ShowModel.omit({
-    uid: true,
-    createdAt: true,
-    updatedAt: true,
-  }).deepPartial(),
-});
-
-const showQueryInputSchema = z
-  .object({
-    dateRange: z.object({
-      curr: z.date(),
-      end: z.date(),
-    }),
-    reviewed: z.boolean().optional(),
-    includes: z.object({
-      riders: z.boolean(),
-      points: z.boolean(),
-    }),
-  })
-  .deepPartial()
-  .optional();
+import {
+  ShowFindManyArgsSchema,
+  ShowUpdateArgsSchema,
+  ShowWhereUniqueInputSchema,
+} from '../prisma/zod-generated';
 
 export const shows = router({
-  all: procedure.input(showQueryInputSchema).query(async ({ input, ctx }) => {
-    const shows = await ctx.prisma.show
-      .findMany({
-        where: {
-          showDate: {
-            gte: input?.dateRange?.curr,
-            lte: input?.dateRange?.end,
-          },
-          reviewed: input?.reviewed,
-        },
-        include: input?.includes,
-        orderBy: {
-          showDate: 'asc',
-        },
-      })
-      .then(shows => shows)
-      .catch(err => {
-        throw err;
-      });
+  all: procedure
+    .input(ShowFindManyArgsSchema.optional())
+    .query(async ({ input, ctx }) => {
+      const shows = await ctx.prisma.show
+        .findMany(input)
+        .then(shows => shows)
+        .catch(err => {
+          throw err;
+        });
 
-    return shows;
-  }),
+      return shows;
+    }),
 
   get: procedure
-    .input(z.object({ uid: z.string().cuid() }))
+    .input(ShowWhereUniqueInputSchema)
     .query(async ({ input, ctx }) => {
       try {
         return await ctx.prisma.show.findUniqueOrThrow({
-          where: {
-            uid: input.uid,
-          },
-          include: {
-            riders: {
-              include: {
-                points: true,
-              },
-            },
-          },
+          where: input,
         });
       } catch (error) {
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
           if (error.code === 'P2001') {
             throw new TRPCError({
               code: 'NOT_FOUND',
-              message: `${input.uid} not found.`,
+              message: `${input.uid ?? input.showName_showDate} not found.`,
               cause: error,
             });
           } else {
             throw new TRPCError({
               code: 'INTERNAL_SERVER_ERROR',
-              message: `Something went wrong fetching ${input.uid}`,
+              message: `Something went wrong fetching ${
+                input.uid ?? input.showName_showDate
+              }`,
               cause: error,
             });
           }
@@ -89,7 +53,7 @@ export const shows = router({
     }),
 
   add: dashboardProcedure
-    .input(ShowModel.omit({ uid: true, reviewed: true }))
+    .input(ShowCreateInputSchema)
     .mutation(async ({ input, ctx }) => {
       console.info('Adding new show...', input);
 
@@ -121,17 +85,10 @@ export const shows = router({
     }),
 
   update: dashboardProcedure
-    .input(ShowPatch)
-    .mutation(async ({ input: { uid, patch }, ctx }) => {
-      console.log(patch);
-      return await ctx.prisma.show.update({
-        where: {
-          uid: uid,
-        },
-        data: {
-          ...patch,
-        },
-      });
+    .input(ShowUpdateArgsSchema)
+    .mutation(async ({ input, ctx }) => {
+      console.log(input);
+      return await ctx.prisma.show.update(input);
     }),
 
   remove: dashboardProcedure

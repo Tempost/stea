@@ -1,15 +1,15 @@
 import Image from 'next/image';
 import { ReactElement } from 'react';
 
-import { PublicLayout } from '@/components/layout';
-import { PlacingsTable } from '@/components/tables';
+import { PublicLayout } from '@/components/layout/PublicLayout';
+import PlacingsTable from '@/components/tables/Placings';
 
 function SteaPoints() {
   return (
     <div className='grid w-full place-items-center gap-20'>
       <PlacingsTable
         title='Current Points'
-        search={true}
+        search
       />
 
       <div className='card w-[20em] shadow-2xl sm:w-[30em] md:w-[40em] lg:w-[45em]'>

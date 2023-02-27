@@ -1,4 +1,4 @@
-import { Prisma, PrismaPromise, Status, Type } from '@prisma/client';
+import { Prisma, Status, Type } from '@prisma/client';
 
 import { prisma } from '../../server/prisma';
 import members from './members.json';

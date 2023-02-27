@@ -1,79 +1,75 @@
-import { useMemo } from 'react';
 import { RouterOutputs, trpc } from '@/utils/trpc';
 
 import TableWithData from './BaseTable';
 
 import type { ColumnDef } from '@tanstack/react-table';
 
-type RiderCombo = RouterOutputs['riders']['all'];
+type RiderCombo = RouterOutputs['riders']['all'][number];
 interface PlacingsTableProps {
   title?: string;
-  overrideDefaultCols?: ColumnDef<RiderCombo>[];
   search?: boolean;
 }
 
-function PlacingsTable({
-  title,
-  overrideDefaultCols,
-  search,
-}: PlacingsTableProps) {
-  const riders = trpc.riders.all.useQuery({
-    selectFields: {
-      horse: true,
-      member: true,
-      totalPoints: true,
-      totalShows: true,
-      division: true,
-    },
-  });
+function PlacingsTable({ title, search }: PlacingsTableProps) {
+  const riders = trpc.riders.all.useQuery();
 
-  const defaultCols = useMemo<ColumnDef<RiderCombo>[]>(
-    () => [
-      {
-        header: title ?? 'Riders',
-        columns: [
-          {
-            accessorKey: 'horse.horseRN',
-            id: 'horse.horseRN',
-            cell: info => info.getValue(),
-            header: () => <span> Horse </span>,
+  const defaultCols: ColumnDef<RiderCombo>[] = [
+    {
+      header: title ?? 'Riders',
+      columns: [
+        {
+          accessorKey: 'division',
+          id: 'division',
+          cell: info => info.getValue(),
+          header: () => <span> Division </span>,
+        },
+        {
+          accessorKey: 'member.memberStatusType',
+          id: 'memberStatusType',
+          cell: info => {
+            const statusType = info.getValue();
+            if (statusType === 'AdultAmateur') {
+              return 'Adult Amateur';
+            }
+
+            return statusType;
           },
-          {
-            accessorKey: 'member.fullName',
-            id: 'member.fullName',
-            cell: info => info.getValue(),
-            header: () => <span> Rider </span>,
-          },
-          {
-            accessorKey: 'totalPoints',
-            id: 'totalPoints',
-            cell: info => info.getValue(),
-            header: () => <span> Points </span>,
-          },
-          {
-            accessorKey: 'totalShows',
-            id: 'totalShows',
-            cell: info => info.getValue(),
-            header: () => <span> Shows Attended </span>,
-          },
-          {
-            accessorKey: 'division',
-            id: 'division',
-            cell: info => info.getValue(),
-            header: () => <span> Divison </span>,
-          },
-        ],
-      },
-    ],
-    [title]
-  );
+          header: () => <span> Member Type </span>,
+        },
+        {
+          accessorKey: 'member.fullName',
+          id: 'member.fullName',
+          cell: info => info.getValue(),
+          header: () => <span> Rider </span>,
+        },
+        {
+          accessorKey: 'horse.horseRN',
+          id: 'horse.horseRN',
+          cell: info => info.getValue(),
+          header: () => <span> Horse </span>,
+        },
+        {
+          accessorKey: 'totalPoints',
+          id: 'totalPoints',
+          cell: info => info.getValue(),
+          header: () => <span> Points </span>,
+        },
+        {
+          accessorKey: 'totalShows',
+          id: 'totalShows',
+          cell: info => info.getValue(),
+          header: () => <span> Shows Attended </span>,
+        },
+      ],
+    },
+  ];
 
   return (
     <TableWithData
-      colDef={overrideDefaultCols ?? defaultCols}
+      colDef={defaultCols}
       query={riders}
-      paginate={true}
       search={search}
+      paginate
     />
   );
 }

@@ -1,7 +1,7 @@
 {
   "plugins": ["prettier"],
   "extends": "next/core-web-vitals",
-  "ignorePatterns": ["**/src/server/prisma/zod"],
+  "ignorePatterns": ["**/src/server/prisma/zod-generated"],
   "rules": {
     "react/no-unescaped-entities": 0,
     "prettier/prettier": "warn"

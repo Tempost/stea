@@ -2,7 +2,7 @@ import { ChangeEvent, ReactElement } from 'react';
 import { useRouter } from 'next/router';
 import { useAtomValue, useSetAtom } from 'jotai';
 
-import { FormLayout } from '@/components/layout';
+import { FormLayout } from '@/components/layout/FormLayout';
 import Radio from '@/components/styled-ui/Radio';
 import { formState, updateFormState } from '@/utils/atoms';
 import { FormType } from '@/types/common';

@@ -1,4 +1,4 @@
-import { PublicLayout } from '@/components/layout';
+import { PublicLayout } from '@/components/layout/PublicLayout';
 function SteaBeneifits() {}
 import { ReactElement } from 'react';
 SteaBeneifits.getLayout = (page: ReactElement) => {

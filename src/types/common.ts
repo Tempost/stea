@@ -1,4 +1,4 @@
-import { Entry } from '@/utils/zodschemas';
+import { Entry } from '@/server/utils';
 import { Status } from '@prisma/client';
 import { typeToFlattenedError } from 'zod';
 

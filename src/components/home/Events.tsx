@@ -12,9 +12,20 @@ const MONTH_FROM_CURR = new Date(
 
 function UpcomingEvents() {
   const shows = trpc.shows.all.useQuery({
-    dateRange: {
-      curr: CURR_MONTH,
-      end: MONTH_FROM_CURR,
+    where: {
+      showDate: {
+        lte: MONTH_FROM_CURR,
+        gte: CURR_MONTH,
+      },
+    },
+    orderBy: {
+      showDate: 'asc',
+    },
+    select: {
+      showDate: true,
+      showEndDate: true,
+      showName: true,
+      showType: true,
     },
   });
 

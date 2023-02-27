@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
-import { RouterOutputs, trpc } from '@/utils/trpc';
 
+import { RouterOutputs, trpc } from '@/utils/trpc';
 import TableWithData from './BaseTable';
 
 import type { ColumnDef } from '@tanstack/react-table';
 
-type RiderCombo = RouterOutputs['riders']['all'];
+type RiderCombo = RouterOutputs['riders']['all'][number];
 
 interface RidersTableProps {
   title?: string;

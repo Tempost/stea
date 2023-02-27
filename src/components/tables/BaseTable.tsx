@@ -11,7 +11,7 @@ import {
   getFacetedRowModel,
 } from '@tanstack/react-table';
 import { useState } from 'react';
-import { DebouncedInput } from '@/components/data-entry';
+import DebouncedInput from '@/components/data-entry/DebouncedInput';
 import { UseTRPCQueryResult } from '@trpc/react-query/shared';
 
 const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {

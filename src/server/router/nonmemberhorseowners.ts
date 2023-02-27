@@ -1,16 +1,11 @@
 import { z } from 'zod';
 
 import { MyPrismaClient } from '@/server/prisma';
-import { HorseModel, NonMemberHorseOwnerModel } from '@/server/prisma/zod';
+import { NonMemberHorseOwnerPartialSchema } from '@/server/prisma/zod-generated/modelSchema/NonMemberHorseOwnerSchema';
 import { TRPCError } from '@trpc/server';
 import { Prisma } from '@prisma/client';
 import { dashboardProcedure, procedure, router } from '@/server/trpc';
-
-const AddOwnerInput = z.object({
-  owner: NonMemberHorseOwnerModel.omit({ fullName: true }),
-  horses: z.array(HorseModel),
-});
-type AddOwnerInput = z.infer<typeof AddOwnerInput>;
+import { OwnerHorseForm, OwnerHorseFormSchema } from '@/utils/zodschemas';
 
 export const nonMemberHorseOwners = router({
   all: procedure.query(async ({ ctx }) => {
@@ -36,8 +31,8 @@ export const nonMemberHorseOwners = router({
     }),
 
   add: procedure
-    .input(AddOwnerInput)
-    .mutation(async ({ input: { owner, horses }, ctx }) => {
+    .input(OwnerHorseFormSchema)
+    .mutation(async ({ input: { horses, owner }, ctx }) => {
       const existingMember = await ctx.prisma.member.findUnique({
         where: { fullName: `${owner.firstName} ${owner.lastName}` },
       });
@@ -93,7 +88,7 @@ export const nonMemberHorseOwners = router({
     .input(
       z.object({
         ownerName: z.string(),
-        patch: NonMemberHorseOwnerModel.deepPartial(),
+        patch: NonMemberHorseOwnerPartialSchema,
       })
     )
     .mutation(async ({ input, ctx }) => {
@@ -134,7 +129,7 @@ export const nonMemberHorseOwners = router({
 });
 
 async function upsertOwner(
-  { owner, horses }: AddOwnerInput,
+  { horses, owner }: OwnerHorseForm,
   db: MyPrismaClient
 ) {
   try {

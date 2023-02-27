@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react';
-import { DashboardLayout } from '@/components/layout';
+import { DashboardLayout } from '@/components/layout/DashboardLayout';
 
 function Dashboard() {
   return (

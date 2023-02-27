@@ -1,0 +1,13 @@
+import { z } from 'zod';
+import { type Prisma } from '@prisma/client';
+import { StringFieldUpdateOperationsInputSchema } from './StringFieldUpdateOperationsInputSchema';
+import { FloatFieldUpdateOperationsInputSchema } from './FloatFieldUpdateOperationsInputSchema';
+
+export const PointsUncheckedUpdateWithoutShowInputSchema: z.ZodType<Prisma.PointsUncheckedUpdateWithoutShowInput> = z.object({
+  uid: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  riderUid: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  points: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
+  place: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+}).strict();
+
+export default PointsUncheckedUpdateWithoutShowInputSchema;

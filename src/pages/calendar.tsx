@@ -2,14 +2,25 @@ import { ReactElement } from 'react';
 import { useAtomValue } from 'jotai';
 
 import { selectedMonth } from '@/utils/atoms';
-import { PublicLayout } from '@/components/layout';
+import { PublicLayout } from '@/components/layout/PublicLayout';
 import { trpc } from '@/utils/trpc';
 import CalendarEvents from '@/components/events/CalendarEvent';
 import MonthSelector from '@/components/events/MonthSelector';
 import { filterByMonths } from '@/utils/filterByMonths';
 
 function SteaCalendar() {
-  const shows = trpc.shows.all.useQuery();
+  const shows = trpc.shows.all.useQuery({
+    orderBy: {
+      showDate: 'asc',
+    },
+    select: {
+      showDate: true,
+      showEndDate: true,
+      showName: true,
+      showType: true,
+    },
+  });
+
   const monthState = useAtomValue(selectedMonth);
 
   const filteredShows = filterByMonths(shows.data, monthState);

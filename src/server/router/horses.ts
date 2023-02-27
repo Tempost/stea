@@ -1,75 +1,67 @@
-import { z } from 'zod';
-
-import { Horse } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
-import { ownerHorseFormSchema, OwnerHorseForm } from '@/utils/zodschemas';
 import { procedure, router } from '@/server/trpc';
 import { MyPrismaClient } from '../prisma';
+import { Horse } from '@prisma/client';
+import { HorseForm, HorseFormSchema } from '@/utils/zodschemas';
+import { HorseFindManyArgsSchema } from '../prisma/zod-generated/outputTypeSchemas/HorseFindManyArgsSchema';
+import { HorseWhereUniqueInputSchema } from '../prisma/zod-generated/inputTypeSchemas/HorseWhereUniqueInputSchema';
 
 export const horses = router({
-  all: procedure.query(async ({ ctx }) => {
-    const horses = await ctx.prisma.horse
-      .findMany()
-      .then(horses => {
-        return horses;
-      })
-      .catch(_ => {
-        throw new TRPCError({
-          code: 'INTERNAL_SERVER_ERROR',
-          message: 'Failed to fetch horses.',
+  all: procedure
+    .input(HorseFindManyArgsSchema.optional())
+    .query(async ({ input, ctx }) => {
+      const horses = await ctx.prisma.horse
+        .findMany(input)
+        .then(horses => {
+          return horses;
+        })
+        .catch(_ => {
+          throw new TRPCError({
+            code: 'INTERNAL_SERVER_ERROR',
+            message: 'Failed to fetch horses.',
+          });
         });
-      });
 
-    return horses as Horse[];
-  }),
+      return horses;
+    }),
 
   get: procedure
-    .input(z.object({ horseRN: z.string() }))
+    .input(HorseWhereUniqueInputSchema)
     .query(async ({ input, ctx }) => {
-      const { horseRN } = input;
       const horse = await ctx.prisma.horse.findUnique({
-        where: { horseRN: horseRN },
+        where: input,
       });
 
       if (!horse) {
         throw new TRPCError({
           code: 'NOT_FOUND',
-          message: `${horseRN} not found.`,
+          message: `${input.horseRN} not found.`,
         });
       }
 
       return horse;
     }),
 
-  exists: procedure
-    .input(ownerHorseFormSchema.omit({ owner: true }))
-    .mutation(async ({ input, ctx }) => {
-      console.log(`Checking for horses... ${horseNames(input.horses)}`);
-      const existingHorses = await checkExistingHorses(
-        input.horses,
-        ctx.prisma
-      );
+  exists: procedure.input(HorseFormSchema).mutation(async ({ input, ctx }) => {
+    console.log(`Checking for horses... ${horseNames(input)}`);
+    const existingHorses = await checkExistingHorses(input, ctx.prisma);
 
-      if (existingHorses) {
-        const message = `${existingHorses} ${
-          existingHorses.length > 1 ? 'have' : 'has'
-        } already been registered.`;
+    if (existingHorses) {
+      const message = `${existingHorses}
+        ${existingHorses.length > 1 ? 'have' : 'has'} already been registered.`;
 
-        throw new TRPCError({
-          code: 'CONFLICT',
-          message: message,
-        });
-      }
-    }),
+      throw new TRPCError({
+        code: 'CONFLICT',
+        message: message,
+      });
+    }
+  }),
 });
 
-const horseNames = (horses: OwnerHorseForm['horses']) =>
+const horseNames = (horses: HorseForm | Horse[]) =>
   horses.map(horse => horse.horseRN);
 
-async function checkExistingHorses(
-  horses: OwnerHorseForm['horses'],
-  db: MyPrismaClient
-) {
+async function checkExistingHorses(horses: HorseForm, db: MyPrismaClient) {
   const matches = await db.horse.findMany({
     where: {
       horseRN: {

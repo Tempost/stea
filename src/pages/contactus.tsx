@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import { PublicLayout } from '@/components/layout';
+import { PublicLayout } from '@/components/layout/PublicLayout';
 import { ContactCard } from '@/components/ContactCard';
 
 function ContactUs() {
