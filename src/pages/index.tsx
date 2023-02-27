@@ -34,7 +34,7 @@ function Home() {
               href={'/join'}
               prefetch={false}
             >
-              <button className='btn-primary btn btn-lg text-xl md:text-2xl md:btn-xl'>
+              <button className='btn-primary btn btn-lg text-xl md:btn-xl md:text-2xl'>
                 Join Today!
               </button>
             </NextLink>
