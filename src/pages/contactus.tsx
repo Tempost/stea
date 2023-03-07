@@ -19,14 +19,24 @@ function ContactUs() {
           position={'Vice President'}
           email={'VP@steventing.net'}
         />
-        <ContactCard position={'Secretary'} />
+        <ContactCard
+          name={'Jennifer Owens'}
+          position={'Secretary'}
+          email={'Secretary@steventing.net'}
+        />
         <ContactCard
           name={'Lynette Diamond'}
           position={'Treasurer'}
           email={'Stea@steventing.net'}
         />
-        <ContactCard position={'Director'} />
-        <ContactCard position={'Junior Director'} />
+        <ContactCard
+          name={'Hannah Elbert'}
+          position={'Member Adult at Large'}
+        />
+        <ContactCard
+          name={'Willow Schwartz'}
+          position={'Junior Adult at Large'}
+        />
         <ContactCard position={'Membership'} />
         <ContactCard position={'Points'} />
         <ContactCard position={'Social Media Manager'} />
