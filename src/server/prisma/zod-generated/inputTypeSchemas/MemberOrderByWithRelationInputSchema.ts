@@ -19,7 +19,6 @@ export const MemberOrderByWithRelationInputSchema: z.ZodType<Prisma.MemberOrderB
   email: z.lazy(() => SortOrderSchema).optional(),
   comments: z.lazy(() => SortOrderSchema).optional(),
   confirmed: z.lazy(() => SortOrderSchema).optional(),
-  currentUSEAMember: z.lazy(() => SortOrderSchema).optional(),
   businessName: z.lazy(() => SortOrderSchema).optional(),
   membershipDate: z.lazy(() => SortOrderSchema).optional(),
   memberType: z.lazy(() => SortOrderSchema).optional(),

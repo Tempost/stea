@@ -35,7 +35,6 @@ export const MemberWhereInputSchema: z.ZodType<Prisma.MemberWhereInput> = z.obje
   email: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   comments: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   confirmed: z.union([ z.lazy(() => BoolFilterSchema),z.boolean() ]).optional(),
-  currentUSEAMember: z.union([ z.lazy(() => BoolFilterSchema),z.boolean() ]).optional(),
   businessName: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   membershipDate: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
   memberType: z.union([ z.lazy(() => EnumTypeFilterSchema),z.lazy(() => TypeSchema) ]).optional(),

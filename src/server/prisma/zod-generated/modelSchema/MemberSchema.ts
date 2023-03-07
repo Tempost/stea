@@ -36,7 +36,6 @@ export const MemberSchema = z.object({
    * Member needs to be confirmed by boardmember from dashboard
    */
   confirmed: z.boolean(),
-  currentUSEAMember: z.boolean(),
   businessName: z.string().trim().min(1, { message: "Business name is required" }).nullable(),
   membershipDate: z.coerce.date(),
   dateOfBirth: z.coerce.date().nullable(),
@@ -68,7 +67,6 @@ export const MemberOptionalDefaultsSchema = MemberSchema.merge(z.object({
    * Member needs to be confirmed by boardmember from dashboard
    */
   confirmed: z.boolean().optional(),
-  currentUSEAMember: z.boolean().optional(),
   membershipDate: z.coerce.date().optional(),
 }))
 

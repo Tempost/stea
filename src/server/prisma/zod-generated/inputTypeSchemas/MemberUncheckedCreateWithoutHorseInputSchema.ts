@@ -21,7 +21,6 @@ export const MemberUncheckedCreateWithoutHorseInputSchema: z.ZodType<Prisma.Memb
   email: z.string(),
   comments: z.string().optional().nullable(),
   confirmed: z.boolean().optional(),
-  currentUSEAMember: z.boolean().optional(),
   businessName: z.string().optional().nullable(),
   membershipDate: z.coerce.date().optional().nullable(),
   memberType: z.lazy(() => TypeSchema),

@@ -22,7 +22,6 @@ export const MemberCreateInputSchema: z.ZodType<Prisma.MemberCreateInput> = z.ob
   email: z.string().trim().email({ message: "Invalid email address" }),
   comments: z.string().optional().nullable(),
   confirmed: z.boolean().optional(),
-  currentUSEAMember: z.boolean().optional(),
   businessName: z.string().trim().min(1, { message: "Business name is required" }).optional().nullable(),
   membershipDate: z.coerce.date().optional().nullable(),
   memberType: z.lazy(() => TypeSchema),
