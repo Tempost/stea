@@ -31,11 +31,11 @@ function ContactUs() {
         />
         <ContactCard
           name={'Hannah Elbert'}
-          position={'Member Adult at Large'}
+          position={'Adult Member at Large'}
         />
         <ContactCard
           name={'Willow Schwartz'}
-          position={'Junior Adult at Large'}
+          position={'Junior Member at Large'}
         />
         <ContactCard position={'Membership'} />
         <ContactCard position={'Points'} />
