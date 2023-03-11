@@ -1,7 +1,8 @@
 import { useSetAtom } from 'jotai';
 import { ReactElement, useState } from 'react';
 
-import { Input, Select } from '@/components/data-entry';
+import Input from '@/components/data-entry/Input';
+import Select from '@/components/data-entry/Select';
 import { FormLayout } from '@/components/layout/FormLayout';
 import { OwnerHorseFormSchema, OwnerHorseForm } from '@/utils/zodschemas';
 import { updateFormState } from '@/utils/atoms';

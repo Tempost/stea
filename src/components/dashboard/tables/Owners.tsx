@@ -1,7 +1,7 @@
 import { RouterOutputs, trpc } from '@/utils/trpc';
 import { readableDateTime } from '@/utils/helpers';
 import type { ColumnDef } from '@tanstack/react-table';
-import { TableWithData } from '@/components/tables';
+import TableWithData from '@/components/tables/BaseTable';
 
 type Owner = RouterOutputs['nonMemberHorseOwners']['all'][number];
 

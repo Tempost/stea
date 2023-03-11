@@ -35,7 +35,7 @@ function UpcomingEvents() {
       {shows.data ? (
         shows.data.map(show => (
           <CalendarEvents
-            key={show.uid}
+            key={`${show.showName}-${show.showDate}`}
             show={show}
           />
         ))

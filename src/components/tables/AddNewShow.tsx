@@ -1,143 +1,122 @@
-import { FormProvider } from 'react-hook-form';
-import { z } from 'zod';
-
 import useZodForm from '@/utils/usezodform';
 import { trpc } from '@/utils/trpc';
-import { ShowCreateInputSchema } from '@/server/prisma/zod-generated/inputTypeSchemas/ShowCreateInputSchema';
-import { ShowSchema } from '@/server/prisma/zod-generated/modelSchema/ShowSchema';
-import { ControlledDatePicker, Select, Input } from '../data-entry';
 import Alert from '../forms/Alert';
-import { ShowType } from '@prisma/client';
-
-const NewShowModel = ShowSchema.omit({ uid: true, reviewed: true });
+import Form from '../forms/Form';
+import {
+  ShowOptionalDefaults,
+  ShowOptionalDefaultsSchema,
+} from '@/server/prisma/zod-generated/modelSchema/ShowSchema';
+import Input from '../data-entry/Input';
+import Select from '../data-entry/Select';
+import ControlledDatePicker from '../data-entry/Date';
+import { ShowTypeSchema } from '@/server/prisma/zod-generated/inputTypeSchemas/ShowTypeSchema';
+import Modal from '../styled-ui/Modal';
 
 function AddNewShow() {
-  const methods = useZodForm({
+  const form = useZodForm({
     reValidateMode: 'onSubmit',
     shouldFocusError: true,
-    shouldUnregister: true,
-    schema: NewShowModel,
+    schema: ShowOptionalDefaultsSchema,
     defaultValues: {
       url: null,
     },
   });
 
-  const { register } = methods;
+  const { register } = form;
   const utils = trpc.useContext();
 
   const addNew = trpc.shows.add.useMutation({
     onSuccess() {
       utils.shows.invalidate();
-      methods.reset();
-      methods.clearErrors();
+      form.reset();
+      form.clearErrors();
     },
   });
 
-  function submitForm(values: z.infer<typeof ShowCreateInputSchema>) {
+  function submitForm(values: ShowOptionalDefaults) {
     addNew.mutate(values);
   }
 
   return (
-    <>
-      <label
-        htmlFor='my-modal-6'
-        className='modal-button btn-primary btn'
+    <Modal
+      buttonLabel='Add Show'
+      onClick={() => {
+        form.clearErrors();
+        form.reset();
+      }}
+      ok={
+        <button
+          className={`btn-sm btn
+            ${addNew.isError
+              ? 'btn-error'
+              : addNew.isSuccess
+                ? 'btn-success'
+                : ''
+            }`}
+          form='show-form'
+          type='submit'
+        >
+          Add
+        </button>
+      }
+    >
+      <h3 className='text-lg font-bold'>Enter Show Information</h3>
+
+      <Form
+        form={form}
+        onSubmit={submitForm}
+        id='show-form'
       >
-        Add Show
-      </label>
-      <input
-        type='checkbox'
-        id='my-modal-6'
-        className='modal-toggle'
-        onClick={() => {
-          methods.clearErrors();
-          methods.reset();
-        }}
-      />
+        <div className='flex flex-row gap-5'>
+          <Input
+            className='input-bordered input-primary input w-full md:input-sm'
+            placeholder='Enter show name'
+            label='Show Name*'
+            {...register('showName')}
+          />
 
-      <div className='modal modal-bottom transition-all delay-75 sm:modal-middle'>
-        <div className='modal-box overflow-visible'>
-          <h3 className='text-lg font-bold'>Enter Show Information</h3>
-
-          <FormProvider {...methods}>
-            <form onSubmit={methods.handleSubmit(submitForm)}>
-              <div className='flex flex-row gap-5'>
-                <Input
-                  className='input-bordered input-primary input w-full md:input-sm'
-                  placeholder='Enter show name'
-                  label='Show Name*'
-                  {...register('showName', {
-                    required: true,
-                  })}
-                />
-
-                <Select
-                  className='select-bordered select-primary select w-fit md:select-sm'
-                  label='Show Type*'
-                  {...register('showType', { required: true })}
-                >
-                  {Object.keys(ShowType).map(type => (
-                    <option
-                      key={type}
-                      value={type}
-                    >
-                      {ShowType[type as ShowType]}
-                    </option>
-                  ))}
-                </Select>
-              </div>
-
-              <div className='grid grid-flow-col'>
-                <ControlledDatePicker
-                  name='showDate'
-                  label='Show Date*'
-                  placeholderText='Start Date'
-                />
-
-                <ControlledDatePicker
-                  name='showEndDate'
-                  placeholderText='End Date'
-                />
-              </div>
-
-              <Input
-                className='input-bordered input-primary input w-full md:input-sm'
-                placeholder='Registration Link'
-                label='Registration Link'
-                {...register('url', { required: false })}
-              />
-
-              <Alert
-                message={addNew.error?.message}
-                visible={addNew.isError}
-              />
-
-              <div className='modal-action'>
-                <button
-                  className={`btn-sm btn ${
-                    addNew.isError
-                      ? 'btn-error'
-                      : addNew.isSuccess
-                      ? 'btn-success'
-                      : ''
-                  }`}
-                  type='submit'
-                >
-                  add
-                </button>
-
-                <label
-                  htmlFor='my-modal-6'
-                  className='btn-sm btn'
-                >
-                  cancel
-                </label>
-              </div>
-            </form>
-          </FormProvider>
+          <Select
+            className='select-bordered select-primary select w-fit md:select-sm'
+            label='Show Type*'
+            {...register('showType')}
+          >
+            {Object.keys(ShowTypeSchema.enum).map(type => (
+              <option
+                key={type}
+                value={type}
+              >
+                {type}
+              </option>
+            ))}
+          </Select>
         </div>
-      </div>
-    </>
+
+        <div className='grid grid-flow-col'>
+          <ControlledDatePicker
+            name='showDate'
+            label='Show Date*'
+            placeholderText='Start Date'
+          />
+
+          <ControlledDatePicker
+            name='showEndDate'
+            placeholderText='End Date'
+          />
+        </div>
+
+        <Input
+          className='input-bordered input-primary input w-full md:input-sm'
+          placeholder='Registration Link'
+          label='Registration Link'
+          {...register('url')}
+        />
+
+        <Alert
+          message={addNew.error?.message}
+          visible={addNew.isError}
+        />
+      </Form>
+    </Modal>
   );
 }
 

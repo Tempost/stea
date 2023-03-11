@@ -3,7 +3,7 @@ import { ColumnDef } from '@tanstack/react-table';
 
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import TableWithData from '@/components/tables/BaseTable';
-import { ConfirmMember } from '@/components/dashboard';
+import ConfirmMember from '@/components/dashboard/ConfirmMember';
 
 import type { Member } from '@prisma/client';
 import type { ReactElement } from 'react';

@@ -1,5 +1,6 @@
-import { Radio, ControlledDatePicker } from '@/components/data-entry';
 import { ChangeEvent, useState } from 'react';
+import ControlledDatePicker from '../data-entry/Date';
+import Radio from '../data-entry/Radio';
 
 interface Props {
   dateName: string;

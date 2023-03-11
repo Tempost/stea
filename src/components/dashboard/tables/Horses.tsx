@@ -1,4 +1,4 @@
-import { TableWithData } from '@/components/tables';
+import TableWithData from '@/components/tables/BaseTable';
 import { readableDateTime } from '@/utils/helpers';
 import { RouterOutputs, trpc } from '@/utils/trpc';
 

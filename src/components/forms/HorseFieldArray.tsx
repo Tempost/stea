@@ -1,8 +1,8 @@
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { Prisma, Status } from '@prisma/client';
-import { Input } from '../data-entry';
 import RegType from './RegType';
 import { AddIcon, TrashIcon } from '../icons';
+import Input from '../data-entry/Input';
 
 type Horses = {
   horses: Prisma.HorseCreateManyInput[];

@@ -2,7 +2,6 @@ import dynamic from 'next/dynamic';
 import { ReactElement, useState } from 'react';
 
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
-import type { TableSelection } from '@/components/tables';
 
 const DynamicShowsTable = dynamic(() => import('@/components/tables/Shows'));
 
@@ -21,6 +20,8 @@ const DynamicOwnersTable = dynamic(
 const DynamicRidersTable = dynamic(
   () => import('@/components/dashboard/tables/Riders')
 );
+
+type TableSelection = 'members' | 'horses' | 'owners' | 'riders' | 'shows';
 
 function Tables() {
   const [table, setTable] = useState<TableSelection>('members');
@@ -47,41 +48,36 @@ function Tables() {
         onClick={e => setTable(e.target.value)}
       >
         <button
-          className={`btn btn-sm p-1 lg:btn-md ${
-            memberSelected && 'btn-active'
-          }`}
+          className={`btn btn-sm p-1 lg:btn-md ${memberSelected && 'btn-active'
+            }`}
           value='members'
         >
           Members
         </button>
         <button
-          className={`btn btn-sm p-1 lg:btn-md ${
-            horseSelected && 'btn-active'
-          }`}
+          className={`btn btn-sm p-1 lg:btn-md ${horseSelected && 'btn-active'
+            }`}
           value='horses'
         >
           Horses
         </button>
         <button
-          className={`btn btn-sm p-1 lg:btn-md ${
-            ownersSelected && 'btn-active'
-          }`}
+          className={`btn btn-sm p-1 lg:btn-md ${ownersSelected && 'btn-active'
+            }`}
           value='owners'
         >
           Owners
         </button>
         <button
-          className={`btn btn-sm p-1 lg:btn-md ${
-            combosSelected && 'btn-active'
-          }`}
+          className={`btn btn-sm p-1 lg:btn-md ${combosSelected && 'btn-active'
+            }`}
           value='riders'
         >
           Riders
         </button>
         <button
-          className={`btn btn-sm p-1 lg:btn-md ${
-            showsSelected && 'btn-active'
-          }`}
+          className={`btn btn-sm p-1 lg:btn-md ${showsSelected && 'btn-active'
+            }`}
           value='shows'
         >
           Shows

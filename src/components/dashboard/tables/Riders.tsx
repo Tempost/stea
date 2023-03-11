@@ -1,4 +1,4 @@
-import { TableWithData } from '@/components/tables';
+import TableWithData from '@/components/tables/BaseTable';
 import { RouterOutputs, trpc } from '@/utils/trpc';
 
 import type { ColumnDef } from '@tanstack/react-table';

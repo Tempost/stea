@@ -13,3 +13,9 @@
 4. Still need to fix Radio comonent to respect when not using a form or react-hook-form
 
 5. Write seperate styled components that will be wrapped by the FormField component in ANOTHER component
+
+## BIG FEATURE TO POINT UPLOAD
+    1. Get list of names that will have points added
+    2. Display in UI
+    3. Make reviewable on dashboard
+    4. Can have button that finished the point submission after review

@@ -1,6 +1,6 @@
 import { DetailedHTMLProps, InputHTMLAttributes } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
-import { Radio } from '../data-entry';
+import Radio from '../data-entry/Radio';
 
 interface Props
   extends DetailedHTMLProps<

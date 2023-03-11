@@ -1,6 +1,6 @@
 import { UseFormRegisterReturn } from 'react-hook-form';
 
-import { Radio } from '@/components/data-entry';
+import Radio from '@/components/data-entry/Radio';
 import { useSetAtom } from 'jotai';
 import { updateFormState } from '@/utils/atoms';
 import { Status } from '@prisma/client';
