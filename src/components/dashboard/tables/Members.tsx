@@ -1,3 +1,4 @@
+import NewMemberForm from '@/components/forms/dashboard/NewMemberForm';
 import TableWithData from '@/components/tables/BaseTable';
 import { readableDateTime } from '@/utils/helpers';
 import { RouterOutputs, trpc } from '@/utils/trpc';
@@ -117,6 +118,7 @@ function DashboardMembers() {
           emails={members.data ? members.data?.map(member => member.email) : []}
         />
       </div>
+      <NewMemberForm />
       <TableWithData
         colDef={columns}
         query={members}

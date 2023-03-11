@@ -36,7 +36,6 @@ enum ShowType {
 
 enum Type {
   Individual
-  Family
   Business
 }
 

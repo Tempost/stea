@@ -104,6 +104,32 @@ export const members = router({
       }
     }),
 
+  manualAdd: dashboardProcedure
+    .input(MemberFormSchema.shape.member)
+    .mutation(async ({ input, ctx }) => {
+      const fullName = `${input.firstName} ${input.lastName}`;
+      try {
+        const member = await ctx.prisma.member.create({
+          data: {
+            fullName,
+            ...input,
+          },
+        });
+
+        return member;
+      } catch (error) {
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+          throw new TRPCError({
+            code: 'INTERNAL_SERVER_ERROR',
+            message: 'Unable to add new member.',
+            cause: error,
+          });
+        }
+
+        throw error;
+      }
+    }),
+
   remove: procedure
     .input(MemberWhereUniqueInputSchema)
     .mutation(async ({ input, ctx }) => {

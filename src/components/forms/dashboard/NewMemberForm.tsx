@@ -7,6 +7,11 @@ import { MemberFormSchema } from '@/utils/zodschemas';
 import Form from '../Form';
 import states from '@/utils/states.json';
 import { capitalize } from '@/utils/helpers';
+import ControlledDatePicker from '@/components/data-entry/Date';
+import { TypeSchema } from '@/server/prisma/zod-generated/inputTypeSchemas/TypeSchema';
+import { StatusSchema, StatusTypeSchema } from '@/server/prisma/zod-generated';
+import { trpc } from '@/utils/trpc';
+import { z } from 'zod';
 
 function NewMemberForm() {
   const form = useZodForm({
@@ -19,21 +24,40 @@ function NewMemberForm() {
   });
 
   const { register } = form;
+  const utils = trpc.useContext();
+  const insert = trpc.members.manualAdd.useMutation({
+    onSuccess() {
+      utils.members.invalidate();
+      form.clearErrors();
+      form.reset();
+    },
+  });
 
   // TODO: Better type after creating form
-  function onSubmit(formValues: any) {}
+  function onSubmit(formValues: z.infer<typeof MemberFormSchema.shape.member>) {
+    console.log('Working');
+    insert.mutate(formValues);
+  }
 
   return (
     <Modal
-      buttonLabel='Add Show'
+      buttonLabel='Add Member'
       onClick={() => {
         form.clearErrors();
         form.reset();
       }}
       ok={
         <button
-          form='show-form'
+          form='member-form'
           type='submit'
+          className={`btn-sm btn
+            ${
+              insert.isError
+                ? 'btn-error'
+                : insert.isSuccess
+                ? 'btn-success'
+                : ''
+            }`}
         >
           Add
         </button>
@@ -42,22 +66,25 @@ function NewMemberForm() {
       <Form
         form={form}
         onSubmit={onSubmit}
+        id='member-form'
       >
         <h3 className='text-lg font-bold'>Enter Member Information</h3>
-        <div className='flex flex-row gap-5'>
-          <Input
-            className='input-bordered input-primary input w-full md:input-sm'
-            type='text'
-            label='First Name'
-            {...register('firstName')}
-          />
+        <div className='flex flex-col gap-5'>
+          <span className='flex space-x-5'>
+            <Input
+              className='input-bordered input-primary input w-full md:input-sm'
+              type='text'
+              label='First Name'
+              {...register('firstName')}
+            />
 
-          <Input
-            className='input-bordered input-primary input w-full md:input-sm'
-            type='text'
-            label='Last Name'
-            {...register('lastName')}
-          />
+            <Input
+              className='input-bordered input-primary input w-full md:input-sm'
+              type='text'
+              label='Last Name'
+              {...register('lastName')}
+            />
+          </span>
 
           <Input
             className='input-bordered input-primary input w-full md:input-sm'
@@ -66,55 +93,59 @@ function NewMemberForm() {
             {...register('address')}
           />
 
-          <Input
-            className='input-bordered input-primary input w-full md:input-sm'
-            type='text'
-            placeholder='City'
-            {...register('city')}
-          />
+          <span className='flex space-x-5'>
+            <Input
+              className='input-bordered input-primary input w-full md:input-sm'
+              type='text'
+              placeholder='City'
+              {...register('city')}
+            />
 
-          <Select
-            className='select-bordered select-primary select w-full md:select-sm'
-            {...register('state')}
-          >
-            {states.map(state => (
-              <option
-                key={state.value}
-                value={state.value}
-              >
-                {capitalize(state.label)}
-              </option>
-            ))}
-          </Select>
+            <Select
+              className='select-bordered select-primary select w-full md:select-sm'
+              {...register('state')}
+            >
+              {states.map(state => (
+                <option
+                  key={state.value}
+                  value={state.value}
+                >
+                  {capitalize(state.label)}
+                </option>
+              ))}
+            </Select>
 
-          <Input
-            className='input-bordered input-primary input w-full md:input-sm'
-            type='numeric'
-            placeholder='Zip Code'
-            {...register('zip')}
-          />
+            <Input
+              className='input-bordered input-primary input w-full md:input-sm'
+              type='numeric'
+              placeholder='Zip Code'
+              {...register('zip', { valueAsNumber: true })}
+            />
+          </span>
 
-          <Select
-            label='Phone Type*'
-            className='select-bordered select-primary select md:select-sm'
-            {...register('phoneType')}
-          >
-            {Object.keys(PhoneTypeSchema.enum).map(type => (
-              <option
-                key={type}
-                value={type}
-              >
-                {type}
-              </option>
-            ))}
-          </Select>
+          <span className='flex space-x-5'>
+            <Select
+              label='Phone Type*'
+              className='select-bordered select-primary select md:select-sm'
+              {...register('phoneType')}
+            >
+              {Object.keys(PhoneTypeSchema.enum).map(type => (
+                <option
+                  key={type}
+                  value={type}
+                >
+                  {type}
+                </option>
+              ))}
+            </Select>
 
-          <Input
-            className='input-bordered input-primary input w-full md:input-sm'
-            type='text'
-            label='Phone Number'
-            {...register('phone')}
-          />
+            <Input
+              className='input-bordered input-primary input w-full md:input-sm'
+              type='text'
+              label='Phone Number'
+              {...register('phone')}
+            />
+          </span>
 
           <Input
             className='input-bordered input-primary input w-full md:input-sm'
@@ -122,6 +153,65 @@ function NewMemberForm() {
             label='Email'
             {...register('email')}
           />
+
+          <Input
+            className='input-bordered input-primary input w-full md:input-sm'
+            type='text'
+            label='USEA Member ID'
+            {...register('useaMemberID', { valueAsNumber: true })}
+          />
+
+          <ControlledDatePicker
+            name='dateOfBirth'
+            label='Date of Birth'
+          />
+
+          <span className='flex space-x-1'>
+            <Select
+              label='Membership Level'
+              className='select-bordered select-primary select md:select-sm'
+              {...register('memberStatus')}
+            >
+              {Object.keys(StatusSchema.enum).map(type => (
+                <option
+                  key={type}
+                  value={type}
+                >
+                  {type}
+                </option>
+              ))}
+            </Select>
+
+            <Select
+              label='Member Type'
+              className='select-bordered select-primary select md:select-sm'
+              {...register('memberType')}
+            >
+              {Object.keys(TypeSchema.enum).map(type => (
+                <option
+                  key={type}
+                  value={type}
+                >
+                  {type}
+                </option>
+              ))}
+            </Select>
+
+            <Select
+              label='Rider Level'
+              className='select-bordered select-primary select md:select-sm'
+              {...register('memberStatusType')}
+            >
+              {Object.keys(StatusTypeSchema.enum).map(type => (
+                <option
+                  key={type}
+                  value={type}
+                >
+                  {type}
+                </option>
+              ))}
+            </Select>
+          </span>
         </div>
       </Form>
     </Modal>

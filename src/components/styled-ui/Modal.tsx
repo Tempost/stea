@@ -10,7 +10,7 @@ function Modal({ buttonLabel, onClick, ok, children }: ModalProps) {
     <>
       <label
         htmlFor='my-modal-6'
-        className='modal-button btn-primary btn'
+        className='modal-button btn-primary btn btn-sm'
       >
         {buttonLabel ?? 'Open'}
       </label>
