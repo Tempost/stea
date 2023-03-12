@@ -12,6 +12,7 @@ import { TypeSchema } from '@/server/prisma/zod-generated/inputTypeSchemas/TypeS
 import { StatusSchema, StatusTypeSchema } from '@/server/prisma/zod-generated';
 import { trpc } from '@/utils/trpc';
 import { z } from 'zod';
+import { optionsFromObject } from '@/components/helpers';
 
 function NewMemberForm() {
   const form = useZodForm({
@@ -35,7 +36,6 @@ function NewMemberForm() {
 
   // TODO: Better type after creating form
   function onSubmit(formValues: z.infer<typeof MemberFormSchema.shape.member>) {
-    console.log('Working');
     insert.mutate(formValues);
   }
 
@@ -69,7 +69,7 @@ function NewMemberForm() {
         id='member-form'
       >
         <h3 className='text-lg font-bold'>Enter Member Information</h3>
-        <div className='flex flex-col gap-5'>
+        <div className='flex flex-col gap-1'>
           <span className='flex space-x-5'>
             <Input
               className='input-bordered input-primary input w-full md:input-sm'
@@ -129,14 +129,7 @@ function NewMemberForm() {
               className='select-bordered select-primary select md:select-sm'
               {...register('phoneType')}
             >
-              {Object.keys(PhoneTypeSchema.enum).map(type => (
-                <option
-                  key={type}
-                  value={type}
-                >
-                  {type}
-                </option>
-              ))}
+              {optionsFromObject(PhoneTypeSchema.enum)}
             </Select>
 
             <Input
@@ -172,14 +165,7 @@ function NewMemberForm() {
               className='select-bordered select-primary select md:select-sm'
               {...register('memberStatus')}
             >
-              {Object.keys(StatusSchema.enum).map(type => (
-                <option
-                  key={type}
-                  value={type}
-                >
-                  {type}
-                </option>
-              ))}
+              {optionsFromObject(StatusSchema.enum)}
             </Select>
 
             <Select
@@ -187,14 +173,7 @@ function NewMemberForm() {
               className='select-bordered select-primary select md:select-sm'
               {...register('memberType')}
             >
-              {Object.keys(TypeSchema.enum).map(type => (
-                <option
-                  key={type}
-                  value={type}
-                >
-                  {type}
-                </option>
-              ))}
+              {optionsFromObject(TypeSchema.enum)}
             </Select>
 
             <Select
@@ -202,14 +181,7 @@ function NewMemberForm() {
               className='select-bordered select-primary select md:select-sm'
               {...register('memberStatusType')}
             >
-              {Object.keys(StatusTypeSchema.enum).map(type => (
-                <option
-                  key={type}
-                  value={type}
-                >
-                  {type}
-                </option>
-              ))}
+              {optionsFromObject(StatusTypeSchema.enum)}
             </Select>
           </span>
         </div>
