@@ -1,10 +1,11 @@
 import { TRPCError } from '@trpc/server';
-import { procedure, router } from '@/server/trpc';
+import { dashboardProcedure, procedure, router } from '@/server/trpc';
 import { MyPrismaClient } from '../prisma';
 import { Horse } from '@prisma/client';
 import { HorseForm, HorseFormSchema } from '@/utils/zodschemas';
 import { HorseFindManyArgsSchema } from '../prisma/zod-generated/outputTypeSchemas/HorseFindManyArgsSchema';
 import { HorseWhereUniqueInputSchema } from '../prisma/zod-generated/inputTypeSchemas/HorseWhereUniqueInputSchema';
+import { HorseOptionalDefaultsSchema } from '../prisma/zod-generated/modelSchema/HorseSchema';
 
 export const horses = router({
   all: procedure
@@ -40,6 +41,45 @@ export const horses = router({
       }
 
       return horse;
+    }),
+
+  add: dashboardProcedure
+    .input(HorseOptionalDefaultsSchema)
+    .mutation(async ({ input, ctx }) => {
+      if (input.memberName !== null) {
+        return await ctx.prisma.horse.create({
+          data: {
+            horseRN: input.horseRN,
+            regType: input.regType,
+            horseAKA: input.horseAKA,
+            memberOwner: {
+              connect: {
+                fullName: input.memberName,
+              },
+            },
+          },
+        });
+      }
+
+      if (input.owner !== null) {
+        return await ctx.prisma.horse.create({
+          data: {
+            horseRN: input.horseRN,
+            regType: input.regType,
+            horseAKA: input.horseAKA,
+            ownerRec: {
+              connect: {
+                fullName: input.owner,
+              },
+            },
+          },
+        });
+      }
+
+      throw new TRPCError({
+        code: 'BAD_REQUEST',
+        message: 'Unable to add new horse.',
+      });
     }),
 
   exists: procedure.input(HorseFormSchema).mutation(async ({ input, ctx }) => {

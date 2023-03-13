@@ -6,10 +6,11 @@ import { TRPCError } from '@trpc/server';
 import { Prisma } from '@prisma/client';
 import { dashboardProcedure, procedure, router } from '@/server/trpc';
 import { OwnerHorseForm, OwnerHorseFormSchema } from '@/utils/zodschemas';
+import { NonMemberHorseOwnerFindManyArgsSchema } from '../prisma/zod-generated';
 
 export const nonMemberHorseOwners = router({
-  all: procedure.query(async ({ ctx }) => {
-    return await ctx.prisma.nonMemberHorseOwner.findMany();
+  all: procedure.input(NonMemberHorseOwnerFindManyArgsSchema).query(async ({ input, ctx }) => {
+    return await ctx.prisma.nonMemberHorseOwner.findMany(input);
   }),
 
   get: procedure

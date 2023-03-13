@@ -1,8 +1,8 @@
 import { RouterOutputs, trpc } from '@/utils/trpc';
 import TableWithData from './BaseTable';
 import { readableDateTime } from '@/utils/helpers';
-import AddNewShow from './AddNewShow';
 import type { ColumnDef } from '@tanstack/react-table';
+import AddNewShow from '@/components/forms/dashboard/AddNewShow';
 
 type Show = RouterOutputs['shows']['all'];
 

@@ -39,6 +39,7 @@ function NewMemberForm() {
     insert.mutate(formValues);
   }
 
+  // Issue with using space-x-1 with the buttons
   return (
     <Modal
       buttonLabel='Add Member'

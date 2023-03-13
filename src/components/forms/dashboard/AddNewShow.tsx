@@ -1,16 +1,16 @@
 import useZodForm from '@/utils/usezodform';
 import { trpc } from '@/utils/trpc';
-import Alert from '../forms/Alert';
-import Form from '../forms/Form';
+import Alert from '@/components/forms/Alert';
+import Form from '@/components/forms/Form';
 import {
   ShowOptionalDefaults,
   ShowOptionalDefaultsSchema,
 } from '@/server/prisma/zod-generated/modelSchema/ShowSchema';
-import Input from '../data-entry/Input';
-import Select from '../data-entry/Select';
-import ControlledDatePicker from '../data-entry/Date';
+import Input from '@/components/data-entry/Input';
+import Select from '@/components/data-entry/Select';
+import ControlledDatePicker from '@/components/data-entry/Date';
 import { ShowTypeSchema } from '@/server/prisma/zod-generated/inputTypeSchemas/ShowTypeSchema';
-import Modal from '../styled-ui/Modal';
+import Modal from '@/components/styled-ui/Modal';
 
 function AddNewShow() {
   const form = useZodForm({

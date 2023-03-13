@@ -9,6 +9,7 @@ import {
   MemberPayload,
   isMemberPayload,
   MonthAction,
+  OwnerType,
 } from '@/types/atoms';
 import { FormType, isFormType } from '@/types/common';
 
@@ -115,4 +116,10 @@ const changeMonth = atom(null, (_get, set, action: MonthAction) => {
   }
 });
 
-export { formState, updateFormState, selectedMonth, changeMonth };
+const ownerTypeAtom = atom('none');
+const changeSelectionAtom = atom(
+  get => get(ownerTypeAtom),
+  (_get, set, newSelection: OwnerType) => set(ownerTypeAtom, newSelection)
+);
+
+export { formState, updateFormState, selectedMonth, changeMonth, changeSelectionAtom, ownerTypeAtom };

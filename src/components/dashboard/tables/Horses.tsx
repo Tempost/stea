@@ -1,3 +1,4 @@
+import NewHorseForm from '@/components/forms/dashboard/NewHorseForm';
 import TableWithData from '@/components/tables/BaseTable';
 import { readableDateTime } from '@/utils/helpers';
 import { RouterOutputs, trpc } from '@/utils/trpc';
@@ -44,12 +45,15 @@ function DashboardHorses() {
   const horses = trpc.horses.all.useQuery();
 
   return (
-    <TableWithData
-      colDef={defaultCols}
-      query={horses}
-      paginate
-      search
-    />
+    <>
+      <NewHorseForm />
+      <TableWithData
+        colDef={defaultCols}
+        query={horses}
+        paginate
+        search
+      />
+    </>
   );
 }
 
