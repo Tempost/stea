@@ -2,7 +2,11 @@ export function removeUndefined<T>(data: (T | undefined)[]) {
   return data.filter((item: any): item is T => item !== undefined);
 }
 
-export function readableDateTime(date: string | Date) {
+export function readableDateTime(date: string | Date | null) {
+  if (!date) {
+    return 'N/A';
+  }
+
   if (typeof date === 'string') {
     date = new Date(date);
   }
