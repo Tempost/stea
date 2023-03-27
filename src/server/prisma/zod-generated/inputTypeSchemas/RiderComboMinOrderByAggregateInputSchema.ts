@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { SortOrderSchema } from './SortOrderSchema';
 
 export const RiderComboMinOrderByAggregateInputSchema: z.ZodType<Prisma.RiderComboMinOrderByAggregateInput> = z.object({
@@ -12,7 +12,7 @@ export const RiderComboMinOrderByAggregateInputSchema: z.ZodType<Prisma.RiderCom
   completedHT: z.lazy(() => SortOrderSchema).optional(),
   multiVenue: z.lazy(() => SortOrderSchema).optional(),
   memberName: z.lazy(() => SortOrderSchema).optional(),
-  horseName: z.lazy(() => SortOrderSchema).optional(),
+  horseName: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export default RiderComboMinOrderByAggregateInputSchema;

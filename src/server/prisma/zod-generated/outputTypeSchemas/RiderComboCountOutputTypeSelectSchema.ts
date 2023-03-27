@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
+import type { Prisma } from '@prisma/client';
 
 export const RiderComboCountOutputTypeSelectSchema: z.ZodType<Prisma.RiderComboCountOutputTypeSelect> = z.object({
   points: z.boolean().optional(),

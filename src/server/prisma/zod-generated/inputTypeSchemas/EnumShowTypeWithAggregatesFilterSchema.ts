@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { ShowTypeSchema } from './ShowTypeSchema';
 import { NestedEnumShowTypeWithAggregatesFilterSchema } from './NestedEnumShowTypeWithAggregatesFilterSchema';
 import { NestedIntFilterSchema } from './NestedIntFilterSchema';
@@ -12,7 +12,7 @@ export const EnumShowTypeWithAggregatesFilterSchema: z.ZodType<Prisma.EnumShowTy
   not: z.union([ z.lazy(() => ShowTypeSchema),z.lazy(() => NestedEnumShowTypeWithAggregatesFilterSchema) ]).optional(),
   _count: z.lazy(() => NestedIntFilterSchema).optional(),
   _min: z.lazy(() => NestedEnumShowTypeFilterSchema).optional(),
-  _max: z.lazy(() => NestedEnumShowTypeFilterSchema).optional(),
+  _max: z.lazy(() => NestedEnumShowTypeFilterSchema).optional()
 }).strict();
 
 export default EnumShowTypeWithAggregatesFilterSchema;

@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { SortOrderSchema } from './SortOrderSchema';
 import { RiderComboCountOrderByAggregateInputSchema } from './RiderComboCountOrderByAggregateInputSchema';
 import { RiderComboAvgOrderByAggregateInputSchema } from './RiderComboAvgOrderByAggregateInputSchema';
@@ -22,7 +22,7 @@ export const RiderComboOrderByWithAggregationInputSchema: z.ZodType<Prisma.Rider
   _avg: z.lazy(() => RiderComboAvgOrderByAggregateInputSchema).optional(),
   _max: z.lazy(() => RiderComboMaxOrderByAggregateInputSchema).optional(),
   _min: z.lazy(() => RiderComboMinOrderByAggregateInputSchema).optional(),
-  _sum: z.lazy(() => RiderComboSumOrderByAggregateInputSchema).optional(),
+  _sum: z.lazy(() => RiderComboSumOrderByAggregateInputSchema).optional()
 }).strict();
 
 export default RiderComboOrderByWithAggregationInputSchema;

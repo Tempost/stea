@@ -31,7 +31,7 @@ export interface MonthAction {
 const ownerType = ['none', 'member', 'non-member'] as const;
 export type OwnerType = (typeof ownerType)[number];
 export function isOwnerType(o: any): o is OwnerType {
-  return ownerType.includes(o)
+  return ownerType.includes(o);
 }
 
 export function isHorsePayload(o: any): o is HorsePayload {

@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { PointsScalarWhereInputSchema } from './PointsScalarWhereInputSchema';
 import { PointsUpdateManyMutationInputSchema } from './PointsUpdateManyMutationInputSchema';
 import { PointsUncheckedUpdateManyWithoutPointsInputSchema } from './PointsUncheckedUpdateManyWithoutPointsInputSchema';

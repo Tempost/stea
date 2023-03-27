@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { ShowTypeSchema } from './ShowTypeSchema';
 
 export const ShowCreateManyInputSchema: z.ZodType<Prisma.ShowCreateManyInput> = z.object({
@@ -11,7 +11,7 @@ export const ShowCreateManyInputSchema: z.ZodType<Prisma.ShowCreateManyInput> = 
   reviewed: z.boolean().optional(),
   showDate: z.coerce.date(),
   showEndDate: z.coerce.date().optional().nullable(),
-  url: z.string().trim().url({ message: "Must be a valid URL" }).optional().nullable(),
+  url: z.string().trim().url({ message: "Must be a valid URL" }).optional().nullable()
 }).strict();
 
 export default ShowCreateManyInputSchema;

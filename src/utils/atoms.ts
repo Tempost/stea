@@ -122,4 +122,11 @@ const changeSelectionAtom = atom(
   (_get, set, newSelection: OwnerType) => set(ownerTypeAtom, newSelection)
 );
 
-export { formState, updateFormState, selectedMonth, changeMonth, changeSelectionAtom, ownerTypeAtom };
+export {
+  formState,
+  updateFormState,
+  selectedMonth,
+  changeMonth,
+  changeSelectionAtom,
+  ownerTypeAtom,
+};

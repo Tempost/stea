@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { SortOrderSchema } from './SortOrderSchema';
 
 export const HorseMaxOrderByAggregateInputSchema: z.ZodType<Prisma.HorseMaxOrderByAggregateInput> = z.object({
@@ -10,7 +10,7 @@ export const HorseMaxOrderByAggregateInputSchema: z.ZodType<Prisma.HorseMaxOrder
   memberName: z.lazy(() => SortOrderSchema).optional(),
   registrationDate: z.lazy(() => SortOrderSchema).optional(),
   regType: z.lazy(() => SortOrderSchema).optional(),
-  owner: z.lazy(() => SortOrderSchema).optional(),
+  owner: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export default HorseMaxOrderByAggregateInputSchema;

@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { HorseScalarWhereInputSchema } from './HorseScalarWhereInputSchema';
 import { HorseUpdateManyMutationInputSchema } from './HorseUpdateManyMutationInputSchema';
 import { HorseUncheckedUpdateManyWithoutHorsesInputSchema } from './HorseUncheckedUpdateManyWithoutHorsesInputSchema';

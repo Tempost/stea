@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { StatusTypeSchema } from './StatusTypeSchema';
 
 export const NestedEnumStatusTypeFilterSchema: z.ZodType<Prisma.NestedEnumStatusTypeFilter> = z.object({

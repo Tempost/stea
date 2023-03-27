@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { NullableDateTimeFieldUpdateOperationsInputSchema } from './NullableDateTimeFieldUpdateOperationsInputSchema';
 import { StringFieldUpdateOperationsInputSchema } from './StringFieldUpdateOperationsInputSchema';
 import { BoolFieldUpdateOperationsInputSchema } from './BoolFieldUpdateOperationsInputSchema';
@@ -41,7 +41,7 @@ export const MemberUncheckedUpdateInputSchema: z.ZodType<Prisma.MemberUncheckedU
   zip: z.union([ z.number().int({message: "Zipcode is required"}),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   useaMemberID: z.union([ z.number().int(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   RiderCombo: z.lazy(() => RiderComboUncheckedUpdateManyWithoutMemberNestedInputSchema).optional(),
-  Horse: z.lazy(() => HorseUncheckedUpdateManyWithoutMemberOwnerNestedInputSchema).optional(),
+  Horse: z.lazy(() => HorseUncheckedUpdateManyWithoutMemberOwnerNestedInputSchema).optional()
 }).strict();
 
 export default MemberUncheckedUpdateInputSchema;

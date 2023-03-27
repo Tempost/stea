@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { DivisionSchema } from './DivisionSchema';
 
 export const RiderComboCreateManyInputSchema: z.ZodType<Prisma.RiderComboCreateManyInput> = z.object({
@@ -12,7 +12,7 @@ export const RiderComboCreateManyInputSchema: z.ZodType<Prisma.RiderComboCreateM
   completedHT: z.boolean().optional(),
   multiVenue: z.boolean().optional(),
   memberName: z.string().trim().min(1, { message: "Member Name is required" }),
-  horseName: z.string().trim().min(1, { message: "Horse Name is required" }),
+  horseName: z.string().trim().min(1, { message: "Horse Name is required" })
 }).strict();
 
 export default RiderComboCreateManyInputSchema;

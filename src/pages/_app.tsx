@@ -46,7 +46,10 @@ function MyApp({
         />
       </Head>
       <AtomsDevTools>
-        <SessionProvider session={session} refetchInterval={60 * 60 * 60 * 24}>
+        <SessionProvider
+          session={session}
+          refetchInterval={60 * 60 * 60 * 24}
+        >
           {getLayout(
             <>
               <Component {...pageProps} />

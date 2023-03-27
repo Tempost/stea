@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { ShowTypeSchema } from './ShowTypeSchema';
 import { RiderComboCreateNestedManyWithoutShowsInputSchema } from './RiderComboCreateNestedManyWithoutShowsInputSchema';
 
@@ -13,7 +13,7 @@ export const ShowCreateWithoutPointsInputSchema: z.ZodType<Prisma.ShowCreateWith
   showDate: z.coerce.date(),
   showEndDate: z.coerce.date().optional().nullable(),
   url: z.string().optional().nullable(),
-  riders: z.lazy(() => RiderComboCreateNestedManyWithoutShowsInputSchema).optional(),
+  riders: z.lazy(() => RiderComboCreateNestedManyWithoutShowsInputSchema).optional()
 }).strict();
 
 export default ShowCreateWithoutPointsInputSchema;

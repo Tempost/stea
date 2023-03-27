@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { DateTimeNullableFilterSchema } from './DateTimeNullableFilterSchema';
 import { StringFilterSchema } from './StringFilterSchema';
 import { EnumPhoneTypeFilterSchema } from './EnumPhoneTypeFilterSchema';
@@ -18,7 +18,7 @@ export const NonMemberHorseOwnerWhereInputSchema: z.ZodType<Prisma.NonMemberHors
   email: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   phone: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   phoneType: z.union([ z.lazy(() => EnumPhoneTypeFilterSchema),z.lazy(() => PhoneTypeSchema) ]).optional(),
-  horses: z.lazy(() => HorseListRelationFilterSchema).optional(),
+  horses: z.lazy(() => HorseListRelationFilterSchema).optional()
 }).strict();
 
 export default NonMemberHorseOwnerWhereInputSchema;

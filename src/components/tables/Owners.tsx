@@ -11,9 +11,14 @@ interface OwnerTableProps {
 }
 
 function OwnerTable({ search }: OwnerTableProps) {
-  const owners = trpc.nonMemberHorseOwners.all.useQuery({select: {
-    fullName: true, email: true, phone: true, createdAt: true
-  }});
+  const owners = trpc.nonMemberHorseOwners.all.useQuery({
+    select: {
+      fullName: true,
+      email: true,
+      phone: true,
+      createdAt: true,
+    },
+  });
 
   const ownerCols: ColumnDef<Owner>[] = [
     {

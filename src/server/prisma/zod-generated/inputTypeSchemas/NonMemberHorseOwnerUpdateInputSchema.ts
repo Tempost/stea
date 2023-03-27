@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { NullableDateTimeFieldUpdateOperationsInputSchema } from './NullableDateTimeFieldUpdateOperationsInputSchema';
 import { StringFieldUpdateOperationsInputSchema } from './StringFieldUpdateOperationsInputSchema';
 import { PhoneTypeSchema } from './PhoneTypeSchema';
@@ -15,7 +15,7 @@ export const NonMemberHorseOwnerUpdateInputSchema: z.ZodType<Prisma.NonMemberHor
   email: z.union([ z.string().trim().email({ message: "Invalid email address" }),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   phone: z.union([ z.string().trim().min(1, { message: "Phone number is required" }),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   phoneType: z.union([ z.lazy(() => PhoneTypeSchema),z.lazy(() => EnumPhoneTypeFieldUpdateOperationsInputSchema) ]).optional(),
-  horses: z.lazy(() => HorseUpdateManyWithoutOwnerRecNestedInputSchema).optional(),
+  horses: z.lazy(() => HorseUpdateManyWithoutOwnerRecNestedInputSchema).optional()
 }).strict();
 
 export default NonMemberHorseOwnerUpdateInputSchema;

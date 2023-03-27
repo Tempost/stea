@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
+import type { Prisma } from '@prisma/client';
 import { PointsIncludeSchema } from '../inputTypeSchemas/PointsIncludeSchema'
 import { PointsWhereInputSchema } from '../inputTypeSchemas/PointsWhereInputSchema'
 import { PointsOrderByWithRelationInputSchema } from '../inputTypeSchemas/PointsOrderByWithRelationInputSchema'

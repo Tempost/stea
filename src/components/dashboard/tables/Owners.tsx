@@ -6,9 +6,14 @@ import TableWithData from '@/components/tables/BaseTable';
 type Owner = RouterOutputs['nonMemberHorseOwners']['all'][number];
 
 function DashboardOwners() {
-  const owners = trpc.nonMemberHorseOwners.all.useQuery({select: {
-    fullName: true, email: true, phone: true, createdAt: true
-  }});
+  const owners = trpc.nonMemberHorseOwners.all.useQuery({
+    select: {
+      fullName: true,
+      email: true,
+      phone: true,
+      createdAt: true,
+    },
+  });
 
   const defaultCols: ColumnDef<Owner>[] = [
     {

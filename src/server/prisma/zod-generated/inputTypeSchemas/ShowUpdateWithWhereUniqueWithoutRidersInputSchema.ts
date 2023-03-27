@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { ShowWhereUniqueInputSchema } from './ShowWhereUniqueInputSchema';
 import { ShowUpdateWithoutRidersInputSchema } from './ShowUpdateWithoutRidersInputSchema';
 import { ShowUncheckedUpdateWithoutRidersInputSchema } from './ShowUncheckedUpdateWithoutRidersInputSchema';

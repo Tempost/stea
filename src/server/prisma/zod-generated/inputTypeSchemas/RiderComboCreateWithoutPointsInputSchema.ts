@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { DivisionSchema } from './DivisionSchema';
 import { MemberCreateNestedOneWithoutRiderComboInputSchema } from './MemberCreateNestedOneWithoutRiderComboInputSchema';
 import { HorseCreateNestedOneWithoutRiderComboInputSchema } from './HorseCreateNestedOneWithoutRiderComboInputSchema';
@@ -16,7 +16,7 @@ export const RiderComboCreateWithoutPointsInputSchema: z.ZodType<Prisma.RiderCom
   multiVenue: z.boolean().optional(),
   member: z.lazy(() => MemberCreateNestedOneWithoutRiderComboInputSchema),
   horse: z.lazy(() => HorseCreateNestedOneWithoutRiderComboInputSchema),
-  shows: z.lazy(() => ShowCreateNestedManyWithoutRidersInputSchema).optional(),
+  shows: z.lazy(() => ShowCreateNestedManyWithoutRidersInputSchema).optional()
 }).strict();
 
 export default RiderComboCreateWithoutPointsInputSchema;

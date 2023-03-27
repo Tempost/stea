@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { PhoneTypeSchema } from './PhoneTypeSchema';
 import { TypeSchema } from './TypeSchema';
 import { StatusSchema } from './StatusSchema';
@@ -29,7 +29,7 @@ export const MemberCreateWithoutRiderComboInputSchema: z.ZodType<Prisma.MemberCr
   dateOfBirth: z.coerce.date().optional().nullable(),
   zip: z.number(),
   useaMemberID: z.number().optional().nullable(),
-  Horse: z.lazy(() => HorseCreateNestedManyWithoutMemberOwnerInputSchema).optional(),
+  Horse: z.lazy(() => HorseCreateNestedManyWithoutMemberOwnerInputSchema).optional()
 }).strict();
 
 export default MemberCreateWithoutRiderComboInputSchema;

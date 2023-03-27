@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { PhoneTypeSchema } from './PhoneTypeSchema';
 import { TypeSchema } from './TypeSchema';
 import { StatusSchema } from './StatusSchema';
@@ -31,7 +31,7 @@ export const MemberUncheckedCreateInputSchema: z.ZodType<Prisma.MemberUncheckedC
   zip: z.number().int({message: "Zipcode is required"}),
   useaMemberID: z.number().int().optional().nullable(),
   RiderCombo: z.lazy(() => RiderComboUncheckedCreateNestedManyWithoutMemberInputSchema).optional(),
-  Horse: z.lazy(() => HorseUncheckedCreateNestedManyWithoutMemberOwnerInputSchema).optional(),
+  Horse: z.lazy(() => HorseUncheckedCreateNestedManyWithoutMemberOwnerInputSchema).optional()
 }).strict();
 
 export default MemberUncheckedCreateInputSchema;

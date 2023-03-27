@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { StringFilterSchema } from './StringFilterSchema';
 import { DateTimeNullableFilterSchema } from './DateTimeNullableFilterSchema';
 import { EnumShowTypeFilterSchema } from './EnumShowTypeFilterSchema';
@@ -24,7 +24,7 @@ export const ShowWhereInputSchema: z.ZodType<Prisma.ShowWhereInput> = z.object({
   showEndDate: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
   url: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   riders: z.lazy(() => RiderComboListRelationFilterSchema).optional(),
-  points: z.lazy(() => PointsListRelationFilterSchema).optional(),
+  points: z.lazy(() => PointsListRelationFilterSchema).optional()
 }).strict();
 
 export default ShowWhereInputSchema;

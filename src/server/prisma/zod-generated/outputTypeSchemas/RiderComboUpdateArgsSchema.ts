@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
+import type { Prisma } from '@prisma/client';
 import { RiderComboIncludeSchema } from '../inputTypeSchemas/RiderComboIncludeSchema'
 import { RiderComboUpdateInputSchema } from '../inputTypeSchemas/RiderComboUpdateInputSchema'
 import { RiderComboUncheckedUpdateInputSchema } from '../inputTypeSchemas/RiderComboUncheckedUpdateInputSchema'

@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { DivisionSchema } from './DivisionSchema';
 
 export const NestedEnumDivisionFilterSchema: z.ZodType<Prisma.NestedEnumDivisionFilter> = z.object({

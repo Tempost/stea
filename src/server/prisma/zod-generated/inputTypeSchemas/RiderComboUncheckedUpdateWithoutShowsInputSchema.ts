@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { StringFieldUpdateOperationsInputSchema } from './StringFieldUpdateOperationsInputSchema';
 import { NullableDateTimeFieldUpdateOperationsInputSchema } from './NullableDateTimeFieldUpdateOperationsInputSchema';
 import { DivisionSchema } from './DivisionSchema';
@@ -20,7 +20,7 @@ export const RiderComboUncheckedUpdateWithoutShowsInputSchema: z.ZodType<Prisma.
   multiVenue: z.union([ z.boolean(),z.lazy(() => BoolFieldUpdateOperationsInputSchema) ]).optional(),
   memberName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   horseName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  points: z.lazy(() => PointsUncheckedUpdateManyWithoutRiderComboNestedInputSchema).optional(),
+  points: z.lazy(() => PointsUncheckedUpdateManyWithoutRiderComboNestedInputSchema).optional()
 }).strict();
 
 export default RiderComboUncheckedUpdateWithoutShowsInputSchema;

@@ -9,9 +9,11 @@ import { OwnerHorseForm, OwnerHorseFormSchema } from '@/utils/zodschemas';
 import { NonMemberHorseOwnerFindManyArgsSchema } from '../prisma/zod-generated';
 
 export const nonMemberHorseOwners = router({
-  all: procedure.input(NonMemberHorseOwnerFindManyArgsSchema).query(async ({ input, ctx }) => {
-    return await ctx.prisma.nonMemberHorseOwner.findMany(input);
-  }),
+  all: procedure
+    .input(NonMemberHorseOwnerFindManyArgsSchema)
+    .query(async ({ input, ctx }) => {
+      return await ctx.prisma.nonMemberHorseOwner.findMany(input);
+    }),
 
   get: procedure
     .input(z.object({ ownerName: z.string() }))

@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { ShowTypeSchema } from './ShowTypeSchema';
 import { PointsCreateNestedManyWithoutShowInputSchema } from './PointsCreateNestedManyWithoutShowInputSchema';
 
@@ -13,7 +13,7 @@ export const ShowCreateWithoutRidersInputSchema: z.ZodType<Prisma.ShowCreateWith
   showDate: z.coerce.date(),
   showEndDate: z.coerce.date().optional().nullable(),
   url: z.string().optional().nullable(),
-  points: z.lazy(() => PointsCreateNestedManyWithoutShowInputSchema).optional(),
+  points: z.lazy(() => PointsCreateNestedManyWithoutShowInputSchema).optional()
 }).strict();
 
 export default ShowCreateWithoutRidersInputSchema;

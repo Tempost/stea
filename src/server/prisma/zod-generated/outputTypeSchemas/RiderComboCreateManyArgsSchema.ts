@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
+import type { Prisma } from '@prisma/client';
 import { RiderComboCreateManyInputSchema } from '../inputTypeSchemas/RiderComboCreateManyInputSchema'
 
 export const RiderComboCreateManyArgsSchema: z.ZodType<Prisma.RiderComboCreateManyArgs> = z.object({

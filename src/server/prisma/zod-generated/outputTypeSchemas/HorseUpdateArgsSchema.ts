@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
+import type { Prisma } from '@prisma/client';
 import { HorseIncludeSchema } from '../inputTypeSchemas/HorseIncludeSchema'
 import { HorseUpdateInputSchema } from '../inputTypeSchemas/HorseUpdateInputSchema'
 import { HorseUncheckedUpdateInputSchema } from '../inputTypeSchemas/HorseUncheckedUpdateInputSchema'

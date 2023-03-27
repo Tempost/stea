@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
+import type { Prisma } from '@prisma/client';
 import { NonMemberHorseOwnerWhereInputSchema } from '../inputTypeSchemas/NonMemberHorseOwnerWhereInputSchema'
 import { NonMemberHorseOwnerOrderByWithRelationInputSchema } from '../inputTypeSchemas/NonMemberHorseOwnerOrderByWithRelationInputSchema'
 import { NonMemberHorseOwnerWhereUniqueInputSchema } from '../inputTypeSchemas/NonMemberHorseOwnerWhereUniqueInputSchema'

@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { StringFilterSchema } from './StringFilterSchema';
 import { DateTimeNullableFilterSchema } from './DateTimeNullableFilterSchema';
 import { EnumDivisionFilterSchema } from './EnumDivisionFilterSchema';
@@ -31,7 +31,7 @@ export const RiderComboWhereInputSchema: z.ZodType<Prisma.RiderComboWhereInput> 
   member: z.union([ z.lazy(() => MemberRelationFilterSchema),z.lazy(() => MemberWhereInputSchema) ]).optional(),
   horse: z.union([ z.lazy(() => HorseRelationFilterSchema),z.lazy(() => HorseWhereInputSchema) ]).optional(),
   points: z.lazy(() => PointsListRelationFilterSchema).optional(),
-  shows: z.lazy(() => ShowListRelationFilterSchema).optional(),
+  shows: z.lazy(() => ShowListRelationFilterSchema).optional()
 }).strict();
 
 export default RiderComboWhereInputSchema;

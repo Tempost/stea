@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
+import type { Prisma } from '@prisma/client';
 import { HorseWhereInputSchema } from '../inputTypeSchemas/HorseWhereInputSchema'
 import { HorseOrderByWithAggregationInputSchema } from '../inputTypeSchemas/HorseOrderByWithAggregationInputSchema'
 import { HorseScalarFieldEnumSchema } from '../inputTypeSchemas/HorseScalarFieldEnumSchema'

@@ -1,9 +1,7 @@
 import { z } from 'zod';
 import { StatusSchema } from '../inputTypeSchemas/StatusSchema'
-import { type NonMemberHorseOwnerWithRelations, NonMemberHorseOwnerWithRelationsSchema } from './NonMemberHorseOwnerSchema'
 import { type MemberWithRelations, MemberWithRelationsSchema } from './MemberSchema'
 import { type RiderComboWithRelations, RiderComboWithRelationsSchema } from './RiderComboSchema'
-import { type NonMemberHorseOwnerPartialWithRelations, NonMemberHorseOwnerPartialWithRelationsSchema } from './NonMemberHorseOwnerSchema'
 import { type MemberPartialWithRelations, MemberPartialWithRelationsSchema } from './MemberSchema'
 import { type RiderComboPartialWithRelations, RiderComboPartialWithRelationsSchema } from './RiderComboSchema'
 

@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { StatusTypeSchema } from './StatusTypeSchema';
 import { NestedIntFilterSchema } from './NestedIntFilterSchema';
 import { NestedEnumStatusTypeFilterSchema } from './NestedEnumStatusTypeFilterSchema';
@@ -11,7 +11,7 @@ export const NestedEnumStatusTypeWithAggregatesFilterSchema: z.ZodType<Prisma.Ne
   not: z.union([ z.lazy(() => StatusTypeSchema),z.lazy(() => NestedEnumStatusTypeWithAggregatesFilterSchema) ]).optional(),
   _count: z.lazy(() => NestedIntFilterSchema).optional(),
   _min: z.lazy(() => NestedEnumStatusTypeFilterSchema).optional(),
-  _max: z.lazy(() => NestedEnumStatusTypeFilterSchema).optional(),
+  _max: z.lazy(() => NestedEnumStatusTypeFilterSchema).optional()
 }).strict();
 
 export default NestedEnumStatusTypeWithAggregatesFilterSchema;

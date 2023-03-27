@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { StatusSchema } from './StatusSchema';
 
 export const HorseCreateManyOwnerRecInputSchema: z.ZodType<Prisma.HorseCreateManyOwnerRecInput> = z.object({
@@ -9,7 +9,7 @@ export const HorseCreateManyOwnerRecInputSchema: z.ZodType<Prisma.HorseCreateMan
   horseAKA: z.string().trim().optional().nullable(),
   memberName: z.string().optional().nullable(),
   registrationDate: z.coerce.date().optional().nullable(),
-  regType: z.lazy(() => StatusSchema),
+  regType: z.lazy(() => StatusSchema)
 }).strict();
 
 export default HorseCreateManyOwnerRecInputSchema;

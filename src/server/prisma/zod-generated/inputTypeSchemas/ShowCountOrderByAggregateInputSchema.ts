@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { SortOrderSchema } from './SortOrderSchema';
 
 export const ShowCountOrderByAggregateInputSchema: z.ZodType<Prisma.ShowCountOrderByAggregateInput> = z.object({
@@ -11,7 +11,7 @@ export const ShowCountOrderByAggregateInputSchema: z.ZodType<Prisma.ShowCountOrd
   reviewed: z.lazy(() => SortOrderSchema).optional(),
   showDate: z.lazy(() => SortOrderSchema).optional(),
   showEndDate: z.lazy(() => SortOrderSchema).optional(),
-  url: z.lazy(() => SortOrderSchema).optional(),
+  url: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export default ShowCountOrderByAggregateInputSchema;

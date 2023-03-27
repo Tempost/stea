@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { PhoneTypeSchema } from './PhoneTypeSchema';
 
 export const NonMemberHorseOwnerUncheckedCreateWithoutHorsesInputSchema: z.ZodType<Prisma.NonMemberHorseOwnerUncheckedCreateWithoutHorsesInput> = z.object({
@@ -10,7 +10,7 @@ export const NonMemberHorseOwnerUncheckedCreateWithoutHorsesInputSchema: z.ZodTy
   fullName: z.string(),
   email: z.string(),
   phone: z.string(),
-  phoneType: z.lazy(() => PhoneTypeSchema).optional(),
+  phoneType: z.lazy(() => PhoneTypeSchema).optional()
 }).strict();
 
 export default NonMemberHorseOwnerUncheckedCreateWithoutHorsesInputSchema;

@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { PointsWhereUniqueInputSchema } from './PointsWhereUniqueInputSchema';
 import { PointsCreateWithoutRiderComboInputSchema } from './PointsCreateWithoutRiderComboInputSchema';
 import { PointsUncheckedCreateWithoutRiderComboInputSchema } from './PointsUncheckedCreateWithoutRiderComboInputSchema';

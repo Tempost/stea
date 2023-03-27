@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { NullableDateTimeFieldUpdateOperationsInputSchema } from './NullableDateTimeFieldUpdateOperationsInputSchema';
 import { StringFieldUpdateOperationsInputSchema } from './StringFieldUpdateOperationsInputSchema';
 import { BoolFieldUpdateOperationsInputSchema } from './BoolFieldUpdateOperationsInputSchema';
@@ -39,7 +39,7 @@ export const MemberUncheckedUpdateWithoutRiderComboInputSchema: z.ZodType<Prisma
   dateOfBirth: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   zip: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   useaMemberID: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  Horse: z.lazy(() => HorseUncheckedUpdateManyWithoutMemberOwnerNestedInputSchema).optional(),
+  Horse: z.lazy(() => HorseUncheckedUpdateManyWithoutMemberOwnerNestedInputSchema).optional()
 }).strict();
 
 export default MemberUncheckedUpdateWithoutRiderComboInputSchema;

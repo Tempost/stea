@@ -47,9 +47,10 @@ function AddNewShow() {
       ok={
         <button
           className={`btn-sm btn
-            ${addNew.isError
-              ? 'btn-error'
-              : addNew.isSuccess
+            ${
+              addNew.isError
+                ? 'btn-error'
+                : addNew.isSuccess
                 ? 'btn-success'
                 : ''
             }`}

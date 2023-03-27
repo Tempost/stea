@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { NullableDateTimeFieldUpdateOperationsInputSchema } from './NullableDateTimeFieldUpdateOperationsInputSchema';
 import { StringFieldUpdateOperationsInputSchema } from './StringFieldUpdateOperationsInputSchema';
 import { NullableStringFieldUpdateOperationsInputSchema } from './NullableStringFieldUpdateOperationsInputSchema';
@@ -16,7 +16,7 @@ export const HorseUpdateWithoutOwnerRecInputSchema: z.ZodType<Prisma.HorseUpdate
   registrationDate: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   regType: z.union([ z.lazy(() => StatusSchema),z.lazy(() => EnumStatusFieldUpdateOperationsInputSchema) ]).optional(),
   memberOwner: z.lazy(() => MemberUpdateOneWithoutHorseNestedInputSchema).optional(),
-  RiderCombo: z.lazy(() => RiderComboUpdateManyWithoutHorseNestedInputSchema).optional(),
+  RiderCombo: z.lazy(() => RiderComboUpdateManyWithoutHorseNestedInputSchema).optional()
 }).strict();
 
 export default HorseUpdateWithoutOwnerRecInputSchema;

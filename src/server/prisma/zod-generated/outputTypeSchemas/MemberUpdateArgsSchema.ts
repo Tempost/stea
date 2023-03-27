@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
+import type { Prisma } from '@prisma/client';
 import { MemberIncludeSchema } from '../inputTypeSchemas/MemberIncludeSchema'
 import { MemberUpdateInputSchema } from '../inputTypeSchemas/MemberUpdateInputSchema'
 import { MemberUncheckedUpdateInputSchema } from '../inputTypeSchemas/MemberUncheckedUpdateInputSchema'

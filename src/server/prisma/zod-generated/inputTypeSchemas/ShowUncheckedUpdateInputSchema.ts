@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { StringFieldUpdateOperationsInputSchema } from './StringFieldUpdateOperationsInputSchema';
 import { NullableDateTimeFieldUpdateOperationsInputSchema } from './NullableDateTimeFieldUpdateOperationsInputSchema';
 import { ShowTypeSchema } from './ShowTypeSchema';
@@ -21,7 +21,7 @@ export const ShowUncheckedUpdateInputSchema: z.ZodType<Prisma.ShowUncheckedUpdat
   showEndDate: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   url: z.union([ z.string().trim().url({ message: "Must be a valid URL" }),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   riders: z.lazy(() => RiderComboUncheckedUpdateManyWithoutShowsNestedInputSchema).optional(),
-  points: z.lazy(() => PointsUncheckedUpdateManyWithoutShowNestedInputSchema).optional(),
+  points: z.lazy(() => PointsUncheckedUpdateManyWithoutShowNestedInputSchema).optional()
 }).strict();
 
 export default ShowUncheckedUpdateInputSchema;

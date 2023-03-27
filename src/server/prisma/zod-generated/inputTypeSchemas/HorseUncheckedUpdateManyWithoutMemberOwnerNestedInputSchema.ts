@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { HorseCreateWithoutMemberOwnerInputSchema } from './HorseCreateWithoutMemberOwnerInputSchema';
 import { HorseUncheckedCreateWithoutMemberOwnerInputSchema } from './HorseUncheckedCreateWithoutMemberOwnerInputSchema';
 import { HorseCreateOrConnectWithoutMemberOwnerInputSchema } from './HorseCreateOrConnectWithoutMemberOwnerInputSchema';

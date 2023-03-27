@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { SortOrderSchema } from './SortOrderSchema';
 
 export const MemberMaxOrderByAggregateInputSchema: z.ZodType<Prisma.MemberMaxOrderByAggregateInput> = z.object({
@@ -24,7 +24,7 @@ export const MemberMaxOrderByAggregateInputSchema: z.ZodType<Prisma.MemberMaxOrd
   memberStatusType: z.lazy(() => SortOrderSchema).optional(),
   dateOfBirth: z.lazy(() => SortOrderSchema).optional(),
   zip: z.lazy(() => SortOrderSchema).optional(),
-  useaMemberID: z.lazy(() => SortOrderSchema).optional(),
+  useaMemberID: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export default MemberMaxOrderByAggregateInputSchema;

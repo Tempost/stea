@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { TypeSchema } from './TypeSchema';
 import { NestedIntFilterSchema } from './NestedIntFilterSchema';
 import { NestedEnumTypeFilterSchema } from './NestedEnumTypeFilterSchema';
@@ -11,7 +11,7 @@ export const NestedEnumTypeWithAggregatesFilterSchema: z.ZodType<Prisma.NestedEn
   not: z.union([ z.lazy(() => TypeSchema),z.lazy(() => NestedEnumTypeWithAggregatesFilterSchema) ]).optional(),
   _count: z.lazy(() => NestedIntFilterSchema).optional(),
   _min: z.lazy(() => NestedEnumTypeFilterSchema).optional(),
-  _max: z.lazy(() => NestedEnumTypeFilterSchema).optional(),
+  _max: z.lazy(() => NestedEnumTypeFilterSchema).optional()
 }).strict();
 
 export default NestedEnumTypeWithAggregatesFilterSchema;

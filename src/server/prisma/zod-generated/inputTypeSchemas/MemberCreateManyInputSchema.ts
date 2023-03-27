@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { PhoneTypeSchema } from './PhoneTypeSchema';
 import { TypeSchema } from './TypeSchema';
 import { StatusSchema } from './StatusSchema';
@@ -27,7 +27,7 @@ export const MemberCreateManyInputSchema: z.ZodType<Prisma.MemberCreateManyInput
   memberStatusType: z.lazy(() => StatusTypeSchema),
   dateOfBirth: z.coerce.date().optional().nullable(),
   zip: z.number().int({message: "Zipcode is required"}),
-  useaMemberID: z.number().int().optional().nullable(),
+  useaMemberID: z.number().int().optional().nullable()
 }).strict();
 
 export default MemberCreateManyInputSchema;

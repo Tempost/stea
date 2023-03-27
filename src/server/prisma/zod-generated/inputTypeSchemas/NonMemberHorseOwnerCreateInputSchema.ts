@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { PhoneTypeSchema } from './PhoneTypeSchema';
 import { HorseCreateNestedManyWithoutOwnerRecInputSchema } from './HorseCreateNestedManyWithoutOwnerRecInputSchema';
 
@@ -12,7 +12,7 @@ export const NonMemberHorseOwnerCreateInputSchema: z.ZodType<Prisma.NonMemberHor
   email: z.string().trim().email({ message: "Invalid email address" }),
   phone: z.string().trim().min(1, { message: "Phone number is required" }),
   phoneType: z.lazy(() => PhoneTypeSchema).optional(),
-  horses: z.lazy(() => HorseCreateNestedManyWithoutOwnerRecInputSchema).optional(),
+  horses: z.lazy(() => HorseCreateNestedManyWithoutOwnerRecInputSchema).optional()
 }).strict();
 
 export default NonMemberHorseOwnerCreateInputSchema;

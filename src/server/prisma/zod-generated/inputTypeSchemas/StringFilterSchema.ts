@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { NestedStringFilterSchema } from './NestedStringFilterSchema';
 
 export const StringFilterSchema: z.ZodType<Prisma.StringFilter> = z.object({

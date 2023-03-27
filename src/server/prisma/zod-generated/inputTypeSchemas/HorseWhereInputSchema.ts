@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { DateTimeNullableFilterSchema } from './DateTimeNullableFilterSchema';
 import { StringFilterSchema } from './StringFilterSchema';
 import { StringNullableFilterSchema } from './StringNullableFilterSchema';
@@ -25,7 +25,7 @@ export const HorseWhereInputSchema: z.ZodType<Prisma.HorseWhereInput> = z.object
   owner: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   ownerRec: z.union([ z.lazy(() => NonMemberHorseOwnerRelationFilterSchema),z.lazy(() => NonMemberHorseOwnerWhereInputSchema) ]).optional().nullable(),
   memberOwner: z.union([ z.lazy(() => MemberRelationFilterSchema),z.lazy(() => MemberWhereInputSchema) ]).optional().nullable(),
-  RiderCombo: z.lazy(() => RiderComboListRelationFilterSchema).optional(),
+  RiderCombo: z.lazy(() => RiderComboListRelationFilterSchema).optional()
 }).strict();
 
 export default HorseWhereInputSchema;

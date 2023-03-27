@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { SortOrderSchema } from './SortOrderSchema';
 import { NonMemberHorseOwnerCountOrderByAggregateInputSchema } from './NonMemberHorseOwnerCountOrderByAggregateInputSchema';
 import { NonMemberHorseOwnerMaxOrderByAggregateInputSchema } from './NonMemberHorseOwnerMaxOrderByAggregateInputSchema';
@@ -16,7 +16,7 @@ export const NonMemberHorseOwnerOrderByWithAggregationInputSchema: z.ZodType<Pri
   phoneType: z.lazy(() => SortOrderSchema).optional(),
   _count: z.lazy(() => NonMemberHorseOwnerCountOrderByAggregateInputSchema).optional(),
   _max: z.lazy(() => NonMemberHorseOwnerMaxOrderByAggregateInputSchema).optional(),
-  _min: z.lazy(() => NonMemberHorseOwnerMinOrderByAggregateInputSchema).optional(),
+  _min: z.lazy(() => NonMemberHorseOwnerMinOrderByAggregateInputSchema).optional()
 }).strict();
 
 export default NonMemberHorseOwnerOrderByWithAggregationInputSchema;

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
+import type { Prisma } from '@prisma/client';
 import { PointsSelectSchema } from '../inputTypeSchemas/PointsSelectSchema';
 import { PointsIncludeSchema } from '../inputTypeSchemas/PointsIncludeSchema';
 

@@ -1,5 +1,5 @@
+import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { type Prisma } from '@prisma/client';
 import { SortOrderSchema } from './SortOrderSchema';
 import { RiderComboOrderByRelationAggregateInputSchema } from './RiderComboOrderByRelationAggregateInputSchema';
 import { HorseOrderByRelationAggregateInputSchema } from './HorseOrderByRelationAggregateInputSchema';
@@ -28,7 +28,7 @@ export const MemberOrderByWithRelationInputSchema: z.ZodType<Prisma.MemberOrderB
   zip: z.lazy(() => SortOrderSchema).optional(),
   useaMemberID: z.lazy(() => SortOrderSchema).optional(),
   RiderCombo: z.lazy(() => RiderComboOrderByRelationAggregateInputSchema).optional(),
-  Horse: z.lazy(() => HorseOrderByRelationAggregateInputSchema).optional(),
+  Horse: z.lazy(() => HorseOrderByRelationAggregateInputSchema).optional()
 }).strict();
 
 export default MemberOrderByWithRelationInputSchema;
