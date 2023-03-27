@@ -1,7 +1,7 @@
 {
   "git": {
     "deploymentEnabled": {
-      "dashboard-crud": false
+      "points-paypal-button": false
     }
   }
 }
