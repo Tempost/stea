@@ -11,6 +11,7 @@ import {
 
 import { formState } from '@/utils/atoms';
 import Alert from './Alert';
+import PayPalButton from '../styled-ui/PayPalButton';
 
 interface PaymentProps extends PropsWithChildren {
   showPayment: boolean;
@@ -63,19 +64,10 @@ function Payment({ showPayment, children, formMutation }: PaymentProps) {
           <h4 className='text-lg font-bold'>
             Your sign-up costs ${amountOwed} USD
           </h4>
-          <button className='w-full'>
-            <PayPalButtons
-              fundingSource='paypal'
-              style={{
-                layout: 'horizontal',
-                color: 'blue',
-                label: 'paypal',
-                tagline: false,
-              }}
-              createOrder={createOrder}
-              onApprove={onApprove}
-            />
-          </button>
+          <PayPalButton
+            createOrder={createOrder}
+            onApprove={onApprove}
+          />
         </div>
       ) : (
         <>
