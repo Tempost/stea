@@ -20,6 +20,7 @@ import {
   ParseError,
 } from '@/types/common';
 import { prisma } from '@/server/prisma';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 
 export default async function handler(
   req: NextApiRequest,
@@ -32,6 +33,14 @@ export default async function handler(
     return res.status(405).json({ message: 'Method Not Allowed.' });
   }
 
+  const params = req.query;
+  if (!isShowUniqueArgs(params)) {
+    console.log(JSON.stringify(params, null, 2));
+    return res
+      .status(500)
+      .json({ message: 'Points for show already submitted.' });
+  }
+
   const token = await getToken({ req });
   if (!token) {
     console.warn('Attempted to access api protected by auth.');
@@ -39,20 +48,15 @@ export default async function handler(
   }
 
   try {
-    const entries = parseCSV(req.body);
+    const entries = await parseCSV(req.body);
 
     // No Errors found when parsing, we can start inserting into db
-    if (!entries.every(entry => entry.success)) {
-      console.log(JSON.stringify(entries, null, 2));
-      const parseErrors = entries
-        .map(entry => {
-          if (!entry.success) {
-            return entry.error.flatten().fieldErrors;
-          }
-        })
-        .filter(isZodFieldError<Entry>);
-
-      console.log('Error parsing csv', JSON.stringify(parseErrors, null, 2));
+    const parseErrors = filterZodErrors(entries);
+    if (parseErrors) {
+      console.error(
+        'Zod errors while parsing csv',
+        JSON.stringify(parseErrors, null, 2)
+      );
       return res.status(500).json({ message: parseErrors });
     }
 
@@ -64,21 +68,34 @@ export default async function handler(
 
     const grouped = groupEntries(parsedEntries);
 
-    const params = req.query;
-    if (!isShowUniqueArgs(params)) {
-      console.log(JSON.stringify(params, null, 2));
-      return res.status(500).json({ message: 'Invalid query param passed.' });
-    }
-
     await uploadPoints(grouped, params.showUID);
 
     return res.status(200).json({ success: true });
   } catch (err) {
+    if (err instanceof PrismaClientKnownRequestError) {
+      console.error(err);
+      return res.status(500).json({ message: err.message });
+    }
+
     // TODO: Maybe add check for prisma error here first, then the generic erorr
     if (err instanceof Error) {
       console.error(err);
       return res.status(500).json({ message: err.message });
     }
+  }
+}
+
+function filterZodErrors(entries: Awaited<ReturnType<typeof parseCSV>>) {
+  if (!entries.every(entry => entry.success)) {
+    const parseErrors = entries
+      .map(entry => {
+        if (!entry.success) {
+          return entry.error.flatten().fieldErrors;
+        }
+      })
+      .filter(isZodFieldError<Entry>);
+
+    return parseErrors;
   }
 }
 
@@ -265,12 +282,18 @@ async function uploadPoints(entries: GroupedEntries, showUID: string) {
   );
 }
 
+function removeEmptyRow(row: string) {
+  return row !== ',,,,,,,';
+}
+
 function parseCSV(csv: string) {
-  const lines = csv
+  const rows = csv
     .trim()
     .split('\n')
-    .map(line => line.trim());
-  const heading = lines.shift();
+    .map(row => row.trim())
+    .filter(row => removeEmptyRow(row));
+
+  const heading = rows.shift();
 
   if (!heading) {
     throw new ParseError('Failed to find column headings.');
@@ -283,13 +306,20 @@ function parseCSV(csv: string) {
 
   const mappedNames = headingNames.map(head => HEADER_NAMES[head]);
 
-  const entries = lines
+  const entries = rows
     .map(line => {
       return line
         .split(',')
         .map((value, column) => {
           if (mappedNames[column].includes('finalScore')) {
             const finalScore = parseFloat(value);
+
+            if (isNaN(finalScore)) {
+              throw new ParseError(
+                `Unable to parse final score, value is either empty or not a valid number.`
+              );
+            }
+
             return { [mappedNames[column]]: finalScore };
           }
 
@@ -299,7 +329,7 @@ function parseCSV(csv: string) {
           return { ...prev, ...curr };
         }, {}) as Entry;
     })
-    .map(entry => EntrySchema.safeParse(entry));
+    .map(entry => EntrySchema.spa(entry));
 
-  return entries;
+  return Promise.all(entries);
 }
