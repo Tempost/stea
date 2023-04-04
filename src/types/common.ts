@@ -1,5 +1,5 @@
 import { Entry } from '@/server/utils';
-import { Status } from '@prisma/client';
+import { ShowType, Status } from '@prisma/client';
 import { typeToFlattenedError } from 'zod';
 
 export class ParseError extends Error {}
@@ -21,7 +21,29 @@ export type TypeKey = (typeof TYPE)[number];
 
 export type Option<T> = T | undefined;
 
-export const HEADER_NAMES = {
+export const HEADER_NAMES = [
+  'Rider First Name',
+  'Rider Last Name',
+  'Horse Name',
+  'HT/CT/Derby',
+  'Division',
+  'Group',
+  'Final Score',
+  'Placing',
+] as const;
+
+export const KEY_NAMES = [
+  'firstName',
+  'lastName',
+  'horseName',
+  'rideType',
+  'division',
+  'group',
+  'finalScore',
+  'placing',
+] as const;
+
+export const HEADER_MAPPING = {
   'Rider First Name': 'firstName',
   'Rider Last Name': 'lastName',
   'Horse Name': 'horseName',
@@ -32,10 +54,10 @@ export const HEADER_NAMES = {
   Placing: 'placing',
 } as const;
 
-export type UnMappedHeaderNames = keyof typeof HEADER_NAMES;
-export type MappedHeaderNames = (typeof HEADER_NAMES)[UnMappedHeaderNames];
-export function isHeadingNames(a: any[]): a is UnMappedHeaderNames[] {
-  return a.every(a => a in HEADER_NAMES);
+export type UnMappedHeaderNames = typeof HEADER_NAMES;
+export type MappedHeaderNames = typeof KEY_NAMES;
+export function isHeadingNames(a: ReadonlyArray<any>): a is UnMappedHeaderNames {
+  return a.every((val) => HEADER_NAMES.includes(val));
 }
 
 export const isEntry = (o: Entry | undefined): o is Entry => {
@@ -54,13 +76,17 @@ export function isShowUniqueArgs(o: any): o is UploadPointsQueryParams {
   return o?.showUID !== undefined;
 }
 
-export type EntriesRideType = { [k in Entry['rideType']]: Entry[] };
-type TempGrouping = { [k in Entry['division']]?: Entry[] };
-export type EntriesRideTypeDivison = { [k in Entry['rideType']]: TempGrouping };
-type SubGrouping = { [k in Entry['group']]?: Entry[] };
-export type GroupedEntries = {
-  [k in Entry['rideType']]: { [k in Entry['division']]?: SubGrouping };
-};
+export type EntriesRideType = Record<Entry['rideType'], Entry[]>;
+export type EntriesRideTypeDivison = Record<
+  Entry['rideType'],
+  Partial<Record<Entry['division'], Entry[]>>
+>;
+
+export type GroupedEntries = Record<
+  Entry['rideType'],
+  Partial<Record<Entry['division'], Partial<Record<Entry['group'], Entry[]>>>>
+>;
+export type PointsMap = Record<ShowType, Record<Entry['placing'], number>>;
 
 export type LayoutProps = React.PropsWithChildren;
 export interface HeaderProps extends React.PropsWithChildren {}

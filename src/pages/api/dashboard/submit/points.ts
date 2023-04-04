@@ -12,12 +12,13 @@ import {
   EntriesRideTypeDivison,
   EntriesRideType,
   GroupedEntries,
-  HEADER_NAMES,
+  HEADER_MAPPING,
   isEntry,
   isHeadingNames,
   isShowUniqueArgs,
   isZodFieldError,
   ParseError,
+  PointsMap,
 } from '@/types/common';
 import { prisma } from '@/server/prisma';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
@@ -36,9 +37,7 @@ export default async function handler(
   const params = req.query;
   if (!isShowUniqueArgs(params)) {
     console.log(JSON.stringify(params, null, 2));
-    return res
-      .status(500)
-      .json({ message: 'Points for show already submitted.' });
+    return res.status(500).json({ message: 'Invalid query param passed.' });
   }
 
   const token = await getToken({ req });
@@ -125,9 +124,6 @@ function groupEntries(entries: Entry[]) {
   return finalGrouping;
 }
 
-type PointsMap = {
-  [p_key in ShowType]: { [c_key in Entry['placing']]: number };
-};
 const POINTS: PointsMap = {
   CT: {
     '1': 3,
@@ -287,49 +283,37 @@ function removeEmptyRow(row: string) {
 }
 
 function parseCSV(csv: string) {
-  const rows = csv
+  const lines = csv
     .trim()
-    .split('\n')
-    .map(row => row.trim())
-    .filter(row => removeEmptyRow(row));
-
-  const heading = rows.shift();
+    .split('\n');
+  const heading = lines.shift();
 
   if (!heading) {
     throw new ParseError('Failed to find column headings.');
   }
 
-  const headingNames = heading.split(',').filter(colName => !!colName);
+  const headingNames = heading.trim().split(',').filter(colName => !!colName);
   if (!isHeadingNames(headingNames)) {
     throw new ParseError('Invalid column headings.');
   }
 
-  const mappedNames = headingNames.map(head => HEADER_NAMES[head]);
+  const entries = lines.map(line => {
+    const row = line.trim().split(',');
+    let entry: Record<string, string | number> = {};
 
-  const entries = rows
-    .map(line => {
-      return line
-        .split(',')
-        .map((value, column) => {
-          if (mappedNames[column].includes('finalScore')) {
-            const finalScore = parseFloat(value);
+    row.forEach((value, column) => {
+      const columnName = HEADER_MAPPING[headingNames[column]];
+      if (columnName === 'finalScore') {
+        const finalScore = parseFloat(value);
+        entry[columnName] = finalScore;
+        return;
+      }
 
-            if (isNaN(finalScore)) {
-              throw new ParseError(
-                `Unable to parse final score, value is either empty or not a valid number.`
-              );
-            }
+      entry[columnName] = value.trim();
+    });
 
-            return { [mappedNames[column]]: finalScore };
-          }
-
-          return { [mappedNames[column]]: value.trim() };
-        })
-        .reduce<{ [x: string]: string | number } | {}[]>((prev, curr) => {
-          return { ...prev, ...curr };
-        }, {}) as Entry;
-    })
-    .map(entry => EntrySchema.spa(entry));
+    return EntrySchema.safeParse(entry);
+  });
 
   return Promise.all(entries);
 }
