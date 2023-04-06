@@ -35,6 +35,7 @@ type FormValues = z.infer<typeof ShowSubmitFormValue>;
 function SubmitPoints() {
   const [error, setError] = useState<string | ZodFieldErrors<Entry>>();
   const [success, setSuccess] = useState(false);
+  const [zodErrors, setZodErrors] = useState<ZodFieldErrors<Entry>>();
   const shows = trpc.shows.all.useQuery({ where: { reviewed: false } });
   const utils = trpc.useContext().shows;
 
@@ -67,6 +68,7 @@ function SubmitPoints() {
         const error = await res.json().then(data => data);
         if (!isSubmitError(error)) {
           setError('Something unexpected happened trying to parse the csv.');
+          setZodErrors(error.data);
           return;
         }
 
@@ -79,6 +81,7 @@ function SubmitPoints() {
         console.log(error.message);
         return;
       }
+      const data = await res.json().then(data => data);
 
       await utils.all.invalidate();
       setError(undefined);

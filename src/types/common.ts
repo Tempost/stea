@@ -1,5 +1,5 @@
 import { Entry } from '@/server/utils';
-import { ShowType, Status } from '@prisma/client';
+import { Division, ShowType, Status } from '@prisma/client';
 import { typeToFlattenedError } from 'zod';
 
 export class ParseError extends Error {}
@@ -87,6 +87,15 @@ export type GroupedEntries = Record<
   Partial<Record<Entry['division'], Partial<Record<Entry['group'], Entry[]>>>>
 >;
 export type PointsMap = Record<ShowType, Record<Entry['placing'], number>>;
+export interface EntryReview {
+  fullName: string;
+  horseRN: string;
+  division: Division;
+  countInDivision: number;
+  rideType: ShowType;
+  place: Entry['placing'];
+  points: number;
+}
 
 export type LayoutProps = React.PropsWithChildren;
 export interface HeaderProps extends React.PropsWithChildren {}

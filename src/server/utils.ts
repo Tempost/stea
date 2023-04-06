@@ -24,7 +24,6 @@ export const EntrySchema = z.object({
     'E',
     'RF',
   ]),
-  divisionCount: z.number().optional(),
 });
 
 export type Entry = z.infer<typeof EntrySchema>;

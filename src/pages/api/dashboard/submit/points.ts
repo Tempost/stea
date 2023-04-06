@@ -19,6 +19,7 @@ import {
   isZodFieldError,
   ParseError,
   PointsMap,
+  EntryReview,
 } from '@/types/common';
 import { prisma } from '@/server/prisma';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
@@ -224,7 +225,7 @@ function calculatePoints(
 
 async function uploadPoints(entries: GroupedEntries, showUID: string) {
   let promises = new Array();
-  let updatedMemberPoints = new Array();
+  let updatedMemberPoints = new Array<EntryReview>();
   for (const [_, divisions] of Object.entries(entries)) {
     for (const [_, groups] of Object.entries(divisions)) {
       for (const [_, entryList] of Object.entries(groups)) {
@@ -251,7 +252,7 @@ async function uploadPoints(entries: GroupedEntries, showUID: string) {
             fullName: entryName,
             horseRN: entry.horseName,
             division: entry.division,
-            coundInDivision: entry.divisionCount,
+            countInDivision: entryList.length,
             rideType: entry.rideType,
             place: entry.placing,
             points: riderFinalPoints,
@@ -316,7 +317,8 @@ async function uploadPoints(entries: GroupedEntries, showUID: string) {
   }
 
   await Promise.all(promises).then(() =>
-    prisma.show.update({ where: { uid: showUID }, data: { reviewed: true } })
+    // prisma.show.update({ where: { uid: showUID }, data: { reviewed: true } })
+    console.log('Pog')
   );
 
   return updatedMemberPoints;
