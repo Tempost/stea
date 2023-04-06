@@ -36,27 +36,48 @@ export default async function handler(
 
   const params = req.query;
   if (!isShowUniqueArgs(params)) {
-    console.log(JSON.stringify(params, null, 2));
+    console.log('Invalid query param', JSON.stringify(params, null, 0));
     return res.status(500).json({ message: 'Invalid query param passed.' });
+  }
+
+  const existingShow = await prisma.show.findUnique({
+    where: {
+      uid: params.showUID,
+    },
+  });
+
+  if (!existingShow) {
+    console.error("Attempted to update show that doesn't exist.");
+    return res.status(400).json({ message: 'Selected show not found.' });
   }
 
   const token = await getToken({ req });
   if (!token) {
-    console.warn('Attempted to access api protected by auth.');
+    console.error('Attempted to access api protected by auth.');
     return res.status(401).json({ message: 'Access Not Allowed.' });
   }
 
   try {
     const entries = await parseCSV(req.body);
 
-    // No Errors found when parsing, we can start inserting into db
-    const parseErrors = filterZodErrors(entries);
-    if (parseErrors) {
+    // Errors found while parsing the entries, return a report of which entries failed
+    // UI will display a table of entries, including the onces that were valid
+    // since zod doesn't give us the row or name of the record that failed we use this method
+    // to keep context for the person fixing the issue
+    if (!entries.every(entry => entry.success)) {
+      const parseErrors = entries
+        .map(entry => {
+          if (!entry.success) {
+            return entry.error.flatten().fieldErrors;
+          }
+        })
+        .filter(isZodFieldError<Entry>);
+
       console.error(
-        'Zod errors while parsing csv',
-        JSON.stringify(parseErrors, null, 2)
+        'Trouble parsing entries',
+        JSON.stringify(parseErrors, null, 0)
       );
-      return res.status(500).json({ message: parseErrors });
+      return res.status(400).json({ success: false, data: entries });
     }
 
     const parsedEntries = entries
@@ -65,18 +86,14 @@ export default async function handler(
       })
       .filter(isEntry);
 
-    const grouped = groupEntries(parsedEntries);
+    const entriesWithMembership = await uploadPoints(
+      groupEntries(parsedEntries),
+      params.showUID
+    );
 
-    await uploadPoints(grouped, params.showUID);
-
-    return res.status(200).json({ success: true });
+    return res.status(200).json({ success: true, data: entriesWithMembership });
   } catch (err) {
-    if (err instanceof PrismaClientKnownRequestError) {
-      console.error(err);
-      return res.status(500).json({ message: err.message });
-    }
-
-    // TODO: Maybe add check for prisma error here first, then the generic erorr
+    // TODO: Maybe add check for prisma error here first, then the generic error
     if (err instanceof Error) {
       console.error(err);
       return res.status(500).json({ message: err.message });
@@ -84,18 +101,42 @@ export default async function handler(
   }
 }
 
-function filterZodErrors(entries: Awaited<ReturnType<typeof parseCSV>>) {
-  if (!entries.every(entry => entry.success)) {
-    const parseErrors = entries
-      .map(entry => {
-        if (!entry.success) {
-          return entry.error.flatten().fieldErrors;
-        }
-      })
-      .filter(isZodFieldError<Entry>);
+function parseCSV(csv: string) {
+  const lines = csv.trim().split('\n');
+  const heading = lines.shift();
 
-    return parseErrors;
+  if (!heading) {
+    throw new ParseError('Failed to find column headings.');
   }
+
+  const headingNames = heading
+    .trim()
+    .split(',')
+    .filter(colName => !!colName);
+
+  if (!isHeadingNames(headingNames)) {
+    throw new ParseError('Invalid column headings.');
+  }
+
+  const entries = lines.map(line => {
+    const row = line.trim().split(',');
+    let entry: Record<string, string | number> = {};
+
+    row.forEach((value, column) => {
+      const columnName = HEADER_MAPPING[headingNames[column]];
+      if (columnName === 'finalScore') {
+        const finalScore = parseFloat(value);
+        entry[columnName] = finalScore;
+        return;
+      }
+
+      entry[columnName] = value.trim();
+    });
+
+    return EntrySchema.safeParse(entry);
+  });
+
+  return entries;
 }
 
 function groupEntries(entries: Entry[]) {
@@ -182,17 +223,8 @@ function calculatePoints(
 }
 
 async function uploadPoints(entries: GroupedEntries, showUID: string) {
-  const showExists = await prisma.show.findUnique({
-    where: {
-      uid: showUID,
-    },
-  });
-
-  if (!showExists) {
-    throw new ParseError('Failed to find matching show.');
-  }
-
   let promises = new Array();
+  let updatedMemberPoints = new Array();
   for (const [_, divisions] of Object.entries(entries)) {
     for (const [_, groups] of Object.entries(divisions)) {
       for (const [_, entryList] of Object.entries(groups)) {
@@ -215,6 +247,16 @@ async function uploadPoints(entries: GroupedEntries, showUID: string) {
             entryList.length
           );
 
+          updatedMemberPoints.push({
+            fullName: entryName,
+            horseRN: entry.horseName,
+            division: entry.division,
+            coundInDivision: entry.divisionCount,
+            rideType: entry.rideType,
+            place: entry.placing,
+            points: riderFinalPoints,
+          });
+
           const relations = {
             member: {
               connect: {
@@ -228,7 +270,7 @@ async function uploadPoints(entries: GroupedEntries, showUID: string) {
             },
             shows: {
               connect: {
-                uid: showExists.uid,
+                uid: showUID,
               },
             },
             points: {
@@ -237,7 +279,7 @@ async function uploadPoints(entries: GroupedEntries, showUID: string) {
                 place: entry.placing,
                 show: {
                   connect: {
-                    uid: showExists.uid,
+                    uid: showUID,
                   },
                 },
               },
@@ -276,44 +318,6 @@ async function uploadPoints(entries: GroupedEntries, showUID: string) {
   await Promise.all(promises).then(() =>
     prisma.show.update({ where: { uid: showUID }, data: { reviewed: true } })
   );
-}
 
-function removeEmptyRow(row: string) {
-  return row !== ',,,,,,,';
-}
-
-function parseCSV(csv: string) {
-  const lines = csv
-    .trim()
-    .split('\n');
-  const heading = lines.shift();
-
-  if (!heading) {
-    throw new ParseError('Failed to find column headings.');
-  }
-
-  const headingNames = heading.trim().split(',').filter(colName => !!colName);
-  if (!isHeadingNames(headingNames)) {
-    throw new ParseError('Invalid column headings.');
-  }
-
-  const entries = lines.map(line => {
-    const row = line.trim().split(',');
-    let entry: Record<string, string | number> = {};
-
-    row.forEach((value, column) => {
-      const columnName = HEADER_MAPPING[headingNames[column]];
-      if (columnName === 'finalScore') {
-        const finalScore = parseFloat(value);
-        entry[columnName] = finalScore;
-        return;
-      }
-
-      entry[columnName] = value.trim();
-    });
-
-    return EntrySchema.safeParse(entry);
-  });
-
-  return Promise.all(entries);
+  return updatedMemberPoints;
 }
