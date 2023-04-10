@@ -87,7 +87,7 @@ export type GroupedEntries = Record<
   Partial<Record<Entry['division'], Partial<Record<Entry['group'], Entry[]>>>>
 >;
 export type PointsMap = Record<ShowType, Record<Entry['placing'], number>>;
-export interface EntryReview {
+export interface EntryReviewType {
   fullName: string;
   horseRN: string;
   division: Division;
