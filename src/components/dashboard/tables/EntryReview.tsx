@@ -1,5 +1,4 @@
 import {
-  ColumnDef,
   createColumnHelper,
   getCoreRowModel,
   TableOptions,
@@ -15,7 +14,7 @@ const columnHelper = createColumnHelper<EntryReviewType>();
 
 const columnDef = [
   columnHelper.group({
-    header: 'Review Entrys',
+    header: 'Review before final submission',
     columns: [
       columnHelper.accessor('fullName', {
         id: 'fullName',

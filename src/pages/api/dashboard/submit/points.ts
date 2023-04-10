@@ -287,30 +287,30 @@ async function uploadPoints(entries: GroupedEntries, showUID: string) {
             },
           };
 
-          promises.push(
-            prisma.riderCombo.upsert({
-              where: {
-                memberName_horseName_division: {
-                  memberName: entryName,
-                  horseName: entry.horseName,
-                  division: entry.division,
-                },
-              },
-              update: {
-                division: entry.division,
-                totalPoints: { increment: riderFinalPoints },
-                totalShows: { increment: 1 },
-                completedHT: entry.rideType === 'HT',
-                ...relations,
-              },
-              create: {
-                division: entry.division,
-                totalPoints: riderFinalPoints,
-                totalShows: 1,
-                ...relations,
-              },
-            })
-          );
+          // promises.push(
+          //   prisma.riderCombo.upsert({
+          //     where: {
+          //       memberName_horseName_division: {
+          //         memberName: entryName,
+          //         horseName: entry.horseName,
+          //         division: entry.division,
+          //       },
+          //     },
+          //     update: {
+          //       division: entry.division,
+          //       totalPoints: { increment: riderFinalPoints },
+          //       totalShows: { increment: 1 },
+          //       completedHT: entry.rideType === 'HT',
+          //       ...relations,
+          //     },
+          //     create: {
+          //       division: entry.division,
+          //       totalPoints: riderFinalPoints,
+          //       totalShows: 1,
+          //       ...relations,
+          //     },
+          //   })
+          // );
         }
       }
     }
@@ -321,5 +321,6 @@ async function uploadPoints(entries: GroupedEntries, showUID: string) {
     console.log('Pog')
   );
 
+  console.log(updatedMemberPoints);
   return updatedMemberPoints;
 }

@@ -4,13 +4,14 @@ import type { ReactElement } from 'react';
 
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import Alert from '@/components/forms/Alert';
-import { ZodFieldErrors } from '@/types/common';
+import { EntryReviewType, ZodFieldErrors } from '@/types/common';
 import useZodForm from '@/utils/usezodform';
 import { z } from 'zod';
 import Select from '@/components/styled-ui/Select';
 import { trpc } from '@/utils/trpc';
 import { readableDateTime } from '@/utils/helpers';
 import { Entry } from '@/server/utils';
+import EntryReview from '@/components/dashboard/tables/EntryReview';
 
 interface SubmitError {
   message: string | ZodFieldErrors<Entry>;
@@ -36,6 +37,7 @@ function SubmitPoints() {
   const [error, setError] = useState<string | ZodFieldErrors<Entry>>();
   const [success, setSuccess] = useState(false);
   const [zodErrors, setZodErrors] = useState<ZodFieldErrors<Entry>>();
+  const [reviewData, setReviewData] = useState<EntryReviewType[]>();
   const shows = trpc.shows.all.useQuery({ where: { reviewed: false } });
   const utils = trpc.useContext().shows;
 
@@ -82,8 +84,9 @@ function SubmitPoints() {
         return;
       }
       const data = await res.json().then(data => data);
+      console.log(data.data);
 
-      await utils.all.invalidate();
+      setReviewData(data.data);
       setError(undefined);
       setSuccess(true);
     });
@@ -104,7 +107,7 @@ function SubmitPoints() {
           message={error}
         />
 
-        <form onSubmit={methods.handleSubmit(handleUpload)}>
+        <form id='points-form' onSubmit={methods.handleSubmit(handleUpload)}>
           <div className='mx-auto flex flex-col items-center gap-5'>
             {shows.isSuccess && (
               <Select
@@ -128,17 +131,19 @@ function SubmitPoints() {
               className='file-input-bordered file-input-primary file-input file-input-xs mt-5 w-fit max-w-xs lg:file-input-md'
               {...methods.register('file', { required: true })}
             />
-
-            <button
-              type='submit'
-              className={`btn-primary btn mt-5 w-fit normal-case ${
-                success ? 'bg-success' : error ? 'btn-error' : ''
-              }`}
-            >
-              Upload
-            </button>
           </div>
         </form>
+
+        {reviewData && <EntryReview entries={reviewData} />}
+        <button
+          type='submit'
+          form='points-form'
+          className={`btn-primary btn mt-5 w-fit normal-case ${
+            error ? 'btn-error' : ''
+          }`}
+        >
+          { reviewData ? 'Submit Points' : 'Start Review' }
+        </button>
       </div>
     </div>
   );

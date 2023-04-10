@@ -19,3 +19,9 @@
     2. Display in UI
     3. Make reviewable on dashboard
     4. Can have button that finished the point submission after review
+
+
+# Handle Internal error case (Can't parse CSV, incorrect headers, network error, file error)
+# Hide form components on submit/points page during review(success and errors)
+# In review show Go Back and Submit buttons
+# Hide Submit button when errors only display Go Back
