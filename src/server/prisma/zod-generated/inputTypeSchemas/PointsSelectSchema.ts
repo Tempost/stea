@@ -6,11 +6,11 @@ import { ShowArgsSchema } from "../outputTypeSchemas/ShowArgsSchema"
 export const PointsSelectSchema: z.ZodType<Prisma.PointsSelect> = z.object({
   uid: z.boolean().optional(),
   riderUid: z.boolean().optional(),
+  RiderCombo: z.union([z.boolean(),z.lazy(() => RiderComboArgsSchema)]).optional(),
   points: z.boolean().optional(),
   place: z.boolean().optional(),
-  showUid: z.boolean().optional(),
-  RiderCombo: z.union([z.boolean(),z.lazy(() => RiderComboArgsSchema)]).optional(),
   show: z.union([z.boolean(),z.lazy(() => ShowArgsSchema)]).optional(),
+  showUid: z.boolean().optional(),
 }).strict()
 
 export default PointsSelectSchema;

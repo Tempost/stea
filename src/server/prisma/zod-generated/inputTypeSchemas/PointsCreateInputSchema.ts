@@ -5,9 +5,9 @@ import { ShowCreateNestedOneWithoutPointsInputSchema } from './ShowCreateNestedO
 
 export const PointsCreateInputSchema: z.ZodType<Prisma.PointsCreateInput> = z.object({
   uid: z.string().cuid().optional(),
+  RiderCombo: z.lazy(() => RiderComboCreateNestedOneWithoutPointsInputSchema),
   points: z.number(),
   place: z.string().trim(),
-  RiderCombo: z.lazy(() => RiderComboCreateNestedOneWithoutPointsInputSchema),
   show: z.lazy(() => ShowCreateNestedOneWithoutPointsInputSchema)
 }).strict();
 

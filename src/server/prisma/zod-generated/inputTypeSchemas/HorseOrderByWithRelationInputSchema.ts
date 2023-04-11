@@ -10,13 +10,13 @@ export const HorseOrderByWithRelationInputSchema: z.ZodType<Prisma.HorseOrderByW
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
   horseRN: z.lazy(() => SortOrderSchema).optional(),
   horseAKA: z.lazy(() => SortOrderSchema).optional(),
+  ownerRec: z.lazy(() => NonMemberHorseOwnerOrderByWithRelationInputSchema).optional(),
+  memberOwner: z.lazy(() => MemberOrderByWithRelationInputSchema).optional(),
   memberName: z.lazy(() => SortOrderSchema).optional(),
   registrationDate: z.lazy(() => SortOrderSchema).optional(),
   regType: z.lazy(() => SortOrderSchema).optional(),
-  owner: z.lazy(() => SortOrderSchema).optional(),
-  ownerRec: z.lazy(() => NonMemberHorseOwnerOrderByWithRelationInputSchema).optional(),
-  memberOwner: z.lazy(() => MemberOrderByWithRelationInputSchema).optional(),
-  RiderCombo: z.lazy(() => RiderComboOrderByRelationAggregateInputSchema).optional()
+  RiderCombo: z.lazy(() => RiderComboOrderByRelationAggregateInputSchema).optional(),
+  owner: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export default HorseOrderByWithRelationInputSchema;

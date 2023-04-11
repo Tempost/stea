@@ -6,8 +6,8 @@ import { ShowTypeSchema } from './ShowTypeSchema';
 import { EnumShowTypeFieldUpdateOperationsInputSchema } from './EnumShowTypeFieldUpdateOperationsInputSchema';
 import { BoolFieldUpdateOperationsInputSchema } from './BoolFieldUpdateOperationsInputSchema';
 import { DateTimeFieldUpdateOperationsInputSchema } from './DateTimeFieldUpdateOperationsInputSchema';
-import { NullableStringFieldUpdateOperationsInputSchema } from './NullableStringFieldUpdateOperationsInputSchema';
 import { RiderComboUncheckedUpdateManyWithoutShowsNestedInputSchema } from './RiderComboUncheckedUpdateManyWithoutShowsNestedInputSchema';
+import { NullableStringFieldUpdateOperationsInputSchema } from './NullableStringFieldUpdateOperationsInputSchema';
 import { PointsUncheckedUpdateManyWithoutShowNestedInputSchema } from './PointsUncheckedUpdateManyWithoutShowNestedInputSchema';
 
 export const ShowUncheckedUpdateInputSchema: z.ZodType<Prisma.ShowUncheckedUpdateInput> = z.object({
@@ -19,8 +19,8 @@ export const ShowUncheckedUpdateInputSchema: z.ZodType<Prisma.ShowUncheckedUpdat
   reviewed: z.union([ z.boolean(),z.lazy(() => BoolFieldUpdateOperationsInputSchema) ]).optional(),
   showDate: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   showEndDate: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  url: z.union([ z.string().trim().url({ message: "Must be a valid URL" }),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   riders: z.lazy(() => RiderComboUncheckedUpdateManyWithoutShowsNestedInputSchema).optional(),
+  url: z.union([ z.string().trim().url({ message: "Must be a valid URL" }),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   points: z.lazy(() => PointsUncheckedUpdateManyWithoutShowNestedInputSchema).optional()
 }).strict();
 

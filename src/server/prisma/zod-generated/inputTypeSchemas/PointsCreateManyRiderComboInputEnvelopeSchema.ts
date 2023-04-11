@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { PointsCreateManyRiderComboInputSchema } from './PointsCreateManyRiderComboInputSchema';
 
 export const PointsCreateManyRiderComboInputEnvelopeSchema: z.ZodType<Prisma.PointsCreateManyRiderComboInputEnvelope> = z.object({
-  data: z.union([ z.lazy(() => PointsCreateManyRiderComboInputSchema),z.lazy(() => PointsCreateManyRiderComboInputSchema).array() ]),
+  data: z.lazy(() => PointsCreateManyRiderComboInputSchema).array(),
   skipDuplicates: z.boolean().optional()
 }).strict();
 

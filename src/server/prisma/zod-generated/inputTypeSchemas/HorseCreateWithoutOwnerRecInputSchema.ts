@@ -1,7 +1,7 @@
 import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { StatusSchema } from './StatusSchema';
 import { MemberCreateNestedOneWithoutHorseInputSchema } from './MemberCreateNestedOneWithoutHorseInputSchema';
+import { StatusSchema } from './StatusSchema';
 import { RiderComboCreateNestedManyWithoutHorseInputSchema } from './RiderComboCreateNestedManyWithoutHorseInputSchema';
 
 export const HorseCreateWithoutOwnerRecInputSchema: z.ZodType<Prisma.HorseCreateWithoutOwnerRecInput> = z.object({
@@ -9,9 +9,9 @@ export const HorseCreateWithoutOwnerRecInputSchema: z.ZodType<Prisma.HorseCreate
   updatedAt: z.coerce.date().optional().nullable(),
   horseRN: z.string(),
   horseAKA: z.string().optional().nullable(),
+  memberOwner: z.lazy(() => MemberCreateNestedOneWithoutHorseInputSchema).optional(),
   registrationDate: z.coerce.date().optional().nullable(),
   regType: z.lazy(() => StatusSchema),
-  memberOwner: z.lazy(() => MemberCreateNestedOneWithoutHorseInputSchema).optional(),
   RiderCombo: z.lazy(() => RiderComboCreateNestedManyWithoutHorseInputSchema).optional()
 }).strict();
 
