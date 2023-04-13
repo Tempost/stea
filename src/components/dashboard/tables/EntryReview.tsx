@@ -3,7 +3,7 @@ import {
   getCoreRowModel,
   TableOptions,
 } from '@tanstack/react-table';
-import { EntryReviewType } from '@/types/common';
+import { EntryReviewType } from '@/utils/zodschemas';
 import Table from '@/components/styled-ui/Table';
 
 interface EntryReviewProps {
@@ -36,10 +36,10 @@ const columnDef = [
         cell: info => info.getValue(),
         header: () => <span> Ride Type </span>,
       }),
-      columnHelper.accessor('place', {
-        id: 'place',
+      columnHelper.accessor('placing', {
+        id: 'placing',
         cell: info => info.getValue(),
-        header: () => <span> Place </span>,
+        header: () => <span> Placing </span>,
       }),
       columnHelper.accessor('points', {
         id: 'points',

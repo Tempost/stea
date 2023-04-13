@@ -25,5 +25,4 @@ export const EntrySchema = z.object({
     'RF',
   ]),
 });
-
 export type Entry = z.infer<typeof EntrySchema>;
