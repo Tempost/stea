@@ -8,7 +8,8 @@ import { trpc } from '@/utils/trpc';
 import { readableDateTime } from '@/utils/helpers';
 import { Entry } from '@/server/utils';
 import EntryReview from '@/components/dashboard/tables/EntryReview';
-import { EntryReviewType } from '@/utils/zodschemas';
+import { entryAtom } from '@/utils/atoms';
+import { useAtom } from 'jotai';
 
 interface SubmitError {
   message: string | ZodFieldErrors<Entry>;
@@ -34,7 +35,7 @@ function EntryReviewForm() {
   const [error, setError] = useState<string | ZodFieldErrors<Entry>>();
   const [success, setSuccess] = useState(false);
   const [zodErrors, setZodErrors] = useState<ZodFieldErrors<Entry>>();
-  const [reviewData, setReviewData] = useState<EntryReviewType[]>();
+  const [entries, setEntries] = useAtom(entryAtom);
   const shows = trpc.shows.all.useQuery({ where: { reviewed: false } });
   const utils = trpc.useContext().shows;
 
@@ -59,14 +60,11 @@ function EntryReviewForm() {
     fetch('/api/dashboard/submit/points', opts).then(async res => {
       if (!res.ok) {
         const error = await res.json().then(data => data);
+        setEntries(undefined);
         if (!isSubmitError(error)) {
+          console.error('Unexpected error: ', error);
           setError('Something unexpected happened trying to parse the csv.');
           setZodErrors(error.data);
-          return;
-        }
-
-        if (typeof error.message === 'string') {
-          setError(error.message);
           return;
         }
 
@@ -77,12 +75,13 @@ function EntryReviewForm() {
       const data = await res.json().then(data => data);
       console.log(data.data);
 
-      setReviewData(data.data);
       setError(undefined);
+      setEntries(data.data);
       setSuccess(true);
       utils.invalidate();
     });
   }
+
   return (
     <>
       <Alert
@@ -93,42 +92,74 @@ function EntryReviewForm() {
         id='review-form'
         onSubmit={methods.handleSubmit(handleUpload)}
       >
-        <div className='mx-auto flex flex-col items-center gap-5'>
-          {shows.isSuccess && (
-            <Select
-              className='select-primary select select-sm lg:select-md'
-              {...methods.register('showUID', { required: true })}
+        <div className='mx-auto flex flex-col items-center space-y-2'>
+          <span className='form-control'>
+            <label
+              htmlFor='show-select'
+              aria-label={'Select Show'}
+              className='label font-bold'
             >
-              {shows.data.map(show => (
-                <option
-                  key={show.uid}
-                  value={show.uid}
-                >
-                  {show.showName + ' ' + readableDateTime(show.showDate)}
-                </option>
-              ))}
-            </Select>
-          )}
+              <span className='label-text'>Select Show</span>
+            </label>
+            {shows.isSuccess && (
+              <Select
+                id='show-select'
+                className='select-primary select select-sm lg:select-md'
+                {...methods.register('showUID', { required: true })}
+              >
+                {shows.data.map(show => (
+                  <option
+                    key={show.uid}
+                    value={show.uid}
+                  >
+                    {show.showName + ' ' + readableDateTime(show.showDate)}
+                  </option>
+                ))}
+              </Select>
+            )}
 
-          <input
-            type='file'
-            accept='text/csv'
-            className='file-input-bordered file-input-primary file-input file-input-xs mt-5 w-fit max-w-xs lg:file-input-md'
-            {...methods.register('file', { required: true })}
-          />
+            <label
+              htmlFor='file-input'
+              aria-label='Upload Points sheet'
+              className='label font-bold'
+            >
+              <span className='label-text'>Upload Points sheet</span>
+            </label>
+            <input
+              type='file'
+              accept='text/csv'
+              id='file-input'
+              className='file-input-primary file-input file-input-xs lg:file-input-md'
+              {...methods.register('file', { required: true })}
+            />
+          </span>
         </div>
       </form>
 
-      {reviewData && <EntryReview entries={reviewData} />}
-      <button
-        type='submit'
-        form='review-form'
-        className={`btn-primary btn mt-5 w-fit normal-case ${
-          error ? 'btn-error' : ''
-        }`}
-      >
-        {reviewData ? 'Submit Points' : 'Start Review'}
-      </button>
+      {entries && <EntryReview entries={entries} />}
+      <span className={`flex ${entries ? 'justify-between' : 'justify-end'}`}>
+        <button
+          type='reset'
+          form='review-form'
+          className={`btn-secondary btn mt-5 w-fit normal-case ${entries ? '' : 'hidden'}`}
+          onClick={() => {
+            setEntries(undefined);
+            methods.reset();
+          }}
+        >
+          Restart
+        </button>
+
+        <button
+          type='submit'
+          form='review-form'
+          className={`btn-primary btn mt-5 w-fit normal-case ${
+            error ? 'btn-error' : ''
+          }`}
+        >
+          Review
+        </button>
+      </span>
     </>
   );
 }

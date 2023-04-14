@@ -47,6 +47,7 @@
   "devDependencies": {
     "@faker-js/faker": "^7.6.0",
     "@next/bundle-analyzer": "^13.2.4",
+    "@swc-jotai/react-refresh": "^0.0.7",
     "@types/jest": "^29.5.0",
     "@types/node": "^18.15.10",
     "@types/react": "^18.0.29",

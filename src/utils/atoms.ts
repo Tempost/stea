@@ -12,6 +12,7 @@ import {
   OwnerType,
 } from '@/types/atoms';
 import { FormType, isFormType } from '@/types/common';
+import { EntryReviewType } from './zodschemas';
 
 const costs = {
   Individual: 55,
@@ -122,6 +123,8 @@ const changeSelectionAtom = atom(
   (_get, set, newSelection: OwnerType) => set(ownerTypeAtom, newSelection)
 );
 
+const entryAtom = atom<EntryReviewType[] | undefined>(undefined);
+
 export {
   formState,
   updateFormState,
@@ -129,4 +132,5 @@ export {
   changeMonth,
   changeSelectionAtom,
   ownerTypeAtom,
+  entryAtom
 };

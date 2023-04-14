@@ -1,19 +1,18 @@
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import EntryReviewForm from '@/components/dashboard/EntryReviewForm';
+import { entryAtom } from '@/utils/atoms';
 
 import type { ReactElement } from 'react';
+import { useAtomValue } from 'jotai';
+import FinalSubmissionForm from '@/components/dashboard/FinalSubmissionForm';
 
 function SubmitPoints() {
+  const entries = useAtomValue(entryAtom);
   return (
-    <div className='grid w-full place-items-center'>
-      <div className='rounded-lg p-5 text-center shadow-xl'>
-        <h2 className='text-xl text-red-500'>PLEASE NOTE!!</h2>
-        <h3 className='text-lg text-red-500'>
-          Ensure the sheet containing the points is in the correct format (csv)
-          <br />
-          Otherwise points might not get correctly added
-        </h3>
+    <div className='mx-auto sm:w-fit'>
+      <div className='rounded-lg p-5 shadow-xl'>
         <EntryReviewForm />
+        {entries && <FinalSubmissionForm entries={entries} />}
       </div>
     </div>
   );

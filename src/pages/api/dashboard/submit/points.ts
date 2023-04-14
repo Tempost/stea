@@ -207,15 +207,15 @@ async function uploadPoints(entries: GroupedEntries) {
         for (const entry of entryList) {
           const entryName = `${entry.firstName} ${entry.lastName}`;
 
-          if (!(await horseExists(entry.horseName))) {
-            console.log(`${entry.horseName} does not exist, skipping`);
-            continue;
-          }
+          // if (!(await horseExists(entry.horseName))) {
+          //   console.log(`${entry.horseName} does not exist, skipping`);
+          //   continue;
+          // }
 
-          if (!(await memberExists(entryName))) {
-            console.log(`${entryName} does not exist, skipping`);
-            continue;
-          }
+          // if (!(await memberExists(entryName))) {
+          //   console.log(`${entryName} does not exist, skipping`);
+          //   continue;
+          // }
 
           const riderFinalPoints = calculatePoints(
             entry.placing,

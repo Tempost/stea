@@ -96,6 +96,9 @@ devDependencies:
   '@next/bundle-analyzer':
     specifier: ^13.2.4
     version: 13.2.4
+  '@swc-jotai/react-refresh':
+    specifier: ^0.0.7
+    version: 0.0.7
   '@types/jest':
     specifier: ^29.5.0
     version: 29.5.0
@@ -1108,6 +1111,10 @@ packages:
     resolution: {integrity: sha512-SwUDyjWnah1AaNl7kxsa7cfLhlTYoiyhDAIgyh+El30YvXs/o7OLXpYH88Zdhyx9JExKrmHDJ+10bwIcY80Jmw==}
     dependencies:
       '@sinonjs/commons': 2.0.0
+    dev: true
+
+  /@swc-jotai/react-refresh@0.0.7:
+    resolution: {integrity: sha512-8/DKZzqsvG+zhmq8BxB6Kx5uu89GkfRSPlv//3SPoNgBJW25oPyCKLD5ADkuyaBLxTzpKKgpkKC1rjSbOWpRCg==}
     dev: true
 
   /@swc/helpers@0.4.14:
