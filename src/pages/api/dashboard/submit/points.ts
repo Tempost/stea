@@ -39,7 +39,7 @@ export default async function handler(
   // }
 
   try {
-    const entries = await parseCSV(req.body);
+    const entries = parseCSV(req.body);
 
     // Errors found while parsing the entries, return a report of which entries failed
     // UI will display a table of entries, including the onces that were valid
