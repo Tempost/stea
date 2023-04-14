@@ -20,7 +20,7 @@ export default trpcNext.createNextApiHandler({
       if (ctx?.res && allOk && isQuery) {
         return {
           headers: {
-            'Cache-Control': `public, max-age=10, s-maxage=1, stale-while-revalidate`,
+            'Cache-Control': `public, s-maxage=5, stale-while-revalidate=${HOUR_SECONDS}`,
           },
         };
       }
