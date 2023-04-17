@@ -34,6 +34,10 @@ export const EntryReviewSchema = z.object({
   countInDivision: z.number(),
   rideType: ShowTypeSchema,
   placing: EntrySchema.shape.placing,
-  points: z.number()
+  points: z.number(),
 });
 export type EntryReviewType = z.infer<typeof EntryReviewSchema>;
+
+export const EntrySubmissionSchema = z.object({
+  entries: z.array(EntryReviewSchema),
+});

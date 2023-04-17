@@ -7,7 +7,7 @@ import {
   horseExists,
   memberExists,
 } from '@/server/router/utils';
-import { Entry, EntrySchema  } from '@/server/utils';
+import { Entry, EntrySchema } from '@/server/utils';
 import {
   EntriesRideTypeDivison,
   EntriesRideType,
@@ -32,11 +32,11 @@ export default async function handler(
     return res.status(405).json({ message: 'Method Not Allowed.' });
   }
 
-  // const token = await getToken({ req });
-  // if (!token) {
-  //   console.error('Attempted to access api protected by auth.');
-  //   return res.status(401).json({ message: 'Access Not Allowed.' });
-  // }
+  const token = await getToken({ req });
+  if (!token) {
+    console.error('Attempted to access api protected by auth.');
+    return res.status(401).json({ message: 'Access Not Allowed.' });
+  }
 
   try {
     const entries = parseCSV(req.body);
@@ -67,7 +67,9 @@ export default async function handler(
       })
       .filter(isEntry);
 
-    const entriesWithMembership = await uploadPoints(groupEntries(parsedEntries));
+    const entriesWithMembership = await uploadPoints(
+      groupEntries(parsedEntries)
+    );
 
     return res.status(200).json({ success: true, data: entriesWithMembership });
   } catch (err) {
@@ -207,15 +209,15 @@ async function uploadPoints(entries: GroupedEntries) {
         for (const entry of entryList) {
           const entryName = `${entry.firstName} ${entry.lastName}`;
 
-          // if (!(await horseExists(entry.horseName))) {
-          //   console.log(`${entry.horseName} does not exist, skipping`);
-          //   continue;
-          // }
+          if (!(await horseExists(entry.horseName))) {
+            console.log(`${entry.horseName} does not exist, skipping`);
+            continue;
+          }
 
-          // if (!(await memberExists(entryName))) {
-          //   console.log(`${entryName} does not exist, skipping`);
-          //   continue;
-          // }
+          if (!(await memberExists(entryName))) {
+            console.log(`${entryName} does not exist, skipping`);
+            continue;
+          }
 
           const riderFinalPoints = calculatePoints(
             entry.placing,
