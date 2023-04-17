@@ -38,6 +38,4 @@ export const EntryReviewSchema = z.object({
 });
 export type EntryReviewType = z.infer<typeof EntryReviewSchema>;
 
-export const EntrySubmissionSchema = z.object({
-  entries: z.array(EntryReviewSchema),
-});
+export const EntrySubmissionSchema = z.array(EntryReviewSchema);

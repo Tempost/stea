@@ -37,7 +37,7 @@ export default async function handler(
   const body = EntrySubmissionSchema.parse(req.body);
 
   const dbActions = new Array();
-  for (const entry of body.entries) {
+  for (const entry of body) {
     const relations = {
       member: {
         connect: {

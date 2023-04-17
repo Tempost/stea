@@ -1,7 +1,6 @@
 import { PropsWithChildren } from 'react';
 import { useRouter } from 'next/router';
 import { useAtom } from 'jotai';
-import { PayPalButtons } from '@paypal/react-paypal-js';
 import {
   CreateOrderActions,
   CreateOrderData,
