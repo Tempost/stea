@@ -39,3 +39,8 @@ export const EntryReviewSchema = z.object({
 export type EntryReviewType = z.infer<typeof EntryReviewSchema>;
 
 export const EntrySubmissionSchema = z.array(EntryReviewSchema);
+export function isEntrySubmissionType(
+  o: any
+): o is z.infer<typeof EntrySubmissionSchema> {
+  return Array.isArray(o) && o.every(x => !!x.placing);
+}
