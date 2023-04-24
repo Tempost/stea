@@ -73,6 +73,7 @@ function reducer(
   switch (action.type) {
     case 'REVIEW':
       if (isEntrySubmissionType(action.data)) {
+        console.log(action.data);
         return {
           ...state,
           reviewStatus: 'SUCCESS',
@@ -159,11 +160,11 @@ function SubmitPoints() {
         console.log(error);
         return;
       }
-      const data = await res.json().then(data => data);
-      console.log(data.data);
 
-      dispatch({ type: 'REVIEW', data });
-      utils.invalidate();
+      await res.json().then(res => {
+        dispatch({ type: 'REVIEW', data: res.data });
+        utils.invalidate();
+      });
     });
   }
 
