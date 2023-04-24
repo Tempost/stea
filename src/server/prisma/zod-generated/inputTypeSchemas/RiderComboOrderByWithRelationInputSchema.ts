@@ -15,10 +15,10 @@ export const RiderComboOrderByWithRelationInputSchema: z.ZodType<Prisma.RiderCom
   totalShows: z.lazy(() => SortOrderSchema).optional(),
   completedHT: z.lazy(() => SortOrderSchema).optional(),
   multiVenue: z.lazy(() => SortOrderSchema).optional(),
-  member: z.lazy(() => MemberOrderByWithRelationInputSchema).optional(),
-  horse: z.lazy(() => HorseOrderByWithRelationInputSchema).optional(),
   memberName: z.lazy(() => SortOrderSchema).optional(),
   horseName: z.lazy(() => SortOrderSchema).optional(),
+  member: z.lazy(() => MemberOrderByWithRelationInputSchema).optional(),
+  horse: z.lazy(() => HorseOrderByWithRelationInputSchema).optional(),
   points: z.lazy(() => PointsOrderByRelationAggregateInputSchema).optional(),
   shows: z.lazy(() => ShowOrderByRelationAggregateInputSchema).optional()
 }).strict();

@@ -6,8 +6,8 @@ import { EnumShowTypeFilterSchema } from './EnumShowTypeFilterSchema';
 import { ShowTypeSchema } from './ShowTypeSchema';
 import { BoolFilterSchema } from './BoolFilterSchema';
 import { DateTimeFilterSchema } from './DateTimeFilterSchema';
-import { RiderComboListRelationFilterSchema } from './RiderComboListRelationFilterSchema';
 import { StringNullableFilterSchema } from './StringNullableFilterSchema';
+import { RiderComboListRelationFilterSchema } from './RiderComboListRelationFilterSchema';
 import { PointsListRelationFilterSchema } from './PointsListRelationFilterSchema';
 
 export const ShowWhereInputSchema: z.ZodType<Prisma.ShowWhereInput> = z.object({
@@ -22,8 +22,8 @@ export const ShowWhereInputSchema: z.ZodType<Prisma.ShowWhereInput> = z.object({
   reviewed: z.union([ z.lazy(() => BoolFilterSchema),z.boolean() ]).optional(),
   showDate: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   showEndDate: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
-  riders: z.lazy(() => RiderComboListRelationFilterSchema).optional(),
   url: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  riders: z.lazy(() => RiderComboListRelationFilterSchema).optional(),
   points: z.lazy(() => PointsListRelationFilterSchema).optional()
 }).strict();
 

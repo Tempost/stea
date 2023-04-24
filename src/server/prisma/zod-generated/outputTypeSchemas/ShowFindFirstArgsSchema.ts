@@ -20,8 +20,8 @@ export const ShowSelectSchema: z.ZodType<Prisma.ShowSelect> = z.object({
   reviewed: z.boolean().optional(),
   showDate: z.boolean().optional(),
   showEndDate: z.boolean().optional(),
-  riders: z.union([z.boolean(),z.lazy(() => RiderComboFindManyArgsSchema)]).optional(),
   url: z.boolean().optional(),
+  riders: z.union([z.boolean(),z.lazy(() => RiderComboFindManyArgsSchema)]).optional(),
   points: z.union([z.boolean(),z.lazy(() => PointsFindManyArgsSchema)]).optional(),
   _count: z.union([z.boolean(),z.lazy(() => ShowCountOutputTypeArgsSchema)]).optional(),
 }).strict()

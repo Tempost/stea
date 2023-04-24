@@ -15,8 +15,8 @@ export const HorseUncheckedUpdateInputSchema: z.ZodType<Prisma.HorseUncheckedUpd
   memberName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   registrationDate: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   regType: z.union([ z.lazy(() => StatusSchema),z.lazy(() => EnumStatusFieldUpdateOperationsInputSchema) ]).optional(),
-  RiderCombo: z.lazy(() => RiderComboUncheckedUpdateManyWithoutHorseNestedInputSchema).optional(),
   owner: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  RiderCombo: z.lazy(() => RiderComboUncheckedUpdateManyWithoutHorseNestedInputSchema).optional()
 }).strict();
 
 export default HorseUncheckedUpdateInputSchema;

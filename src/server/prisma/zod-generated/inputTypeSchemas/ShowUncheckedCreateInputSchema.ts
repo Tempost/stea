@@ -13,8 +13,8 @@ export const ShowUncheckedCreateInputSchema: z.ZodType<Prisma.ShowUncheckedCreat
   reviewed: z.boolean().optional(),
   showDate: z.coerce.date(),
   showEndDate: z.coerce.date().optional().nullable(),
-  riders: z.lazy(() => RiderComboUncheckedCreateNestedManyWithoutShowsInputSchema).optional(),
   url: z.string().trim().url({ message: "Must be a valid URL" }).optional().nullable(),
+  riders: z.lazy(() => RiderComboUncheckedCreateNestedManyWithoutShowsInputSchema).optional(),
   points: z.lazy(() => PointsUncheckedCreateNestedManyWithoutShowInputSchema).optional()
 }).strict();
 

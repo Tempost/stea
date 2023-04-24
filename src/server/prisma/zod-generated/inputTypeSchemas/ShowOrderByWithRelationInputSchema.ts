@@ -13,8 +13,8 @@ export const ShowOrderByWithRelationInputSchema: z.ZodType<Prisma.ShowOrderByWit
   reviewed: z.lazy(() => SortOrderSchema).optional(),
   showDate: z.lazy(() => SortOrderSchema).optional(),
   showEndDate: z.lazy(() => SortOrderSchema).optional(),
-  riders: z.lazy(() => RiderComboOrderByRelationAggregateInputSchema).optional(),
   url: z.lazy(() => SortOrderSchema).optional(),
+  riders: z.lazy(() => RiderComboOrderByRelationAggregateInputSchema).optional(),
   points: z.lazy(() => PointsOrderByRelationAggregateInputSchema).optional()
 }).strict();
 

@@ -26,10 +26,10 @@ export const RiderComboWhereInputSchema: z.ZodType<Prisma.RiderComboWhereInput> 
   totalShows: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
   completedHT: z.union([ z.lazy(() => BoolFilterSchema),z.boolean() ]).optional(),
   multiVenue: z.union([ z.lazy(() => BoolFilterSchema),z.boolean() ]).optional(),
-  member: z.union([ z.lazy(() => MemberRelationFilterSchema),z.lazy(() => MemberWhereInputSchema) ]).optional(),
-  horse: z.union([ z.lazy(() => HorseRelationFilterSchema),z.lazy(() => HorseWhereInputSchema) ]).optional(),
   memberName: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   horseName: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  member: z.union([ z.lazy(() => MemberRelationFilterSchema),z.lazy(() => MemberWhereInputSchema) ]).optional(),
+  horse: z.union([ z.lazy(() => HorseRelationFilterSchema),z.lazy(() => HorseWhereInputSchema) ]).optional(),
   points: z.lazy(() => PointsListRelationFilterSchema).optional(),
   shows: z.lazy(() => ShowListRelationFilterSchema).optional()
 }).strict();

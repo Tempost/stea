@@ -6,8 +6,8 @@ import { ShowTypeSchema } from './ShowTypeSchema';
 import { EnumShowTypeFieldUpdateOperationsInputSchema } from './EnumShowTypeFieldUpdateOperationsInputSchema';
 import { BoolFieldUpdateOperationsInputSchema } from './BoolFieldUpdateOperationsInputSchema';
 import { DateTimeFieldUpdateOperationsInputSchema } from './DateTimeFieldUpdateOperationsInputSchema';
-import { RiderComboUpdateManyWithoutShowsNestedInputSchema } from './RiderComboUpdateManyWithoutShowsNestedInputSchema';
 import { NullableStringFieldUpdateOperationsInputSchema } from './NullableStringFieldUpdateOperationsInputSchema';
+import { RiderComboUpdateManyWithoutShowsNestedInputSchema } from './RiderComboUpdateManyWithoutShowsNestedInputSchema';
 import { PointsUpdateManyWithoutShowNestedInputSchema } from './PointsUpdateManyWithoutShowNestedInputSchema';
 
 export const ShowUpdateInputSchema: z.ZodType<Prisma.ShowUpdateInput> = z.object({
@@ -19,8 +19,8 @@ export const ShowUpdateInputSchema: z.ZodType<Prisma.ShowUpdateInput> = z.object
   reviewed: z.union([ z.boolean(),z.lazy(() => BoolFieldUpdateOperationsInputSchema) ]).optional(),
   showDate: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   showEndDate: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  riders: z.lazy(() => RiderComboUpdateManyWithoutShowsNestedInputSchema).optional(),
   url: z.union([ z.string().trim().url({ message: "Must be a valid URL" }),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  riders: z.lazy(() => RiderComboUpdateManyWithoutShowsNestedInputSchema).optional(),
   points: z.lazy(() => PointsUpdateManyWithoutShowNestedInputSchema).optional()
 }).strict();
 

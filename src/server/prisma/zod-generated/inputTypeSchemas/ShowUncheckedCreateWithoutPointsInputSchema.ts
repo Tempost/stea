@@ -12,8 +12,8 @@ export const ShowUncheckedCreateWithoutPointsInputSchema: z.ZodType<Prisma.ShowU
   reviewed: z.boolean().optional(),
   showDate: z.coerce.date(),
   showEndDate: z.coerce.date().optional().nullable(),
-  riders: z.lazy(() => RiderComboUncheckedCreateNestedManyWithoutShowsInputSchema).optional(),
-  url: z.string().optional().nullable()
+  url: z.string().optional().nullable(),
+  riders: z.lazy(() => RiderComboUncheckedCreateNestedManyWithoutShowsInputSchema).optional()
 }).strict();
 
 export default ShowUncheckedCreateWithoutPointsInputSchema;

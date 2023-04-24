@@ -13,8 +13,8 @@ export const ShowCreateInputSchema: z.ZodType<Prisma.ShowCreateInput> = z.object
   reviewed: z.boolean().optional(),
   showDate: z.coerce.date(),
   showEndDate: z.coerce.date().optional().nullable(),
-  riders: z.lazy(() => RiderComboCreateNestedManyWithoutShowsInputSchema).optional(),
   url: z.string().trim().url({ message: "Must be a valid URL" }).optional().nullable(),
+  riders: z.lazy(() => RiderComboCreateNestedManyWithoutShowsInputSchema).optional(),
   points: z.lazy(() => PointsCreateNestedManyWithoutShowInputSchema).optional()
 }).strict();
 

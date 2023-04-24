@@ -3,9 +3,9 @@ import { z } from 'zod';
 import { NullableDateTimeFieldUpdateOperationsInputSchema } from './NullableDateTimeFieldUpdateOperationsInputSchema';
 import { StringFieldUpdateOperationsInputSchema } from './StringFieldUpdateOperationsInputSchema';
 import { NullableStringFieldUpdateOperationsInputSchema } from './NullableStringFieldUpdateOperationsInputSchema';
-import { MemberUpdateOneWithoutHorseNestedInputSchema } from './MemberUpdateOneWithoutHorseNestedInputSchema';
 import { StatusSchema } from './StatusSchema';
 import { EnumStatusFieldUpdateOperationsInputSchema } from './EnumStatusFieldUpdateOperationsInputSchema';
+import { MemberUpdateOneWithoutHorseNestedInputSchema } from './MemberUpdateOneWithoutHorseNestedInputSchema';
 import { RiderComboUpdateManyWithoutHorseNestedInputSchema } from './RiderComboUpdateManyWithoutHorseNestedInputSchema';
 
 export const HorseUpdateWithoutOwnerRecInputSchema: z.ZodType<Prisma.HorseUpdateWithoutOwnerRecInput> = z.object({
@@ -13,9 +13,9 @@ export const HorseUpdateWithoutOwnerRecInputSchema: z.ZodType<Prisma.HorseUpdate
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   horseRN: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   horseAKA: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  memberOwner: z.lazy(() => MemberUpdateOneWithoutHorseNestedInputSchema).optional(),
   registrationDate: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   regType: z.union([ z.lazy(() => StatusSchema),z.lazy(() => EnumStatusFieldUpdateOperationsInputSchema) ]).optional(),
+  memberOwner: z.lazy(() => MemberUpdateOneWithoutHorseNestedInputSchema).optional(),
   RiderCombo: z.lazy(() => RiderComboUpdateManyWithoutHorseNestedInputSchema).optional()
 }).strict();
 

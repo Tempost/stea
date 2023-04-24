@@ -4,6 +4,7 @@ import { type MemberWithRelations, MemberWithRelationsSchema } from './MemberSch
 import { type RiderComboWithRelations, RiderComboWithRelationsSchema } from './RiderComboSchema'
 import { type MemberPartialWithRelations, MemberPartialWithRelationsSchema } from './MemberSchema'
 import { type RiderComboPartialWithRelations, RiderComboPartialWithRelationsSchema } from './RiderComboSchema'
+import { NonMemberHorseOwnerWithRelations, NonMemberHorseOwnerWithRelationsSchema, NonMemberHorseOwnerPartialWithRelations, NonMemberHorseOwnerPartialWithRelationsSchema } from './NonMemberHorseOwnerSchema';
 
 /////////////////////////////////////////
 // HORSE SCHEMA
