@@ -123,7 +123,7 @@ function SubmitPoints() {
     schema: ShowSubmitFormValue,
   });
 
-  function handlReviewSubmit(formValues: FormValues) {
+  function handleReviewSubmit(formValues: FormValues) {
     const headers = new Headers();
     headers.set('Accept', '*/*');
     headers.set('Content-Type', 'text/csv');
@@ -186,7 +186,7 @@ function SubmitPoints() {
           showUID: formValues.showUID,
         }),
       opts
-    );
+    ).then(console.log);
   }
 
   return (
@@ -198,9 +198,7 @@ function SubmitPoints() {
         />
         <form
           id='review-form'
-          onSubmit={methods.handleSubmit(
-            state.entries ? handleFinalSubmit : handlReviewSubmit
-          )}
+          onSubmit={methods.handleSubmit(handleReviewSubmit)}
         >
           <div className='mx-auto flex flex-col items-center space-y-2'>
             <span className='form-control'>
@@ -269,7 +267,10 @@ function SubmitPoints() {
 
           <PayPalScriptProvider options={initOptions}>
             {state.entries ? (
-              <PointsPayment pointsCount={state.entries.length} />
+              <PointsPayment
+                pointsCount={state.entries.length}
+                approveHandler={methods.handleSubmit(handleFinalSubmit)}
+              />
             ) : (
               <button
                 type='submit'
