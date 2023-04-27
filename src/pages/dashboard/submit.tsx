@@ -163,7 +163,6 @@ function SubmitPoints() {
 
       await res.json().then(res => {
         dispatch({ type: 'REVIEW', data: res.data });
-        utils.invalidate();
       });
     });
   }
@@ -186,7 +185,12 @@ function SubmitPoints() {
           showUID: formValues.showUID,
         }),
       opts
-    ).then(console.log);
+    ).then(res => {
+        if (res.ok) {
+          dispatch({type: 'RESET'})
+          utils.invalidate();
+        }
+      });
   }
 
   return (
