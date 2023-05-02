@@ -1,7 +1,6 @@
 import { router } from '@/server/trpc';
 import { horses } from './horses';
 import { members } from './members';
-import { points } from './points';
 import { shows } from './shows';
 import { riders } from './combos';
 import { mail } from './mail';
@@ -11,7 +10,6 @@ export const appRouter = router({
   members,
   nonMemberHorseOwners,
   horses,
-  points,
   shows,
   riders,
   mail,

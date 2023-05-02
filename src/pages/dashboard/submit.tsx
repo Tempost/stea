@@ -1,6 +1,6 @@
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 
-import { ReactElement, useReducer, useState } from 'react';
+import { ReactElement, useReducer } from 'react';
 import Select from '@/components/styled-ui/Select';
 import { Entry } from '@/server/utils';
 import { isZodFieldError, ZodFieldErrors } from '@/types/common';
@@ -76,6 +76,7 @@ function reducer(
         console.log(action.data);
         return {
           ...state,
+          error: undefined,
           reviewStatus: 'SUCCESS',
           entries: action.data,
         };
@@ -139,12 +140,13 @@ function SubmitPoints() {
       if (!res.ok) {
         const error = await res.json().then(data => data);
         dispatch({ type: 'RESET' });
-        if (!isZodFieldError<Entry>(error)) {
-          console.error('Unexpected error: ', error);
+        if (isZodFieldError<Entry>(error.data)) {
+          console.log(error.data)
           dispatch({
             type: 'ERROR',
             data: {
-              message: 'Something unexpected happened trying to parse the csv.',
+              message: 'An entry does not conform to the legend.',
+              errors: error.data.filter((e: any) => !e.success),
             },
           });
           return;
@@ -153,7 +155,7 @@ function SubmitPoints() {
         dispatch({
           type: 'ERROR',
           data: {
-            message: 'An entry does not match legend.',
+            message: error.message,
             errors: error,
           },
         });
@@ -186,11 +188,11 @@ function SubmitPoints() {
         }),
       opts
     ).then(res => {
-        if (res.ok) {
-          dispatch({type: 'RESET'})
-          utils.invalidate();
-        }
-      });
+      if (res.ok) {
+        dispatch({ type: 'RESET' });
+        utils.invalidate();
+      }
+    });
   }
 
   return (
