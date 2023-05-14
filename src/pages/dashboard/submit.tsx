@@ -141,7 +141,7 @@ function SubmitPoints() {
         const error = await res.json().then(data => data);
         dispatch({ type: 'RESET' });
         if (isZodFieldError<Entry>(error.data)) {
-          console.log(error.data)
+          console.log(error.data);
           dispatch({
             type: 'ERROR',
             data: {

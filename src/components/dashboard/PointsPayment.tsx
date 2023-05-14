@@ -12,7 +12,7 @@ interface PointsPaymentProps {
   approveHandler: () => void;
 }
 
-function PointsPayment({ pointsCount, approveHandler}: PointsPaymentProps) {
+function PointsPayment({ pointsCount, approveHandler }: PointsPaymentProps) {
   function createOrder(_: CreateOrderData, actions: CreateOrderActions) {
     return actions.order.create({
       intent: 'CAPTURE',
@@ -35,7 +35,7 @@ function PointsPayment({ pointsCount, approveHandler}: PointsPaymentProps) {
     return actions.order!.capture().then(details => {
       const name = details.payer.name?.given_name;
       console.log(`${name} has paid for a show.`);
-      approveHandler()
+      approveHandler();
     });
   }
 

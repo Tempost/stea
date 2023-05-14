@@ -36,7 +36,7 @@ function Home() {
               href={'/join'}
               prefetch={false}
             >
-              <button className='btn-primary btn-lg btn text-xl md:btn-xl md:text-2xl'>
+              <button className='btn-primary btn btn-lg text-xl md:btn-xl md:text-2xl'>
                 Join Today!
               </button>
             </NextLink>
@@ -74,7 +74,7 @@ function Home() {
             <p className='inline-grid place-content-center text-xl md:text-2xl'>
               Review rule changes for 2023
               <a
-                className='btn-primary btn-sm btn md:btn-xs'
+                className='btn-primary btn btn-sm md:btn-xs'
                 href='/stea_rule_book.pdf'
                 rel='noopener noreferrer'
                 target='_blank'

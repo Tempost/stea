@@ -56,8 +56,10 @@ export const HEADER_MAPPING = {
 
 export type UnMappedHeaderNames = typeof HEADER_NAMES;
 export type MappedHeaderNames = typeof KEY_NAMES;
-export function isHeadingNames(a: ReadonlyArray<any>): a is UnMappedHeaderNames {
-  return a.every((val) => HEADER_NAMES.includes(val));
+export function isHeadingNames(
+  a: ReadonlyArray<any>
+): a is UnMappedHeaderNames {
+  return a.every(val => HEADER_NAMES.includes(val));
 }
 
 export const isEntry = (o: Entry | undefined): o is Entry => {

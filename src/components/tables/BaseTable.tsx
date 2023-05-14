@@ -19,7 +19,6 @@ function TableWithData<TData, TError>({
   paginate,
   search,
 }: TableWithDataProps<TData, TError>) {
-
   if (query.isLoading) {
     return <div className='rounded-b-lg p-5 shadow-xl'>Loading...</div>;
   }

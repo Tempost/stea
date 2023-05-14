@@ -132,5 +132,5 @@ export {
   changeMonth,
   changeSelectionAtom,
   ownerTypeAtom,
-  entryAtom
+  entryAtom,
 };

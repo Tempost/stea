@@ -31,7 +31,7 @@ export default async function handler(
       uid: true,
       showDate: true,
       showName: true,
-    }
+    },
   });
 
   if (!existingShow) {
@@ -99,7 +99,10 @@ export default async function handler(
   }
 
   await Promise.all(dbActions).then(() =>
-    prisma.show.update({ where: { uid: existingShow.uid }, data: { reviewed: true } })
+    prisma.show.update({
+      where: { uid: existingShow.uid },
+      data: { reviewed: true },
+    })
   );
   return res.status(200).json({ success: true, message: 'WOW' });
 }
