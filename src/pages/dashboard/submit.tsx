@@ -115,7 +115,10 @@ function reducer(
 
 function SubmitPoints() {
   const [state, dispatch] = useReducer(reducer, initState);
-  const shows = trpc.shows.all.useQuery({ where: { reviewed: false } });
+  const shows = trpc.shows.all.useQuery({
+    where: { reviewed: false },
+    orderBy: { showDate: 'asc' },
+  });
   const utils = trpc.useContext().shows;
 
   const methods = useZodForm({
