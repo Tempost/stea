@@ -7,8 +7,8 @@ import { NestedEnumTypeFilterSchema } from './NestedEnumTypeFilterSchema';
 
 export const EnumTypeWithAggregatesFilterSchema: z.ZodType<Prisma.EnumTypeWithAggregatesFilter> = z.object({
   equals: z.lazy(() => TypeSchema).optional(),
-  in: z.lazy(() => TypeSchema).array().optional(),
-  notIn: z.lazy(() => TypeSchema).array().optional(),
+  in: z.union([ z.lazy(() => TypeSchema).array(),z.lazy(() => TypeSchema) ]).optional(),
+  notIn: z.union([ z.lazy(() => TypeSchema).array(),z.lazy(() => TypeSchema) ]).optional(),
   not: z.union([ z.lazy(() => TypeSchema),z.lazy(() => NestedEnumTypeWithAggregatesFilterSchema) ]).optional(),
   _count: z.lazy(() => NestedIntFilterSchema).optional(),
   _min: z.lazy(() => NestedEnumTypeFilterSchema).optional(),

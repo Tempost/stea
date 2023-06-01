@@ -7,8 +7,8 @@ import { NestedEnumPhoneTypeFilterSchema } from './NestedEnumPhoneTypeFilterSche
 
 export const EnumPhoneTypeWithAggregatesFilterSchema: z.ZodType<Prisma.EnumPhoneTypeWithAggregatesFilter> = z.object({
   equals: z.lazy(() => PhoneTypeSchema).optional(),
-  in: z.lazy(() => PhoneTypeSchema).array().optional(),
-  notIn: z.lazy(() => PhoneTypeSchema).array().optional(),
+  in: z.union([ z.lazy(() => PhoneTypeSchema).array(),z.lazy(() => PhoneTypeSchema) ]).optional(),
+  notIn: z.union([ z.lazy(() => PhoneTypeSchema).array(),z.lazy(() => PhoneTypeSchema) ]).optional(),
   not: z.union([ z.lazy(() => PhoneTypeSchema),z.lazy(() => NestedEnumPhoneTypeWithAggregatesFilterSchema) ]).optional(),
   _count: z.lazy(() => NestedIntFilterSchema).optional(),
   _min: z.lazy(() => NestedEnumPhoneTypeFilterSchema).optional(),

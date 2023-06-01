@@ -5,8 +5,8 @@ import { NestedEnumDivisionFilterSchema } from './NestedEnumDivisionFilterSchema
 
 export const EnumDivisionFilterSchema: z.ZodType<Prisma.EnumDivisionFilter> = z.object({
   equals: z.lazy(() => DivisionSchema).optional(),
-  in: z.lazy(() => DivisionSchema).array().optional(),
-  notIn: z.lazy(() => DivisionSchema).array().optional(),
+  in: z.union([ z.lazy(() => DivisionSchema).array(),z.lazy(() => DivisionSchema) ]).optional(),
+  notIn: z.union([ z.lazy(() => DivisionSchema).array(),z.lazy(() => DivisionSchema) ]).optional(),
   not: z.union([ z.lazy(() => DivisionSchema),z.lazy(() => NestedEnumDivisionFilterSchema) ]).optional(),
 }).strict();
 
