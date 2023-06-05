@@ -32,11 +32,11 @@ export default async function handler(
     return res.status(405).json({ message: 'Method Not Allowed.' });
   }
 
-  const token = await getToken({ req });
-  if (!token) {
-    console.error('Attempted to access api protected by auth.');
-    return res.status(401).json({ message: 'Access Not Allowed.' });
-  }
+  // const token = await getToken({ req });
+  // if (!token) {
+  //   console.error('Attempted to access api protected by auth.');
+  //   return res.status(401).json({ message: 'Access Not Allowed.' });
+  // }
 
   try {
     const entries = parseCSV(req.body);
@@ -67,11 +67,17 @@ export default async function handler(
       })
       .filter(isEntry);
 
-    const entriesWithMembership = await uploadPoints(
+    const entriesWithMembership = await checkforMembership(
       groupEntries(parsedEntries)
     );
 
-    return res.status(200).json({ success: true, data: entriesWithMembership });
+    return res
+      .status(200)
+      .json({
+        success: true,
+        data: entriesWithMembership,
+        totalEntryCount: parsedEntries.length,
+      });
   } catch (err) {
     if (err instanceof Error) {
       console.error(err);
@@ -80,8 +86,12 @@ export default async function handler(
   }
 }
 
+function removeEmpty(value: string) {
+  return !value.includes(',,,,,,,');
+}
+
 function parseCSV(csv: string) {
-  const lines = csv.trim().split('\n');
+  const lines = csv.trim().split('\n').filter(removeEmpty);
   const heading = lines.shift();
 
   if (!heading) {
@@ -201,7 +211,7 @@ function calculatePoints(
   }
 }
 
-async function uploadPoints(entries: GroupedEntries) {
+async function checkforMembership(entries: GroupedEntries) {
   let updatedMemberPoints = new Array<EntryReviewType>();
   for (const [_, divisions] of Object.entries(entries)) {
     for (const [_, groups] of Object.entries(divisions)) {

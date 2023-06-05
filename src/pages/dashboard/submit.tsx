@@ -39,6 +39,7 @@ type StatusMessage = 'SUCCESS' | 'ERROR' | 'INIT';
 interface ComponentActions {
   type: 'REVIEW' | 'SUBMIT' | 'RESET' | 'ERROR';
   data?: string | SubmitPointsError | EntryReviewType[];
+  totalEntries?: number;
 }
 
 interface SubmitPointsError {
@@ -50,6 +51,7 @@ interface SubmitPointsState {
   reviewStatus: StatusMessage;
   submissionStatus: StatusMessage;
   entries: EntryReviewType[] | undefined;
+  totalEntries: number;
   error: SubmitPointsError | undefined;
 }
 
@@ -58,6 +60,7 @@ const initState: SubmitPointsState = {
   submissionStatus: 'INIT',
   entries: undefined,
   error: undefined,
+  totalEntries: 0,
 };
 
 type FormValues = z.infer<typeof ShowSubmitFormValue>;
@@ -73,12 +76,12 @@ function reducer(
   switch (action.type) {
     case 'REVIEW':
       if (isEntrySubmissionType(action.data)) {
-        console.log(action.data);
         return {
           ...state,
           error: undefined,
           reviewStatus: 'SUCCESS',
           entries: action.data,
+          totalEntries: action.totalEntries ?? 0,
         };
       }
     case 'SUBMIT':
@@ -167,7 +170,7 @@ function SubmitPoints() {
       }
 
       await res.json().then(res => {
-        dispatch({ type: 'REVIEW', data: res.data });
+        dispatch({ type: 'REVIEW', data: res.data, totalEntries: res.totalEntryCount });
       });
     });
   }
@@ -277,7 +280,7 @@ function SubmitPoints() {
           <PayPalScriptProvider options={initOptions}>
             {state.entries ? (
               <PointsPayment
-                pointsCount={state.entries.length}
+                pointsCount={state.totalEntries}
                 approveHandler={methods.handleSubmit(handleFinalSubmit)}
               />
             ) : (
