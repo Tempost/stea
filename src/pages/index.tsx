@@ -86,7 +86,6 @@ function Home() {
         </section>
 
         <section className='mx-auto flex flex-col items-center gap-2'>
-          <EOYPlacing />
         </section>
 
         <section className='mx-auto flex flex-col items-center gap-2'>

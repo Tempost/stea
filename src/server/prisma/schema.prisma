@@ -134,6 +134,10 @@ model Horse {
   regType          Status
   RiderCombo       RiderCombo[]
   owner            String?
+
+
+  @@index([owner])
+  @@index([memberName])
 }
 
 model RiderCombo {
@@ -155,6 +159,7 @@ model RiderCombo {
   shows       Show[]
 
   @@unique([memberName, horseName, division])
+  @@index([horseName])
 }
 
 model Points {
@@ -167,6 +172,9 @@ model Points {
   place      String
   show       Show       @relation(fields: [showUid], references: [uid], onDelete: Cascade, onUpdate: Cascade)
   showUid    String
+
+  @@index([riderUid])
+  @@index([showUid])
 }
 
 model Show {
