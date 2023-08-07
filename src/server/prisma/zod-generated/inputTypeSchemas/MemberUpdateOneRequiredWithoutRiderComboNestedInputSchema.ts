@@ -5,6 +5,7 @@ import { MemberUncheckedCreateWithoutRiderComboInputSchema } from './MemberUnche
 import { MemberCreateOrConnectWithoutRiderComboInputSchema } from './MemberCreateOrConnectWithoutRiderComboInputSchema';
 import { MemberUpsertWithoutRiderComboInputSchema } from './MemberUpsertWithoutRiderComboInputSchema';
 import { MemberWhereUniqueInputSchema } from './MemberWhereUniqueInputSchema';
+import { MemberUpdateToOneWithWhereWithoutRiderComboInputSchema } from './MemberUpdateToOneWithWhereWithoutRiderComboInputSchema';
 import { MemberUpdateWithoutRiderComboInputSchema } from './MemberUpdateWithoutRiderComboInputSchema';
 import { MemberUncheckedUpdateWithoutRiderComboInputSchema } from './MemberUncheckedUpdateWithoutRiderComboInputSchema';
 
@@ -13,7 +14,7 @@ export const MemberUpdateOneRequiredWithoutRiderComboNestedInputSchema: z.ZodTyp
   connectOrCreate: z.lazy(() => MemberCreateOrConnectWithoutRiderComboInputSchema).optional(),
   upsert: z.lazy(() => MemberUpsertWithoutRiderComboInputSchema).optional(),
   connect: z.lazy(() => MemberWhereUniqueInputSchema).optional(),
-  update: z.union([ z.lazy(() => MemberUpdateWithoutRiderComboInputSchema),z.lazy(() => MemberUncheckedUpdateWithoutRiderComboInputSchema) ]).optional(),
+  update: z.union([ z.lazy(() => MemberUpdateToOneWithWhereWithoutRiderComboInputSchema),z.lazy(() => MemberUpdateWithoutRiderComboInputSchema),z.lazy(() => MemberUncheckedUpdateWithoutRiderComboInputSchema) ]).optional(),
 }).strict();
 
 export default MemberUpdateOneRequiredWithoutRiderComboNestedInputSchema;

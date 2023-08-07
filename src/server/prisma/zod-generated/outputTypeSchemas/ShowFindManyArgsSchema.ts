@@ -34,7 +34,7 @@ export const ShowFindManyArgsSchema: z.ZodType<Prisma.ShowFindManyArgs> = z.obje
   cursor: ShowWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
-  distinct: ShowScalarFieldEnumSchema.array().optional(),
+  distinct: z.union([ ShowScalarFieldEnumSchema,ShowScalarFieldEnumSchema.array() ]).optional(),
 }).strict()
 
 export default ShowFindManyArgsSchema;

@@ -5,6 +5,7 @@ import { RiderComboUncheckedCreateWithoutPointsInputSchema } from './RiderComboU
 import { RiderComboCreateOrConnectWithoutPointsInputSchema } from './RiderComboCreateOrConnectWithoutPointsInputSchema';
 import { RiderComboUpsertWithoutPointsInputSchema } from './RiderComboUpsertWithoutPointsInputSchema';
 import { RiderComboWhereUniqueInputSchema } from './RiderComboWhereUniqueInputSchema';
+import { RiderComboUpdateToOneWithWhereWithoutPointsInputSchema } from './RiderComboUpdateToOneWithWhereWithoutPointsInputSchema';
 import { RiderComboUpdateWithoutPointsInputSchema } from './RiderComboUpdateWithoutPointsInputSchema';
 import { RiderComboUncheckedUpdateWithoutPointsInputSchema } from './RiderComboUncheckedUpdateWithoutPointsInputSchema';
 
@@ -13,7 +14,7 @@ export const RiderComboUpdateOneRequiredWithoutPointsNestedInputSchema: z.ZodTyp
   connectOrCreate: z.lazy(() => RiderComboCreateOrConnectWithoutPointsInputSchema).optional(),
   upsert: z.lazy(() => RiderComboUpsertWithoutPointsInputSchema).optional(),
   connect: z.lazy(() => RiderComboWhereUniqueInputSchema).optional(),
-  update: z.union([ z.lazy(() => RiderComboUpdateWithoutPointsInputSchema),z.lazy(() => RiderComboUncheckedUpdateWithoutPointsInputSchema) ]).optional(),
+  update: z.union([ z.lazy(() => RiderComboUpdateToOneWithWhereWithoutPointsInputSchema),z.lazy(() => RiderComboUpdateWithoutPointsInputSchema),z.lazy(() => RiderComboUncheckedUpdateWithoutPointsInputSchema) ]).optional(),
 }).strict();
 
 export default RiderComboUpdateOneRequiredWithoutPointsNestedInputSchema;

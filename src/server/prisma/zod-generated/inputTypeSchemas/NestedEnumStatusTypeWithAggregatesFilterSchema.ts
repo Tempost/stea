@@ -6,8 +6,8 @@ import { NestedEnumStatusTypeFilterSchema } from './NestedEnumStatusTypeFilterSc
 
 export const NestedEnumStatusTypeWithAggregatesFilterSchema: z.ZodType<Prisma.NestedEnumStatusTypeWithAggregatesFilter> = z.object({
   equals: z.lazy(() => StatusTypeSchema).optional(),
-  in: z.union([ z.lazy(() => StatusTypeSchema).array(),z.lazy(() => StatusTypeSchema) ]).optional(),
-  notIn: z.union([ z.lazy(() => StatusTypeSchema).array(),z.lazy(() => StatusTypeSchema) ]).optional(),
+  in: z.lazy(() => StatusTypeSchema).array().optional(),
+  notIn: z.lazy(() => StatusTypeSchema).array().optional(),
   not: z.union([ z.lazy(() => StatusTypeSchema),z.lazy(() => NestedEnumStatusTypeWithAggregatesFilterSchema) ]).optional(),
   _count: z.lazy(() => NestedIntFilterSchema).optional(),
   _min: z.lazy(() => NestedEnumStatusTypeFilterSchema).optional(),

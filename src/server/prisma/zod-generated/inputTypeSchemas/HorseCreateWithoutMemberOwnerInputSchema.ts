@@ -7,8 +7,8 @@ import { RiderComboCreateNestedManyWithoutHorseInputSchema } from './RiderComboC
 export const HorseCreateWithoutMemberOwnerInputSchema: z.ZodType<Prisma.HorseCreateWithoutMemberOwnerInput> = z.object({
   createdAt: z.coerce.date().optional().nullable(),
   updatedAt: z.coerce.date().optional().nullable(),
-  horseRN: z.string(),
-  horseAKA: z.string().optional().nullable(),
+  horseRN: z.string().trim().min(1, { message: "Registered horse name is required" }),
+  horseAKA: z.string().trim().optional().nullable(),
   registrationDate: z.coerce.date().optional().nullable(),
   regType: z.lazy(() => StatusSchema),
   ownerRec: z.lazy(() => NonMemberHorseOwnerCreateNestedOneWithoutHorsesInputSchema).optional(),

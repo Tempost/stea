@@ -8,7 +8,7 @@ import { FloatFieldUpdateOperationsInputSchema } from './FloatFieldUpdateOperati
 import { IntFieldUpdateOperationsInputSchema } from './IntFieldUpdateOperationsInputSchema';
 import { BoolFieldUpdateOperationsInputSchema } from './BoolFieldUpdateOperationsInputSchema';
 
-export const RiderComboUncheckedUpdateManyWithoutRiderComboInputSchema: z.ZodType<Prisma.RiderComboUncheckedUpdateManyWithoutRiderComboInput> = z.object({
+export const RiderComboUncheckedUpdateManyWithoutHorseInputSchema: z.ZodType<Prisma.RiderComboUncheckedUpdateManyWithoutHorseInput> = z.object({
   uid: z.union([ z.string().cuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -17,7 +17,7 @@ export const RiderComboUncheckedUpdateManyWithoutRiderComboInputSchema: z.ZodTyp
   totalShows: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   completedHT: z.union([ z.boolean(),z.lazy(() => BoolFieldUpdateOperationsInputSchema) ]).optional(),
   multiVenue: z.union([ z.boolean(),z.lazy(() => BoolFieldUpdateOperationsInputSchema) ]).optional(),
-  horseName: z.union([ z.string().trim().min(1, { message: "Horse Name is required" }),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  memberName: z.union([ z.string().trim().min(1, { message: "Member Name is required" }),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
-export default RiderComboUncheckedUpdateManyWithoutRiderComboInputSchema;
+export default RiderComboUncheckedUpdateManyWithoutHorseInputSchema;

@@ -3,7 +3,7 @@ import type { Prisma } from '@prisma/client';
 import { RiderComboSelectSchema } from '../inputTypeSchemas/RiderComboSelectSchema';
 import { RiderComboIncludeSchema } from '../inputTypeSchemas/RiderComboIncludeSchema';
 
-export const RiderComboArgsSchema: z.ZodType<Prisma.RiderComboArgs> = z.object({
+export const RiderComboArgsSchema: z.ZodType<Prisma.RiderComboDefaultArgs> = z.object({
   select: z.lazy(() => RiderComboSelectSchema).optional(),
   include: z.lazy(() => RiderComboIncludeSchema).optional(),
 }).strict();

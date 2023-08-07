@@ -35,7 +35,7 @@ export const HorseFindManyArgsSchema: z.ZodType<Prisma.HorseFindManyArgs> = z.ob
   cursor: HorseWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
-  distinct: HorseScalarFieldEnumSchema.array().optional(),
+  distinct: z.union([ HorseScalarFieldEnumSchema,HorseScalarFieldEnumSchema.array() ]).optional(),
 }).strict()
 
 export default HorseFindManyArgsSchema;

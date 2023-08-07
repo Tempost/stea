@@ -5,6 +5,7 @@ import { HorseUncheckedCreateWithoutRiderComboInputSchema } from './HorseUncheck
 import { HorseCreateOrConnectWithoutRiderComboInputSchema } from './HorseCreateOrConnectWithoutRiderComboInputSchema';
 import { HorseUpsertWithoutRiderComboInputSchema } from './HorseUpsertWithoutRiderComboInputSchema';
 import { HorseWhereUniqueInputSchema } from './HorseWhereUniqueInputSchema';
+import { HorseUpdateToOneWithWhereWithoutRiderComboInputSchema } from './HorseUpdateToOneWithWhereWithoutRiderComboInputSchema';
 import { HorseUpdateWithoutRiderComboInputSchema } from './HorseUpdateWithoutRiderComboInputSchema';
 import { HorseUncheckedUpdateWithoutRiderComboInputSchema } from './HorseUncheckedUpdateWithoutRiderComboInputSchema';
 
@@ -13,7 +14,7 @@ export const HorseUpdateOneRequiredWithoutRiderComboNestedInputSchema: z.ZodType
   connectOrCreate: z.lazy(() => HorseCreateOrConnectWithoutRiderComboInputSchema).optional(),
   upsert: z.lazy(() => HorseUpsertWithoutRiderComboInputSchema).optional(),
   connect: z.lazy(() => HorseWhereUniqueInputSchema).optional(),
-  update: z.union([ z.lazy(() => HorseUpdateWithoutRiderComboInputSchema),z.lazy(() => HorseUncheckedUpdateWithoutRiderComboInputSchema) ]).optional(),
+  update: z.union([ z.lazy(() => HorseUpdateToOneWithWhereWithoutRiderComboInputSchema),z.lazy(() => HorseUpdateWithoutRiderComboInputSchema),z.lazy(() => HorseUncheckedUpdateWithoutRiderComboInputSchema) ]).optional(),
 }).strict();
 
 export default HorseUpdateOneRequiredWithoutRiderComboNestedInputSchema;

@@ -1,13 +1,29 @@
 import { z } from 'zod';
 import { DivisionSchema } from '../inputTypeSchemas/DivisionSchema'
-import { type MemberWithRelations, MemberWithRelationsSchema } from './MemberSchema'
-import { type HorseWithRelations, HorseWithRelationsSchema } from './HorseSchema'
-import { type PointsWithRelations, PointsWithRelationsSchema } from './PointsSchema'
-import { type ShowWithRelations, ShowWithRelationsSchema } from './ShowSchema'
-import { type MemberPartialWithRelations, MemberPartialWithRelationsSchema } from './MemberSchema'
-import { type HorsePartialWithRelations, HorsePartialWithRelationsSchema } from './HorseSchema'
-import { type PointsPartialWithRelations, PointsPartialWithRelationsSchema } from './PointsSchema'
-import { type ShowPartialWithRelations, ShowPartialWithRelationsSchema } from './ShowSchema'
+import type { MemberWithRelations } from './MemberSchema'
+import type { MemberPartialWithRelations } from './MemberSchema'
+import type { MemberOptionalDefaultsWithRelations } from './MemberSchema'
+import type { HorseWithRelations } from './HorseSchema'
+import type { HorsePartialWithRelations } from './HorseSchema'
+import type { HorseOptionalDefaultsWithRelations } from './HorseSchema'
+import type { PointsWithRelations } from './PointsSchema'
+import type { PointsPartialWithRelations } from './PointsSchema'
+import type { PointsOptionalDefaultsWithRelations } from './PointsSchema'
+import type { ShowWithRelations } from './ShowSchema'
+import type { ShowPartialWithRelations } from './ShowSchema'
+import type { ShowOptionalDefaultsWithRelations } from './ShowSchema'
+import { MemberWithRelationsSchema } from './MemberSchema'
+import { MemberPartialWithRelationsSchema } from './MemberSchema'
+import { MemberOptionalDefaultsWithRelationsSchema } from './MemberSchema'
+import { HorseWithRelationsSchema } from './HorseSchema'
+import { HorsePartialWithRelationsSchema } from './HorseSchema'
+import { HorseOptionalDefaultsWithRelationsSchema } from './HorseSchema'
+import { PointsWithRelationsSchema } from './PointsSchema'
+import { PointsPartialWithRelationsSchema } from './PointsSchema'
+import { PointsOptionalDefaultsWithRelationsSchema } from './PointsSchema'
+import { ShowWithRelationsSchema } from './ShowSchema'
+import { ShowPartialWithRelationsSchema } from './ShowSchema'
+import { ShowOptionalDefaultsWithRelationsSchema } from './ShowSchema'
 
 /////////////////////////////////////////
 // RIDER COMBO SCHEMA
@@ -28,15 +44,17 @@ export const RiderComboSchema = z.object({
 
 export type RiderCombo = z.infer<typeof RiderComboSchema>
 
+/////////////////////////////////////////
 // RIDER COMBO PARTIAL SCHEMA
-//------------------------------------------------------
+/////////////////////////////////////////
 
 export const RiderComboPartialSchema = RiderComboSchema.partial()
 
 export type RiderComboPartial = z.infer<typeof RiderComboPartialSchema>
 
+/////////////////////////////////////////
 // RIDER COMBO OPTIONAL DEFAULTS SCHEMA
-//------------------------------------------------------
+/////////////////////////////////////////
 
 export const RiderComboOptionalDefaultsSchema = RiderComboSchema.merge(z.object({
   uid: z.string().cuid().optional(),
@@ -50,8 +68,9 @@ export const RiderComboOptionalDefaultsSchema = RiderComboSchema.merge(z.object(
 
 export type RiderComboOptionalDefaults = z.infer<typeof RiderComboOptionalDefaultsSchema>
 
+/////////////////////////////////////////
 // RIDER COMBO RELATION SCHEMA
-//------------------------------------------------------
+/////////////////////////////////////////
 
 export type RiderComboRelations = {
   member: MemberWithRelations;
@@ -69,20 +88,29 @@ export const RiderComboWithRelationsSchema: z.ZodType<RiderComboWithRelations> =
   shows: z.lazy(() => ShowWithRelationsSchema).array(),
 }))
 
+/////////////////////////////////////////
 // RIDER COMBO OPTIONAL DEFAULTS RELATION SCHEMA
-//------------------------------------------------------
+/////////////////////////////////////////
 
-export type RiderComboOptionalDefaultsWithRelations = z.infer<typeof RiderComboOptionalDefaultsSchema> & RiderComboRelations
+export type RiderComboOptionalDefaultsRelations = {
+  member: MemberOptionalDefaultsWithRelations;
+  horse: HorseOptionalDefaultsWithRelations;
+  points: PointsOptionalDefaultsWithRelations[];
+  shows: ShowOptionalDefaultsWithRelations[];
+};
+
+export type RiderComboOptionalDefaultsWithRelations = z.infer<typeof RiderComboOptionalDefaultsSchema> & RiderComboOptionalDefaultsRelations
 
 export const RiderComboOptionalDefaultsWithRelationsSchema: z.ZodType<RiderComboOptionalDefaultsWithRelations> = RiderComboOptionalDefaultsSchema.merge(z.object({
-  member: z.lazy(() => MemberWithRelationsSchema),
-  horse: z.lazy(() => HorseWithRelationsSchema),
-  points: z.lazy(() => PointsWithRelationsSchema).array(),
-  shows: z.lazy(() => ShowWithRelationsSchema).array(),
+  member: z.lazy(() => MemberOptionalDefaultsWithRelationsSchema),
+  horse: z.lazy(() => HorseOptionalDefaultsWithRelationsSchema),
+  points: z.lazy(() => PointsOptionalDefaultsWithRelationsSchema).array(),
+  shows: z.lazy(() => ShowOptionalDefaultsWithRelationsSchema).array(),
 }))
 
+/////////////////////////////////////////
 // RIDER COMBO PARTIAL RELATION SCHEMA
-//------------------------------------------------------
+/////////////////////////////////////////
 
 export type RiderComboPartialRelations = {
   member?: MemberPartialWithRelations;
@@ -99,5 +127,23 @@ export const RiderComboPartialWithRelationsSchema: z.ZodType<RiderComboPartialWi
   points: z.lazy(() => PointsPartialWithRelationsSchema).array(),
   shows: z.lazy(() => ShowPartialWithRelationsSchema).array(),
 })).partial()
+
+export type RiderComboOptionalDefaultsWithPartialRelations = z.infer<typeof RiderComboOptionalDefaultsSchema> & RiderComboPartialRelations
+
+export const RiderComboOptionalDefaultsWithPartialRelationsSchema: z.ZodType<RiderComboOptionalDefaultsWithPartialRelations> = RiderComboOptionalDefaultsSchema.merge(z.object({
+  member: z.lazy(() => MemberPartialWithRelationsSchema),
+  horse: z.lazy(() => HorsePartialWithRelationsSchema),
+  points: z.lazy(() => PointsPartialWithRelationsSchema).array(),
+  shows: z.lazy(() => ShowPartialWithRelationsSchema).array(),
+}).partial())
+
+export type RiderComboWithPartialRelations = z.infer<typeof RiderComboSchema> & RiderComboPartialRelations
+
+export const RiderComboWithPartialRelationsSchema: z.ZodType<RiderComboWithPartialRelations> = RiderComboSchema.merge(z.object({
+  member: z.lazy(() => MemberPartialWithRelationsSchema),
+  horse: z.lazy(() => HorsePartialWithRelationsSchema),
+  points: z.lazy(() => PointsPartialWithRelationsSchema).array(),
+  shows: z.lazy(() => ShowPartialWithRelationsSchema).array(),
+}).partial())
 
 export default RiderComboSchema;

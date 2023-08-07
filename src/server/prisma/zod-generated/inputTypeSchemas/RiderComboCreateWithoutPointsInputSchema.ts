@@ -6,12 +6,12 @@ import { HorseCreateNestedOneWithoutRiderComboInputSchema } from './HorseCreateN
 import { ShowCreateNestedManyWithoutRidersInputSchema } from './ShowCreateNestedManyWithoutRidersInputSchema';
 
 export const RiderComboCreateWithoutPointsInputSchema: z.ZodType<Prisma.RiderComboCreateWithoutPointsInput> = z.object({
-  uid: z.string().optional(),
+  uid: z.string().cuid().optional(),
   createdAt: z.coerce.date().optional().nullable(),
   updatedAt: z.coerce.date().optional().nullable(),
   division: z.lazy(() => DivisionSchema),
   totalPoints: z.number().optional(),
-  totalShows: z.number().optional(),
+  totalShows: z.number().int().optional(),
   completedHT: z.boolean().optional(),
   multiVenue: z.boolean().optional(),
   member: z.lazy(() => MemberCreateNestedOneWithoutRiderComboInputSchema),

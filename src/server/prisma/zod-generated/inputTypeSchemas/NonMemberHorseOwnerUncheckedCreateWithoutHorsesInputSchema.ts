@@ -5,11 +5,11 @@ import { PhoneTypeSchema } from './PhoneTypeSchema';
 export const NonMemberHorseOwnerUncheckedCreateWithoutHorsesInputSchema: z.ZodType<Prisma.NonMemberHorseOwnerUncheckedCreateWithoutHorsesInput> = z.object({
   createdAt: z.coerce.date().optional().nullable(),
   updatedAt: z.coerce.date().optional().nullable(),
-  firstName: z.string(),
-  lastName: z.string(),
-  fullName: z.string(),
-  email: z.string(),
-  phone: z.string(),
+  firstName: z.string().trim().min(1, { message: "First Name is required" }),
+  lastName: z.string().trim().min(1, { message: "Last Name is required" }),
+  fullName: z.string().trim(),
+  email: z.string().trim().email({ message: "Invalid email address" }),
+  phone: z.string().trim().min(1, { message: "Phone number is required" }),
   phoneType: z.lazy(() => PhoneTypeSchema).optional()
 }).strict();
 

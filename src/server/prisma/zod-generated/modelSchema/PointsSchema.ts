@@ -1,8 +1,16 @@
 import { z } from 'zod';
-import { type RiderComboWithRelations, RiderComboWithRelationsSchema } from './RiderComboSchema'
-import { type ShowWithRelations, ShowWithRelationsSchema } from './ShowSchema'
-import { type RiderComboPartialWithRelations, RiderComboPartialWithRelationsSchema } from './RiderComboSchema'
-import { type ShowPartialWithRelations, ShowPartialWithRelationsSchema } from './ShowSchema'
+import type { RiderComboWithRelations } from './RiderComboSchema'
+import type { RiderComboPartialWithRelations } from './RiderComboSchema'
+import type { RiderComboOptionalDefaultsWithRelations } from './RiderComboSchema'
+import type { ShowWithRelations } from './ShowSchema'
+import type { ShowPartialWithRelations } from './ShowSchema'
+import type { ShowOptionalDefaultsWithRelations } from './ShowSchema'
+import { RiderComboWithRelationsSchema } from './RiderComboSchema'
+import { RiderComboPartialWithRelationsSchema } from './RiderComboSchema'
+import { RiderComboOptionalDefaultsWithRelationsSchema } from './RiderComboSchema'
+import { ShowWithRelationsSchema } from './ShowSchema'
+import { ShowPartialWithRelationsSchema } from './ShowSchema'
+import { ShowOptionalDefaultsWithRelationsSchema } from './ShowSchema'
 
 /////////////////////////////////////////
 // POINTS SCHEMA
@@ -18,15 +26,17 @@ export const PointsSchema = z.object({
 
 export type Points = z.infer<typeof PointsSchema>
 
+/////////////////////////////////////////
 // POINTS PARTIAL SCHEMA
-//------------------------------------------------------
+/////////////////////////////////////////
 
 export const PointsPartialSchema = PointsSchema.partial()
 
 export type PointsPartial = z.infer<typeof PointsPartialSchema>
 
+/////////////////////////////////////////
 // POINTS OPTIONAL DEFAULTS SCHEMA
-//------------------------------------------------------
+/////////////////////////////////////////
 
 export const PointsOptionalDefaultsSchema = PointsSchema.merge(z.object({
   uid: z.string().cuid().optional(),
@@ -34,8 +44,9 @@ export const PointsOptionalDefaultsSchema = PointsSchema.merge(z.object({
 
 export type PointsOptionalDefaults = z.infer<typeof PointsOptionalDefaultsSchema>
 
+/////////////////////////////////////////
 // POINTS RELATION SCHEMA
-//------------------------------------------------------
+/////////////////////////////////////////
 
 export type PointsRelations = {
   RiderCombo: RiderComboWithRelations;
@@ -49,18 +60,25 @@ export const PointsWithRelationsSchema: z.ZodType<PointsWithRelations> = PointsS
   show: z.lazy(() => ShowWithRelationsSchema),
 }))
 
+/////////////////////////////////////////
 // POINTS OPTIONAL DEFAULTS RELATION SCHEMA
-//------------------------------------------------------
+/////////////////////////////////////////
 
-export type PointsOptionalDefaultsWithRelations = z.infer<typeof PointsOptionalDefaultsSchema> & PointsRelations
+export type PointsOptionalDefaultsRelations = {
+  RiderCombo: RiderComboOptionalDefaultsWithRelations;
+  show: ShowOptionalDefaultsWithRelations;
+};
+
+export type PointsOptionalDefaultsWithRelations = z.infer<typeof PointsOptionalDefaultsSchema> & PointsOptionalDefaultsRelations
 
 export const PointsOptionalDefaultsWithRelationsSchema: z.ZodType<PointsOptionalDefaultsWithRelations> = PointsOptionalDefaultsSchema.merge(z.object({
-  RiderCombo: z.lazy(() => RiderComboWithRelationsSchema),
-  show: z.lazy(() => ShowWithRelationsSchema),
+  RiderCombo: z.lazy(() => RiderComboOptionalDefaultsWithRelationsSchema),
+  show: z.lazy(() => ShowOptionalDefaultsWithRelationsSchema),
 }))
 
+/////////////////////////////////////////
 // POINTS PARTIAL RELATION SCHEMA
-//------------------------------------------------------
+/////////////////////////////////////////
 
 export type PointsPartialRelations = {
   RiderCombo?: RiderComboPartialWithRelations;
@@ -73,5 +91,19 @@ export const PointsPartialWithRelationsSchema: z.ZodType<PointsPartialWithRelati
   RiderCombo: z.lazy(() => RiderComboPartialWithRelationsSchema),
   show: z.lazy(() => ShowPartialWithRelationsSchema),
 })).partial()
+
+export type PointsOptionalDefaultsWithPartialRelations = z.infer<typeof PointsOptionalDefaultsSchema> & PointsPartialRelations
+
+export const PointsOptionalDefaultsWithPartialRelationsSchema: z.ZodType<PointsOptionalDefaultsWithPartialRelations> = PointsOptionalDefaultsSchema.merge(z.object({
+  RiderCombo: z.lazy(() => RiderComboPartialWithRelationsSchema),
+  show: z.lazy(() => ShowPartialWithRelationsSchema),
+}).partial())
+
+export type PointsWithPartialRelations = z.infer<typeof PointsSchema> & PointsPartialRelations
+
+export const PointsWithPartialRelationsSchema: z.ZodType<PointsWithPartialRelations> = PointsSchema.merge(z.object({
+  RiderCombo: z.lazy(() => RiderComboPartialWithRelationsSchema),
+  show: z.lazy(() => ShowPartialWithRelationsSchema),
+}).partial())
 
 export default PointsSchema;

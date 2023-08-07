@@ -8,7 +8,7 @@ import { FloatFieldUpdateOperationsInputSchema } from './FloatFieldUpdateOperati
 import { IntFieldUpdateOperationsInputSchema } from './IntFieldUpdateOperationsInputSchema';
 import { BoolFieldUpdateOperationsInputSchema } from './BoolFieldUpdateOperationsInputSchema';
 
-export const RiderComboUncheckedUpdateManyWithoutRidersInputSchema: z.ZodType<Prisma.RiderComboUncheckedUpdateManyWithoutRidersInput> = z.object({
+export const RiderComboUncheckedUpdateManyWithoutShowsInputSchema: z.ZodType<Prisma.RiderComboUncheckedUpdateManyWithoutShowsInput> = z.object({
   uid: z.union([ z.string().cuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -21,4 +21,4 @@ export const RiderComboUncheckedUpdateManyWithoutRidersInputSchema: z.ZodType<Pr
   horseName: z.union([ z.string().trim().min(1, { message: "Horse Name is required" }),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
-export default RiderComboUncheckedUpdateManyWithoutRidersInputSchema;
+export default RiderComboUncheckedUpdateManyWithoutShowsInputSchema;

@@ -3,10 +3,18 @@ import { PhoneTypeSchema } from '../inputTypeSchemas/PhoneTypeSchema'
 import { TypeSchema } from '../inputTypeSchemas/TypeSchema'
 import { StatusSchema } from '../inputTypeSchemas/StatusSchema'
 import { StatusTypeSchema } from '../inputTypeSchemas/StatusTypeSchema'
-import { type RiderComboWithRelations, RiderComboWithRelationsSchema } from './RiderComboSchema'
-import { type HorseWithRelations, HorseWithRelationsSchema } from './HorseSchema'
-import { type RiderComboPartialWithRelations, RiderComboPartialWithRelationsSchema } from './RiderComboSchema'
-import { type HorsePartialWithRelations, HorsePartialWithRelationsSchema } from './HorseSchema'
+import type { RiderComboWithRelations } from './RiderComboSchema'
+import type { RiderComboPartialWithRelations } from './RiderComboSchema'
+import type { RiderComboOptionalDefaultsWithRelations } from './RiderComboSchema'
+import type { HorseWithRelations } from './HorseSchema'
+import type { HorsePartialWithRelations } from './HorseSchema'
+import type { HorseOptionalDefaultsWithRelations } from './HorseSchema'
+import { RiderComboWithRelationsSchema } from './RiderComboSchema'
+import { RiderComboPartialWithRelationsSchema } from './RiderComboSchema'
+import { RiderComboOptionalDefaultsWithRelationsSchema } from './RiderComboSchema'
+import { HorseWithRelationsSchema } from './HorseSchema'
+import { HorsePartialWithRelationsSchema } from './HorseSchema'
+import { HorseOptionalDefaultsWithRelationsSchema } from './HorseSchema'
 
 /////////////////////////////////////////
 // MEMBER SCHEMA
@@ -45,15 +53,17 @@ export const MemberSchema = z.object({
 
 export type Member = z.infer<typeof MemberSchema>
 
+/////////////////////////////////////////
 // MEMBER PARTIAL SCHEMA
-//------------------------------------------------------
+/////////////////////////////////////////
 
 export const MemberPartialSchema = MemberSchema.partial()
 
 export type MemberPartial = z.infer<typeof MemberPartialSchema>
 
+/////////////////////////////////////////
 // MEMBER OPTIONAL DEFAULTS SCHEMA
-//------------------------------------------------------
+/////////////////////////////////////////
 
 export const MemberOptionalDefaultsSchema = MemberSchema.merge(z.object({
   phoneType: PhoneTypeSchema.optional(),
@@ -72,8 +82,9 @@ export const MemberOptionalDefaultsSchema = MemberSchema.merge(z.object({
 
 export type MemberOptionalDefaults = z.infer<typeof MemberOptionalDefaultsSchema>
 
+/////////////////////////////////////////
 // MEMBER RELATION SCHEMA
-//------------------------------------------------------
+/////////////////////////////////////////
 
 export type MemberRelations = {
   RiderCombo: RiderComboWithRelations[];
@@ -87,18 +98,25 @@ export const MemberWithRelationsSchema: z.ZodType<MemberWithRelations> = MemberS
   Horse: z.lazy(() => HorseWithRelationsSchema).array(),
 }))
 
+/////////////////////////////////////////
 // MEMBER OPTIONAL DEFAULTS RELATION SCHEMA
-//------------------------------------------------------
+/////////////////////////////////////////
 
-export type MemberOptionalDefaultsWithRelations = z.infer<typeof MemberOptionalDefaultsSchema> & MemberRelations
+export type MemberOptionalDefaultsRelations = {
+  RiderCombo: RiderComboOptionalDefaultsWithRelations[];
+  Horse: HorseOptionalDefaultsWithRelations[];
+};
+
+export type MemberOptionalDefaultsWithRelations = z.infer<typeof MemberOptionalDefaultsSchema> & MemberOptionalDefaultsRelations
 
 export const MemberOptionalDefaultsWithRelationsSchema: z.ZodType<MemberOptionalDefaultsWithRelations> = MemberOptionalDefaultsSchema.merge(z.object({
-  RiderCombo: z.lazy(() => RiderComboWithRelationsSchema).array(),
-  Horse: z.lazy(() => HorseWithRelationsSchema).array(),
+  RiderCombo: z.lazy(() => RiderComboOptionalDefaultsWithRelationsSchema).array(),
+  Horse: z.lazy(() => HorseOptionalDefaultsWithRelationsSchema).array(),
 }))
 
+/////////////////////////////////////////
 // MEMBER PARTIAL RELATION SCHEMA
-//------------------------------------------------------
+/////////////////////////////////////////
 
 export type MemberPartialRelations = {
   RiderCombo?: RiderComboPartialWithRelations[];
@@ -111,5 +129,19 @@ export const MemberPartialWithRelationsSchema: z.ZodType<MemberPartialWithRelati
   RiderCombo: z.lazy(() => RiderComboPartialWithRelationsSchema).array(),
   Horse: z.lazy(() => HorsePartialWithRelationsSchema).array(),
 })).partial()
+
+export type MemberOptionalDefaultsWithPartialRelations = z.infer<typeof MemberOptionalDefaultsSchema> & MemberPartialRelations
+
+export const MemberOptionalDefaultsWithPartialRelationsSchema: z.ZodType<MemberOptionalDefaultsWithPartialRelations> = MemberOptionalDefaultsSchema.merge(z.object({
+  RiderCombo: z.lazy(() => RiderComboPartialWithRelationsSchema).array(),
+  Horse: z.lazy(() => HorsePartialWithRelationsSchema).array(),
+}).partial())
+
+export type MemberWithPartialRelations = z.infer<typeof MemberSchema> & MemberPartialRelations
+
+export const MemberWithPartialRelationsSchema: z.ZodType<MemberWithPartialRelations> = MemberSchema.merge(z.object({
+  RiderCombo: z.lazy(() => RiderComboPartialWithRelationsSchema).array(),
+  Horse: z.lazy(() => HorsePartialWithRelationsSchema).array(),
+}).partial())
 
 export default MemberSchema;

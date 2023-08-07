@@ -4,16 +4,16 @@ import { DivisionSchema } from './DivisionSchema';
 import { PointsUncheckedCreateNestedManyWithoutRiderComboInputSchema } from './PointsUncheckedCreateNestedManyWithoutRiderComboInputSchema';
 
 export const RiderComboUncheckedCreateWithoutShowsInputSchema: z.ZodType<Prisma.RiderComboUncheckedCreateWithoutShowsInput> = z.object({
-  uid: z.string().optional(),
+  uid: z.string().cuid().optional(),
   createdAt: z.coerce.date().optional().nullable(),
   updatedAt: z.coerce.date().optional().nullable(),
   division: z.lazy(() => DivisionSchema),
   totalPoints: z.number().optional(),
-  totalShows: z.number().optional(),
+  totalShows: z.number().int().optional(),
   completedHT: z.boolean().optional(),
   multiVenue: z.boolean().optional(),
-  memberName: z.string(),
-  horseName: z.string(),
+  memberName: z.string().trim().min(1, { message: "Member Name is required" }),
+  horseName: z.string().trim().min(1, { message: "Horse Name is required" }),
   points: z.lazy(() => PointsUncheckedCreateNestedManyWithoutRiderComboInputSchema).optional()
 }).strict();
 

@@ -28,7 +28,7 @@ export const PointsFindFirstOrThrowArgsSchema: z.ZodType<Prisma.PointsFindFirstO
   cursor: PointsWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
-  distinct: PointsScalarFieldEnumSchema.array().optional(),
+  distinct: z.union([ PointsScalarFieldEnumSchema,PointsScalarFieldEnumSchema.array() ]).optional(),
 }).strict()
 
 export default PointsFindFirstOrThrowArgsSchema;

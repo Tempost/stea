@@ -5,9 +5,9 @@ import { StringFilterSchema } from './StringFilterSchema';
 import { StringNullableFilterSchema } from './StringNullableFilterSchema';
 import { EnumStatusFilterSchema } from './EnumStatusFilterSchema';
 import { StatusSchema } from './StatusSchema';
-import { NonMemberHorseOwnerRelationFilterSchema } from './NonMemberHorseOwnerRelationFilterSchema';
+import { NonMemberHorseOwnerNullableRelationFilterSchema } from './NonMemberHorseOwnerNullableRelationFilterSchema';
 import { NonMemberHorseOwnerWhereInputSchema } from './NonMemberHorseOwnerWhereInputSchema';
-import { MemberRelationFilterSchema } from './MemberRelationFilterSchema';
+import { MemberNullableRelationFilterSchema } from './MemberNullableRelationFilterSchema';
 import { MemberWhereInputSchema } from './MemberWhereInputSchema';
 import { RiderComboListRelationFilterSchema } from './RiderComboListRelationFilterSchema';
 
@@ -23,8 +23,8 @@ export const HorseWhereInputSchema: z.ZodType<Prisma.HorseWhereInput> = z.object
   registrationDate: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
   regType: z.union([ z.lazy(() => EnumStatusFilterSchema),z.lazy(() => StatusSchema) ]).optional(),
   owner: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-  ownerRec: z.union([ z.lazy(() => NonMemberHorseOwnerRelationFilterSchema),z.lazy(() => NonMemberHorseOwnerWhereInputSchema) ]).optional().nullable(),
-  memberOwner: z.union([ z.lazy(() => MemberRelationFilterSchema),z.lazy(() => MemberWhereInputSchema) ]).optional().nullable(),
+  ownerRec: z.union([ z.lazy(() => NonMemberHorseOwnerNullableRelationFilterSchema),z.lazy(() => NonMemberHorseOwnerWhereInputSchema) ]).optional().nullable(),
+  memberOwner: z.union([ z.lazy(() => MemberNullableRelationFilterSchema),z.lazy(() => MemberWhereInputSchema) ]).optional().nullable(),
   RiderCombo: z.lazy(() => RiderComboListRelationFilterSchema).optional()
 }).strict();
 

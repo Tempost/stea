@@ -3,8 +3,8 @@ import { z } from 'zod';
 
 export const NestedFloatNullableFilterSchema: z.ZodType<Prisma.NestedFloatNullableFilter> = z.object({
   equals: z.number().optional().nullable(),
-  in: z.union([ z.number().array(),z.number() ]).optional().nullable(),
-  notIn: z.union([ z.number().array(),z.number() ]).optional().nullable(),
+  in: z.number().array().optional().nullable(),
+  notIn: z.number().array().optional().nullable(),
   lt: z.number().optional(),
   lte: z.number().optional(),
   gt: z.number().optional(),

@@ -1,7 +1,11 @@
 import { z } from 'zod';
 import { PhoneTypeSchema } from '../inputTypeSchemas/PhoneTypeSchema'
-import { type HorseWithRelations, HorseWithRelationsSchema } from './HorseSchema'
-import { type HorsePartialWithRelations, HorsePartialWithRelationsSchema } from './HorseSchema'
+import type { HorseWithRelations } from './HorseSchema'
+import type { HorsePartialWithRelations } from './HorseSchema'
+import type { HorseOptionalDefaultsWithRelations } from './HorseSchema'
+import { HorseWithRelationsSchema } from './HorseSchema'
+import { HorsePartialWithRelationsSchema } from './HorseSchema'
+import { HorseOptionalDefaultsWithRelationsSchema } from './HorseSchema'
 
 /////////////////////////////////////////
 // NON MEMBER HORSE OWNER SCHEMA
@@ -20,15 +24,17 @@ export const NonMemberHorseOwnerSchema = z.object({
 
 export type NonMemberHorseOwner = z.infer<typeof NonMemberHorseOwnerSchema>
 
+/////////////////////////////////////////
 // NON MEMBER HORSE OWNER PARTIAL SCHEMA
-//------------------------------------------------------
+/////////////////////////////////////////
 
 export const NonMemberHorseOwnerPartialSchema = NonMemberHorseOwnerSchema.partial()
 
 export type NonMemberHorseOwnerPartial = z.infer<typeof NonMemberHorseOwnerPartialSchema>
 
+/////////////////////////////////////////
 // NON MEMBER HORSE OWNER OPTIONAL DEFAULTS SCHEMA
-//------------------------------------------------------
+/////////////////////////////////////////
 
 export const NonMemberHorseOwnerOptionalDefaultsSchema = NonMemberHorseOwnerSchema.merge(z.object({
   phoneType: PhoneTypeSchema.optional(),
@@ -38,8 +44,9 @@ export const NonMemberHorseOwnerOptionalDefaultsSchema = NonMemberHorseOwnerSche
 
 export type NonMemberHorseOwnerOptionalDefaults = z.infer<typeof NonMemberHorseOwnerOptionalDefaultsSchema>
 
+/////////////////////////////////////////
 // NON MEMBER HORSE OWNER RELATION SCHEMA
-//------------------------------------------------------
+/////////////////////////////////////////
 
 export type NonMemberHorseOwnerRelations = {
   horses: HorseWithRelations[];
@@ -51,17 +58,23 @@ export const NonMemberHorseOwnerWithRelationsSchema: z.ZodType<NonMemberHorseOwn
   horses: z.lazy(() => HorseWithRelationsSchema).array(),
 }))
 
+/////////////////////////////////////////
 // NON MEMBER HORSE OWNER OPTIONAL DEFAULTS RELATION SCHEMA
-//------------------------------------------------------
+/////////////////////////////////////////
 
-export type NonMemberHorseOwnerOptionalDefaultsWithRelations = z.infer<typeof NonMemberHorseOwnerOptionalDefaultsSchema> & NonMemberHorseOwnerRelations
+export type NonMemberHorseOwnerOptionalDefaultsRelations = {
+  horses: HorseOptionalDefaultsWithRelations[];
+};
+
+export type NonMemberHorseOwnerOptionalDefaultsWithRelations = z.infer<typeof NonMemberHorseOwnerOptionalDefaultsSchema> & NonMemberHorseOwnerOptionalDefaultsRelations
 
 export const NonMemberHorseOwnerOptionalDefaultsWithRelationsSchema: z.ZodType<NonMemberHorseOwnerOptionalDefaultsWithRelations> = NonMemberHorseOwnerOptionalDefaultsSchema.merge(z.object({
-  horses: z.lazy(() => HorseWithRelationsSchema).array(),
+  horses: z.lazy(() => HorseOptionalDefaultsWithRelationsSchema).array(),
 }))
 
+/////////////////////////////////////////
 // NON MEMBER HORSE OWNER PARTIAL RELATION SCHEMA
-//------------------------------------------------------
+/////////////////////////////////////////
 
 export type NonMemberHorseOwnerPartialRelations = {
   horses?: HorsePartialWithRelations[];
@@ -72,5 +85,17 @@ export type NonMemberHorseOwnerPartialWithRelations = z.infer<typeof NonMemberHo
 export const NonMemberHorseOwnerPartialWithRelationsSchema: z.ZodType<NonMemberHorseOwnerPartialWithRelations> = NonMemberHorseOwnerPartialSchema.merge(z.object({
   horses: z.lazy(() => HorsePartialWithRelationsSchema).array(),
 })).partial()
+
+export type NonMemberHorseOwnerOptionalDefaultsWithPartialRelations = z.infer<typeof NonMemberHorseOwnerOptionalDefaultsSchema> & NonMemberHorseOwnerPartialRelations
+
+export const NonMemberHorseOwnerOptionalDefaultsWithPartialRelationsSchema: z.ZodType<NonMemberHorseOwnerOptionalDefaultsWithPartialRelations> = NonMemberHorseOwnerOptionalDefaultsSchema.merge(z.object({
+  horses: z.lazy(() => HorsePartialWithRelationsSchema).array(),
+}).partial())
+
+export type NonMemberHorseOwnerWithPartialRelations = z.infer<typeof NonMemberHorseOwnerSchema> & NonMemberHorseOwnerPartialRelations
+
+export const NonMemberHorseOwnerWithPartialRelationsSchema: z.ZodType<NonMemberHorseOwnerWithPartialRelations> = NonMemberHorseOwnerSchema.merge(z.object({
+  horses: z.lazy(() => HorsePartialWithRelationsSchema).array(),
+}).partial())
 
 export default NonMemberHorseOwnerSchema;

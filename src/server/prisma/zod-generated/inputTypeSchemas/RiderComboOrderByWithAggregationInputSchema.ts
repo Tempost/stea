@@ -1,6 +1,7 @@
 import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
 import { SortOrderSchema } from './SortOrderSchema';
+import { SortOrderInputSchema } from './SortOrderInputSchema';
 import { RiderComboCountOrderByAggregateInputSchema } from './RiderComboCountOrderByAggregateInputSchema';
 import { RiderComboAvgOrderByAggregateInputSchema } from './RiderComboAvgOrderByAggregateInputSchema';
 import { RiderComboMaxOrderByAggregateInputSchema } from './RiderComboMaxOrderByAggregateInputSchema';
@@ -9,8 +10,8 @@ import { RiderComboSumOrderByAggregateInputSchema } from './RiderComboSumOrderBy
 
 export const RiderComboOrderByWithAggregationInputSchema: z.ZodType<Prisma.RiderComboOrderByWithAggregationInput> = z.object({
   uid: z.lazy(() => SortOrderSchema).optional(),
-  createdAt: z.lazy(() => SortOrderSchema).optional(),
-  updatedAt: z.lazy(() => SortOrderSchema).optional(),
+  createdAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  updatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   division: z.lazy(() => SortOrderSchema).optional(),
   totalPoints: z.lazy(() => SortOrderSchema).optional(),
   totalShows: z.lazy(() => SortOrderSchema).optional(),

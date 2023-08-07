@@ -5,9 +5,9 @@ import { FloatFieldUpdateOperationsInputSchema } from './FloatFieldUpdateOperati
 import { ShowUpdateOneRequiredWithoutPointsNestedInputSchema } from './ShowUpdateOneRequiredWithoutPointsNestedInputSchema';
 
 export const PointsUpdateWithoutRiderComboInputSchema: z.ZodType<Prisma.PointsUpdateWithoutRiderComboInput> = z.object({
-  uid: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  uid: z.union([ z.string().cuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   points: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
-  place: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  place: z.union([ z.string().trim(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   show: z.lazy(() => ShowUpdateOneRequiredWithoutPointsNestedInputSchema).optional()
 }).strict();
 

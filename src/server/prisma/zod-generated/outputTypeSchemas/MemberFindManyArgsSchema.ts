@@ -47,7 +47,7 @@ export const MemberFindManyArgsSchema: z.ZodType<Prisma.MemberFindManyArgs> = z.
   cursor: MemberWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
-  distinct: MemberScalarFieldEnumSchema.array().optional(),
+  distinct: z.union([ MemberScalarFieldEnumSchema,MemberScalarFieldEnumSchema.array() ]).optional(),
 }).strict()
 
 export default MemberFindManyArgsSchema;

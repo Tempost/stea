@@ -1,10 +1,23 @@
 import { z } from 'zod';
 import { StatusSchema } from '../inputTypeSchemas/StatusSchema'
-import { type MemberWithRelations, MemberWithRelationsSchema } from './MemberSchema'
-import { type RiderComboWithRelations, RiderComboWithRelationsSchema } from './RiderComboSchema'
-import { type MemberPartialWithRelations, MemberPartialWithRelationsSchema } from './MemberSchema'
-import { type RiderComboPartialWithRelations, RiderComboPartialWithRelationsSchema } from './RiderComboSchema'
-import { NonMemberHorseOwnerWithRelations, NonMemberHorseOwnerWithRelationsSchema, NonMemberHorseOwnerPartialWithRelations, NonMemberHorseOwnerPartialWithRelationsSchema } from './NonMemberHorseOwnerSchema';
+import type { NonMemberHorseOwnerWithRelations } from './NonMemberHorseOwnerSchema'
+import type { NonMemberHorseOwnerPartialWithRelations } from './NonMemberHorseOwnerSchema'
+import type { NonMemberHorseOwnerOptionalDefaultsWithRelations } from './NonMemberHorseOwnerSchema'
+import type { MemberWithRelations } from './MemberSchema'
+import type { MemberPartialWithRelations } from './MemberSchema'
+import type { MemberOptionalDefaultsWithRelations } from './MemberSchema'
+import type { RiderComboWithRelations } from './RiderComboSchema'
+import type { RiderComboPartialWithRelations } from './RiderComboSchema'
+import type { RiderComboOptionalDefaultsWithRelations } from './RiderComboSchema'
+import { NonMemberHorseOwnerWithRelationsSchema } from './NonMemberHorseOwnerSchema'
+import { NonMemberHorseOwnerPartialWithRelationsSchema } from './NonMemberHorseOwnerSchema'
+import { NonMemberHorseOwnerOptionalDefaultsWithRelationsSchema } from './NonMemberHorseOwnerSchema'
+import { MemberWithRelationsSchema } from './MemberSchema'
+import { MemberPartialWithRelationsSchema } from './MemberSchema'
+import { MemberOptionalDefaultsWithRelationsSchema } from './MemberSchema'
+import { RiderComboWithRelationsSchema } from './RiderComboSchema'
+import { RiderComboPartialWithRelationsSchema } from './RiderComboSchema'
+import { RiderComboOptionalDefaultsWithRelationsSchema } from './RiderComboSchema'
 
 /////////////////////////////////////////
 // HORSE SCHEMA
@@ -29,15 +42,17 @@ export const HorseSchema = z.object({
 
 export type Horse = z.infer<typeof HorseSchema>
 
+/////////////////////////////////////////
 // HORSE PARTIAL SCHEMA
-//------------------------------------------------------
+/////////////////////////////////////////
 
 export const HorsePartialSchema = HorseSchema.partial()
 
 export type HorsePartial = z.infer<typeof HorsePartialSchema>
 
+/////////////////////////////////////////
 // HORSE OPTIONAL DEFAULTS SCHEMA
-//------------------------------------------------------
+/////////////////////////////////////////
 
 export const HorseOptionalDefaultsSchema = HorseSchema.merge(z.object({
   createdAt: z.coerce.date().optional(),
@@ -47,8 +62,9 @@ export const HorseOptionalDefaultsSchema = HorseSchema.merge(z.object({
 
 export type HorseOptionalDefaults = z.infer<typeof HorseOptionalDefaultsSchema>
 
+/////////////////////////////////////////
 // HORSE RELATION SCHEMA
-//------------------------------------------------------
+/////////////////////////////////////////
 
 export type HorseRelations = {
   ownerRec?: NonMemberHorseOwnerWithRelations | null;
@@ -64,19 +80,27 @@ export const HorseWithRelationsSchema: z.ZodType<HorseWithRelations> = HorseSche
   RiderCombo: z.lazy(() => RiderComboWithRelationsSchema).array(),
 }))
 
+/////////////////////////////////////////
 // HORSE OPTIONAL DEFAULTS RELATION SCHEMA
-//------------------------------------------------------
+/////////////////////////////////////////
 
-export type HorseOptionalDefaultsWithRelations = z.infer<typeof HorseOptionalDefaultsSchema> & HorseRelations
+export type HorseOptionalDefaultsRelations = {
+  ownerRec?: NonMemberHorseOwnerOptionalDefaultsWithRelations | null;
+  memberOwner?: MemberOptionalDefaultsWithRelations | null;
+  RiderCombo: RiderComboOptionalDefaultsWithRelations[];
+};
+
+export type HorseOptionalDefaultsWithRelations = z.infer<typeof HorseOptionalDefaultsSchema> & HorseOptionalDefaultsRelations
 
 export const HorseOptionalDefaultsWithRelationsSchema: z.ZodType<HorseOptionalDefaultsWithRelations> = HorseOptionalDefaultsSchema.merge(z.object({
-  ownerRec: z.lazy(() => NonMemberHorseOwnerWithRelationsSchema).nullable(),
-  memberOwner: z.lazy(() => MemberWithRelationsSchema).nullable(),
-  RiderCombo: z.lazy(() => RiderComboWithRelationsSchema).array(),
+  ownerRec: z.lazy(() => NonMemberHorseOwnerOptionalDefaultsWithRelationsSchema).nullable(),
+  memberOwner: z.lazy(() => MemberOptionalDefaultsWithRelationsSchema).nullable(),
+  RiderCombo: z.lazy(() => RiderComboOptionalDefaultsWithRelationsSchema).array(),
 }))
 
+/////////////////////////////////////////
 // HORSE PARTIAL RELATION SCHEMA
-//------------------------------------------------------
+/////////////////////////////////////////
 
 export type HorsePartialRelations = {
   ownerRec?: NonMemberHorseOwnerPartialWithRelations | null;
@@ -91,5 +115,21 @@ export const HorsePartialWithRelationsSchema: z.ZodType<HorsePartialWithRelation
   memberOwner: z.lazy(() => MemberPartialWithRelationsSchema).nullable(),
   RiderCombo: z.lazy(() => RiderComboPartialWithRelationsSchema).array(),
 })).partial()
+
+export type HorseOptionalDefaultsWithPartialRelations = z.infer<typeof HorseOptionalDefaultsSchema> & HorsePartialRelations
+
+export const HorseOptionalDefaultsWithPartialRelationsSchema: z.ZodType<HorseOptionalDefaultsWithPartialRelations> = HorseOptionalDefaultsSchema.merge(z.object({
+  ownerRec: z.lazy(() => NonMemberHorseOwnerPartialWithRelationsSchema).nullable(),
+  memberOwner: z.lazy(() => MemberPartialWithRelationsSchema).nullable(),
+  RiderCombo: z.lazy(() => RiderComboPartialWithRelationsSchema).array(),
+}).partial())
+
+export type HorseWithPartialRelations = z.infer<typeof HorseSchema> & HorsePartialRelations
+
+export const HorseWithPartialRelationsSchema: z.ZodType<HorseWithPartialRelations> = HorseSchema.merge(z.object({
+  ownerRec: z.lazy(() => NonMemberHorseOwnerPartialWithRelationsSchema).nullable(),
+  memberOwner: z.lazy(() => MemberPartialWithRelationsSchema).nullable(),
+  RiderCombo: z.lazy(() => RiderComboPartialWithRelationsSchema).array(),
+}).partial())
 
 export default HorseSchema;

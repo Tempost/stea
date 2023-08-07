@@ -6,7 +6,7 @@ import { NullableStringFieldUpdateOperationsInputSchema } from './NullableString
 import { StatusSchema } from './StatusSchema';
 import { EnumStatusFieldUpdateOperationsInputSchema } from './EnumStatusFieldUpdateOperationsInputSchema';
 
-export const HorseUncheckedUpdateManyWithoutHorseInputSchema: z.ZodType<Prisma.HorseUncheckedUpdateManyWithoutHorseInput> = z.object({
+export const HorseUncheckedUpdateManyWithoutMemberOwnerInputSchema: z.ZodType<Prisma.HorseUncheckedUpdateManyWithoutMemberOwnerInput> = z.object({
   createdAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   horseRN: z.union([ z.string().trim().min(1, { message: "Registered horse name is required" }),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -16,4 +16,4 @@ export const HorseUncheckedUpdateManyWithoutHorseInputSchema: z.ZodType<Prisma.H
   owner: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
-export default HorseUncheckedUpdateManyWithoutHorseInputSchema;
+export default HorseUncheckedUpdateManyWithoutMemberOwnerInputSchema;

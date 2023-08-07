@@ -8,7 +8,7 @@ import { BoolFieldUpdateOperationsInputSchema } from './BoolFieldUpdateOperation
 import { DateTimeFieldUpdateOperationsInputSchema } from './DateTimeFieldUpdateOperationsInputSchema';
 import { NullableStringFieldUpdateOperationsInputSchema } from './NullableStringFieldUpdateOperationsInputSchema';
 
-export const ShowUncheckedUpdateManyWithoutShowsInputSchema: z.ZodType<Prisma.ShowUncheckedUpdateManyWithoutShowsInput> = z.object({
+export const ShowUncheckedUpdateManyWithoutRidersInputSchema: z.ZodType<Prisma.ShowUncheckedUpdateManyWithoutRidersInput> = z.object({
   uid: z.union([ z.string().cuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -20,4 +20,4 @@ export const ShowUncheckedUpdateManyWithoutShowsInputSchema: z.ZodType<Prisma.Sh
   url: z.union([ z.string().trim().url({ message: "Must be a valid URL" }),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
-export default ShowUncheckedUpdateManyWithoutShowsInputSchema;
+export default ShowUncheckedUpdateManyWithoutRidersInputSchema;
