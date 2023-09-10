@@ -25,7 +25,7 @@ export default function HorseFieldArray() {
       <h2 className='text-sm font-bold'>
         List the horses you are registering.
         <br />
-        Note that the horse’s registered name MUST be used when entering a show.
+        Note that the horse’s registered name MUST match when entering a show.
       </h2>
 
       {fields.map((field, index) => (

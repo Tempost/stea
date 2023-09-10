@@ -1,5 +1,6 @@
-import { Prisma } from '@prisma/client';
-import { prisma } from '../prisma';
+import { HorseForm } from '@/utils/zodschemas';
+import { Horse, Prisma } from '@prisma/client';
+import { MyPrismaClient, prisma } from '../prisma';
 
 export function prepareCombos(
   combos: Prisma.RiderComboCreateManyInput[] | undefined
@@ -57,3 +58,24 @@ export function groupByFunc<
 export const getKeys = Object.keys as <T extends object>(
   obj: T
 ) => Array<keyof T>;
+
+export async function checkForExistingMember(fullName: string, db: MyPrismaClient) {
+  return !!(await db.member.findUnique({ where: { fullName } }));
+}
+
+export const horseNames = (horses: HorseForm | Horse[]) =>
+  horses.map(horse => horse.horseRN);
+
+export async function checkExistingHorses(horses: HorseForm, db: MyPrismaClient) {
+  const matches = await db.horse.findMany({
+    where: {
+      horseRN: {
+        in: horses.map(horse => horse.horseRN),
+      },
+    },
+  });
+
+  if (matches.length !== 0) {
+    return horseNames(matches);
+  }
+}

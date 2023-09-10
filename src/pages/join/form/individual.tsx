@@ -68,12 +68,18 @@ function IndividualRegistration() {
     checkMember.mutate(formValues);
   }
 
-  function handleCheck() {
+  function handleRegHorseCheck() {
     toggleRegHorse(curr => !curr);
   }
 
   function handleUSEACheck() {
-    toggleUSEAInput(curr => !curr);
+    if (isUSEAMember) {
+      form.resetField('member.useaMemberID');
+    }
+
+    toggleUSEAInput(curr => {
+      return !curr;
+    });
   }
 
   return (
@@ -207,10 +213,10 @@ function IndividualRegistration() {
 
             {isUSEAMember && (
               <Input
-                type='numeric'
+                type='number'
                 className='input-bordered input-primary input w-full md:input-sm'
                 placeholder='USEA Member ID'
-                {...register('member.useaMemberID')}
+                {...register('member.useaMemberID', { valueAsNumber: true })}
               />
             )}
           </div>
@@ -219,7 +225,7 @@ function IndividualRegistration() {
             label='Do you plan to register your horse(s)?'
             className='checkbox-primary checkbox md:checkbox-sm'
             checked={isRegHorse}
-            onChange={handleCheck}
+            onChange={handleRegHorseCheck}
           />
 
           {isRegHorse && <HorseFieldArray />}

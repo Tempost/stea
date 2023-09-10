@@ -1,11 +1,10 @@
 import { TRPCError } from '@trpc/server';
 import { dashboardProcedure, procedure, router } from '@/server/trpc';
-import { MyPrismaClient } from '../prisma';
-import { Horse } from '@prisma/client';
-import { HorseForm, HorseFormSchema } from '@/utils/zodschemas';
+import { HorseFormSchema } from '@/utils/zodschemas';
 import { HorseFindManyArgsSchema } from '../prisma/zod-generated/outputTypeSchemas/HorseFindManyArgsSchema';
 import { HorseWhereUniqueInputSchema } from '../prisma/zod-generated/inputTypeSchemas/HorseWhereUniqueInputSchema';
 import { HorseOptionalDefaultsSchema } from '../prisma/zod-generated/modelSchema/HorseSchema';
+import { checkExistingHorses, horseNames } from './utils';
 
 export const horses = router({
   all: procedure
@@ -97,20 +96,3 @@ export const horses = router({
     }
   }),
 });
-
-const horseNames = (horses: HorseForm | Horse[]) =>
-  horses.map(horse => horse.horseRN);
-
-async function checkExistingHorses(horses: HorseForm, db: MyPrismaClient) {
-  const matches = await db.horse.findMany({
-    where: {
-      horseRN: {
-        in: horses.map(horse => horse.horseRN),
-      },
-    },
-  });
-
-  if (matches.length !== 0) {
-    return horseNames(matches);
-  }
-}

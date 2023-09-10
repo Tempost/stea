@@ -1,4 +1,3 @@
-import { MyPrismaClient } from '@/server/prisma';
 import { MemberPartialSchema } from '@/server/prisma/zod-generated/modelSchema/MemberSchema';
 import { TRPCError } from '@trpc/server';
 import { MemberFormSchema } from '@/utils/zodschemas';
@@ -8,6 +7,7 @@ import {
   MemberFindManyArgsSchema,
   MemberWhereUniqueInputSchema,
 } from '../prisma/zod-generated';
+import { checkForExistingMember, checkExistingHorses, horseNames } from './utils';
 
 export const members = router({
   all: procedure
@@ -64,6 +64,21 @@ export const members = router({
         code: 'CONFLICT',
         message: `${fullName} is already a member`,
       });
+    }
+
+    if (input.horses) {
+      console.log(`Checking for horses... ${horseNames(input.horses)}`);
+      const existingHorses = await checkExistingHorses(input.horses, ctx.prisma);
+
+      if (existingHorses) {
+        const message = `${existingHorses}
+        ${existingHorses.length > 1 ? 'have' : 'has'} already been registered.`;
+
+        throw new TRPCError({
+          code: 'CONFLICT',
+          message: message,
+        });
+      }
     }
   }),
 
@@ -201,7 +216,3 @@ export const members = router({
       }
     }),
 });
-
-async function checkForExistingMember(fullName: string, db: MyPrismaClient) {
-  return !!(await db.member.findUnique({ where: { fullName } }));
-}
