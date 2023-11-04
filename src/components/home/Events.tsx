@@ -17,6 +17,7 @@ function UpcomingEvents() {
         lte: MONTH_FROM_CURR,
         gte: CURR_MONTH,
       },
+      reviewed: false,
     },
     orderBy: {
       showDate: 'asc',

@@ -13,6 +13,9 @@ function SteaCalendar() {
     orderBy: {
       showDate: 'asc',
     },
+    where: {
+      reviewed: false,
+    },
     select: {
       showDate: true,
       showEndDate: true,
