@@ -22,6 +22,7 @@ export const MemberOrderByWithRelationInputSchema: z.ZodType<Prisma.MemberOrderB
   confirmed: z.lazy(() => SortOrderSchema).optional(),
   businessName: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   membershipDate: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  membershipEnd: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   memberType: z.lazy(() => SortOrderSchema).optional(),
   memberStatus: z.lazy(() => SortOrderSchema).optional(),
   memberStatusType: z.lazy(() => SortOrderSchema).optional(),

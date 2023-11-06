@@ -46,6 +46,7 @@ export const MemberSchema = z.object({
   confirmed: z.boolean(),
   businessName: z.string().trim().min(1, { message: "Business name is required" }).nullable(),
   membershipDate: z.coerce.date(),
+  membershipEnd: z.coerce.date().nullable(),
   dateOfBirth: z.coerce.date().nullable(),
   zip: z.number().int({message: "Zipcode is required"}),
   useaMemberID: z.number().int().nullable(),

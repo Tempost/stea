@@ -24,6 +24,7 @@ export const MemberUncheckedCreateInputSchema: z.ZodType<Prisma.MemberUncheckedC
   confirmed: z.boolean().optional(),
   businessName: z.string().trim().min(1, { message: "Business name is required" }).optional().nullable(),
   membershipDate: z.coerce.date().optional().nullable(),
+  membershipEnd: z.coerce.date().optional().nullable(),
   memberType: z.lazy(() => TypeSchema),
   memberStatus: z.lazy(() => StatusSchema),
   memberStatusType: z.lazy(() => StatusTypeSchema),

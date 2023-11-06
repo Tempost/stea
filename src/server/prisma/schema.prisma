@@ -102,6 +102,7 @@ model Member {
   /// @zod.string.trim().min(1, { message: "Business name is required" })
   businessName      String?      @db.VarChar(100)
   membershipDate    DateTime?    @default(now())
+  membershipEnd     DateTime?
   memberType        Type
   memberStatus      Status
   memberStatusType  StatusType

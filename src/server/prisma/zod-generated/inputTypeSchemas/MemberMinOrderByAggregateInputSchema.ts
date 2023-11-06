@@ -19,6 +19,7 @@ export const MemberMinOrderByAggregateInputSchema: z.ZodType<Prisma.MemberMinOrd
   confirmed: z.lazy(() => SortOrderSchema).optional(),
   businessName: z.lazy(() => SortOrderSchema).optional(),
   membershipDate: z.lazy(() => SortOrderSchema).optional(),
+  membershipEnd: z.lazy(() => SortOrderSchema).optional(),
   memberType: z.lazy(() => SortOrderSchema).optional(),
   memberStatus: z.lazy(() => SortOrderSchema).optional(),
   memberStatusType: z.lazy(() => SortOrderSchema).optional(),

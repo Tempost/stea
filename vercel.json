@@ -1,7 +1,7 @@
 {
   "git": {
     "deploymentEnabled": {
-      "prisma-5": false
+      "membership-year": false
     }
   }
 }

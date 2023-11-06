@@ -26,6 +26,7 @@ export const MemberSelectSchema: z.ZodType<Prisma.MemberSelect> = z.object({
   confirmed: z.boolean().optional(),
   businessName: z.boolean().optional(),
   membershipDate: z.boolean().optional(),
+  membershipEnd: z.boolean().optional(),
   memberType: z.boolean().optional(),
   memberStatus: z.boolean().optional(),
   memberStatusType: z.boolean().optional(),
