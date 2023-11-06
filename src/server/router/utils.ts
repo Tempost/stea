@@ -59,14 +59,23 @@ export const getKeys = Object.keys as <T extends object>(
   obj: T
 ) => Array<keyof T>;
 
-export async function checkForExistingMember(fullName: string, db: MyPrismaClient) {
-  return !!(await db.member.findUnique({ where: { fullName } }));
+export async function checkForExistingMember(
+  fullName: string,
+  db: MyPrismaClient,
+  memberStatus: 'Annual' | 'Life',
+) {
+  return !!(await db.member.findUnique({
+    where: { fullName, memberStatus },
+  }));
 }
 
 export const horseNames = (horses: HorseForm | Horse[]) =>
   horses.map(horse => horse.horseRN);
 
-export async function checkExistingHorses(horses: HorseForm, db: MyPrismaClient) {
+export async function checkExistingHorses(
+  horses: HorseForm,
+  db: MyPrismaClient
+) {
   const matches = await db.horse.findMany({
     where: {
       horseRN: {

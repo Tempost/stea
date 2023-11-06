@@ -27,7 +27,7 @@ function BusinessRegistration() {
     },
   });
 
-  const insert = trpc.members.add.useMutation();
+  const create = trpc.members.create.useMutation();
 
   const form = useZodForm({
     reValidateMode: 'onSubmit',
@@ -81,7 +81,7 @@ function BusinessRegistration() {
         formMutation={{
           error: checkMember.isError,
           message: checkMember.error?.message,
-          mutateFn: () => insert.mutate(form.getValues()),
+          mutateFn: () => create.mutate(form.getValues()),
         }}
       >
         <h2 className='divider'>Business Registration</h2>

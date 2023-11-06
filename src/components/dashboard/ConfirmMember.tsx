@@ -6,14 +6,14 @@ interface CMProps {
 
 function ConfirmMember({ fullName }: CMProps) {
   const utils = trpc.useContext();
-  const mutation = trpc.members.update.useMutation({
+  const update = trpc.members.dashboardUpdate.useMutation({
     onSuccess() {
       utils.members.invalidate();
     },
   });
 
   function onClick() {
-    mutation.mutate({
+    update.mutate({
       fullName: fullName,
       confirmed: true,
     });
@@ -21,8 +21,8 @@ function ConfirmMember({ fullName }: CMProps) {
 
   return (
     <button
-      className={`btn-primary btn-sm btn ${mutation.error ? 'btn-error' : ''} ${
-        mutation.isSuccess ? 'btn-success' : ''
+      className={`btn-primary btn-sm btn ${update.error ? 'btn-error' : ''} ${
+        update.isSuccess ? 'btn-success' : ''
       }`}
       onClick={onClick}
     >
