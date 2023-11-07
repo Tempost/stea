@@ -10,7 +10,8 @@ export const HorseUncheckedCreateWithoutRiderComboInputSchema: z.ZodType<Prisma.
   memberName: z.string().optional().nullable(),
   registrationDate: z.coerce.date().optional().nullable(),
   regType: z.lazy(() => StatusSchema),
-  owner: z.string().optional().nullable()
+  owner: z.string().optional().nullable(),
+  registrationEnd: z.coerce.date().optional().nullable()
 }).strict();
 
 export default HorseUncheckedCreateWithoutRiderComboInputSchema;

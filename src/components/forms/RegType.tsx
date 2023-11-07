@@ -2,7 +2,7 @@ import { UseFormRegisterReturn } from 'react-hook-form';
 
 import Radio from '@/components/data-entry/Radio';
 import { useSetAtom } from 'jotai';
-import { updateFormState } from '@/utils/atoms';
+import { costs, updateFormState } from '@/utils/atoms';
 import { Status } from '@prisma/client';
 import { ChangeEvent, DetailedHTMLProps, InputHTMLAttributes } from 'react';
 import { FormType } from '@/types/common';
@@ -17,19 +17,6 @@ interface Props
   formType: FormType;
 }
 
-const costs = {
-  life: {
-    Individual: 500,
-    Business: 500,
-    Horse: 150,
-  },
-  annual: {
-    Individual: 55,
-    Business: 65,
-    Horse: 25,
-  },
-};
-
 function RegType({ register, noAtomUpdate, onClick, formType }: Props) {
   const update = useSetAtom(updateFormState);
 
@@ -38,9 +25,6 @@ function RegType({ register, noAtomUpdate, onClick, formType }: Props) {
       update({ type: 'STATUS', payload: e.target.value as Status });
   }
 
-  const annualLabel = `Annual ($${costs.annual[formType]})`;
-  const lifeLabel = `Life ($${costs.life[formType]})`;
-
   return (
     <section
       className='mt-3 w-fit'
@@ -48,7 +32,7 @@ function RegType({ register, noAtomUpdate, onClick, formType }: Props) {
     >
       <h3>Registration Type*</h3>
       <Radio
-        label={annualLabel}
+        label={`Annual ($${costs.Annual[formType]})`}
         value='Annual'
         className='radio-primary radio align-middle md:radio-sm'
         onClick={onClick}
@@ -56,7 +40,7 @@ function RegType({ register, noAtomUpdate, onClick, formType }: Props) {
       />
 
       <Radio
-        label={lifeLabel}
+        label={`Life ($${costs.Life[formType]})`}
         value='Life'
         className='radio-primary radio align-middle md:radio-sm'
         onClick={onClick}

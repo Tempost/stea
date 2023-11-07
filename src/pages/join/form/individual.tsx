@@ -31,7 +31,7 @@ function IndividualRegistration() {
     },
   });
 
-  const create = trpc.members.create.useMutation();
+  const add = trpc.members.add.useMutation();
 
   const form = useZodForm({
     reValidateMode: 'onSubmit',
@@ -43,6 +43,7 @@ function IndividualRegistration() {
         useaMemberID: null,
         dateOfBirth: null,
         memberType: 'Individual',
+        membershipEnd: null,
       },
     },
   });
@@ -92,7 +93,7 @@ function IndividualRegistration() {
         formMutation={{
           error: checkMember.isError,
           message: checkMember.error?.message,
-          mutateFn: () => create.mutate(form.getValues()),
+          mutateFn: () => add.mutate(form.getValues()),
         }}
       >
         <h2 className='divider'>Individual Membership</h2>

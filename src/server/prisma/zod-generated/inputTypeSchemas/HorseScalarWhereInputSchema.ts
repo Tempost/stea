@@ -18,6 +18,7 @@ export const HorseScalarWhereInputSchema: z.ZodType<Prisma.HorseScalarWhereInput
   registrationDate: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
   regType: z.union([ z.lazy(() => EnumStatusFilterSchema),z.lazy(() => StatusSchema) ]).optional(),
   owner: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  registrationEnd: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
 }).strict();
 
 export default HorseScalarWhereInputSchema;

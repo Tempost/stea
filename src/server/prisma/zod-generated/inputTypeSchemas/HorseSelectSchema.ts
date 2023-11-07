@@ -14,6 +14,7 @@ export const HorseSelectSchema: z.ZodType<Prisma.HorseSelect> = z.object({
   registrationDate: z.boolean().optional(),
   regType: z.boolean().optional(),
   owner: z.boolean().optional(),
+  registrationEnd: z.boolean().optional(),
   ownerRec: z.union([z.boolean(),z.lazy(() => NonMemberHorseOwnerArgsSchema)]).optional(),
   memberOwner: z.union([z.boolean(),z.lazy(() => MemberArgsSchema)]).optional(),
   RiderCombo: z.union([z.boolean(),z.lazy(() => RiderComboFindManyArgsSchema)]).optional(),

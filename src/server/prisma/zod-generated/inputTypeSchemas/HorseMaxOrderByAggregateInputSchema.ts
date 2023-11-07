@@ -10,7 +10,8 @@ export const HorseMaxOrderByAggregateInputSchema: z.ZodType<Prisma.HorseMaxOrder
   memberName: z.lazy(() => SortOrderSchema).optional(),
   registrationDate: z.lazy(() => SortOrderSchema).optional(),
   regType: z.lazy(() => SortOrderSchema).optional(),
-  owner: z.lazy(() => SortOrderSchema).optional()
+  owner: z.lazy(() => SortOrderSchema).optional(),
+  registrationEnd: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export default HorseMaxOrderByAggregateInputSchema;

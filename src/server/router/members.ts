@@ -91,14 +91,14 @@ export const members = router({
     }
   }),
 
-  create: procedure
+  add: procedure
     .input(MemberFormSchema)
     .mutation(async ({ input: { member, horses }, ctx }) => {
       console.info(`Member: ${JSON.stringify(member)}`);
       console.info(
         `Horses: ${JSON.stringify(horses)}` ?? 'Did not register horses'
       );
-      await createMember({ member, horses }, ctx.prisma);
+      await addMember({ member, horses }, ctx.prisma);
     }),
 
   /* TODO:
@@ -233,25 +233,28 @@ export const members = router({
     }),
 });
 
-async function createMember(
+async function addMember(
   { member, horses }: MemberForm,
   prisma: MyPrismaClient
 ) {
   try {
-    // TODO: Move this into a seperate 'addNewMember' Function
-    return prisma.member.create({
-      data: {
-        ...member,
+    return prisma.member.upsert({
+      where: {
         fullName:
           member.businessName ??
           `${member.firstName.trim()} ${member.lastName.trim()}`,
-        Horse: {
-          create: horses && [
-            ...horses.map(horse => {
-              return { ...horse, horseRN: horse.horseRN.trim() };
-            }),
-          ],
-        },
+      },
+      create: {
+        fullName:
+          member.businessName ??
+          `${member.firstName.trim()} ${member.lastName.trim()}`,
+        ...member,
+      },
+      update: {
+        fullName:
+          member.businessName ??
+          `${member.firstName.trim()} ${member.lastName.trim()}`,
+        ...member,
       },
     });
   } catch (error) {

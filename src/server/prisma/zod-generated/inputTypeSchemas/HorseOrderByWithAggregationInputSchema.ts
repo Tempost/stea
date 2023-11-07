@@ -15,6 +15,7 @@ export const HorseOrderByWithAggregationInputSchema: z.ZodType<Prisma.HorseOrder
   registrationDate: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   regType: z.lazy(() => SortOrderSchema).optional(),
   owner: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  registrationEnd: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   _count: z.lazy(() => HorseCountOrderByAggregateInputSchema).optional(),
   _max: z.lazy(() => HorseMaxOrderByAggregateInputSchema).optional(),
   _min: z.lazy(() => HorseMinOrderByAggregateInputSchema).optional()

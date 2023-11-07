@@ -12,7 +12,7 @@ export interface FormState {
 
 export interface ReducerAction {
   type: 'RESET' | 'FORMTYPE' | 'HORSE' | 'SIGNUPTYPE' | 'STATUS';
-  payload?: HorsePayload | Status | FormType | Type;
+  payload?: HorsePayload | Status;
 }
 
 export interface HorsePayload {
@@ -20,7 +20,7 @@ export interface HorsePayload {
   annualCount: number;
 }
 
-export type MemberPayload = Type | Status;
+export type MemberPayload = Status;
 
 export type ValidDir = 'left' | 'right';
 
@@ -39,7 +39,7 @@ export function isHorsePayload(o: any): o is HorsePayload {
 }
 
 export function isMemberPayload(o: any): o is Type | Status {
-  return TYPE.includes(o) || STATUS.includes(o);
+  return STATUS.includes(o);
 }
 
 export function isSignUpType(o: any): o is Type {

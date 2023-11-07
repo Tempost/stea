@@ -9,7 +9,8 @@ export const HorseCreateManyOwnerRecInputSchema: z.ZodType<Prisma.HorseCreateMan
   horseAKA: z.string().trim().optional().nullable(),
   memberName: z.string().optional().nullable(),
   registrationDate: z.coerce.date().optional().nullable(),
-  regType: z.lazy(() => StatusSchema)
+  regType: z.lazy(() => StatusSchema),
+  registrationEnd: z.coerce.date().optional().nullable()
 }).strict();
 
 export default HorseCreateManyOwnerRecInputSchema;

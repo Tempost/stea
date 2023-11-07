@@ -14,12 +14,17 @@ import {
 import { FormType, isFormType } from '@/types/common';
 import { EntryReviewType } from './zodschemas';
 
-const costs = {
-  Individual: 55,
-  AnnualPerHorse: 25,
-  Business: 65,
-  Life: 500,
-  LifePerHorse: 150,
+export const costs = {
+  Life: {
+    Individual: 500,
+    Business: 500,
+    Horse: 150,
+  },
+  Annual: {
+    Individual: 55,
+    Business: 65,
+    Horse: 25,
+  },
 };
 
 const initFormState: FormState = {
@@ -46,13 +51,7 @@ const updateFormType = atom(null, (get, set, updateValue: FormType) => {
 const updateSignupCost = atom(null, (get, set, updateValue: MemberPayload) => {
   const prev = get(formState);
   const newState = produce(prev, draft => {
-    if (updateValue === 'Annual') {
-      if (draft.type === 'Individual') draft.memberCost = costs[draft.type];
-
-      if (draft.type === 'Business') draft.memberCost = costs[draft.type];
-    }
-
-    if (updateValue === 'Life') draft.memberCost = costs[updateValue];
+    draft.memberCost = draft.type ? costs[updateValue][draft.type] : 0;
   });
   set(formState, newState);
 });
@@ -61,8 +60,8 @@ const updateHorseCost = atom(null, (get, set, updateValue: HorsePayload) => {
   const prev = get(formState);
   const newState = produce(prev, draft => {
     draft.horses = {
-      lifeCost: updateValue.lifeCount * costs.LifePerHorse,
-      annualCost: updateValue.annualCount * costs.AnnualPerHorse,
+      lifeCost: updateValue.lifeCount * costs.Life.Horse,
+      annualCost: updateValue.annualCount * costs.Annual.Horse,
     };
   });
 
@@ -70,6 +69,7 @@ const updateHorseCost = atom(null, (get, set, updateValue: HorsePayload) => {
 });
 
 const updateFormState = atom(null, (_get, set, action: ReducerAction) => {
+  console.log(action);
   switch (action.type) {
     case 'FORMTYPE':
       isFormType(action.payload) && set(updateFormType, action.payload);

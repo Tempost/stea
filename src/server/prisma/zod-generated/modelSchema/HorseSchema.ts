@@ -38,6 +38,7 @@ export const HorseSchema = z.object({
   memberName: z.string().nullable(),
   registrationDate: z.coerce.date(),
   owner: z.string().nullable(),
+  registrationEnd: z.coerce.date().nullable(),
 })
 
 export type Horse = z.infer<typeof HorseSchema>
