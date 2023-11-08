@@ -26,10 +26,7 @@ function RegType({ register, noAtomUpdate, onClick, formType }: Props) {
   }
 
   return (
-    <section
-      className='mt-3 w-fit'
-      onChange={handleRadioClick}
-    >
+    <section onChange={handleRadioClick}>
       <h3>Registration Type*</h3>
       <Radio
         label={`Annual ($${costs.Annual[formType]})`}

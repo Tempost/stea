@@ -33,6 +33,8 @@ export const nonMemberHorseOwners = router({
       return owner;
     }),
 
+  // TODO: Update API to allow membership updating of annual horses
+  // backend work is actually more complicated than originally thought...
   add: procedure
     .input(OwnerHorseFormSchema)
     .mutation(async ({ input: { horses, owner }, ctx }) => {

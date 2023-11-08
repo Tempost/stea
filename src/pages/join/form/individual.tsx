@@ -18,6 +18,7 @@ import MemberType from '@/components/forms/MemberType';
 import Under18 from '@/components/forms/Under18';
 import Checkbox from '@/components/data-entry/Checkbox';
 import HorseFieldArray from '@/components/forms/HorseFieldArray';
+import RegistrationYearSelect from '@/components/forms/RegistrationYearSelect';
 
 function IndividualRegistration() {
   const [payment, togglePayment] = useState(false);
@@ -198,6 +199,10 @@ function IndividualRegistration() {
             <RegType
               register={register('member.memberStatus')}
               formType='Individual'
+            />
+
+            <RegistrationYearSelect
+              register={register('member.membershipEnd')}
             />
 
             <MemberType register={register('member.memberStatusType')} />

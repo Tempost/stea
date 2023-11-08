@@ -72,15 +72,15 @@ export const RadioFormField = ({
   const state = ctx.getFieldState(name);
 
   return (
-    <div className='form-control'>
+    <div className='form-control flex-row'>
       {label && (
         <label
           htmlFor={id}
           aria-label={label}
           className={`label cursor-pointer ${labelStyle}`}
         >
-          <span className='label-text'>{label}</span>
           {children}
+          <span className='label-text ml-2'>{label}</span>
         </label>
       )}
       {state.error && <p className='text-error'>{state.error.message}</p>}
