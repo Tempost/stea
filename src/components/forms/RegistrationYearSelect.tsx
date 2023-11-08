@@ -1,5 +1,5 @@
 import { DetailedHTMLProps, InputHTMLAttributes } from 'react';
-import { UseFormRegisterReturn } from 'react-hook-form';
+import { UseFormRegisterReturn, useWatch } from 'react-hook-form';
 import Radio from '../data-entry/Radio';
 
 interface Props
@@ -7,23 +7,38 @@ interface Props
     InputHTMLAttributes<HTMLInputElement>,
     HTMLInputElement
   > {
+  heading: string;
+  watchFieldName: string;
   register: UseFormRegisterReturn;
+  control: any;
 }
 
-function RegistrationYearSelect({ register, onClick }: Props) {
+function RegistrationYearSelect({
+  heading,
+  watchFieldName,
+  register,
+  onClick,
+  control,
+}: Props) {
+  const annual = useWatch({ name: watchFieldName, control });
+  const currYear = new Date(Date.now());
+  const nextYear = new Date(currYear.getFullYear() + 1, 10, 30);
+
+  console.log(annual);
+
   return (
-    <section>
-      <h3>Which year are you registering for?</h3>
+    <section className={`${annual === 'Annual' ? '' : 'hidden'}`}>
+      <h3>{heading} (New year starts Novemeber 30th)</h3>
       <Radio
-        label='current year'
-        value='curr'
+        label={`Current Year (${currYear.getFullYear()})`}
+        value={currYear.toString()}
         className='radio-primary radio align-middle md:radio-sm'
         onClick={onClick}
         {...register}
       />
       <Radio
-        label='next year'
-        value='next'
+        label={`Coming Year (${nextYear.getFullYear()})`}
+        value={nextYear.toString()}
         className='radio-primary radio align-middle md:radio-sm'
         onClick={onClick}
         {...register}

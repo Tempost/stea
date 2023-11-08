@@ -29,7 +29,7 @@ function HorseRegistration() {
     schema: OwnerHorseFormSchema,
   });
 
-  const { register } = form;
+  const { register, control } = form;
 
   const update = useSetAtom(updateFormState);
 

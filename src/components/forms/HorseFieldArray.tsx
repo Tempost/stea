@@ -3,6 +3,7 @@ import { Prisma, Status } from '@prisma/client';
 import RegType from './RegType';
 import { AddIcon, TrashIcon } from '../icons';
 import Input from '../data-entry/Input';
+import RegistrationYearSelect from './RegistrationYearSelect';
 
 type Horses = {
   horses: Prisma.HorseCreateManyInput[];
@@ -51,6 +52,13 @@ export default function HorseFieldArray() {
                 required: true,
               })}
               formType='Horse'
+            />
+
+            <RegistrationYearSelect
+              heading='Which year is the registration for?'
+              watchFieldName={`horses.${index}.regType` as const}
+              control={control}
+              register={register(`horses.${index}.registrationEnd` as const)}
             />
 
             <span className='flex flex-col gap-2'>

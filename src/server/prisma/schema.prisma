@@ -135,7 +135,7 @@ model Horse {
   regType          Status
   RiderCombo       RiderCombo[]
   owner            String?
-  registrationEnd    DateTime?
+  registrationEnd  DateTime?
 
   @@index([owner])
   @@index([memberName])

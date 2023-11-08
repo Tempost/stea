@@ -19,6 +19,16 @@ import Under18 from '@/components/forms/Under18';
 import Checkbox from '@/components/data-entry/Checkbox';
 import HorseFieldArray from '@/components/forms/HorseFieldArray';
 import RegistrationYearSelect from '@/components/forms/RegistrationYearSelect';
+import { useFormContext, useWatch } from 'react-hook-form';
+
+const useFormValues = () => {
+  const { getValues } = useFormContext();
+
+  return {
+    ...useWatch(),
+    ...getValues(),
+  };
+};
 
 function IndividualRegistration() {
   const [payment, togglePayment] = useState(false);
@@ -49,7 +59,7 @@ function IndividualRegistration() {
     },
   });
 
-  const { register } = form;
+  const { register, control } = form;
 
   function onSubmit(formValues: MemberForm) {
     if (formValues.horses) {
@@ -202,6 +212,9 @@ function IndividualRegistration() {
             />
 
             <RegistrationYearSelect
+              heading="Which year are you registering for?"
+              watchFieldName="member.memberStatus"
+              control={control}
               register={register('member.membershipEnd')}
             />
 
