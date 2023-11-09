@@ -12,7 +12,7 @@ export const HorseFormSchema = HorseOptionalDefaultsSchema.omit({
 }).array();
 
 export const MemberFormSchema = z.object({
-  member: z.lazy(() =>
+  memberInput: z.lazy(() =>
     MemberOptionalDefaultsSchema.omit({ fullName: true, comments: true })
   ),
   horses: z.lazy(() => HorseFormSchema).optional(),

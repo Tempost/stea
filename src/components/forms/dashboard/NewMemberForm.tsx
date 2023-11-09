@@ -18,7 +18,7 @@ function NewMemberForm() {
   const form = useZodForm({
     reValidateMode: 'onSubmit',
     shouldFocusError: true,
-    schema: MemberFormSchema.shape.member,
+    schema: MemberFormSchema.shape.memberInput,
     defaultValues: {
       businessName: null,
     },
@@ -35,7 +35,7 @@ function NewMemberForm() {
   });
 
   // TODO: Better type after creating form
-  function onSubmit(formValues: z.infer<typeof MemberFormSchema.shape.member>) {
+  function onSubmit(formValues: z.infer<typeof MemberFormSchema.shape.memberInput>) {
     insert.mutate(formValues);
   }
 

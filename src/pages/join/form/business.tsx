@@ -34,7 +34,7 @@ function BusinessRegistration() {
     shouldFocusError: true,
     schema: MemberFormSchema,
     defaultValues: {
-      member: {
+      memberInput: {
         useaMemberID: null,
         dateOfBirth: null,
         memberType: 'Business',
@@ -99,7 +99,7 @@ function BusinessRegistration() {
           <Input
             type='text'
             className='input-bordered input-primary input w-full md:input-sm'
-            {...register('member.businessName')}
+            {...register('memberInput.businessName')}
           />
 
           <h3 className='text-sm'>Business Address*</h3>
@@ -108,7 +108,7 @@ function BusinessRegistration() {
               type='text'
               className='input-bordered input-primary input w-full md:input-sm'
               placeholder='Address Line 1'
-              {...register('member.address')}
+              {...register('memberInput.address')}
             />
 
             <Input
@@ -123,12 +123,12 @@ function BusinessRegistration() {
                 type='text'
                 className='input-bordered input-primary input w-full md:input-sm'
                 placeholder='City'
-                {...register('member.city')}
+                {...register('memberInput.city')}
               />
 
               <Select
                 className='select-bordered select-primary select w-full md:select-sm'
-                {...register('member.state')}
+                {...register('memberInput.state')}
               >
                 {states.map(state => (
                   <option
@@ -144,7 +144,7 @@ function BusinessRegistration() {
                 type='numeric'
                 className='input-bordered input-primary input w-full md:input-sm'
                 placeholder='Zip Code'
-                {...register('member.zip', { valueAsNumber: true })}
+                {...register('memberInput.zip', { valueAsNumber: true })}
               />
             </div>
           </div>
@@ -156,21 +156,21 @@ function BusinessRegistration() {
                 type='text'
                 label='First Name*'
                 className='input-bordered input-primary input w-full md:input-sm'
-                {...register('member.firstName')}
+                {...register('memberInput.firstName')}
               />
 
               <Input
                 type='text'
                 label='Last Name*'
                 className='input-bordered input-primary input w-full md:input-sm'
-                {...register('member.lastName')}
+                {...register('memberInput.lastName')}
               />
             </div>
             <div className='flex gap-2'>
               <Select
                 label='Phone Type*'
                 className='select-bordered select-primary select md:select-sm'
-                {...register('member.phoneType')}
+                {...register('memberInput.phoneType')}
               >
                 {Object.keys(PhoneTypeSchema.enum).map(type => (
                   <option
@@ -186,7 +186,7 @@ function BusinessRegistration() {
                 label='Phone Number*'
                 type='tel'
                 className='input-bordered input-primary input w-full md:input-sm'
-                {...register('member.phone')}
+                {...register('memberInput.phone')}
               />
             </div>
 
@@ -195,11 +195,11 @@ function BusinessRegistration() {
               type='text'
               className='input-bordered input-primary input w-full md:input-sm'
               altLabel={'This will be the primary method of contact.'}
-              {...register('member.email')}
+              {...register('memberInput.email')}
             />
 
             <RegType
-              register={register('member.memberStatus')}
+              register={register('memberInput.memberStatus')}
               formType='Business'
             />
           </div>

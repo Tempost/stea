@@ -19,16 +19,6 @@ import Under18 from '@/components/forms/Under18';
 import Checkbox from '@/components/data-entry/Checkbox';
 import HorseFieldArray from '@/components/forms/HorseFieldArray';
 import RegistrationYearSelect from '@/components/forms/RegistrationYearSelect';
-import { useFormContext, useWatch } from 'react-hook-form';
-
-const useFormValues = () => {
-  const { getValues } = useFormContext();
-
-  return {
-    ...useWatch(),
-    ...getValues(),
-  };
-};
 
 function IndividualRegistration() {
   const [payment, togglePayment] = useState(false);
@@ -49,7 +39,7 @@ function IndividualRegistration() {
     shouldFocusError: true,
     schema: MemberFormSchema,
     defaultValues: {
-      member: {
+      memberInput: {
         businessName: null,
         useaMemberID: null,
         dateOfBirth: null,
@@ -86,7 +76,7 @@ function IndividualRegistration() {
 
   function handleUSEACheck() {
     if (isUSEAMember) {
-      form.resetField('member.useaMemberID');
+      form.resetField('memberInput.useaMemberID');
     }
 
     toggleUSEAInput(curr => {
@@ -114,14 +104,14 @@ function IndividualRegistration() {
             type='text'
             label='First Name*'
             className='input-bordered input-primary input w-full md:input-sm'
-            {...register('member.firstName')}
+            {...register('memberInput.firstName')}
           />
 
           <Input
             type='text'
             label='Last Name*'
             className='input-bordered input-primary input w-full md:input-sm'
-            {...register('member.lastName')}
+            {...register('memberInput.lastName')}
           />
         </div>
 
@@ -131,7 +121,7 @@ function IndividualRegistration() {
             type='text'
             className='input-bordered input-primary input w-full md:input-sm'
             placeholder='Address Line 1'
-            {...register('member.address')}
+            {...register('memberInput.address')}
           />
 
           <Input
@@ -146,12 +136,12 @@ function IndividualRegistration() {
               type='text'
               className='input-bordered input-primary input w-full md:input-sm'
               placeholder='City'
-              {...register('member.city')}
+              {...register('memberInput.city')}
             />
 
             <Select
               className='select-bordered select-primary select w-full md:select-sm'
-              {...register('member.state')}
+              {...register('memberInput.state')}
             >
               {states.map(state => (
                 <option
@@ -167,7 +157,7 @@ function IndividualRegistration() {
               type='numeric'
               className='input-bordered input-primary input w-full md:input-sm'
               placeholder='Zip Code'
-              {...register('member.zip', { valueAsNumber: true })}
+              {...register('memberInput.zip', { valueAsNumber: true })}
             />
           </div>
 
@@ -176,7 +166,7 @@ function IndividualRegistration() {
               <Select
                 label='Phone Type*'
                 className='select-bordered select-primary select md:select-sm'
-                {...register('member.phoneType')}
+                {...register('memberInput.phoneType')}
               >
                 {Object.keys(PhoneTypeSchema.enum).map(type => (
                   <option
@@ -192,7 +182,7 @@ function IndividualRegistration() {
                 label='Phone Number*'
                 type='tel'
                 className='input-bordered input-primary input w-full md:input-sm'
-                {...register('member.phone')}
+                {...register('memberInput.phone')}
               />
             </div>
 
@@ -201,26 +191,26 @@ function IndividualRegistration() {
               type='text'
               className='input-bordered input-primary input w-full md:input-sm'
               altLabel={'This will be the primary method of contact.'}
-              {...register('member.email')}
+              {...register('memberInput.email')}
             />
           </div>
 
           <div className='container flex-col'>
             <RegType
-              register={register('member.memberStatus')}
+              register={register('memberInput.memberStatus')}
               formType='Individual'
             />
 
             <RegistrationYearSelect
-              heading="Which year are you registering for?"
-              watchFieldName="member.memberStatus"
+              heading='Which year are you registering for?'
+              watchFieldName='memberInput.memberStatus'
               control={control}
-              register={register('member.membershipEnd')}
+              register={register('memberInput.membershipEnd')}
             />
 
-            <MemberType register={register('member.memberStatusType')} />
+            <MemberType register={register('memberInput.memberStatusType')} />
 
-            <Under18 dateName='member.dateOfBirth' />
+            <Under18 dateName='memberInput.dateOfBirth' />
           </div>
 
           <div className='flex gap-2'>
@@ -235,7 +225,9 @@ function IndividualRegistration() {
                 type='number'
                 className='input-bordered input-primary input w-full md:input-sm'
                 placeholder='USEA Member ID'
-                {...register('member.useaMemberID', { valueAsNumber: true })}
+                {...register('memberInput.useaMemberID', {
+                  valueAsNumber: true,
+                })}
               />
             )}
           </div>

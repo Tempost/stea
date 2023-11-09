@@ -57,19 +57,33 @@ export const members = router({
         });
     }),
 
-  // NOTE: Endpoint will only report an existing member if they are a lifetime member
   exists: procedure.input(MemberFormSchema).mutation(async ({ input, ctx }) => {
     const fullName =
-      input.member.businessName ??
-      `${input.member.firstName} ${input.member.lastName}`;
+      input.memberInput.businessName ??
+      `${input.memberInput.firstName} ${input.memberInput.lastName}`;
 
-    console.info(`Checking if ${fullName} is a lifetime member.`);
+    console.info(`Checking if ${fullName} is a member.`);
 
-    if (await checkForExistingMember(fullName, ctx.prisma, 'Life')) {
-      throw new TRPCError({
-        code: 'CONFLICT',
-        message: `${fullName} is already a member`,
-      });
+    const existingMember = await checkForExistingMember(fullName, ctx.prisma);
+    if (existingMember) {
+      if (existingMember.memberStatus === 'Life') {
+        throw new TRPCError({
+          code: 'CONFLICT',
+          message: `${fullName} is already a lifetime member`,
+        });
+      }
+
+      if (existingMember.membershipEnd && input.memberInput.membershipEnd) {
+        if (
+          existingMember.membershipEnd.getFullYear() ===
+          input.memberInput.membershipEnd.getFullYear()
+        ) {
+          throw new TRPCError({
+            code: 'CONFLICT',
+            message: `You are already signed up for the selected year.`,
+          });
+        }
+      }
     }
 
     if (input.horses) {
@@ -80,63 +94,82 @@ export const members = router({
       );
 
       if (existingHorses) {
-        const message = `${existingHorses}
-        ${existingHorses.length > 1 ? 'have' : 'has'} already been registered.`;
-
-        throw new TRPCError({
-          code: 'CONFLICT',
-          message: message,
+        let signedUp = new Array();
+        existingHorses.forEach(horse => {
+          if (horse.regType === 'Life') signedUp.push(horse);
+          if (horse.registrationEnd) {
+            const horseInput = input.horses?.find(
+              h => h.horseRN === horse.horseRN
+            );
+            if (horseInput && horseInput.registrationEnd) {
+              if (horse.registrationEnd >= horseInput.registrationEnd) {
+                signedUp.push(horse);
+              }
+            }
+          }
         });
+
+        if (signedUp.length > 0) {
+          const message = `${horseNames(signedUp)}
+        ${signedUp.length > 1 ? 'have' : 'has'} already been registered.`;
+
+          throw new TRPCError({
+            code: 'CONFLICT',
+            message: message,
+          });
+        }
       }
     }
   }),
 
   add: procedure
     .input(MemberFormSchema)
-    .mutation(async ({ input: { member, horses }, ctx }) => {
-      console.info(`Member: ${JSON.stringify(member)}`);
+    .mutation(async ({ input: { memberInput, horses }, ctx }) => {
+      console.info(`Member: ${JSON.stringify(memberInput)}`);
       console.info(
         `Horses: ${JSON.stringify(horses)}` ?? 'Did not register horses'
       );
-      await addMember({ member, horses }, ctx.prisma);
-    }),
 
-  /* TODO:
-   * Step 1. Look for an existing user(Only do this step if they are signing up with
-   * an annual membership)
-   *
-   * Step 1.5. Check if the annual member is signing up for the current year or the
-   * up-coming year
-   *
-   * Step 2. Update/create membership with new membership date and membership end date, user
-   * has the option of selecting current year and next year as options
-   *
-   */
-  publicUpdate: procedure
-    .input(MemberFormSchema)
-    .mutation(async ({ input: { member, horses }, ctx }) => {
       const fullName =
-        member.businessName ??
-        `${member.firstName.trim()} ${member.lastName.trim()}`;
+        memberInput.businessName ??
+        `${memberInput.firstName.trim()} ${memberInput.lastName.trim()}`;
 
-      const exisitingMember = ctx.prisma.member.findFirst({
-        where: {
+      // Check if Updating a member
+      const existingMember = await getMember(
+        {
           fullName,
+          memberStatus: 'Annual',
         },
-      });
+        ctx.prisma
+      );
 
-      if ((await exisitingMember) === null) {
-        throw new TRPCError({
-          code: 'BAD_REQUEST',
-          message: 'Attemping to update user that does not exist.',
+      if (existingMember) {
+        console.log('Updating member');
+        ctx.prisma.$transaction(async tx => {
+          await tx.member.update({
+            where: { fullName },
+            data: { ...memberInput },
+          });
+
+          const queries = horses?.map(horse =>
+            tx.horse.upsert({
+              where: { horseRN: horse.horseRN },
+              create: { ...horse, memberName: fullName },
+              update: { ...horse },
+            })
+          );
+
+          if (queries) {
+            await Promise.allSettled(queries);
+          }
         });
+      } else {
+        await addMember({ memberInput, horses }, ctx.prisma);
       }
-
-      await updateAnnualMember({ member, horses }, ctx.prisma);
     }),
 
   manualAdd: dashboardProcedure
-    .input(MemberFormSchema.shape.member)
+    .input(MemberFormSchema.shape.memberInput)
     .mutation(async ({ input, ctx }) => {
       const fullName = `${input.firstName} ${input.lastName}`;
       try {
@@ -234,7 +267,7 @@ export const members = router({
 });
 
 async function addMember(
-  { member, horses }: MemberForm,
+  { memberInput: member }: MemberForm,
   prisma: MyPrismaClient
 ) {
   try {
@@ -276,7 +309,7 @@ async function addMember(
 }
 
 async function updateAnnualMember(
-  { member, horses }: MemberForm,
+  { memberInput: member }: MemberForm,
   prisma: MyPrismaClient
 ) {
   const fullName =
@@ -309,4 +342,16 @@ async function updateAnnualMember(
       cause: error,
     });
   }
+}
+
+async function getMember(filters: Prisma.MemberWhereInput, db: MyPrismaClient) {
+  return db.member.findFirst({ where: filters });
+}
+
+async function updateMember(
+  fullName: string,
+  input: MemberForm['memberInput'],
+  db: MyPrismaClient
+) {
+  return db.member.update({ where: { fullName }, data: { ...input } });
 }

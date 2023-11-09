@@ -1,5 +1,5 @@
 import { HorseForm } from '@/utils/zodschemas';
-import { Horse, Prisma } from '@prisma/client';
+import { Horse, Prisma, Status, Type } from '@prisma/client';
 import { MyPrismaClient, prisma } from '../prisma';
 
 export function prepareCombos(
@@ -62,11 +62,11 @@ export const getKeys = Object.keys as <T extends object>(
 export async function checkForExistingMember(
   fullName: string,
   db: MyPrismaClient,
-  memberStatus: 'Annual' | 'Life',
+  memberStatus?: Status
 ) {
-  return !!(await db.member.findUnique({
+  return await db.member.findUnique({
     where: { fullName, memberStatus },
-  }));
+  });
 }
 
 export const horseNames = (horses: HorseForm | Horse[]) =>
@@ -74,17 +74,19 @@ export const horseNames = (horses: HorseForm | Horse[]) =>
 
 export async function checkExistingHorses(
   horses: HorseForm,
-  db: MyPrismaClient
+  db: MyPrismaClient,
+  regType?: Status
 ) {
   const matches = await db.horse.findMany({
     where: {
       horseRN: {
         in: horses.map(horse => horse.horseRN),
       },
+      regType,
     },
   });
 
   if (matches.length !== 0) {
-    return horseNames(matches);
+    return matches;
   }
 }

@@ -21,7 +21,8 @@ function RegistrationYearSelect({
   control,
 }: Props) {
   const annual = useWatch({ name: watchFieldName, control });
-  const currYear = new Date(Date.now());
+  const currentDate = new Date(Date.now());
+  const currYear = new Date(currentDate.getFullYear(), 10, 30);
   const nextYear = new Date(currYear.getFullYear() + 1, 10, 30);
 
   console.log(annual);
