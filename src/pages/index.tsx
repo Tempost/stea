@@ -7,7 +7,6 @@ import Image from 'next/image';
 import { BookIcon } from '@/components/icons';
 import UpcomingEvents from '@/components/home/Events';
 import NavCard from '@/components/home/NavCard';
-import EOYPlacing from '@/components/home/Placing';
 
 function Home() {
   return (

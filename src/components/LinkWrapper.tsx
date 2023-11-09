@@ -1,8 +1,9 @@
 import Link from 'next/link';
+import { ReactNode } from 'react';
 
 interface WrapperProps {
   href?: string;
-  children: JSX.Element | string | number;
+  children: ReactNode | string | number;
 }
 
 function LinkWrapper({ href, children }: WrapperProps) {

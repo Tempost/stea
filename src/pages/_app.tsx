@@ -8,7 +8,7 @@ import '../styles/globals.css';
 
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
-import type { ReactElement, ReactNode } from 'react';
+import type { PropsWithChildren, ReactElement, ReactNode } from 'react';
 import { SessionProvider } from 'next-auth/react';
 
 export type NextPageWithLayout = NextPage & {
@@ -20,9 +20,9 @@ export interface AppPropsWithLayout extends AppProps<{ session?: Session }> {
 }
 
 // TODO TODO TODO: Remove this on prod build
-const AtomsDevTools = ({ children }: any) => {
+const AtomsDevTools = ({ children }: PropsWithChildren) => {
   useAtomsDevtools('Form State');
-  return children;
+  return <>{children}</>;
 };
 
 function MyApp({

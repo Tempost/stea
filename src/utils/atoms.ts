@@ -5,13 +5,10 @@ import {
   FormState,
   ReducerAction,
   HorsePayload,
-  isHorsePayload,
   MemberPayload,
-  isMemberPayload,
   MonthAction,
-  OwnerType,
 } from '@/types/atoms';
-import { FormType, isFormType } from '@/types/common';
+import { FormType } from '@/types/common';
 import { EntryReviewType } from './zodschemas';
 
 export const costs = {
@@ -72,13 +69,13 @@ const updateFormState = atom(null, (_get, set, action: ReducerAction) => {
   console.log(action);
   switch (action.type) {
     case 'FORMTYPE':
-      isFormType(action.payload) && set(updateFormType, action.payload);
+      set(updateFormType, action.payload);
       break;
     case 'STATUS':
-      isMemberPayload(action.payload) && set(updateSignupCost, action.payload);
+      set(updateSignupCost, action.payload);
       break;
     case 'HORSE':
-      isHorsePayload(action.payload) && set(updateHorseCost, action.payload);
+      set(updateHorseCost, action.payload);
       break;
     case 'RESET':
       set(formState, initFormState);
@@ -120,7 +117,7 @@ const changeMonth = atom(null, (_get, set, action: MonthAction) => {
 const ownerTypeAtom = atom('none');
 const changeSelectionAtom = atom(
   get => get(ownerTypeAtom),
-  (_get, set, newSelection: OwnerType) => set(ownerTypeAtom, newSelection)
+  (_get, set, newSelection: string) => set(ownerTypeAtom, newSelection)
 );
 
 const entryAtom = atom<EntryReviewType[] | undefined>(undefined);

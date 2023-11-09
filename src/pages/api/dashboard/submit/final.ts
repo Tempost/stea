@@ -3,7 +3,6 @@ import type {
   NextApiResponse,
 } from 'next/dist/shared/lib/utils';
 import { prisma } from '@/server/prisma';
-import { isShowUniqueArgs } from '@/types/common';
 import { getToken } from 'next-auth/jwt';
 import { EntrySubmissionSchema } from '@/utils/zodschemas';
 
@@ -11,8 +10,10 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const params = req.query;
-  if (!isShowUniqueArgs(params)) {
+  const {searchParams} = new URL(req.url);
+  const showUID = searchParams.get("showUID");
+
+  if (!showUID) {
     console.log('Invalid query param', JSON.stringify(params, null, 0));
     return res.status(500).json({ message: 'Invalid query param passed.' });
   }
@@ -25,7 +26,7 @@ export default async function handler(
 
   const existingShow = await prisma.show.findUnique({
     where: {
-      uid: params.showUID,
+      uid: showUID,
     },
     select: {
       uid: true,
@@ -41,7 +42,7 @@ export default async function handler(
 
   const body = EntrySubmissionSchema.parse(req.body);
 
-  const dbActions = new Array();
+  const dbActions = [];
   for (const entry of body) {
     const relations = {
       member: {

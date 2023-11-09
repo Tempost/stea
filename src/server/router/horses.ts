@@ -15,10 +15,11 @@ export const horses = router({
         .then(horses => {
           return horses;
         })
-        .catch(_ => {
+        .catch((e) => {
           throw new TRPCError({
             code: 'INTERNAL_SERVER_ERROR',
             message: 'Failed to fetch horses.',
+            cause: e,
           });
         });
 

@@ -18,7 +18,6 @@ const prismaGlobal = global as typeof global & {
 
 export const prisma = prismaGlobal.prisma ?? prismaClientSingleton();
 
-// @ts-ignore TODO: Fix this type issue
 if (process.env.NODE_ENV !== 'production') prismaGlobal.prisma = prisma;
 
 export type MyPrismaClient = typeof prisma;

@@ -1,5 +1,5 @@
 import { useSetAtom } from 'jotai';
-import { ReactElement, useState } from 'react';
+import { ChangeEvent, ReactElement, useState } from 'react';
 
 import { FormLayout } from '@/components/layout/FormLayout';
 import { MemberForm, MemberFormSchema } from '@/utils/zodschemas';
@@ -66,7 +66,7 @@ function BusinessRegistration() {
     checkMember.mutate(formValues);
   }
 
-  function handleCheck(e: any) {
+  function handleCheck(e: ChangeEvent<HTMLInputElement>) {
     e.preventDefault;
     toggleRegHorse(curr => !curr);
   }

@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
 
-import { MyPrismaClient, prisma } from '@/server/prisma';
+import { MyPrismaClient } from '@/server/prisma';
 import { dashboardProcedure, procedure, router } from '@/server/trpc';
 import {
   RiderComboFindManyArgsSchema,
@@ -59,7 +59,7 @@ export const riders = router({
   remove: dashboardProcedure
     .input(RiderComboWhereUniqueInputSchema)
     .mutation(async ({ input, ctx }) => {
-      const rider = await fetchRiderCombo(input, ctx.prisma);
+      await fetchRiderCombo(input, ctx.prisma);
 
       // TODO: Find out why this returns empty obj
       // return await prisma.riderCombo.delete({

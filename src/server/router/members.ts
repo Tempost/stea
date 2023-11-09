@@ -94,7 +94,7 @@ export const members = router({
       );
 
       if (existingHorses) {
-        let signedUp = new Array();
+        const signedUp: typeof existingHorses | undefined = [];
         existingHorses.forEach(horse => {
           if (horse.regType === 'Life') signedUp.push(horse);
           if (horse.registrationEnd) {
@@ -127,7 +127,7 @@ export const members = router({
     .mutation(async ({ input: { memberInput, horses }, ctx }) => {
       console.info(`Member: ${JSON.stringify(memberInput)}`);
       console.info(
-        `Horses: ${JSON.stringify(horses)}` ?? 'Did not register horses'
+        horses ? `Horses: ${JSON.stringify(horses)}` : 'Did not register horses'
       );
 
       const fullName =
@@ -308,50 +308,6 @@ async function addMember(
   }
 }
 
-async function updateAnnualMember(
-  { memberInput: member }: MemberForm,
-  prisma: MyPrismaClient
-) {
-  const fullName =
-    member.businessName ??
-    `${member.firstName.trim()} ${member.lastName.trim()}`;
-  try {
-    // TODO: Create Dynamic date, should be November 30th 20XX(one year from current year)
-    return prisma.member.update({
-      where: {
-        fullName,
-      },
-      data: {
-        // TODO: Do we want to update all of their fields or only the new dates? discuss
-        ...member,
-      },
-    });
-  } catch (error) {
-    if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      // TODO: Check for some of the more common db/prisma errors
-      throw new TRPCError({
-        code: 'INTERNAL_SERVER_ERROR',
-        message: 'Something went wrong, contact us for more information.',
-        cause: error,
-      });
-    }
-
-    throw new TRPCError({
-      code: 'INTERNAL_SERVER_ERROR',
-      message: 'Something went wrong, contact us for more information.',
-      cause: error,
-    });
-  }
-}
-
 async function getMember(filters: Prisma.MemberWhereInput, db: MyPrismaClient) {
   return db.member.findFirst({ where: filters });
-}
-
-async function updateMember(
-  fullName: string,
-  input: MemberForm['memberInput'],
-  db: MyPrismaClient
-) {
-  return db.member.update({ where: { fullName }, data: { ...input } });
 }

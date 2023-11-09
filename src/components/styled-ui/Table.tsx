@@ -16,6 +16,7 @@ interface TableProps<TData> {
   tableOptions: TableOptions<TData>;
 }
 
+// eslint-disable-next-line
 const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   // Rank the item
   const itemRank = rankItem(row.getValue(columnId), value);

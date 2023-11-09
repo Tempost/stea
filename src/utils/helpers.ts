@@ -1,5 +1,5 @@
 export function removeUndefined<T>(data: (T | undefined)[]) {
-  return data.filter((item: any): item is T => item !== undefined);
+  return data.filter((item: T | undefined): item is T => item !== undefined);
 }
 
 export function readableDateTime(date: string | Date | null) {

@@ -1,4 +1,10 @@
-import { useEffect, useState } from 'react';
+import { InputHTMLAttributes, useEffect, useState } from 'react';
+
+interface DebounceArgs {
+  value: string | number;
+  onChange(value: string | number): void;
+  debounce?: number;
+}
 
 // A debounced input react component, taken from tan stack table exmaples
 function DebouncedInput({
@@ -6,11 +12,7 @@ function DebouncedInput({
   onChange,
   debounce = 100,
   ...props
-}: {
-  value: string | number;
-  onChange: (value: string | number) => void;
-  debounce?: number;
-} & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'>) {
+}: DebounceArgs & Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'>) {
   const [value, setValue] = useState(initialValue);
 
   useEffect(() => {

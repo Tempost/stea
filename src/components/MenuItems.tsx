@@ -1,10 +1,11 @@
+import { ReactNode } from 'react';
 import NavLinkSubMenu from './NavLinkMenu';
 
 interface Menu {
   href?: string;
   name: string;
   drawer?: true;
-  render?: ({ href, name }: Menu) => JSX.Element;
+  render?(menu: Menu): ReactNode;
 }
 
 export const publicMenuItems: Menu[] = [

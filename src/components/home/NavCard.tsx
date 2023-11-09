@@ -1,9 +1,10 @@
 import NextLink, { LinkProps } from 'next/link';
 import Image from 'next/image';
+import { ReactNode } from 'react';
 
 export interface NavCardProps extends LinkProps {
   img: string;
-  bodyText: React.ReactNode;
+  bodyText: ReactNode;
 }
 
 export default function NavCard({ img, bodyText, ...props }: NavCardProps) {

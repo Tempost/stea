@@ -44,7 +44,7 @@ function Tables() {
     <>
       <div
         className='btn-group  mx-auto mb-10 grid w-fit grid-flow-col place-content-center'
-        //@ts-ignore
+        //@ts-expect-error wtf does this even mean
         onClick={e => setTable(e.target.value)}
       >
         <button

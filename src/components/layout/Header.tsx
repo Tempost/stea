@@ -1,11 +1,11 @@
-import React, { Fragment } from 'react';
+import { Fragment, PropsWithChildren } from 'react';
 import { Hamburger, MobileMenu } from '@/components/icons';
 import LinkWrapper from '@/components/LinkWrapper';
 import { publicMenuItems, dashMenuItems } from '@/components/MenuItems';
 import Link from 'next/link';
 
 // TODO: Please type my props
-export const ResponsiveHeader = ({ children }: any) => {
+export const ResponsiveHeader = ({ children }: PropsWithChildren) => {
   return (
     <div className='drawer'>
       <input

@@ -1,7 +1,19 @@
 {
-  "extends": "next/core-web-vitals",
-  "ignorePatterns": ["**/src/server/prisma/zod-generated"],
+  "extends": [
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "ignorePatterns": ["**/src/server/prisma/zod-generated", "**/src/tests/**", "**/src/utils/seed"],
   "rules": {
-    "react/no-unescaped-entities": 0
-  }
+    "react/no-unescaped-entities": "off",
+    "react/prop-types": "off",
+    "no-constant-binary-expression": "error",
+    "no-const-assign": "error",
+    "no-dupe-else-if": "error"
+  },
+  "root": true
 }

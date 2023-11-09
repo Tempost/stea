@@ -65,10 +65,12 @@ const initState: SubmitPointsState = {
 
 type FormValues = z.infer<typeof ShowSubmitFormValue>;
 
+// eslint-disable-next-line
 function isSubmitPointsError(o: any): o is SubmitPointsError {
   return !!o && o?.message !== undefined;
 }
 
+// TODO: Fix types in this reducer function
 function reducer(
   state: SubmitPointsState,
   action: ComponentActions
@@ -84,6 +86,7 @@ function reducer(
           totalEntries: action.totalEntries ?? 0,
         };
       }
+    // eslint-disable-next-line
     case 'SUBMIT':
       return {
         ...state,
@@ -109,6 +112,7 @@ function reducer(
           };
         }
       }
+    // eslint-disable-next-line
     case 'RESET':
       return initState;
     default:
@@ -152,7 +156,9 @@ function SubmitPoints() {
             type: 'ERROR',
             data: {
               message: 'An entry does not conform to the legend.',
-              errors: error.data.filter((e: any) => !e.success),
+              errors: error.data.filter(
+                (e: { success: boolean }) => !e.success
+              ),
             },
           });
           return;
@@ -170,7 +176,11 @@ function SubmitPoints() {
       }
 
       await res.json().then(res => {
-        dispatch({ type: 'REVIEW', data: res.data, totalEntries: res.totalEntryCount });
+        dispatch({
+          type: 'REVIEW',
+          data: res.data,
+          totalEntries: res.totalEntryCount,
+        });
       });
     });
   }

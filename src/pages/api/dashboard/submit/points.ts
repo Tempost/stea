@@ -14,7 +14,6 @@ import {
   GroupedEntries,
   HEADER_MAPPING,
   isEntry,
-  isHeadingNames,
   isZodFieldError,
   ParseError,
   PointsMap,
@@ -71,13 +70,11 @@ export default async function handler(
       groupEntries(parsedEntries)
     );
 
-    return res
-      .status(200)
-      .json({
-        success: true,
-        data: entriesWithMembership,
-        totalEntryCount: parsedEntries.length,
-      });
+    return res.status(200).json({
+      success: true,
+      data: entriesWithMembership,
+      totalEntryCount: parsedEntries.length,
+    });
   } catch (err) {
     if (err instanceof Error) {
       console.error(err);
@@ -103,13 +100,14 @@ function parseCSV(csv: string) {
     .split(',')
     .filter(colName => !!colName);
 
-  if (!isHeadingNames(headingNames)) {
+  // NOTE: Checking for any invalid heading names, no real need to do a type check here
+  if (!headingNames.every(val => HEADER_NAMES.includes(val))) {
     throw new ParseError('Invalid column headings.');
   }
 
   const entries = lines.map(line => {
     const row = line.trim().split(',');
-    let entry: Record<string, string | number> = {};
+    const entry: Record<string, string | number> = {};
 
     row.forEach((value, column) => {
       const columnName = HEADER_MAPPING[headingNames[column]];
@@ -133,13 +131,17 @@ function groupEntries(entries: Entry[]) {
   const rideTypes: EntriesRideType = groupByFunc(entries, e => e.rideType);
 
   // Group each of the above further into divisions
-  let divisionGrouping: EntriesRideTypeDivison = { CT: {}, HT: {}, Derby: {} };
+  const divisionGrouping: EntriesRideTypeDivison = {
+    CT: {},
+    HT: {},
+    Derby: {},
+  };
   for (const key of getKeys(rideTypes)) {
     divisionGrouping[key] = groupByFunc(rideTypes[key], e => e.division);
   }
 
   // Finally group into final A,B,C,D groupings
-  let finalGrouping: GroupedEntries = { CT: {}, HT: {}, Derby: {} };
+  const finalGrouping: GroupedEntries = { CT: {}, HT: {}, Derby: {} };
   for (const key of getKeys(divisionGrouping)) {
     for (const subKey of getKeys(divisionGrouping[key])) {
       const inner_entries = divisionGrouping[key][subKey];
@@ -212,10 +214,10 @@ function calculatePoints(
 }
 
 async function checkforMembership(entries: GroupedEntries) {
-  let updatedMemberPoints = new Array<EntryReviewType>();
-  for (const [_, divisions] of Object.entries(entries)) {
-    for (const [_, groups] of Object.entries(divisions)) {
-      for (const [_, entryList] of Object.entries(groups)) {
+  const updatedMemberPoints = new Array<EntryReviewType>();
+  for (const [, divisions] of Object.entries(entries)) {
+    for (const [, groups] of Object.entries(divisions)) {
+      for (const [, entryList] of Object.entries(groups)) {
         for (const entry of entryList) {
           const entryName = `${entry.firstName} ${entry.lastName}`;
 

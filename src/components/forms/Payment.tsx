@@ -48,9 +48,7 @@ function Payment({ showPayment, children, formMutation }: PaymentProps) {
   }
 
   async function onApprove(_data: OnApproveData, actions: OnApproveActions) {
-    return actions.order!.capture().then(details => {
-      const name = details.payer.name?.given_name;
-
+    return actions.order!.capture().then(() => {
       formMutation.mutateFn();
       history.push('/');
     });

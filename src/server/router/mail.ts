@@ -3,7 +3,7 @@ import { procedure, router } from '../trpc';
 import z from 'zod';
 
 export const mail = router({
-  send: procedure.input(z.any()).mutation(async ({ input, ctx }) => {
+  send: procedure.input(z.any()).mutation(async ({ input }) => {
     const mailer = createMailer();
 
     try {
@@ -15,25 +15,23 @@ export const mail = router({
     }
   }),
 
-  welcome: procedure
-    .input(z.any())
-    .mutation(async ({ input: { member }, ctx }) => {
-      const mailer = createMailer();
+  welcome: procedure.input(z.any()).mutation(async ({ input: { member } }) => {
+    const mailer = createMailer();
 
-      try {
-        const res = await mailer.send({
-          to: member.email,
-          from: 'stea@steventing.net',
-          subject: 'Welcome to stea',
-          text: 'Welcome to south texas eventing association',
-          html: '<div>Welcome to South Texas Eventing Association</div>',
-        });
+    try {
+      const res = await mailer.send({
+        to: member.email,
+        from: 'stea@steventing.net',
+        subject: 'Welcome to stea',
+        text: 'Welcome to south texas eventing association',
+        html: '<div>Welcome to South Texas Eventing Association</div>',
+      });
 
-        return res;
-      } catch (error) {
-        return error as ResponseError;
-      }
-    }),
+      return res;
+    } catch (error) {
+      return error as ResponseError;
+    }
+  }),
 });
 
 function createMailer() {

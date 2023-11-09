@@ -10,7 +10,7 @@ export function ContactCard({ name, position, email }: ContactCardProps) {
       <p className='text-lg font-semibold'>{position}</p>
       <span className='divider my-1 w-full' />
       <p>{name ?? 'Open Position'}</p>
-      {email && <p className='underline'>{email}</p>}
+      <p className='underline'>{email}</p>
     </span>
   );
 }

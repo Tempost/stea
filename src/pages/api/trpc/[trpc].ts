@@ -3,7 +3,6 @@ import { appRouter } from '@/server/router/_app';
 import * as trpcNext from '@trpc/server/adapters/next';
 
 const HOUR_SECONDS = 60 * 60;
-const THIRTY_MINS = 60 * 30;
 
 // export API handler
 export default trpcNext.createNextApiHandler({
@@ -12,7 +11,7 @@ export default trpcNext.createNextApiHandler({
   onError({ error }) {
     console.error('Something went wrong', error);
   },
-  responseMeta({ ctx, paths, type, errors }) {
+  responseMeta({ ctx, type, errors }) {
     const allOk = errors.length === 0;
     const isQuery = type === 'query';
 
@@ -20,7 +19,7 @@ export default trpcNext.createNextApiHandler({
       if (ctx?.res && allOk && isQuery) {
         return {
           headers: {
-            'Cache-Control': `public, s-maxage=5, stale-while-revalidate=${HOUR_SECONDS}`,
+            'Cache-Control': `public, s-maxage=5, stale-while-revalidate=${HOUR_SECONDS / 2}`,
           },
         };
       }

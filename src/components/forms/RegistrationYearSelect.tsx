@@ -10,6 +10,7 @@ interface Props
   heading: string;
   watchFieldName: string;
   register: UseFormRegisterReturn;
+  // eslint-disable-next-line
   control: any;
 }
 

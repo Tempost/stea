@@ -3,7 +3,6 @@ import { useAtomValue, useSetAtom } from 'jotai';
 
 import { selectedMonth, changeMonth } from '@/utils/atoms';
 import { ChevLeft, ChevRight } from '@/components/icons';
-import { isValidDir } from '@/types/atoms';
 
 const MONTHS = [
   'January',
@@ -27,9 +26,7 @@ function MonthSelector() {
   function handleMonthChange(e: MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     const direction = e.currentTarget.id;
-    if (isValidDir(direction)) {
-      dispatch({ dir: direction });
-    }
+    dispatch({ dir: direction });
   }
 
   return (

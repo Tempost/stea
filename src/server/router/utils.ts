@@ -1,5 +1,5 @@
 import { HorseForm } from '@/utils/zodschemas';
-import { Horse, Prisma, Status, Type } from '@prisma/client';
+import { Horse, Prisma, Status } from '@prisma/client';
 import { MyPrismaClient, prisma } from '../prisma';
 
 export function prepareCombos(
@@ -30,6 +30,7 @@ export async function horseExists(horseRN: string): Promise<boolean> {
   return !!horseExists;
 }
 
+// eslint-disable-next-line
 export function groupBy<TObj>(arr: TObj[], fn: (item: TObj) => any) {
   return arr.reduce<Record<string, TObj[]>>((prev, curr) => {
     const groupKey = fn(curr);

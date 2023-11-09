@@ -11,7 +11,6 @@ import { trpc } from '@/utils/trpc';
 import { HorseOptionalDefaultsSchema } from '@/server/prisma/zod-generated/modelSchema/HorseSchema';
 import Select from '@/components/data-entry/Select';
 import { changeSelectionAtom, ownerTypeAtom } from '@/utils/atoms';
-import { isOwnerType } from '@/types/atoms';
 import Radio from '@/components/data-entry/Radio';
 
 function MemberSelection() {
@@ -106,10 +105,6 @@ function NewHorseForm() {
   }
 
   function handleSelection(e: ChangeEvent<HTMLSelectElement>) {
-    if (!isOwnerType(e.target.value)) {
-      throw new Error('Invalid selection was made.');
-    }
-
     if (e.target.value === 'member') {
       form.resetField('owner');
     } else {
