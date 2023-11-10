@@ -19,6 +19,7 @@ export default function HorseFieldArray() {
   const { fields, append, remove } = useFieldArray<Horses>({
     control,
     name: 'horses',
+    shouldUnregister: true,
   });
 
   return (
@@ -58,7 +59,9 @@ export default function HorseFieldArray() {
               heading='Which year is the registration for?'
               watchFieldName={`horses.${index}.regType` as const}
               control={control}
-              register={register(`horses.${index}.registrationEnd` as const)}
+              register={register(`horses.${index}.registrationEnd` as const, {
+                shouldUnregister: true,
+              })}
             />
 
             <span className='flex flex-col gap-2'>

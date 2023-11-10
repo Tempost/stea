@@ -16,6 +16,7 @@ import Select from '@/components/data-entry/Select';
 import RegType from '@/components/forms/RegType';
 import Checkbox from '@/components/data-entry/Checkbox';
 import HorseFieldArray from '@/components/forms/HorseFieldArray';
+import RegistrationYearSelect from '@/components/forms/RegistrationYearSelect';
 
 function BusinessRegistration() {
   const [payment, togglePayment] = useState(false);
@@ -39,11 +40,12 @@ function BusinessRegistration() {
         dateOfBirth: null,
         memberType: 'Business',
         memberStatusType: 'Professional',
+        membershipEnd: null,
       },
     },
   });
 
-  const { register } = form;
+  const { register, control } = form;
 
   const update = useSetAtom(updateFormState);
 
@@ -201,6 +203,14 @@ function BusinessRegistration() {
             <RegType
               register={register('memberInput.memberStatus')}
               formType='Business'
+            />
+
+
+            <RegistrationYearSelect
+              heading='Which year are you registering for?'
+              watchFieldName='memberInput.memberStatus'
+              control={control}
+              register={register('memberInput.membershipEnd')}
             />
           </div>
 

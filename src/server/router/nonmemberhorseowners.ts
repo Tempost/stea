@@ -33,8 +33,6 @@ export const nonMemberHorseOwners = router({
       return owner;
     }),
 
-  // TODO: Update API to allow membership updating of annual horses
-  // backend work is actually more complicated than originally thought...
   add: procedure
     .input(OwnerHorseFormSchema)
     .mutation(async ({ input: { horses, owner }, ctx }) => {
@@ -48,12 +46,19 @@ export const nonMemberHorseOwners = router({
           `Member exists adding horses to ${owner.firstName} ${owner.lastName}...`
         );
 
+        // TODO: Horse already exists, how to update only its info
         try {
           return await ctx.prisma.member.update({
             where: { fullName: `${owner.firstName} ${owner.lastName}` },
             data: {
               Horse: {
-                create: [...horses],
+                upsert: horses.map(horse => {
+                  return {
+                    where: { horseRN: horse.horseRN },
+                    create: { ...horse },
+                    update: { ...horse },
+                  };
+                }),
               },
             },
           });

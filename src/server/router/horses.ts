@@ -15,7 +15,7 @@ export const horses = router({
         .then(horses => {
           return horses;
         })
-        .catch((e) => {
+        .catch(e => {
           throw new TRPCError({
             code: 'INTERNAL_SERVER_ERROR',
             message: 'Failed to fetch horses.',
@@ -87,13 +87,28 @@ export const horses = router({
     const existingHorses = await checkExistingHorses(input, ctx.prisma);
 
     if (existingHorses) {
-      const message = `${existingHorses}
-        ${existingHorses.length > 1 ? 'have' : 'has'} already been registered.`;
-
-      throw new TRPCError({
-        code: 'CONFLICT',
-        message: message,
+      const signedUp: typeof existingHorses | undefined = [];
+      existingHorses.forEach(horse => {
+        if (horse.regType === 'Life') signedUp.push(horse);
+        if (horse.registrationEnd) {
+          const horseInput = input.find(h => h.horseRN === horse.horseRN);
+          if (horseInput && horseInput.registrationEnd) {
+            if (horse.registrationEnd >= horseInput.registrationEnd) {
+              signedUp.push(horse);
+            }
+          }
+        }
       });
+
+      if (signedUp.length > 0) {
+        const message = `${horseNames(signedUp)}
+        ${signedUp.length > 1 ? 'have' : 'has'} already been registered.`;
+
+        throw new TRPCError({
+          code: 'CONFLICT',
+          message: message,
+        });
+      }
     }
   }),
 });

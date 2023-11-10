@@ -26,8 +26,6 @@ function RegistrationYearSelect({
   const currYear = new Date(currentDate.getFullYear(), 10, 30);
   const nextYear = new Date(currYear.getFullYear() + 1, 10, 30);
 
-  console.log(annual);
-
   return (
     <section className={`${annual === 'Annual' ? '' : 'hidden'}`}>
       <h3>{heading} (New year starts Novemeber 30th)</h3>

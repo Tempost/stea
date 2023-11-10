@@ -24,23 +24,24 @@ function JoinStea() {
       <h2 className='border-b-2 text-center text-2xl'>Join Online Below</h2>
       <div className='card-body grid place-items-center'>
         <h3>Membership Application type:</h3>
-        <div
-          className='w-[75%]'
-          onChange={handleRadioClick}
-        >
+        <div onChange={handleRadioClick}>
           {radioSelections.map(selection => (
-            <label
-              aria-label='Individual'
-              className='label'
-              key={selection}
-            >
-              <span className='label-text'>{selection}</span>
-              <Radio
-                className='radio-primary radio radio-md md:radio-sm'
-                value={selection}
-                name='app-select'
-              />
-            </label>
+            <div className='form-control flex-row'>
+              <label
+                htmlFor={`${selection}-id`}
+                aria-label={selection}
+                className='label cursor-pointer space-x-10'
+                key={selection}
+              >
+                <Radio
+                  id={`${selection}-id`}
+                  className='radio-primary radio radio-md md:radio-sm'
+                  value={selection}
+                  name='app-select'
+                />
+                <span className='label-text'>{selection}</span>
+              </label>
+            </div>
           ))}
         </div>
       </div>
