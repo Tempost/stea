@@ -10,11 +10,11 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const {searchParams} = new URL(req.url);
+  const {searchParams} = new URL(req.url!);
   const showUID = searchParams.get("showUID");
 
   if (!showUID) {
-    console.log('Invalid query param', JSON.stringify(params, null, 0));
+    console.log('Invalid query param', JSON.stringify(searchParams, null, 0));
     return res.status(500).json({ message: 'Invalid query param passed.' });
   }
 
