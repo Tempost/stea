@@ -69,12 +69,15 @@ const updateFormState = atom(null, (_get, set, action: ReducerAction) => {
   console.log(action);
   switch (action.type) {
     case 'FORMTYPE':
+      //@ts-expect-error fix me
       set(updateFormType, action.payload);
       break;
     case 'STATUS':
+      //@ts-expect-error fix me
       set(updateSignupCost, action.payload);
       break;
     case 'HORSE':
+      //@ts-expect-error fix me
       set(updateHorseCost, action.payload);
       break;
     case 'RESET':

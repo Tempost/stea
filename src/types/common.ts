@@ -25,7 +25,7 @@ export const HEADER_NAMES = [
   'Group',
   'Final Score',
   'Placing',
-] as const;
+];
 
 export const KEY_NAMES = [
   'firstName',
@@ -47,7 +47,7 @@ export const HEADER_MAPPING = {
   Group: 'group',
   'Final Score': 'finalScore',
   Placing: 'placing',
-} as const;
+};
 
 export type UnMappedHeaderNames = typeof HEADER_NAMES;
 export type MappedHeaderNames = typeof KEY_NAMES;

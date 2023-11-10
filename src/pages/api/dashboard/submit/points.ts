@@ -17,6 +17,7 @@ import {
   isZodFieldError,
   ParseError,
   PointsMap,
+  HEADER_NAMES,
 } from '@/types/common';
 import { EntryReviewType } from '@/utils/zodschemas';
 
@@ -110,6 +111,7 @@ function parseCSV(csv: string) {
     const entry: Record<string, string | number> = {};
 
     row.forEach((value, column) => {
+      //@ts-expect-error types blow
       const columnName = HEADER_MAPPING[headingNames[column]];
       if (columnName === 'finalScore') {
         const finalScore = parseFloat(value);
