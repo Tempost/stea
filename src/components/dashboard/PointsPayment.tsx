@@ -34,7 +34,6 @@ function PointsPayment({ pointsCount, approveHandler }: PointsPaymentProps) {
   async function onApprove(_data: OnApproveData, actions: OnApproveActions) {
     return actions.order!.capture().then(details => {
       const name = details.payer.name?.given_name;
-      console.log(`${name} has paid for a show.`);
       approveHandler();
     });
   }

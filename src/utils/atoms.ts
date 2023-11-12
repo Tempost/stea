@@ -66,7 +66,6 @@ const updateHorseCost = atom(null, (get, set, updateValue: HorsePayload) => {
 });
 
 const updateFormState = atom(null, (_get, set, action: ReducerAction) => {
-  console.log(action);
   switch (action.type) {
     case 'FORMTYPE':
       //@ts-expect-error fix me

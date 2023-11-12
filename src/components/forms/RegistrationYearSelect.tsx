@@ -31,7 +31,6 @@ function RegistrationYearSelect({
   const annual = useWatch({ name: watchFieldName, control });
 
   const showComponent = today >= from && today <= to;
-  console.log(today, from, to, showComponent);
 
   if (annual === 'Annual' && showComponent) {
     return (
