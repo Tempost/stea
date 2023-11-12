@@ -46,7 +46,6 @@ export const nonMemberHorseOwners = router({
           `Member exists adding horses to ${owner.firstName} ${owner.lastName}...`
         );
 
-        // TODO: Horse already exists, how to update only its info
         try {
           return await ctx.prisma.member.update({
             where: { fullName: `${owner.firstName} ${owner.lastName}` },

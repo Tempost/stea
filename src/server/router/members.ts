@@ -75,7 +75,7 @@ export const members = router({
 
       if (existingMember.membershipEnd && input.memberInput.membershipEnd) {
         if (
-          existingMember.membershipEnd.getFullYear() ===
+          existingMember.membershipEnd.getFullYear() >=
           input.memberInput.membershipEnd.getFullYear()
         ) {
           throw new TRPCError({
@@ -95,15 +95,18 @@ export const members = router({
 
       if (existingHorses) {
         const signedUp: typeof existingHorses | undefined = [];
-        existingHorses.forEach(horse => {
-          if (horse.regType === 'Life') signedUp.push(horse);
-          if (horse.registrationEnd) {
+        existingHorses.forEach(existingHorse => {
+          if (existingHorse.regType === 'Life') signedUp.push(existingHorse);
+          if (existingHorse.registrationEnd) {
             const horseInput = input.horses?.find(
-              h => h.horseRN === horse.horseRN
+              h => h.horseRN === existingHorse.horseRN
             );
             if (horseInput && horseInput.registrationEnd) {
-              if (horse.registrationEnd >= horseInput.registrationEnd) {
-                signedUp.push(horse);
+              if (
+                existingHorse.registrationEnd.getFullYear() >=
+                horseInput.registrationEnd.getFullYear()
+              ) {
+                signedUp.push(existingHorse);
               }
             }
           }
