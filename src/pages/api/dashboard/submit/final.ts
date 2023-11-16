@@ -10,11 +10,11 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const {searchParams} = new URL(req.url!);
-  const showUID = searchParams.get("showUID");
+  console.log(req.url);
+  const { showUID } = req.query;
 
   if (!showUID) {
-    console.log('Invalid query param', JSON.stringify(searchParams, null, 0));
+    console.log('Invalid query param', JSON.stringify(showUID, null, 0));
     return res.status(500).json({ message: 'Invalid query param passed.' });
   }
 
@@ -26,7 +26,7 @@ export default async function handler(
 
   const existingShow = await prisma.show.findUnique({
     where: {
-      uid: showUID,
+      uid: showUID as string,
     },
     select: {
       uid: true,
@@ -37,7 +37,9 @@ export default async function handler(
 
   if (!existingShow) {
     console.error("Attempted to update show that doesn't exist.");
-    return res.status(400).json({ message: 'Selected show not found.' });
+    return res.status(400).json({
+      message: 'Selected show not found or points were already submitted.',
+    });
   }
 
   const body = EntrySubmissionSchema.parse(req.body);
