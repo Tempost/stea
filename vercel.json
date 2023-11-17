@@ -1,7 +1,8 @@
 {
   "git": {
     "deploymentEnabled": {
-      "points-download": false
+      "points-download": false,
+      "node-csv-parsing": false
     }
   }
 }

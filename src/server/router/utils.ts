@@ -1,6 +1,6 @@
 import { HorseForm } from '@/utils/zodschemas';
 import { Horse, Prisma, Status } from '@prisma/client';
-import { MyPrismaClient, prisma } from '../prisma';
+import { MyPrismaClient } from '../prisma';
 
 export function prepareCombos(
   combos: Prisma.RiderComboCreateManyInput[] | undefined
@@ -12,22 +12,6 @@ export function prepareCombos(
   return combos.map(combo => {
     return { horseName: combo.horseName, division: combo.division };
   });
-}
-
-export async function memberExists(fullName: string): Promise<boolean> {
-  const memberExists = await prisma.member.findUnique({
-    where: { fullName },
-  });
-
-  return !!memberExists;
-}
-
-export async function horseExists(horseRN: string): Promise<boolean> {
-  const horseExists = await prisma.horse.findUnique({
-    where: { horseRN },
-  });
-
-  return !!horseExists;
 }
 
 // eslint-disable-next-line

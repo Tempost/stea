@@ -1,25 +1,18 @@
 import { getToken } from 'next-auth/jwt';
-import { ShowType } from '@prisma/client';
+import { Prisma, ShowType } from '@prisma/client';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import {
-  getKeys,
-  groupByFunc,
-  horseExists,
-  memberExists,
-} from '@/server/router/utils';
-import { Entry, EntrySchema } from '@/server/utils';
+import { getKeys, groupByFunc } from '@/server/router/utils';
+import { CSVEntry, CSVEntrySchema, Entry } from '@/server/utils';
 import {
   EntriesRideTypeDivison,
   EntriesRideType,
   GroupedEntries,
-  HEADER_MAPPING,
-  isEntry,
-  isZodFieldError,
-  ParseError,
   PointsMap,
-  HEADER_NAMES,
 } from '@/types/common';
 import { EntryReviewType } from '@/utils/zodschemas';
+import { parse } from 'csv';
+import { fromZodError, ValidationError } from 'zod-validation-error';
+import { prisma } from '@/server/prisma';
 
 export default async function handler(
   req: NextApiRequest,
@@ -29,52 +22,31 @@ export default async function handler(
 
   if (req.method !== 'POST') {
     console.warn('Attempted to access via unsupported method');
-    return res.status(405).json({ message: 'Method Not Allowed.' });
+    return res.status(405).end();
   }
 
   const token = await getToken({ req });
-  if (!token) {
+  if (token) {
     console.error('Attempted to access api protected by auth.');
-    return res.status(401).json({ message: 'Access Not Allowed.' });
+    return res.status(401).end();
   }
 
   try {
-    const entries = parseCSV(req.body);
+    const entries = await nodeCsvParser(req.body);
 
-    // Errors found while parsing the entries, return a report of which entries failed
-    // UI will display a table of entries, including the onces that were valid
-    // since zod doesn't give us the row or name of the record that failed we use this method
-    // to keep context for the person fixing the issue
-    if (!entries.every(entry => entry.success)) {
-      const parseErrors = entries
-        .map(entry => {
-          if (!entry.success) {
-            return entry.error.flatten().fieldErrors;
-          }
-        })
-        .filter(isZodFieldError<Entry>);
-
-      console.error(
-        'Trouble parsing entries',
-        JSON.stringify(parseErrors, null, 0)
-      );
-      return res.status(400).json({ success: false, data: entries });
+    if (entries.failed.length != 0) {
+      return res.status(412).json({ success: false, data: entries.failed });
     }
 
-    const parsedEntries = entries
-      .map(entry => {
-        if (entry.success) return entry.data;
-      })
-      .filter(isEntry);
-
     const entriesWithMembership = await checkforMembership(
-      groupEntries(parsedEntries)
+      groupEntries(entries.successful)
     );
 
+    console.log(entriesWithMembership);
     return res.status(200).json({
       success: true,
       data: entriesWithMembership,
-      totalEntryCount: parsedEntries.length,
+      totalEntryCount: entries.successful.length,
     });
   } catch (err) {
     if (err instanceof Error) {
@@ -84,47 +56,44 @@ export default async function handler(
   }
 }
 
-function removeEmpty(value: string) {
-  return !value.includes(',,,,,,,');
+interface EntryParseResults {
+  successful: CSVEntry[];
+  failed: ValidationError[];
 }
 
-function parseCSV(csv: string) {
-  const lines = csv.trim().split('\n').filter(removeEmpty);
-  const heading = lines.shift();
+async function nodeCsvParser(csv: string) {
+  const entries: EntryParseResults = {
+    successful: [],
+    failed: [],
+  };
 
-  if (!heading) {
-    throw new ParseError('Failed to find column headings.');
-  }
-
-  const headingNames = heading
-    .trim()
-    .split(',')
-    .filter(colName => !!colName);
-
-  // NOTE: Checking for any invalid heading names, no real need to do a type check here
-  if (!headingNames.every(val => HEADER_NAMES.includes(val))) {
-    throw new ParseError('Invalid column headings.');
-  }
-
-  const entries = lines.map(line => {
-    const row = line.trim().split(',');
-    const entry: Record<string, string | number> = {};
-
-    row.forEach((value, column) => {
-      //@ts-expect-error types blow
-      const columnName = HEADER_MAPPING[headingNames[column]];
-      if (columnName === 'finalScore') {
-        const finalScore = parseFloat(value);
-        entry[columnName] = finalScore;
-        return;
-      }
-
-      entry[columnName] = value.trim();
-    });
-
-    return EntrySchema.safeParse(entry);
+  const parser = parse(csv, {
+    columns: [
+      'firstName',
+      'lastName',
+      'horseName',
+      'rideType',
+      'division',
+      'group',
+      'finalScore',
+      'placing',
+    ],
+    from_line: 2,
+    skip_empty_lines: true,
+    skip_records_with_empty_values: true,
+    ignore_last_delimiters: true,
+    trim: true,
+    on_record: record => CSVEntrySchema.safeParse(record),
   });
 
+  for await (const record of parser) {
+    if (record.success) {
+      entries.successful.push(record.data);
+    } else {
+      const hello = fromZodError(record.error);
+      entries.failed.push(hello);
+    }
+  }
   return entries;
 }
 
@@ -215,43 +184,56 @@ function calculatePoints(
   }
 }
 
+async function riderExists(fullName: string, horseRN: string) {
+  const memberExists = prisma.member.findUniqueOrThrow({
+    where: { fullName },
+  });
+
+  const horseExists = prisma.horse.findUniqueOrThrow({
+    where: { horseRN },
+  });
+
+  return !(await memberExists) && !(await horseExists);
+}
+
 async function checkforMembership(entries: GroupedEntries) {
   const updatedMemberPoints = new Array<EntryReviewType>();
+  const promises = [];
   for (const [, divisions] of Object.entries(entries)) {
     for (const [, groups] of Object.entries(divisions)) {
       for (const [, entryList] of Object.entries(groups)) {
         for (const entry of entryList) {
           const entryName = `${entry.firstName} ${entry.lastName}`;
-
-          if (!(await horseExists(entry.horseName))) {
-            console.log(`${entry.horseName} does not exist, skipping`);
-            continue;
-          }
-
-          if (!(await memberExists(entryName))) {
-            console.log(`${entryName} does not exist, skipping`);
-            continue;
-          }
-
-          const riderFinalPoints = calculatePoints(
-            entry.placing,
-            entry.rideType,
-            entryList.length
+          promises.push(
+            riderExists(entryName, entry.horseName)
+              .then(() =>
+                updatedMemberPoints.push({
+                  fullName: entryName,
+                  horseRN: entry.horseName,
+                  division: entry.division,
+                  countInDivision: entryList.length,
+                  rideType: entry.rideType,
+                  placing: entry.placing,
+                  points: calculatePoints(
+                    entry.placing,
+                    entry.rideType,
+                    entryList.length
+                  ),
+                })
+              )
+              .catch(error => {
+                if (error instanceof Prisma.PrismaClientKnownRequestError) {
+                  console.log(error.message);
+                } else {
+                  console.log('Unexpected erorr', error);
+                }
+              })
           );
-
-          updatedMemberPoints.push({
-            fullName: entryName,
-            horseRN: entry.horseName,
-            division: entry.division,
-            countInDivision: entryList.length,
-            rideType: entry.rideType,
-            placing: entry.placing,
-            points: riderFinalPoints,
-          });
         }
       }
     }
   }
 
+  await Promise.allSettled(promises);
   return updatedMemberPoints;
 }

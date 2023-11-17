@@ -26,3 +26,28 @@ export const EntrySchema = z.object({
   ]),
 });
 export type Entry = z.infer<typeof EntrySchema>;
+
+export const CSVEntrySchema = z.object({
+  firstName: z.string().trim(),
+  lastName: z.string().trim(),
+  horseName: z.string().trim(),
+  rideType: ShowTypeSchema,
+  division: DivisionSchema,
+  group: z.enum(['A', 'B', 'C', 'D']),
+  finalScore: z.coerce.number(),
+  placing: z.enum([
+    'HC',
+    'R',
+    'C',
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    'W',
+    'E',
+    'RF',
+  ]),
+});
+export type CSVEntry = z.infer<typeof CSVEntrySchema>;

@@ -89,6 +89,9 @@ dependencies:
   zod:
     specifier: 3.21.1
     version: 3.21.1
+  zod-validation-error:
+    specifier: ^2.1.0
+    version: 2.1.0(zod@3.21.1)
 
 devDependencies:
   '@faker-js/faker':
@@ -5896,6 +5899,15 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /zod-validation-error@2.1.0(zod@3.21.1):
+    resolution: {integrity: sha512-VJh93e2wb4c3tWtGgTa0OF/dTt/zoPCPzXq4V11ZjxmEAFaPi/Zss1xIZdEB5RD8GD00U0/iVXgqkF77RV7pdQ==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      zod: ^3.18.0
+    dependencies:
+      zod: 3.21.1
+    dev: false
 
   /zod@3.21.1:
     resolution: {integrity: sha512-+dTu2m6gmCbO9Ahm4ZBDapx2O6ZY9QSPXst2WXjcznPMwf2YNpn3RevLx4KkZp1OPW/ouFcoBtBzFz/LeY69oA==}
