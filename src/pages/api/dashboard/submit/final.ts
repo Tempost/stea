@@ -107,5 +107,6 @@ export default async function handler(
       data: { reviewed: true },
     })
   );
-  return res.status(200).json({ success: true, message: 'WOW' });
+
+  return res.status(200).json({ success: true, message: '' });
 }
