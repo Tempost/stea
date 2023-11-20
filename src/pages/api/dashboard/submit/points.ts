@@ -26,7 +26,7 @@ export default async function handler(
   }
 
   const token = await getToken({ req });
-  if (token) {
+  if (!token) {
     console.error('Attempted to access api protected by auth.');
     return res.status(401).end();
   }
