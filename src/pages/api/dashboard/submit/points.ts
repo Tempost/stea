@@ -90,8 +90,8 @@ async function nodeCsvParser(csv: string) {
     if (record.success) {
       entries.successful.push(record.data);
     } else {
-      const hello = fromZodError(record.error);
-      entries.failed.push(hello);
+      const prettyZodError = fromZodError(record.error);
+      entries.failed.push(prettyZodError);
     }
   }
   return entries;
