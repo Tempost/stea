@@ -47,6 +47,9 @@ dependencies:
   '@vercel/analytics':
     specifier: ^0.1.11
     version: 0.1.11(react@18.2.0)
+  csv:
+    specifier: ^6.3.5
+    version: 6.3.5
   daisyui:
     specifier: ^2.51.5
     version: 2.51.5(autoprefixer@10.4.16)(postcss@8.4.31)(ts-node@10.9.1)
@@ -2140,6 +2143,28 @@ packages:
   /csstype@3.1.1:
     resolution: {integrity: sha512-DJR/VvkAvSZW9bTouZue2sSxDwdTN92uHjqeKVm+0dAqdfNykRzQ95tay8aXMBAAPpUiq4Qcug2L7neoRh2Egw==}
     dev: true
+
+  /csv-generate@4.3.0:
+    resolution: {integrity: sha512-7KdVId/2RgwPIKfWHaHtjBq7I9mgdi8ICzsUyIhP8is6UwpwVGGSC/aPnrZ8/SkgBcCP20lXrdPuP64Irs1VBg==}
+    dev: false
+
+  /csv-parse@5.5.2:
+    resolution: {integrity: sha512-YRVtvdtUNXZCMyK5zd5Wty1W6dNTpGKdqQd4EQ8tl/c6KW1aMBB1Kg1ppky5FONKmEqGJ/8WjLlTNLPne4ioVA==}
+    dev: false
+
+  /csv-stringify@6.4.4:
+    resolution: {integrity: sha512-NDshLupGa7gp4UG4sSNIqwYJqgSwvds0SvENntxoVoVvTzXcrHvd5gG2MWpbRpSNvk59dlmIe1IwNvSxN4IVmg==}
+    dev: false
+
+  /csv@6.3.5:
+    resolution: {integrity: sha512-Y+KTCAUljtq2JaGP42ZL1bymqlU5BkfnFpZhxRczGFDZox2VXhlRHnG5DRshyUrwQzmCdEiLjSqNldCfm1OVCA==}
+    engines: {node: '>= 0.1.90'}
+    dependencies:
+      csv-generate: 4.3.0
+      csv-parse: 5.5.2
+      csv-stringify: 6.4.4
+      stream-transform: 3.2.10
+    dev: false
 
   /daisyui@2.51.5(autoprefixer@10.4.16)(postcss@8.4.31)(ts-node@10.9.1):
     resolution: {integrity: sha512-L05dRw0tasmz2Ha+10LhftEGLq4kaA8vRR/T0wDaXfHwqcgsf81jfXDJ6NlZ63Z7Rl1k3rj7UHs0l0p7CM3aYA==}
@@ -5167,6 +5192,10 @@ packages:
     dependencies:
       internal-slot: 1.0.5
     dev: true
+
+  /stream-transform@3.2.10:
+    resolution: {integrity: sha512-Yu+x7zcWbWdyB0Td8dFzHt2JEyD6694CNq2lqh1rbuEBVxPtjb/GZ7xDnZcdYiU5E/RtufM54ClSEOzZDeWguA==}
+    dev: false
 
   /streamsearch@1.1.0:
     resolution: {integrity: sha512-Mcc5wHehp9aXz1ax6bZUyY5afg9u2rv5cqQI3mRrYkGC8rW2hM02jWuwjtL++LS5qinSyhj2QfLyNsuc+VsExg==}
