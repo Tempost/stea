@@ -4,19 +4,21 @@ interface ModalProps extends PropsWithChildren {
   buttonLabel?: ReactNode;
   onClick?: () => void;
   ok?: ReactNode;
+  id: string;
 }
-function Modal({ buttonLabel, onClick, ok, children }: ModalProps) {
+
+function Modal({ buttonLabel, onClick, ok, id, children }: ModalProps) {
   return (
     <>
       <label
-        htmlFor='my-modal-6'
-        className='modal-button btn-primary btn-sm btn'
+        htmlFor={id}
+        className='btn-primary btn-sm btn'
       >
         {buttonLabel ?? 'Open'}
       </label>
       <input
+        id={id}
         type='checkbox'
-        id='my-modal-6'
         className='modal-toggle'
         onClick={onClick}
       />
@@ -28,7 +30,7 @@ function Modal({ buttonLabel, onClick, ok, children }: ModalProps) {
             {ok ?? <button className='btn-sm btn'>Ok</button>}
 
             <label
-              htmlFor='my-modal-6'
+              htmlFor={id}
               className='btn-sm btn'
             >
               Close

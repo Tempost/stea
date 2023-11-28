@@ -1,8 +1,9 @@
-import { RouterOutputs, trpc } from '@/utils/trpc';
-import TableWithData from './BaseTable';
-import { readableDateTime } from '@/utils/helpers';
-import type { ColumnDef } from '@tanstack/react-table';
 import AddNewShow from '@/components/forms/dashboard/AddNewShow';
+import DownloadPoints from '@/components/forms/dashboard/DownloadPoints';
+import TableWithData from '@/components/tables/BaseTable';
+import { readableDateTime } from '@/utils/helpers';
+import { RouterOutputs, trpc } from '@/utils/trpc';
+import type { ColumnDef } from '@tanstack/react-table';
 
 type Show = RouterOutputs['shows']['all'];
 
@@ -58,6 +59,12 @@ function ShowsTable({ overRideDefaultCols, search }: ShowTableProps) {
           cell: info => info.getValue(),
           header: () => <span> Type </span>,
         },
+        {
+          accessorKey: 'uid',
+          id: 'uid',
+          cell: info => <DownloadPoints uid={info.getValue()}/>,
+          header: () => <></>,
+        }
       ],
     },
   ];

@@ -3,7 +3,7 @@ import { ReactElement, useState } from 'react';
 
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 
-const DynamicShowsTable = dynamic(() => import('@/components/tables/Shows'));
+const DynamicShowsTable = dynamic(() => import('@/components/dashboard/tables/Shows'));
 
 const DynamicHorsesTable = dynamic(
   () => import('@/components/dashboard/tables/Horses')

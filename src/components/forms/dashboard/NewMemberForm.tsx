@@ -42,6 +42,7 @@ function NewMemberForm() {
   // Issue with using space-x-1 with the buttons
   return (
     <Modal
+      id='new-member-form'
       buttonLabel='Add Member'
       onClick={() => {
         form.clearErrors();

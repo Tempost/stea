@@ -39,6 +39,7 @@ function AddNewShow() {
 
   return (
     <Modal
+      id='show-modal'
       buttonLabel='Add Show'
       onClick={() => {
         form.clearErrors();

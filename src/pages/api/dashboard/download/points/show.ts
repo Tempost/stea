@@ -1,10 +1,10 @@
 import { prisma } from '@/server/prisma';
+import { readableDateTime } from '@/utils/helpers';
+import { Prisma } from '@prisma/client';
+import { stringify } from 'csv';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getToken } from 'next-auth/jwt';
 import { z } from 'zod';
-import { stringify } from 'csv';
-import { readableDateTime } from '@/utils/helpers';
-import { Prisma } from '@prisma/client';
 
 const queryParams = z.object({
   show: z.string(),

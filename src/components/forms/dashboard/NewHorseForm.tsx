@@ -115,6 +115,7 @@ function NewHorseForm() {
 
   return (
     <Modal
+      id='new-horse-modal'
       buttonLabel='Add Horse'
       onClick={() => resetForm()}
       ok={
