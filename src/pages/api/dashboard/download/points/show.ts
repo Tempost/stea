@@ -41,8 +41,8 @@ export default async function handler(
       { key: 'RiderCombo.memberName', header: 'Member Name' },
       { key: 'RiderCombo.horseName', header: 'Horse Rode' },
       { key: 'RiderCombo.division', header: 'Division' },
-      { key: 'points', header: 'Points' },
       { key: 'place', header: 'Place' },
+      { key: 'points', header: 'Points' },
     ],
   });
 
@@ -63,15 +63,12 @@ export default async function handler(
         RiderCombo: {
           select: {
             division: true,
-            totalPoints: true,
-            totalShows: true,
-            completedHT: true,
-            multiVenue: true,
             memberName: true,
             horseName: true,
           },
         },
       },
+      orderBy: [{ RiderCombo: { division: 'desc' } }, { points: 'asc' }],
     });
 
     if (points.length === 0) {

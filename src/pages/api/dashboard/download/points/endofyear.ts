@@ -38,9 +38,10 @@ export default async function handler(
     header: true,
     columns: [
       { key: 'memberName', header: 'Member Name' },
-      { key: 'totalPoints', header: 'Points' },
-      { key: 'totalShows', header: 'Shows Attended' },
       { key: 'horseName', header: 'Horse Rode' },
+      { key: 'totalShows', header: 'Shows Attended' },
+      { key: 'division', header: 'division' },
+      { key: 'totalPoints', header: 'Points' },
     ],
   });
 
@@ -54,7 +55,14 @@ export default async function handler(
         totalPoints: true,
         totalShows: true,
         horseName: true,
+        division: true,
       },
+      orderBy: [
+        {
+          division: 'desc',
+        },
+        { totalPoints: 'desc' },
+      ],
     });
 
     if (riderEndofYear.length === 0) {
