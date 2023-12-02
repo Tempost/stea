@@ -12,7 +12,8 @@ export const RiderComboCountOrderByAggregateInputSchema: z.ZodType<Prisma.RiderC
   completedHT: z.lazy(() => SortOrderSchema).optional(),
   multiVenue: z.lazy(() => SortOrderSchema).optional(),
   memberName: z.lazy(() => SortOrderSchema).optional(),
-  horseName: z.lazy(() => SortOrderSchema).optional()
+  horseName: z.lazy(() => SortOrderSchema).optional(),
+  showYear: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export default RiderComboCountOrderByAggregateInputSchema;

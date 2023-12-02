@@ -40,6 +40,7 @@ const defaultOpts: z.infer<typeof RiderComboFindManyArgsSchema> = {
     totalPoints: true,
     totalShows: true,
     division: true,
+    showYear: true,
   },
 };
 
@@ -90,7 +91,7 @@ function fetchRiderCombo(
         throw new TRPCError({
           code: 'NOT_FOUND',
           message: `${
-            input.uid ?? input.memberName_horseName_division
+            input.uid ?? input.memberName_horseName_division_showYear
           } not found.`,
           cause: error,
         });
@@ -98,7 +99,7 @@ function fetchRiderCombo(
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
           message: `Something went wrong fetching ${
-            input.uid ?? input.memberName_horseName_division
+            input.uid ?? input.memberName_horseName_division_showYear
           }`,
           cause: error,
         });

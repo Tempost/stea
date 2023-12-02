@@ -7,6 +7,7 @@ import { DivisionSchema } from './DivisionSchema';
 import { FloatFilterSchema } from './FloatFilterSchema';
 import { IntFilterSchema } from './IntFilterSchema';
 import { BoolFilterSchema } from './BoolFilterSchema';
+import { IntNullableFilterSchema } from './IntNullableFilterSchema';
 
 export const RiderComboScalarWhereInputSchema: z.ZodType<Prisma.RiderComboScalarWhereInput> = z.object({
   AND: z.union([ z.lazy(() => RiderComboScalarWhereInputSchema),z.lazy(() => RiderComboScalarWhereInputSchema).array() ]).optional(),
@@ -22,6 +23,7 @@ export const RiderComboScalarWhereInputSchema: z.ZodType<Prisma.RiderComboScalar
   multiVenue: z.union([ z.lazy(() => BoolFilterSchema),z.boolean() ]).optional(),
   memberName: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   horseName: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  showYear: z.union([ z.lazy(() => IntNullableFilterSchema),z.number() ]).optional().nullable(),
 }).strict();
 
 export default RiderComboScalarWhereInputSchema;

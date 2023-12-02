@@ -1,3 +1,4 @@
+import EndOfYearPoints from '@/components/dashboard/EndOfYearPoints';
 import AddNewShow from '@/components/forms/dashboard/AddNewShow';
 import DownloadPoints from '@/components/forms/dashboard/DownloadPoints';
 import TableWithData from '@/components/tables/BaseTable';
@@ -62,9 +63,9 @@ function ShowsTable({ overRideDefaultCols, search }: ShowTableProps) {
         {
           accessorKey: 'uid',
           id: 'uid',
-          cell: info => <DownloadPoints uid={info.getValue()}/>,
+          cell: info => <DownloadPoints uid={info.getValue()} />,
           header: () => <></>,
-        }
+        },
       ],
     },
   ];
@@ -72,6 +73,7 @@ function ShowsTable({ overRideDefaultCols, search }: ShowTableProps) {
   return (
     <>
       <AddNewShow />
+      <EndOfYearPoints />
       <TableWithData
         colDef={overRideDefaultCols ?? defaultCols}
         query={shows}

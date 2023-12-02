@@ -14,6 +14,7 @@ export const RiderComboCreateWithoutPointsInputSchema: z.ZodType<Prisma.RiderCom
   totalShows: z.number().int().optional(),
   completedHT: z.boolean().optional(),
   multiVenue: z.boolean().optional(),
+  showYear: z.number().int().optional().nullable(),
   member: z.lazy(() => MemberCreateNestedOneWithoutRiderComboInputSchema),
   horse: z.lazy(() => HorseCreateNestedOneWithoutRiderComboInputSchema),
   shows: z.lazy(() => ShowCreateNestedManyWithoutRidersInputSchema).optional()

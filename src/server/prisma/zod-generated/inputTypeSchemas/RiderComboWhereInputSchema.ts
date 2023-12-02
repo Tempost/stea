@@ -7,6 +7,7 @@ import { DivisionSchema } from './DivisionSchema';
 import { FloatFilterSchema } from './FloatFilterSchema';
 import { IntFilterSchema } from './IntFilterSchema';
 import { BoolFilterSchema } from './BoolFilterSchema';
+import { IntNullableFilterSchema } from './IntNullableFilterSchema';
 import { MemberRelationFilterSchema } from './MemberRelationFilterSchema';
 import { MemberWhereInputSchema } from './MemberWhereInputSchema';
 import { HorseRelationFilterSchema } from './HorseRelationFilterSchema';
@@ -28,6 +29,7 @@ export const RiderComboWhereInputSchema: z.ZodType<Prisma.RiderComboWhereInput> 
   multiVenue: z.union([ z.lazy(() => BoolFilterSchema),z.boolean() ]).optional(),
   memberName: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   horseName: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  showYear: z.union([ z.lazy(() => IntNullableFilterSchema),z.number() ]).optional().nullable(),
   member: z.union([ z.lazy(() => MemberRelationFilterSchema),z.lazy(() => MemberWhereInputSchema) ]).optional(),
   horse: z.union([ z.lazy(() => HorseRelationFilterSchema),z.lazy(() => HorseWhereInputSchema) ]).optional(),
   points: z.lazy(() => PointsListRelationFilterSchema).optional(),

@@ -14,6 +14,7 @@ export const RiderComboUncheckedCreateWithoutMemberInputSchema: z.ZodType<Prisma
   completedHT: z.boolean().optional(),
   multiVenue: z.boolean().optional(),
   horseName: z.string().trim().min(1, { message: "Horse Name is required" }),
+  showYear: z.number().int().optional().nullable(),
   points: z.lazy(() => PointsUncheckedCreateNestedManyWithoutRiderComboInputSchema).optional(),
   shows: z.lazy(() => ShowUncheckedCreateNestedManyWithoutRidersInputSchema).optional()
 }).strict();

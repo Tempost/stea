@@ -22,6 +22,7 @@ export const RiderComboSelectSchema: z.ZodType<Prisma.RiderComboSelect> = z.obje
   multiVenue: z.boolean().optional(),
   memberName: z.boolean().optional(),
   horseName: z.boolean().optional(),
+  showYear: z.boolean().optional(),
   member: z.union([z.boolean(),z.lazy(() => MemberArgsSchema)]).optional(),
   horse: z.union([z.boolean(),z.lazy(() => HorseArgsSchema)]).optional(),
   points: z.union([z.boolean(),z.lazy(() => PointsFindManyArgsSchema)]).optional(),

@@ -18,6 +18,7 @@ export const RiderComboOrderByWithRelationInputSchema: z.ZodType<Prisma.RiderCom
   multiVenue: z.lazy(() => SortOrderSchema).optional(),
   memberName: z.lazy(() => SortOrderSchema).optional(),
   horseName: z.lazy(() => SortOrderSchema).optional(),
+  showYear: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   member: z.lazy(() => MemberOrderByWithRelationInputSchema).optional(),
   horse: z.lazy(() => HorseOrderByWithRelationInputSchema).optional(),
   points: z.lazy(() => PointsOrderByRelationAggregateInputSchema).optional(),

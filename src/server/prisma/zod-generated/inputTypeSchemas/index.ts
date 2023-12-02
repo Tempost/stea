@@ -116,7 +116,7 @@ export { PointsListRelationFilterSchema } from './PointsListRelationFilterSchema
 export { ShowListRelationFilterSchema } from './ShowListRelationFilterSchema';
 export { PointsOrderByRelationAggregateInputSchema } from './PointsOrderByRelationAggregateInputSchema';
 export { ShowOrderByRelationAggregateInputSchema } from './ShowOrderByRelationAggregateInputSchema';
-export { RiderComboMemberNameHorseNameDivisionCompoundUniqueInputSchema } from './RiderComboMemberNameHorseNameDivisionCompoundUniqueInputSchema';
+export { RiderComboMemberNameHorseNameDivisionShowYearCompoundUniqueInputSchema } from './RiderComboMemberNameHorseNameDivisionShowYearCompoundUniqueInputSchema';
 export { RiderComboCountOrderByAggregateInputSchema } from './RiderComboCountOrderByAggregateInputSchema';
 export { RiderComboAvgOrderByAggregateInputSchema } from './RiderComboAvgOrderByAggregateInputSchema';
 export { RiderComboMaxOrderByAggregateInputSchema } from './RiderComboMaxOrderByAggregateInputSchema';

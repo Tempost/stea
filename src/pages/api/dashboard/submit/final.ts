@@ -78,10 +78,11 @@ export default async function handler(
     dbActions.push(
       prisma.riderCombo.upsert({
         where: {
-          memberName_horseName_division: {
+          memberName_horseName_division_showYear: {
             memberName: entry.fullName,
             horseName: entry.horseRN,
             division: entry.division,
+            showYear: existingShow.showDate.getFullYear(),
           },
         },
         update: {
@@ -95,6 +96,7 @@ export default async function handler(
           division: entry.division,
           totalPoints: entry.points,
           totalShows: 1,
+          showYear: existingShow.showDate.getFullYear(),
           ...relations,
         },
       })

@@ -12,7 +12,8 @@ export const RiderComboCreateManyInputSchema: z.ZodType<Prisma.RiderComboCreateM
   completedHT: z.boolean().optional(),
   multiVenue: z.boolean().optional(),
   memberName: z.string().trim().min(1, { message: "Member Name is required" }),
-  horseName: z.string().trim().min(1, { message: "Horse Name is required" })
+  horseName: z.string().trim().min(1, { message: "Horse Name is required" }),
+  showYear: z.number().int().optional().nullable()
 }).strict();
 
 export default RiderComboCreateManyInputSchema;

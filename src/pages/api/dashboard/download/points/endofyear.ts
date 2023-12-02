@@ -1,5 +1,4 @@
 import { prisma } from '@/server/prisma';
-import { readableDateTime } from '@/utils/helpers';
 import { Prisma } from '@prisma/client';
 import { stringify } from 'csv';
 import { NextApiRequest, NextApiResponse } from 'next';
@@ -7,7 +6,7 @@ import { getToken } from 'next-auth/jwt';
 import { z } from 'zod';
 
 const queryParams = z.object({
-  year: z.number(),
+  year: z.coerce.number(),
 });
 
 export default async function handler(
@@ -38,52 +37,34 @@ export default async function handler(
   const CSV = stringify({
     header: true,
     columns: [
-      { key: 'RiderCombo.memberName', header: 'Member Name' },
-      { key: 'RiderCombo.totalPoints', header: 'Points' },
-      { key: 'RiderCombo.totalShows', header: 'Shows Attended' },
-      { key: 'RiderCombo.horseName', header: 'Horse Rode' },
+      { key: 'memberName', header: 'Member Name' },
+      { key: 'totalPoints', header: 'Points' },
+      { key: 'totalShows', header: 'Shows Attended' },
+      { key: 'horseName', header: 'Horse Rode' },
     ],
   });
 
   try {
-    const points = await prisma.points.findMany({
+    const riderEndofYear = await prisma.riderCombo.findMany({
       where: {
-        // Calculate date range based on the query string here
-        // showUid: params.data.year,
+        showYear: params.data.year,
       },
       select: {
-        show: {
-          select: {
-            showName: true,
-            showDate: true,
-          },
-        },
-        points: true,
-        RiderCombo: {
-          select: {
-            division: true,
-            totalPoints: true,
-            totalShows: true,
-            completedHT: true,
-            multiVenue: true,
-            memberName: true,
-            horseName: true,
-          },
-        },
-        place: true,
+        memberName: true,
+        totalPoints: true,
+        totalShows: true,
+        horseName: true,
       },
     });
 
-    if (points.length === 0) {
+    if (riderEndofYear.length === 0) {
       return res.status(204).end();
     }
 
-    const filename = `${points[0].show.showName}-${readableDateTime(
-      points[0].show.showDate
-    )}.csv`;
+    const filename = `Points_For_${params.data.year}.csv`;
 
     await new Promise(function (resolve) {
-      points.forEach(row => CSV.write(row));
+      riderEndofYear.forEach(row => CSV.write(row));
 
       res.setHeader('Content-Type', 'application/csv');
 

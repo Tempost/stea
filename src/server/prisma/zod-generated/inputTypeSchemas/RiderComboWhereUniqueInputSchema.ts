@@ -1,6 +1,6 @@
 import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
-import { RiderComboMemberNameHorseNameDivisionCompoundUniqueInputSchema } from './RiderComboMemberNameHorseNameDivisionCompoundUniqueInputSchema';
+import { RiderComboMemberNameHorseNameDivisionShowYearCompoundUniqueInputSchema } from './RiderComboMemberNameHorseNameDivisionShowYearCompoundUniqueInputSchema';
 import { RiderComboWhereInputSchema } from './RiderComboWhereInputSchema';
 import { DateTimeNullableFilterSchema } from './DateTimeNullableFilterSchema';
 import { EnumDivisionFilterSchema } from './EnumDivisionFilterSchema';
@@ -9,6 +9,7 @@ import { FloatFilterSchema } from './FloatFilterSchema';
 import { IntFilterSchema } from './IntFilterSchema';
 import { BoolFilterSchema } from './BoolFilterSchema';
 import { StringFilterSchema } from './StringFilterSchema';
+import { IntNullableFilterSchema } from './IntNullableFilterSchema';
 import { MemberRelationFilterSchema } from './MemberRelationFilterSchema';
 import { MemberWhereInputSchema } from './MemberWhereInputSchema';
 import { HorseRelationFilterSchema } from './HorseRelationFilterSchema';
@@ -19,18 +20,18 @@ import { ShowListRelationFilterSchema } from './ShowListRelationFilterSchema';
 export const RiderComboWhereUniqueInputSchema: z.ZodType<Prisma.RiderComboWhereUniqueInput> = z.union([
   z.object({
     uid: z.string(),
-    memberName_horseName_division: z.lazy(() => RiderComboMemberNameHorseNameDivisionCompoundUniqueInputSchema)
+    memberName_horseName_division_showYear: z.lazy(() => RiderComboMemberNameHorseNameDivisionShowYearCompoundUniqueInputSchema)
   }),
   z.object({
     uid: z.string(),
   }),
   z.object({
-    memberName_horseName_division: z.lazy(() => RiderComboMemberNameHorseNameDivisionCompoundUniqueInputSchema),
+    memberName_horseName_division_showYear: z.lazy(() => RiderComboMemberNameHorseNameDivisionShowYearCompoundUniqueInputSchema),
   }),
 ])
 .and(z.object({
   uid: z.string().optional(),
-  memberName_horseName_division: z.lazy(() => RiderComboMemberNameHorseNameDivisionCompoundUniqueInputSchema).optional(),
+  memberName_horseName_division_showYear: z.lazy(() => RiderComboMemberNameHorseNameDivisionShowYearCompoundUniqueInputSchema).optional(),
   AND: z.union([ z.lazy(() => RiderComboWhereInputSchema),z.lazy(() => RiderComboWhereInputSchema).array() ]).optional(),
   OR: z.lazy(() => RiderComboWhereInputSchema).array().optional(),
   NOT: z.union([ z.lazy(() => RiderComboWhereInputSchema),z.lazy(() => RiderComboWhereInputSchema).array() ]).optional(),
@@ -43,6 +44,7 @@ export const RiderComboWhereUniqueInputSchema: z.ZodType<Prisma.RiderComboWhereU
   multiVenue: z.union([ z.lazy(() => BoolFilterSchema),z.boolean() ]).optional(),
   memberName: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   horseName: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  showYear: z.union([ z.lazy(() => IntNullableFilterSchema),z.number() ]).optional().nullable(),
   member: z.union([ z.lazy(() => MemberRelationFilterSchema),z.lazy(() => MemberWhereInputSchema) ]).optional(),
   horse: z.union([ z.lazy(() => HorseRelationFilterSchema),z.lazy(() => HorseWhereInputSchema) ]).optional(),
   points: z.lazy(() => PointsListRelationFilterSchema).optional(),

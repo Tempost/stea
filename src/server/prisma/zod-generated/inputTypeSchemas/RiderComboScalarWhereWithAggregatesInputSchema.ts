@@ -7,6 +7,7 @@ import { DivisionSchema } from './DivisionSchema';
 import { FloatWithAggregatesFilterSchema } from './FloatWithAggregatesFilterSchema';
 import { IntWithAggregatesFilterSchema } from './IntWithAggregatesFilterSchema';
 import { BoolWithAggregatesFilterSchema } from './BoolWithAggregatesFilterSchema';
+import { IntNullableWithAggregatesFilterSchema } from './IntNullableWithAggregatesFilterSchema';
 
 export const RiderComboScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.RiderComboScalarWhereWithAggregatesInput> = z.object({
   AND: z.union([ z.lazy(() => RiderComboScalarWhereWithAggregatesInputSchema),z.lazy(() => RiderComboScalarWhereWithAggregatesInputSchema).array() ]).optional(),
@@ -22,6 +23,7 @@ export const RiderComboScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.Ri
   multiVenue: z.union([ z.lazy(() => BoolWithAggregatesFilterSchema),z.boolean() ]).optional(),
   memberName: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   horseName: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  showYear: z.union([ z.lazy(() => IntNullableWithAggregatesFilterSchema),z.number() ]).optional().nullable(),
 }).strict();
 
 export default RiderComboScalarWhereWithAggregatesInputSchema;

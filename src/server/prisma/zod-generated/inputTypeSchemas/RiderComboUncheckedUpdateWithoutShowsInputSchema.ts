@@ -7,6 +7,7 @@ import { EnumDivisionFieldUpdateOperationsInputSchema } from './EnumDivisionFiel
 import { FloatFieldUpdateOperationsInputSchema } from './FloatFieldUpdateOperationsInputSchema';
 import { IntFieldUpdateOperationsInputSchema } from './IntFieldUpdateOperationsInputSchema';
 import { BoolFieldUpdateOperationsInputSchema } from './BoolFieldUpdateOperationsInputSchema';
+import { NullableIntFieldUpdateOperationsInputSchema } from './NullableIntFieldUpdateOperationsInputSchema';
 import { PointsUncheckedUpdateManyWithoutRiderComboNestedInputSchema } from './PointsUncheckedUpdateManyWithoutRiderComboNestedInputSchema';
 
 export const RiderComboUncheckedUpdateWithoutShowsInputSchema: z.ZodType<Prisma.RiderComboUncheckedUpdateWithoutShowsInput> = z.object({
@@ -20,6 +21,7 @@ export const RiderComboUncheckedUpdateWithoutShowsInputSchema: z.ZodType<Prisma.
   multiVenue: z.union([ z.boolean(),z.lazy(() => BoolFieldUpdateOperationsInputSchema) ]).optional(),
   memberName: z.union([ z.string().trim().min(1, { message: "Member Name is required" }),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   horseName: z.union([ z.string().trim().min(1, { message: "Horse Name is required" }),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  showYear: z.union([ z.number().int(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   points: z.lazy(() => PointsUncheckedUpdateManyWithoutRiderComboNestedInputSchema).optional()
 }).strict();
 

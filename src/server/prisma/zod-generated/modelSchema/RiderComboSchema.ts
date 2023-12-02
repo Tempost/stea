@@ -40,6 +40,7 @@ export const RiderComboSchema = z.object({
   multiVenue: z.boolean(),
   memberName: z.string().trim().min(1, { message: "Member Name is required" }),
   horseName: z.string().trim().min(1, { message: "Horse Name is required" }),
+  showYear: z.number().int().nullable(),
 })
 
 export type RiderCombo = z.infer<typeof RiderComboSchema>

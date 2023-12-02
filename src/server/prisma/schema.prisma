@@ -158,9 +158,11 @@ model RiderCombo {
   horseName   String
   points      Points[]
   shows       Show[]
+  showYear    Int?
 
-  @@unique([memberName, horseName, division])
-  @@index([horseName])
+
+  @@unique([memberName, horseName, division, showYear])
+  @@index([horseName, memberName, division, showYear])
 }
 
 model Points {
