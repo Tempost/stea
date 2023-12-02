@@ -22,7 +22,7 @@ export default async function handler(
   }
 
   const token = await getToken({ req });
-  if (!token) {
+  if (token) {
     console.warn('Attempted to access api protected by auth.');
     return res.status(401).json({ message: 'Access Not Allowed.' });
   }
@@ -39,9 +39,10 @@ export default async function handler(
     header: true,
     columns: [
       { key: 'RiderCombo.memberName', header: 'Member Name' },
-      { key: 'RiderCombo.totalPoints', header: 'Points' },
-      { key: 'RiderCombo.totalShows', header: 'Shows Attended' },
       { key: 'RiderCombo.horseName', header: 'Horse Rode' },
+      { key: 'RiderCombo.division', header: 'Division' },
+      { key: 'points', header: 'Points' },
+      { key: 'place', header: 'Place' },
     ],
   });
 
@@ -51,13 +52,14 @@ export default async function handler(
         showUid: params.data.show,
       },
       select: {
+        points: true,
+        place: true,
         show: {
           select: {
             showName: true,
             showDate: true,
           },
         },
-        points: true,
         RiderCombo: {
           select: {
             division: true,
@@ -69,7 +71,6 @@ export default async function handler(
             horseName: true,
           },
         },
-        place: true,
       },
     });
 

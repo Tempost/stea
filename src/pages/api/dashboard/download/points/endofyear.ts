@@ -1,10 +1,10 @@
-import { prisma } from "@/server/prisma";
-import { readableDateTime } from "@/utils/helpers";
-import { Prisma } from "@prisma/client";
-import { stringify } from "csv";
-import { NextApiRequest, NextApiResponse } from "next";
-import { getToken } from "next-auth/jwt";
-import { z } from "zod";
+import { prisma } from '@/server/prisma';
+import { readableDateTime } from '@/utils/helpers';
+import { Prisma } from '@prisma/client';
+import { stringify } from 'csv';
+import { NextApiRequest, NextApiResponse } from 'next';
+import { getToken } from 'next-auth/jwt';
+import { z } from 'zod';
 
 const queryParams = z.object({
   year: z.number(),
@@ -34,7 +34,6 @@ export default async function handler(
     );
     return res.status(400).json({ message: 'Incorrect query params.' });
   }
-
 
   const CSV = stringify({
     header: true,
