@@ -26,7 +26,7 @@ export default async function handler(
   }
 
   const token = await getToken({ req });
-  if (token) {
+  if (!token) {
     console.error('Attempted to access api protected by auth.');
     return res.status(401).end();
   }
@@ -184,16 +184,12 @@ function calculatePoints(
   }
 }
 
-// TODO: How do ensure it only captures between 2023-2024? 
-// case 1. current year is 2023 (december show so 2024 members should get points)
-// case 2. current year is 2024 next cap is still 2024
-const currDate = new Date();
-const nextCapDate = new Date(currDate.getFullYear() + 1, 10, 30);
-
-async function riderExists(fullName: string, horseRN: string) {
-  console.log(currDate);
+async function riderExists(fullName: string, horseRN: string, membershipEnd: Date) {
   const memberExists = prisma.member.findUniqueOrThrow({
-    where: { fullName, membershipEnd: { gte: nextCapDate } },
+    where: {
+      fullName,
+      membershipEnd,
+    },
   });
 
   const horseExists = prisma.horse.findUniqueOrThrow({
@@ -206,13 +202,21 @@ async function riderExists(fullName: string, horseRN: string) {
 async function checkforMembership(entries: GroupedEntries) {
   const updatedMemberPoints = new Array<EntryReviewType>();
   const promises = [];
+  const currDate = new Date();
+  const membershipEnd = new Date(currDate.getFullYear(), 10, 30);
+
+  // If the current month is decemeber
+  if (currDate.getMonth() == 11) {
+    membershipEnd.setFullYear(membershipEnd.getFullYear() + 1)
+  }
+
   for (const [, divisions] of Object.entries(entries)) {
     for (const [, groups] of Object.entries(divisions)) {
       for (const [, entryList] of Object.entries(groups)) {
         for (const entry of entryList) {
           const entryName = `${entry.firstName} ${entry.lastName}`;
           promises.push(
-            riderExists(entryName, entry.horseName)
+            riderExists(entryName, entry.horseName, membershipEnd)
               .then(() =>
                 updatedMemberPoints.push({
                   fullName: entryName,
