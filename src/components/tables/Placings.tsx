@@ -3,6 +3,7 @@ import { RouterOutputs, trpc } from '@/utils/trpc';
 import TableWithData from './BaseTable';
 
 import type { ColumnDef } from '@tanstack/react-table';
+import { useState } from 'react';
 
 type RiderCombo = RouterOutputs['riders']['all'][number];
 interface PlacingsTableProps {
@@ -10,8 +11,48 @@ interface PlacingsTableProps {
   search?: boolean;
 }
 
+const years = Array.from({ length: 10 }, (_, i) => i + 2023);
+const currYear = new Date().getFullYear();
+
 function PlacingsTable({ title, search }: PlacingsTableProps) {
-  const riders = trpc.riders.all.useQuery();
+  const [yearSelect, setYearSelect] = useState(currYear);
+
+  const riders = trpc.riders.all.useQuery({
+    where: {
+      showYear: yearSelect,
+    },
+    orderBy: [
+      {
+        division: 'desc',
+      },
+      {
+        member: {
+          memberStatusType: 'asc',
+        },
+      },
+      {
+        totalPoints: 'desc',
+      },
+    ],
+    select: {
+      member: {
+        select: {
+          fullName: true,
+          memberStatusType: true,
+        },
+      },
+      horse: {
+        select: {
+          horseRN: true,
+        },
+      },
+      shows: true,
+      totalPoints: true,
+      totalShows: true,
+      division: true,
+      showYear: true,
+    },
+  });
 
   const defaultCols: ColumnDef<RiderCombo>[] = [
     {
@@ -65,12 +106,33 @@ function PlacingsTable({ title, search }: PlacingsTableProps) {
   ];
 
   return (
-    <TableWithData
-      colDef={defaultCols}
-      query={riders}
-      search={search}
-      paginate
-    />
+    <div>
+      <select
+        name='show-year'
+        id='show-year'
+        className='select-bordered select-primary select w-fit md:select-sm'
+        value={yearSelect}
+        onChange={e => {
+          e.preventDefault();
+          setYearSelect(Number.parseInt(e.target.value));
+        }}
+      >
+        {years.map(year => (
+          <option
+            key={year}
+            value={year}
+          >
+            {year}
+          </option>
+        ))}
+      </select>
+      <TableWithData
+        colDef={defaultCols}
+        query={riders}
+        search={search}
+        paginate
+      />
+    </div>
   );
 }
 
