@@ -26,7 +26,7 @@ export default async function handler(
   }
 
   const token = await getToken({ req });
-  if (!token) {
+  if (token) {
     console.error('Attempted to access api protected by auth.');
     return res.status(401).end();
   }
@@ -184,9 +184,16 @@ function calculatePoints(
   }
 }
 
+// TODO: How do ensure it only captures between 2023-2024? 
+// case 1. current year is 2023 (december show so 2024 members should get points)
+// case 2. current year is 2024 next cap is still 2024
+const currDate = new Date();
+const nextCapDate = new Date(currDate.getFullYear() + 1, 10, 30);
+
 async function riderExists(fullName: string, horseRN: string) {
+  console.log(currDate);
   const memberExists = prisma.member.findUniqueOrThrow({
-    where: { fullName },
+    where: { fullName, membershipEnd: { gte: nextCapDate } },
   });
 
   const horseExists = prisma.horse.findUniqueOrThrow({

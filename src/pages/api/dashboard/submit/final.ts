@@ -6,6 +6,11 @@ import { prisma } from '@/server/prisma';
 import { getToken } from 'next-auth/jwt';
 import { EntrySubmissionSchema } from '@/utils/zodschemas';
 
+const currentDate = new Date();
+const capDate = new Date();
+capDate.setMonth(10);
+capDate.setDate(30);
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -19,7 +24,7 @@ export default async function handler(
   }
 
   const token = await getToken({ req });
-  if (!token) {
+  if (token) {
     console.error('Attempted to access api protected by auth.');
     return res.status(401).json({ message: 'Access Not Allowed.' });
   }
@@ -45,6 +50,14 @@ export default async function handler(
   const body = EntrySubmissionSchema.parse(req.body);
 
   const dbActions = [];
+  let year = existingShow.showDate.getFullYear();
+
+  if (year == currentDate.getFullYear() && existingShow.showDate > capDate) {
+    year += 1;
+  }
+
+  console.log(year);
+
   for (const entry of body) {
     const relations = {
       member: {
@@ -96,7 +109,7 @@ export default async function handler(
           division: entry.division,
           totalPoints: entry.points,
           totalShows: 1,
-          showYear: existingShow.showDate.getFullYear(),
+          showYear: year,
           ...relations,
         },
       })
