@@ -7,13 +7,21 @@
     "plugin:@typescript-eslint/recommended"
   ],
   "parser": "@typescript-eslint/parser",
-  "ignorePatterns": ["**/src/server/prisma/zod-generated", "**/src/tests/**", "**/src/utils/seed"],
+  "ignorePatterns": [
+    "**/src/server/prisma/zod-generated",
+    "**/src/tests/**",
+    "**/src/utils/seed"
+  ],
   "rules": {
     "react/no-unescaped-entities": "off",
     "react/prop-types": "off",
     "no-constant-binary-expression": "error",
     "no-const-assign": "error",
-    "no-dupe-else-if": "error"
+    "no-dupe-else-if": "error",
+    "@typescript-eslint/array-type": [
+      "warn",
+      { "default": "generic", "readonly": "generic" }
+    ]
   },
   "root": true
 }
