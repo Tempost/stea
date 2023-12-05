@@ -7,13 +7,14 @@ import {
   TableOptions,
   useReactTable,
 } from '@tanstack/react-table';
-import { useState } from 'react';
+import { ReactElement, useState } from 'react';
 import DebouncedInput from '../data-entry/DebouncedInput';
 
-interface TableProps<TData> {
+export interface TableProps<TData> {
   paginate?: boolean;
   search?: boolean;
   tableOptions: TableOptions<TData>;
+  extras?: ReactElement;
 }
 
 // eslint-disable-next-line
@@ -30,7 +31,7 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   return itemRank.passed;
 };
 
-function Table<TData>({ paginate, search, tableOptions }: TableProps<TData>) {
+function Table<TData>({ paginate, search, tableOptions, extras }: TableProps<TData>) {
   const [globalFilter, setGlobalFilter] = useState('');
 
   const defaultOptions: TableOptions<TData> = {
@@ -60,15 +61,16 @@ function Table<TData>({ paginate, search, tableOptions }: TableProps<TData>) {
                       colSpan={header.colSpan}
                       className='select-none px-2 py-2 text-center text-xs font-medium text-gray-900 lg:text-sm'
                     >
-                      <div className='flex flex-row justify-between'>
+                      <div className='flex flex-row'>
                         {!header.isPlaceholder &&
                           flexRender(
                             header.column.columnDef.header,
                             header.getContext()
                           )}
+                        {(extras && headerGroup.depth === 0) && extras}
                         {headerGroup.depth === 0 && search && (
                           <DebouncedInput
-                            className='input-primary input input-sm w-36'
+                            className='input-primary input input-sm w-36 ml-auto'
                             type='text'
                             placeholder='Search'
                             value={globalFilter ?? ''}

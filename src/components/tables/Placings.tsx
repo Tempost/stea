@@ -54,7 +54,7 @@ function PlacingsTable({ title, search }: PlacingsTableProps) {
     },
   });
 
-  const defaultCols: ColumnDef<RiderCombo>[] = [
+  const defaultCols: Array<ColumnDef<RiderCombo>> = [
     {
       header: title ?? 'Riders',
       columns: [
@@ -106,33 +106,33 @@ function PlacingsTable({ title, search }: PlacingsTableProps) {
   ];
 
   return (
-    <div>
-      <select
-        name='show-year'
-        id='show-year'
-        className='select-bordered select-primary select w-fit md:select-sm'
-        value={yearSelect}
-        onChange={e => {
-          e.preventDefault();
-          setYearSelect(Number.parseInt(e.target.value));
-        }}
-      >
-        {years.map(year => (
-          <option
-            key={year}
-            value={year}
-          >
-            {year}
-          </option>
-        ))}
-      </select>
-      <TableWithData
-        colDef={defaultCols}
-        query={riders}
-        search={search}
-        paginate
-      />
-    </div>
+    <TableWithData
+      colDef={defaultCols}
+      query={riders}
+      search={search}
+      extras={
+        <select
+          name='show-year'
+          id='show-year'
+          className='select-bordered select-primary select w-fit select-xs ml-2'
+          value={yearSelect}
+          onChange={e => {
+            e.preventDefault();
+            setYearSelect(Number.parseInt(e.target.value));
+          }}
+        >
+          {years.map(year => (
+            <option
+              key={year}
+              value={year}
+            >
+              {year}
+            </option>
+          ))}
+        </select>
+      }
+      paginate
+    />
   );
 }
 
