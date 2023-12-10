@@ -1,18 +1,18 @@
-import { getToken } from 'next-auth/jwt';
-import { Prisma, ShowType } from '@prisma/client';
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { prisma } from '@/server/prisma';
 import { getKeys, groupByFunc } from '@/server/router/utils';
 import { CSVEntry, CSVEntrySchema, Entry } from '@/server/utils';
 import {
-  EntriesRideTypeDivison,
   EntriesRideType,
+  EntriesRideTypeDivison,
   GroupedEntries,
   PointsMap,
 } from '@/types/common';
 import { EntryReviewType } from '@/utils/zodschemas';
+import { Prisma, ShowType } from '@prisma/client';
 import { parse } from 'csv';
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { getToken } from 'next-auth/jwt';
 import { fromZodError, ValidationError } from 'zod-validation-error';
-import { prisma } from '@/server/prisma';
 
 export default async function handler(
   req: NextApiRequest,
@@ -57,8 +57,8 @@ export default async function handler(
 }
 
 interface EntryParseResults {
-  successful: CSVEntry[];
-  failed: ValidationError[];
+  successful: Array<CSVEntry>;
+  failed: Array<ValidationError>;
 }
 
 async function nodeCsvParser(csv: string) {
@@ -97,7 +97,7 @@ async function nodeCsvParser(csv: string) {
   return entries;
 }
 
-function groupEntries(entries: Entry[]) {
+function groupEntries(entries: Array<Entry>) {
   // Group each entry by the type of ride they did (CT/HT/Derby)
   const rideTypes: EntriesRideType = groupByFunc(entries, e => e.rideType);
 
@@ -184,16 +184,19 @@ function calculatePoints(
   }
 }
 
-async function riderExists(fullName: string, horseRN: string, membershipEnd: Date) {
+async function riderExists(fullName: string, horseRN: string, endDate: Date) {
   const memberExists = prisma.member.findUniqueOrThrow({
     where: {
       fullName,
-      membershipEnd,
+      OR: [{ membershipEnd: endDate }, { memberStatus: 'Life' }],
     },
   });
 
   const horseExists = prisma.horse.findUniqueOrThrow({
-    where: { horseRN },
+    where: {
+      horseRN,
+      OR: [{ registrationEnd: endDate }, { regType: 'Life' }],
+    },
   });
 
   return !(await memberExists) && !(await horseExists);
@@ -207,7 +210,7 @@ async function checkforMembership(entries: GroupedEntries) {
 
   // If the current month is decemeber
   if (currDate.getMonth() == 11) {
-    membershipEnd.setFullYear(membershipEnd.getFullYear() + 1)
+    membershipEnd.setFullYear(membershipEnd.getFullYear() + 1);
   }
 
   for (const [, divisions] of Object.entries(entries)) {
