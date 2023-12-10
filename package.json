@@ -29,6 +29,7 @@
     "@trpc/react-query": "^10.18.0",
     "@trpc/server": "^10.18.0",
     "@vercel/analytics": "^0.1.11",
+    "@vercel/speed-insights": "^1.0.1",
     "csv": "^6.3.5",
     "daisyui": "^2.51.5",
     "immer": "^9.0.21",

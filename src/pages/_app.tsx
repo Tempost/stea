@@ -1,15 +1,16 @@
-import Head from 'next/head';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { useAtomsDevtools } from 'jotai-devtools';
-import type { Session } from 'next-auth';
+import { SessionProvider } from 'next-auth/react';
+import Head from 'next/head';
 
 import { trpc } from '@/utils/trpc';
 import '../styles/globals.css';
 
 import type { NextPage } from 'next';
+import type { Session } from 'next-auth';
 import type { AppProps } from 'next/app';
 import type { PropsWithChildren, ReactElement, ReactNode } from 'react';
-import { SessionProvider } from 'next-auth/react';
 
 export type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -19,7 +20,6 @@ export interface AppPropsWithLayout extends AppProps<{ session?: Session }> {
   Component: NextPageWithLayout;
 }
 
-// TODO TODO TODO: Remove this on prod build
 const AtomsDevTools = ({ children }: PropsWithChildren) => {
   useAtomsDevtools('Form State');
   return <>{children}</>;
@@ -54,6 +54,7 @@ function MyApp({
             <>
               <Component {...pageProps} />
               <Analytics />
+              <SpeedInsights />
             </>
           )}
         </SessionProvider>
