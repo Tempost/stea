@@ -1,7 +1,5 @@
 import { trpc } from '@/utils/trpc';
-import NextLink from 'next/link';
 import CalendarEvents from '../events/CalendarEvent';
-import { CalendarIcon } from '../icons';
 
 const CURR_MONTH = new Date();
 const MONTH_FROM_CURR = new Date(
@@ -30,29 +28,28 @@ function UpcomingEvents() {
     },
   });
 
-  return (
-    <div className='flex w-full flex-col rounded-lg border p-5 shadow-xl sm:w-96'>
-      <h2 className='border-b-2 text-center text-xl'>Upcoming Events</h2>
-      {shows.data ? (
-        shows.data.map(show => (
+  if (shows.isError) {
+    return <span className='my-12 text-center'>Unable to load shows</span>;
+  }
+
+  if (shows.isLoading) {
+    return <span className='my-12 text-center'>Loading...</span>;
+  }
+
+  if (shows.data) {
+    return (
+      <>
+        {shows.data.map(show => (
           <CalendarEvents
             key={`${show.showName}-${show.showDate}`}
             show={show}
           />
-        ))
-      ) : (
-        <span className='my-12 text-center'>Loading...</span>
-      )}
-      <NextLink
-        href='/calendar'
-        className='self-center'
-      >
-        <button className='btn-primary btn-md btn grid grid-flow-col place-content-center gap-2'>
-          {CalendarIcon} View Full Calendar
-        </button>
-      </NextLink>
-    </div>
-  );
+        ))}
+      </>
+    );
+  }
+
+  return <></>;
 }
 
 export default UpcomingEvents;

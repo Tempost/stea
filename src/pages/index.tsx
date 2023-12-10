@@ -2,11 +2,11 @@ import NextLink from 'next/link';
 
 import { PublicLayout } from '@/components/layout/PublicLayout';
 
-import { ReactElement } from 'react';
-import Image from 'next/image';
-import { BookIcon } from '@/components/icons';
 import UpcomingEvents from '@/components/home/Events';
 import NavCard from '@/components/home/NavCard';
+import { BookIcon, CalendarIcon } from '@/components/icons';
+import Image from 'next/image';
+import { ReactElement } from 'react';
 
 function Home() {
   return (
@@ -44,7 +44,7 @@ function Home() {
       </div>
 
       <div className='flex flex-col gap-5 p-5 md:gap-10 md:p-10'>
-        <div className='mx-auto flex flex-col justify-around gap-5 md:flex-row md:flex-wrap'>
+        <section className='mx-auto flex flex-col justify-around gap-5 md:flex-row md:flex-wrap'>
           <NavCard
             bodyText='Membership'
             href='/members-horses'
@@ -60,64 +60,99 @@ function Home() {
             href='/scores'
             img='/points_landing.png'
           />
+        </section>
+
+        <div className='flex flex-col md:flex-row gap-5 md:gap-10'>
+          <section className='card-compact container card mx-auto w-fit border shadow-xl md:shadow-2xl'>
+            <div className='card-body'>
+              <h2 className='text-center text-xl font-bold md:text-2xl lg:text-3xl'>
+                Announcements
+              </h2>
+
+              <div className='divider mt-0 mb-0'></div>
+
+              <div className='inline-grid place-content-center text-xl md:text-2xl text-center [&_h3]:mb-2'>
+                <div>
+                  <h3 className='text-lg md:text-xl lg:text-xl'>
+                    2023 Stea Award Winners
+                  </h3>
+                  <a
+                    className='btn btn-primary btn-sm md:btn-xs w-fit place-self-center'
+                    href='/stea_2023_year_end_award_winners.docx'
+                  >
+                    Download
+                  </a>
+                </div>
+
+                <div className='divider'></div>
+
+                <div>
+                  <h3 className='text-lg md:text-xl lg:text-xl'>
+                    Keep up to date on STEA rules
+                  </h3>
+                  <a
+                    className='btn-primary btn btn-sm md:btn-xs w-fit place-self-center gap-2'
+                    href='/stea_rule_book.pdf'
+                    rel='noopener noreferrer'
+                    target='_blank'
+                  >
+                    {BookIcon}RuleBook
+                  </a>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section className='card-compact container card mx-auto w-fit border shadow-xl md:shadow-2xl'>
+            <div className='card-body'>
+              <h2 className='text-center text-xl font-bold md:text-2xl lg:text-3xl'>
+                Upcoming Events
+              </h2>
+              <div className='divider mt-0 mb-0'></div>
+              <UpcomingEvents />
+              <NextLink
+                href='/calendar'
+                className='self-center'
+              >
+                <button className='btn-primary btn-sm btn grid grid-flow-col place-content-center gap-2'>
+                  {CalendarIcon} View Full Calendar
+                </button>
+              </NextLink>
+            </div>
+          </section>
         </div>
 
-        <section className='card-compact container card mx-auto w-fit border shadow-2xl'>
-          <h2 className='text-center text-xl font-bold text-red-600 md:text-2xl lg:text-3xl'>
-            Notice
-          </h2>
+        <section className='card-compact container card mx-auto w-fit border shadow-xl md:shadow-2xl'>
           <div className='card-body'>
-            <p className='text-center text-lg font-semibold md:text-2xl'>
-              Please remember to check your points throughout the year!
-            </p>
-            <p className='inline-grid place-content-center text-xl md:text-2xl'>
-              Review rule changes for 2023
-              <a
-                className='btn-primary btn btn-sm md:btn-xs'
-                href='/stea_rule_book.pdf'
-                rel='noopener noreferrer'
-                target='_blank'
-              >
-                <span className='mr-1'>RuleBook</span> {BookIcon}
-              </a>
-            </p>
-          </div>
-        </section>
+            <h2 className='text-center text-xl font-bold mg:text-2xl lg:text-3xl'>
+              Recognized vendors
+            </h2>
+            <div className='divider mt-0 mb-0'></div>
+            <div className='flex flex-row flex-wrap justify-center'>
+              <Image
+                src='/riding_warehouse.jpg'
+                width={300}
+                height={300}
+                sizes='100vw, 50vw'
+                alt='Logo for riding warehouse, two horses jumping towards a horseshoe.'
+              />
 
-        <section className='mx-auto flex flex-col items-center gap-2'>
-        </section>
+              <Image
+                src='/dover_home_page.jpg'
+                width={300}
+                height={300}
+                sizes='100vw, 50vw'
+                alt='Logo for dover tack, white logo "Dover Saddlery".'
+              />
 
-        <section className='mx-auto flex flex-col items-center gap-2'>
-          <UpcomingEvents />
-        </section>
-
-        <section className='flex flex-col items-center gap-2'>
-          <h1 className='text-2xl font-bold'>Recognized vendors</h1>
-          {/* TODO: Scale photo size by screen size */}
-          <div className='flex flex-row flex-wrap justify-center'>
-            <Image
-              src='/riding_warehouse.jpg'
-              width={300}
-              height={300}
-              sizes='100vw, 50vw'
-              alt='Logo for riding warehouse, two horses jumping towards a horseshoe.'
-            />
-
-            <Image
-              src='/dover_home_page.jpg'
-              width={300}
-              height={300}
-              sizes='100vw, 50vw'
-              alt='Logo for dover tack, white logo "Dover Saddlery".'
-            />
-
-            <Image
-              src='/sneak_away_home_page.png'
-              width={300}
-              height={300}
-              sizes='100vw, 50vw'
-              alt='Logo for riding warehouse, outline of horse head with "Sneak Away Riding Club".'
-            />
+              <Image
+                src='/sneak_away_home_page.png'
+                width={300}
+                height={300}
+                sizes='100vw, 50vw'
+                alt='Logo for riding warehouse, outline of horse head with "Sneak Away Riding Club".'
+              />
+            </div>
           </div>
         </section>
       </div>

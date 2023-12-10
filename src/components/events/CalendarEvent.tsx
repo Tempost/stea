@@ -15,9 +15,10 @@ function CalendarEvents({ show }: CalendarEventsProps) {
 
   return (
     <div className='m-4 flex flex-col rounded-lg border p-2 text-center text-lg shadow-xl'>
-      <h3 className='border-b-2'>
+      <h3>
         {show.showName} ({show.showType})
       </h3>
+      <div className='divider mt-0 mb-0'></div>
       <p className='m-2 text-lg'>{date}</p>
 
       {show.url && (
