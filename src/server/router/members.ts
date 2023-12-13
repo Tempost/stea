@@ -148,7 +148,7 @@ export const members = router({
 
       if (existingMember) {
         console.log('Updating member');
-        ctx.prisma.$transaction(async tx => {
+        await ctx.prisma.$transaction(async tx => {
           await tx.member.update({
             where: { fullName },
             data: { ...memberInput },
@@ -270,27 +270,32 @@ export const members = router({
 });
 
 async function addMember(
-  { memberInput: member }: MemberForm,
+  { memberInput, horses }: MemberForm,
   prisma: MyPrismaClient
 ) {
   try {
     return prisma.member.upsert({
       where: {
         fullName:
-          member.businessName ??
-          `${member.firstName.trim()} ${member.lastName.trim()}`,
+          memberInput.businessName ??
+          `${memberInput.firstName.trim()} ${memberInput.lastName.trim()}`,
       },
       create: {
         fullName:
-          member.businessName ??
-          `${member.firstName.trim()} ${member.lastName.trim()}`,
-        ...member,
+          memberInput.businessName ??
+          `${memberInput.firstName.trim()} ${memberInput.lastName.trim()}`,
+        Horse: {
+          createMany: {
+            data: horses ? horses : [],
+          },
+        },
+        ...memberInput,
       },
       update: {
         fullName:
-          member.businessName ??
-          `${member.firstName.trim()} ${member.lastName.trim()}`,
-        ...member,
+          memberInput.businessName ??
+          `${memberInput.firstName.trim()} ${memberInput.lastName.trim()}`,
+        ...memberInput,
       },
     });
   } catch (error) {
