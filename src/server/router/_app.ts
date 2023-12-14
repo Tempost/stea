@@ -5,8 +5,10 @@ import { shows } from './shows';
 import { riders } from './combos';
 import { mail } from './mail';
 import { nonMemberHorseOwners } from './nonmemberhorseowners';
+import { boardmember } from './boardmember';
 
 export const appRouter = router({
+  boardmember,
   members,
   nonMemberHorseOwners,
   horses,

@@ -55,6 +55,18 @@ enum Division {
   GAG
 }
 
+enum Position {
+  President
+  VicePresident @map("Vice President")
+  Secretary
+  Treasurer
+  AdultMemberAtLarge @map("Adult Member At Large")
+  JuniorMemberAtLarge @map("Junior Member At Large")
+  SocialMediaManager @map("Social Media Manager")
+  Membership
+  Points
+}
+
 model NonMemberHorseOwner {
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
@@ -119,6 +131,14 @@ model Member {
   @@id([fullName])
 }
 
+model Boardmember {
+  name String? @db.VarChar(100)
+  email String? @db.VarChar(100)
+  position Position
+
+  @@id([position])
+}
+
 model Horse {
   createdAt        DateTime?            @default(now())
   updatedAt        DateTime?            @updatedAt
@@ -159,7 +179,6 @@ model RiderCombo {
   points      Points[]
   shows       Show[]
   showYear    Int?
-
 
   @@unique([memberName, horseName, division, showYear])
   @@index([horseName, memberName, division, showYear])

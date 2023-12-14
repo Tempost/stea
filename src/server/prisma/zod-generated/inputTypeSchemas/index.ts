@@ -8,6 +8,11 @@ export { MemberOrderByWithRelationInputSchema } from './MemberOrderByWithRelatio
 export { MemberWhereUniqueInputSchema } from './MemberWhereUniqueInputSchema';
 export { MemberOrderByWithAggregationInputSchema } from './MemberOrderByWithAggregationInputSchema';
 export { MemberScalarWhereWithAggregatesInputSchema } from './MemberScalarWhereWithAggregatesInputSchema';
+export { BoardmemberWhereInputSchema } from './BoardmemberWhereInputSchema';
+export { BoardmemberOrderByWithRelationInputSchema } from './BoardmemberOrderByWithRelationInputSchema';
+export { BoardmemberWhereUniqueInputSchema } from './BoardmemberWhereUniqueInputSchema';
+export { BoardmemberOrderByWithAggregationInputSchema } from './BoardmemberOrderByWithAggregationInputSchema';
+export { BoardmemberScalarWhereWithAggregatesInputSchema } from './BoardmemberScalarWhereWithAggregatesInputSchema';
 export { HorseWhereInputSchema } from './HorseWhereInputSchema';
 export { HorseOrderByWithRelationInputSchema } from './HorseOrderByWithRelationInputSchema';
 export { HorseWhereUniqueInputSchema } from './HorseWhereUniqueInputSchema';
@@ -42,6 +47,13 @@ export { MemberUncheckedUpdateInputSchema } from './MemberUncheckedUpdateInputSc
 export { MemberCreateManyInputSchema } from './MemberCreateManyInputSchema';
 export { MemberUpdateManyMutationInputSchema } from './MemberUpdateManyMutationInputSchema';
 export { MemberUncheckedUpdateManyInputSchema } from './MemberUncheckedUpdateManyInputSchema';
+export { BoardmemberCreateInputSchema } from './BoardmemberCreateInputSchema';
+export { BoardmemberUncheckedCreateInputSchema } from './BoardmemberUncheckedCreateInputSchema';
+export { BoardmemberUpdateInputSchema } from './BoardmemberUpdateInputSchema';
+export { BoardmemberUncheckedUpdateInputSchema } from './BoardmemberUncheckedUpdateInputSchema';
+export { BoardmemberCreateManyInputSchema } from './BoardmemberCreateManyInputSchema';
+export { BoardmemberUpdateManyMutationInputSchema } from './BoardmemberUpdateManyMutationInputSchema';
+export { BoardmemberUncheckedUpdateManyInputSchema } from './BoardmemberUncheckedUpdateManyInputSchema';
 export { HorseCreateInputSchema } from './HorseCreateInputSchema';
 export { HorseUncheckedCreateInputSchema } from './HorseUncheckedCreateInputSchema';
 export { HorseUpdateInputSchema } from './HorseUpdateInputSchema';
@@ -103,6 +115,11 @@ export { EnumStatusWithAggregatesFilterSchema } from './EnumStatusWithAggregates
 export { EnumStatusTypeWithAggregatesFilterSchema } from './EnumStatusTypeWithAggregatesFilterSchema';
 export { IntWithAggregatesFilterSchema } from './IntWithAggregatesFilterSchema';
 export { IntNullableWithAggregatesFilterSchema } from './IntNullableWithAggregatesFilterSchema';
+export { EnumPositionFilterSchema } from './EnumPositionFilterSchema';
+export { BoardmemberCountOrderByAggregateInputSchema } from './BoardmemberCountOrderByAggregateInputSchema';
+export { BoardmemberMaxOrderByAggregateInputSchema } from './BoardmemberMaxOrderByAggregateInputSchema';
+export { BoardmemberMinOrderByAggregateInputSchema } from './BoardmemberMinOrderByAggregateInputSchema';
+export { EnumPositionWithAggregatesFilterSchema } from './EnumPositionWithAggregatesFilterSchema';
 export { NonMemberHorseOwnerNullableRelationFilterSchema } from './NonMemberHorseOwnerNullableRelationFilterSchema';
 export { MemberNullableRelationFilterSchema } from './MemberNullableRelationFilterSchema';
 export { HorseCountOrderByAggregateInputSchema } from './HorseCountOrderByAggregateInputSchema';
@@ -161,6 +178,7 @@ export { RiderComboUpdateManyWithoutMemberNestedInputSchema } from './RiderCombo
 export { HorseUpdateManyWithoutMemberOwnerNestedInputSchema } from './HorseUpdateManyWithoutMemberOwnerNestedInputSchema';
 export { RiderComboUncheckedUpdateManyWithoutMemberNestedInputSchema } from './RiderComboUncheckedUpdateManyWithoutMemberNestedInputSchema';
 export { HorseUncheckedUpdateManyWithoutMemberOwnerNestedInputSchema } from './HorseUncheckedUpdateManyWithoutMemberOwnerNestedInputSchema';
+export { EnumPositionFieldUpdateOperationsInputSchema } from './EnumPositionFieldUpdateOperationsInputSchema';
 export { NonMemberHorseOwnerCreateNestedOneWithoutHorsesInputSchema } from './NonMemberHorseOwnerCreateNestedOneWithoutHorsesInputSchema';
 export { MemberCreateNestedOneWithoutHorseInputSchema } from './MemberCreateNestedOneWithoutHorseInputSchema';
 export { RiderComboCreateNestedManyWithoutHorseInputSchema } from './RiderComboCreateNestedManyWithoutHorseInputSchema';
@@ -219,6 +237,8 @@ export { NestedIntWithAggregatesFilterSchema } from './NestedIntWithAggregatesFi
 export { NestedFloatFilterSchema } from './NestedFloatFilterSchema';
 export { NestedIntNullableWithAggregatesFilterSchema } from './NestedIntNullableWithAggregatesFilterSchema';
 export { NestedFloatNullableFilterSchema } from './NestedFloatNullableFilterSchema';
+export { NestedEnumPositionFilterSchema } from './NestedEnumPositionFilterSchema';
+export { NestedEnumPositionWithAggregatesFilterSchema } from './NestedEnumPositionWithAggregatesFilterSchema';
 export { NestedEnumDivisionFilterSchema } from './NestedEnumDivisionFilterSchema';
 export { NestedEnumDivisionWithAggregatesFilterSchema } from './NestedEnumDivisionWithAggregatesFilterSchema';
 export { NestedFloatWithAggregatesFilterSchema } from './NestedFloatWithAggregatesFilterSchema';
@@ -359,6 +379,7 @@ export { PointsUncheckedUpdateManyWithoutShowInputSchema } from './PointsUncheck
 export { TransactionIsolationLevelSchema } from './TransactionIsolationLevelSchema';
 export { NonMemberHorseOwnerScalarFieldEnumSchema } from './NonMemberHorseOwnerScalarFieldEnumSchema';
 export { MemberScalarFieldEnumSchema } from './MemberScalarFieldEnumSchema';
+export { BoardmemberScalarFieldEnumSchema } from './BoardmemberScalarFieldEnumSchema';
 export { HorseScalarFieldEnumSchema } from './HorseScalarFieldEnumSchema';
 export { RiderComboScalarFieldEnumSchema } from './RiderComboScalarFieldEnumSchema';
 export { PointsScalarFieldEnumSchema } from './PointsScalarFieldEnumSchema';
@@ -371,3 +392,4 @@ export { ShowTypeSchema } from './ShowTypeSchema';
 export { TypeSchema } from './TypeSchema';
 export { PhoneTypeSchema } from './PhoneTypeSchema';
 export { DivisionSchema } from './DivisionSchema';
+export { PositionSchema } from './PositionSchema';
