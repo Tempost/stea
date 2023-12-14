@@ -31,15 +31,16 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   return itemRank.passed;
 };
 
-function Table<TData>({ paginate, search, tableOptions, extras }: TableProps<TData>) {
+function Table<TData>({ paginate, search, tableOptions: {state, ...opts} , extras }: TableProps<TData>) {
   const [globalFilter, setGlobalFilter] = useState('');
 
   const defaultOptions: TableOptions<TData> = {
-    ...tableOptions,
+    ...opts,
     getPaginationRowModel: paginate ? getPaginationRowModel() : undefined,
     getFilteredRowModel: getFilteredRowModel(),
     globalFilterFn: fuzzyFilter,
     state: {
+      ...state,
       globalFilter: globalFilter,
     },
     onGlobalFilterChange: setGlobalFilter,

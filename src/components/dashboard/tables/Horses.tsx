@@ -7,7 +7,7 @@ import type { ColumnDef } from '@tanstack/react-table';
 
 type Horse = RouterOutputs['horses']['all'][number];
 
-const defaultCols: ColumnDef<Horse>[] = [
+const columns: Array<ColumnDef<Horse>> = [
   {
     header: 'Horses',
     columns: [
@@ -45,15 +45,17 @@ function DashboardHorses() {
   const horses = trpc.horses.all.useQuery();
 
   return (
-    <>
+    <div>
       <NewHorseForm />
       <TableWithData
-        colDef={defaultCols}
+        extraTableOpts={{
+          columns,
+        }}
         query={horses}
         paginate
         search
       />
-    </>
+    </div>
   );
 }
 

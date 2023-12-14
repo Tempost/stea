@@ -6,11 +6,12 @@ import type { ColumnDef } from '@tanstack/react-table';
 type Horse = RouterOutputs['horses']['all'][number];
 
 interface HorseTableProps {
-  overRideDefaultCols?: ColumnDef<Horse>[];
+  overRideDefaultCols?: Array<ColumnDef<Horse>>;
   search?: boolean;
+  paginate?: boolean;
 }
 
-const defaultCols: ColumnDef<Horse>[] = [
+const defaultCols: Array<ColumnDef<Horse>> = [
   {
     header: 'Horses',
     columns: [
@@ -38,15 +39,16 @@ const defaultCols: ColumnDef<Horse>[] = [
   },
 ];
 
-function HorseTable({ overRideDefaultCols, search }: HorseTableProps) {
+function HorseTable({ overRideDefaultCols, ...props }: HorseTableProps) {
   const horses = trpc.horses.all.useQuery();
 
   return (
     <TableWithData
-      colDef={overRideDefaultCols ?? defaultCols}
+      extraTableOpts={{
+        columns: overRideDefaultCols ?? defaultCols,
+      }}
       query={horses}
-      paginate={true}
-      search={search}
+      {...props}
     />
   );
 }

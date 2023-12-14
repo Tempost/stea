@@ -8,7 +8,7 @@ import ConfirmMember from '@/components/dashboard/ConfirmMember';
 import type { Member } from '@prisma/client';
 import type { ReactElement } from 'react';
 
-const applicantCols: ColumnDef<Member>[] = [
+const columns: Array<ColumnDef<Member>> = [
   {
     header: 'Unconfirmed Members',
     columns: [
@@ -64,7 +64,9 @@ function Applications() {
         <div className='rounded-lg p-5 shadow-xl'>No New Members...</div>
       ) : (
         <TableWithData
-          colDef={applicantCols}
+          extraTableOpts={{
+            columns,
+          }}
           query={members}
         />
       )}

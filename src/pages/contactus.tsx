@@ -1,6 +1,6 @@
-import { ReactElement } from 'react';
-import { PublicLayout } from '@/components/layout/PublicLayout';
 import { ContactCard } from '@/components/ContactCard';
+import { PublicLayout } from '@/components/layout/PublicLayout';
+import { ReactElement } from 'react';
 
 function ContactUs() {
   return (
@@ -37,9 +37,12 @@ function ContactUs() {
           name={'Willow Schwartz'}
           position={'Junior Member at Large'}
         />
+        <ContactCard
+          name={'Cat Schwartz'}
+          position={'Social Media Manager'}
+        />
         <ContactCard position={'Membership'} />
         <ContactCard position={'Points'} />
-        <ContactCard position={'Social Media Manager'} />
       </div>
     </section>
   );

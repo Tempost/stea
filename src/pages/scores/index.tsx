@@ -10,6 +10,7 @@ function SteaPoints() {
       <PlacingsTable
         title='Current Points'
         search
+        paginate
       />
 
       <div className='card w-[20em] shadow-2xl sm:w-[30em] md:w-[40em] lg:w-[45em]'>

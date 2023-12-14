@@ -7,7 +7,7 @@ import { ColumnDef } from '@tanstack/react-table';
 type Member = RouterOutputs['members']['all'][number];
 
 interface EmailListProps {
-  emails: string[];
+  emails: Array<string>;
 }
 
 function EmailList({ emails }: EmailListProps) {
@@ -25,7 +25,7 @@ function EmailList({ emails }: EmailListProps) {
   );
 }
 
-const columns: ColumnDef<Member>[] = [
+const columns: Array<ColumnDef<Member>> = [
   {
     header: 'Members',
     columns: [
@@ -109,7 +109,7 @@ function DashboardMembers() {
   });
 
   return (
-    <>
+    <div>
       <div
         className='tooltip'
         data-tip='Copied!'
@@ -120,12 +120,14 @@ function DashboardMembers() {
       </div>
       <NewMemberForm />
       <TableWithData
-        colDef={columns}
+        extraTableOpts={{
+          columns,
+        }}
         query={members}
         paginate
         search
       />
-    </>
+    </div>
   );
 }
 

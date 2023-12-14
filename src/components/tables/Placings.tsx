@@ -3,18 +3,19 @@ import { RouterOutputs, trpc } from '@/utils/trpc';
 import TableWithData from './BaseTable';
 
 import type { ColumnDef } from '@tanstack/react-table';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 type RiderCombo = RouterOutputs['riders']['all'][number];
 interface PlacingsTableProps {
   title?: string;
   search?: boolean;
+  paginate?: boolean;
 }
 
 const years = Array.from({ length: 10 }, (_, i) => i + 2023);
 const currYear = new Date().getFullYear();
 
-function PlacingsTable({ title, search }: PlacingsTableProps) {
+function PlacingsTable({ title, ...props }: PlacingsTableProps) {
   const [yearSelect, setYearSelect] = useState(currYear);
 
   const riders = trpc.riders.all.useQuery({
@@ -54,62 +55,66 @@ function PlacingsTable({ title, search }: PlacingsTableProps) {
     },
   });
 
-  const defaultCols: Array<ColumnDef<RiderCombo>> = [
-    {
-      header: title ?? 'Riders',
-      columns: [
-        {
-          accessorKey: 'division',
-          id: 'division',
-          cell: info => info.getValue(),
-          header: () => <span> Division </span>,
-        },
-        {
-          accessorKey: 'member.memberStatusType',
-          id: 'memberStatusType',
-          cell: info => {
-            const statusType = info.getValue();
-            if (statusType === 'AdultAmateur') {
-              return 'Adult Amateur';
-            }
-
-            return statusType;
+  const columns: Array<ColumnDef<RiderCombo>> = useMemo(
+    () => [
+      {
+        header: title ?? 'Riders',
+        columns: [
+          {
+            accessorKey: 'division',
+            id: 'division',
+            cell: info => info.getValue(),
+            header: () => <span> Division </span>,
           },
-          header: () => <span> Member Type </span>,
-        },
-        {
-          accessorKey: 'member.fullName',
-          id: 'member.fullName',
-          cell: info => info.getValue(),
-          header: () => <span> Rider </span>,
-        },
-        {
-          accessorKey: 'horse.horseRN',
-          id: 'horse.horseRN',
-          cell: info => info.getValue(),
-          header: () => <span> Horse </span>,
-        },
-        {
-          accessorKey: 'totalPoints',
-          id: 'totalPoints',
-          cell: info => info.getValue(),
-          header: () => <span> Points </span>,
-        },
-        {
-          accessorKey: 'totalShows',
-          id: 'totalShows',
-          cell: info => info.getValue(),
-          header: () => <span> Shows Attended </span>,
-        },
-      ],
-    },
-  ];
+          {
+            accessorKey: 'member.memberStatusType',
+            id: 'memberStatusType',
+            cell: info => {
+              const statusType = info.getValue();
+              if (statusType === 'AdultAmateur') {
+                return 'Adult Amateur';
+              }
+
+              return statusType;
+            },
+            header: () => <span> Member Type </span>,
+          },
+          {
+            accessorKey: 'member.fullName',
+            id: 'member.fullName',
+            cell: info => info.getValue(),
+            header: () => <span> Rider </span>,
+          },
+          {
+            accessorKey: 'horse.horseRN',
+            id: 'horse.horseRN',
+            cell: info => info.getValue(),
+            header: () => <span> Horse </span>,
+          },
+          {
+            accessorKey: 'totalPoints',
+            id: 'totalPoints',
+            cell: info => info.getValue(),
+            header: () => <span> Points </span>,
+          },
+          {
+            accessorKey: 'totalShows',
+            id: 'totalShows',
+            cell: info => info.getValue(),
+            header: () => <span> Shows Attended </span>,
+          },
+        ],
+      },
+    ],
+    [title]
+  );
 
   return (
     <TableWithData
-      colDef={defaultCols}
+      extraTableOpts={{
+        columns,
+      }}
       query={riders}
-      search={search}
       extras={
         <select
           name='show-year'
@@ -131,7 +136,7 @@ function PlacingsTable({ title, search }: PlacingsTableProps) {
           ))}
         </select>
       }
-      paginate
+      {...props}
     />
   );
 }

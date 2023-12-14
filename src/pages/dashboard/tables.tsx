@@ -3,7 +3,9 @@ import { ReactElement, useState } from 'react';
 
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 
-const DynamicShowsTable = dynamic(() => import('@/components/dashboard/tables/Shows'));
+const DynamicShowsTable = dynamic(
+  () => import('@/components/dashboard/tables/Shows')
+);
 
 const DynamicHorsesTable = dynamic(
   () => import('@/components/dashboard/tables/Horses')
@@ -21,7 +23,17 @@ const DynamicRidersTable = dynamic(
   () => import('@/components/dashboard/tables/Riders')
 );
 
-type TableSelection = 'members' | 'horses' | 'owners' | 'riders' | 'shows';
+const DynamicBoardMembers = dynamic(
+  () => import('@/components/dashboard/tables/BoardMembers')
+);
+
+type TableSelection =
+  | 'members'
+  | 'horses'
+  | 'owners'
+  | 'riders'
+  | 'shows'
+  | 'boardmembers';
 
 function Tables() {
   const [table, setTable] = useState<TableSelection>('members');
@@ -31,6 +43,7 @@ function Tables() {
   const ownersSelected = table === 'owners';
   const combosSelected = table === 'riders';
   const showsSelected = table === 'shows';
+  const boardmembersSelected = table === 'boardmembers';
 
   const tables = {
     members: <DynamicMembersTable />,
@@ -38,12 +51,13 @@ function Tables() {
     owners: <DynamicOwnersTable />,
     riders: <DynamicRidersTable />,
     shows: <DynamicShowsTable />,
+    boardmembers: <DynamicBoardMembers />,
   };
 
   return (
-    <>
+    <div className='flex flex-col w-full gap-10'>
       <div
-        className='btn-group  mx-auto mb-10 grid w-fit grid-flow-col place-content-center'
+        className='btn-group mx-auto'
         //@ts-expect-error wtf does this even mean
         onClick={e => setTable(e.target.value)}
       >
@@ -87,9 +101,17 @@ function Tables() {
         >
           Shows
         </button>
+        <button
+          className={`btn btn-sm p-1 lg:btn-md ${
+            boardmembersSelected && 'btn-active'
+          }`}
+          value='boardmembers'
+        >
+          Board Members
+        </button>
       </div>
       {tables[table]}
-    </>
+    </div>
   );
 }
 

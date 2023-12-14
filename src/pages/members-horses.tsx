@@ -9,8 +9,8 @@ function MembersAnHorses() {
   // <Image layout='fill' src='/membersandhorses.jpg'/>
   return (
     <div className='md:grid md:grid-flow-col md:place-content-evenly'>
-      <MemberTable search />
-      <HorseTable search />
+      <MemberTable search paginate />
+      <HorseTable search paginate />
     </div>
   );
 }

@@ -5,11 +5,12 @@ import type { ColumnDef } from '@tanstack/react-table';
 
 type Member = RouterOutputs['members']['all'][number];
 interface MemberTableProps {
-  overRideDefaultCols?: ColumnDef<Member>[];
-  search?: true;
+  overRideDefaultCols?: Array<ColumnDef<Member>>;
+  search?: boolean;
+  paginate?: boolean;
 }
 
-const defaultCols: ColumnDef<Member>[] = [
+const defaultCols: Array<ColumnDef<Member>> = [
   {
     header: 'Members',
     columns: [
@@ -42,7 +43,7 @@ const defaultCols: ColumnDef<Member>[] = [
   },
 ];
 
-function MemberTable({ overRideDefaultCols, search }: MemberTableProps) {
+function MemberTable({ overRideDefaultCols, ...props }: MemberTableProps) {
   const members = trpc.members.all.useQuery({
     select: {
       fullName: true,
@@ -56,10 +57,11 @@ function MemberTable({ overRideDefaultCols, search }: MemberTableProps) {
 
   return (
     <TableWithData
-      colDef={overRideDefaultCols ?? defaultCols}
+      extraTableOpts={{
+        columns: overRideDefaultCols ?? defaultCols,
+      }}
       query={members}
-      paginate={true}
-      search={search}
+      {...props}
     />
   );
 }

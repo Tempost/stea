@@ -9,14 +9,19 @@ type RiderCombo = RouterOutputs['riders']['all'][number];
 
 interface RidersTableProps {
   title?: string;
-  overRideDefaultCols?: ColumnDef<RiderCombo>[];
+  overRideDefaultCols?: Array<ColumnDef<RiderCombo>>;
   search?: boolean;
+  paginate?: boolean;
 }
 
-function RidersTable({ title, overRideDefaultCols, search }: RidersTableProps) {
+function RidersTable({
+  title,
+  overRideDefaultCols,
+  ...props
+}: RidersTableProps) {
   const riders = trpc.riders.all.useQuery();
 
-  const defaultCols = useMemo<ColumnDef<RiderCombo>[]>(
+  const defaultCols: Array<ColumnDef<RiderCombo>> = useMemo(
     () => [
       {
         header: title ?? 'Riders',
@@ -59,10 +64,9 @@ function RidersTable({ title, overRideDefaultCols, search }: RidersTableProps) {
 
   return (
     <TableWithData
-      colDef={overRideDefaultCols ?? defaultCols}
+      extraTableOpts={{ columns: overRideDefaultCols ?? defaultCols }}
       query={riders}
-      paginate={true}
-      search={search}
+      {...props}
     />
   );
 }
