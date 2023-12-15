@@ -4,17 +4,23 @@ import {
   flexRender,
   getFilteredRowModel,
   getPaginationRowModel,
+  Row,
   TableOptions,
   useReactTable,
 } from '@tanstack/react-table';
-import { ReactElement, useState } from 'react';
+import { ReactElement, ReactNode, useState } from 'react';
 import DebouncedInput from '../data-entry/DebouncedInput';
+
+interface RowRenderProps<TData> {
+  row: Row<TData>;
+}
 
 export interface TableProps<TData> {
   paginate?: boolean;
   search?: boolean;
   tableOptions: TableOptions<TData>;
   extras?: ReactElement;
+  rowRender?: (props: RowRenderProps<TData>) => ReactNode;
 }
 
 // eslint-disable-next-line
@@ -31,7 +37,13 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   return itemRank.passed;
 };
 
-function Table<TData>({ paginate, search, tableOptions: {state, ...opts} , extras }: TableProps<TData>) {
+function Table<TData>({
+  paginate,
+  search,
+  tableOptions: { state, ...opts },
+  extras,
+  ...props
+}: TableProps<TData>) {
   const [globalFilter, setGlobalFilter] = useState('');
 
   const defaultOptions: TableOptions<TData> = {
@@ -45,6 +57,29 @@ function Table<TData>({ paginate, search, tableOptions: {state, ...opts} , extra
     },
     onGlobalFilterChange: setGlobalFilter,
   };
+
+  function RowRender(rowProps: RowRenderProps<TData>) {
+    if (props.rowRender) {
+      return <>{props.rowRender(rowProps)}</>;
+    }
+
+    return (
+      <tr className='border-b bg-white transition duration-300 ease-in-out hover:bg-primary/10'>
+        {rowProps.row.getVisibleCells().map(cell => {
+          return (
+            <td
+              key={cell.id}
+              className={
+                'whitespace-nowrap px-2 py-2 text-xs font-normal text-gray-900 md:px-2 md:py-2 lg:text-sm'
+              }
+            >
+              {flexRender(cell.column.columnDef.cell, cell.getContext())}
+            </td>
+          );
+        })}
+      </tr>
+    );
+  }
 
   const table = useReactTable(defaultOptions);
 
@@ -68,7 +103,7 @@ function Table<TData>({ paginate, search, tableOptions: {state, ...opts} , extra
                             header.column.columnDef.header,
                             header.getContext()
                           )}
-                        {(extras && headerGroup.depth === 0) && extras}
+                        {extras && headerGroup.depth === 0 && extras}
                         {headerGroup.depth === 0 && search && (
                           <DebouncedInput
                             className='input-primary input input-sm w-36 ml-auto'
@@ -87,26 +122,10 @@ function Table<TData>({ paginate, search, tableOptions: {state, ...opts} , extra
 
             <tbody>
               {table.getRowModel().rows.map(row => (
-                <tr
+                <RowRender
                   key={row.id}
-                  className='border-b bg-white transition duration-300 ease-in-out hover:bg-primary/10'
-                >
-                  {row.getVisibleCells().map(cell => {
-                    return (
-                      <td
-                        key={cell.id}
-                        className={
-                          'whitespace-nowrap px-2 py-2 text-xs font-normal text-gray-900 md:px-2 md:py-2 lg:text-sm'
-                        }
-                      >
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </td>
-                    );
-                  })}
-                </tr>
+                  row={row}
+                />
               ))}
             </tbody>
           </table>
