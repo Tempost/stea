@@ -51,3 +51,15 @@ export const CSVEntrySchema = z.object({
   ]),
 });
 export type CSVEntry = z.infer<typeof CSVEntrySchema>;
+
+export const mapping = {
+  President: 'President',
+  Secretary: 'Secretary',
+  Treasurer: 'Treasurer',
+  Membership: 'Membership',
+  Points: 'Points',
+  AdultMemberAtLarge: 'Adult Member At Large',
+  JuniorMemberAtLarge: 'Junior Member At Large',
+  SocialMediaManager: 'Social Media Manager',
+  VicePresident: 'Vice President',
+};

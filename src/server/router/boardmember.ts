@@ -13,7 +13,7 @@ export const boardmember = router({
   update: dashboardProcedure
     .input(BoardmemberSchema)
     .output(BoardmemberSchema)
-    .query(
+    .mutation(
       async ({ input: { position, ...rest }, ctx }) =>
         await ctx.prisma.boardmember.update({
           where: { position },

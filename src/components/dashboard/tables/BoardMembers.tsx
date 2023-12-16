@@ -1,8 +1,14 @@
+import Input from '@/components/data-entry/Input';
+import Form from '@/components/forms/Form';
 import TableWithData from '@/components/tables/BaseTable';
+import { Boardmember, BoardmemberSchema } from '@/server/prisma/zod-generated';
+import { mapping } from '@/server/utils';
 import { RouterOutputs, trpc } from '@/utils/trpc';
-import { ColumnDef, flexRender, RowSelectionState } from '@tanstack/react-table';
+import useZodForm from '@/utils/usezodform';
+import { ColumnDef, flexRender } from '@tanstack/react-table';
 import { SetStateAction } from 'jotai';
 import { Dispatch, useState } from 'react';
+import { UseFormReturn } from 'react-hook-form';
 
 type Boardmembers = RouterOutputs['boardmember']['all'][number];
 const columns: Array<ColumnDef<Boardmembers>> = [
@@ -24,7 +30,7 @@ const columns: Array<ColumnDef<Boardmembers>> = [
       {
         accessorKey: 'position',
         id: 'position',
-        cell: info => info.getValue(),
+        cell: info => mapping[info.getValue() as Boardmember['position']],
         header: () => <span> Position </span>,
       },
     ],
@@ -34,11 +40,18 @@ const columns: Array<ColumnDef<Boardmembers>> = [
 interface ModalProps {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
-  rowSelection: RowSelectionState | undefined;
-  setRowSelection: Dispatch<SetStateAction<object>>;
+  form: UseFormReturn<Boardmember>;
 }
 
-function BoardmemberModal({ isOpen, setIsOpen, rowSelection, setRowSelection }: ModalProps) {
+function BoardmemberModal({ isOpen, setIsOpen, form }: ModalProps) {
+  const utils = trpc.useContext();
+  const add = trpc.boardmember.update.useMutation({
+    onSuccess: () => {
+      utils.boardmember.invalidate();
+      setIsOpen(curr => !curr);
+    },
+  });
+
   return (
     <div
       className={`modal modal-bottom ${
@@ -46,14 +59,42 @@ function BoardmemberModal({ isOpen, setIsOpen, rowSelection, setRowSelection }: 
       } transition-all delay-75 sm:modal-middle`}
     >
       <div className='modal-box overflow-visible'>
-        <div className='modal-action'>
-          <button className='btn-sm btn'>Ok</button>
+        <h3 className='text-lg font-bold'>
+          {mapping[form.getValues().position]}
+        </h3>
 
+        <Form
+          form={form}
+          id='boardmember-form'
+          onSubmit={formValue => {
+            add.mutate(formValue);
+          }}
+        >
+          <Input
+            className='input-bordered input-primary input w-full md:input-sm'
+            label='Name'
+            {...form.register('name')}
+          />
+          <Input
+            className='input-bordered input-primary input w-full md:input-sm'
+            label='Email'
+            {...form.register('email')}
+          />
+        </Form>
+
+        <div className='modal-action'>
+          <button
+            form='boardmember-form'
+            type='submit'
+            className='btn-sm btn'
+          >
+            Ok
+          </button>
           <label
             htmlFor='boardmember-modal'
             className='btn-sm btn'
             onClick={() => {
-              setRowSelection({});
+              form.reset();
               setIsOpen(curr => !curr);
             }}
           >
@@ -66,33 +107,38 @@ function BoardmemberModal({ isOpen, setIsOpen, rowSelection, setRowSelection }: 
 }
 
 function BoardMembers() {
-  const [rowSelection, setRowSelection] = useState({});
   const [isOpen, setIsOpen] = useState(false);
-  const boardmembers = trpc.boardmember.all.useQuery();
+
+  const form = useZodForm({
+    reValidateMode: 'onSubmit',
+    shouldFocusError: true,
+    schema: BoardmemberSchema,
+  });
+
+  const get = trpc.boardmember.all.useQuery();
 
   return (
     <>
       <BoardmemberModal
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        rowSelection={rowSelection}
-        setRowSelection={setRowSelection}
+        form={form}
       />
       <div className='w-fit mx-auto'>
         <TableWithData
           extraTableOpts={{
             columns,
             enableRowSelection: true,
-            onRowSelectionChange: setRowSelection,
-            state: { rowSelection },
           }}
-          query={boardmembers}
+          query={get}
           rowRender={({ row }) => (
             <tr
               className='border-b bg-white transition duration-300 ease-in-out hover:bg-primary/10'
               onClick={e => {
                 e.preventDefault();
-                setRowSelection(row.original);
+                Object.entries(row.original).forEach(([key, value]) =>
+                  form.setValue(key as keyof Boardmembers, value)
+                );
                 setIsOpen(curr => !curr);
               }}
             >
