@@ -7,6 +7,7 @@ import { RouterOutputs, trpc } from '@/utils/trpc';
 import useZodForm from '@/utils/usezodform';
 import { ColumnDef, flexRender } from '@tanstack/react-table';
 import { SetStateAction } from 'jotai';
+import { getSession, useSession } from 'next-auth/react';
 import { Dispatch, useState } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 
@@ -108,6 +109,7 @@ function BoardmemberModal({ isOpen, setIsOpen, form }: ModalProps) {
 
 function BoardMembers() {
   const [isOpen, setIsOpen] = useState(false);
+  const session = useSession();
 
   const form = useZodForm({
     reValidateMode: 'onSubmit',
@@ -135,11 +137,18 @@ function BoardMembers() {
             <tr
               className='border-b bg-white transition duration-300 ease-in-out hover:bg-primary/10'
               onClick={e => {
-                e.preventDefault();
-                Object.entries(row.original).forEach(([key, value]) =>
-                  form.setValue(key as keyof Boardmembers, value)
-                );
-                setIsOpen(curr => !curr);
+                if (
+                  session.data?.user?.name === 'Cody Diamond' ||
+                  session.data?.user?.name === 'Lynette Diamond' ||
+                  session.data?.user?.name === 'Laura Sartwelle' ||
+                  session.data?.user?.name === 'Markie Owen'
+                ) {
+                  e.preventDefault();
+                  Object.entries(row.original).forEach(([key, value]) =>
+                    form.setValue(key as keyof Boardmembers, value)
+                  );
+                  setIsOpen(curr => !curr);
+                }
               }}
             >
               {row.getVisibleCells().map(cell => {
