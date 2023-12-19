@@ -137,28 +137,23 @@ export const members = router({
         memberInput.businessName ??
         `${memberInput.firstName.trim()} ${memberInput.lastName.trim()}`;
 
-      // Check if Updating a member
-      const existingMember = await getMember(
-        {
-          fullName,
-          memberStatus: 'Annual',
-        },
-        ctx.prisma
-      );
+      // Check if Updating a member (Able to update annual to life member)
+      const existingMember = await getMember({ fullName }, ctx.prisma);
 
+      const today = new Date();
       if (existingMember) {
-        console.log('Updating member');
+        console.log('Updating membership status');
         await ctx.prisma.$transaction(async tx => {
           await tx.member.update({
             where: { fullName },
-            data: { ...memberInput },
+            data: { ...memberInput, membershipDate: today },
           });
 
           const queries = horses?.map(horse =>
             tx.horse.upsert({
               where: { horseRN: horse.horseRN },
               create: { ...horse, memberName: fullName },
-              update: { ...horse },
+              update: { ...horse, registrationDate: today },
             })
           );
 
@@ -296,6 +291,7 @@ async function addMember(
           memberInput.businessName ??
           `${memberInput.firstName.trim()} ${memberInput.lastName.trim()}`,
         ...memberInput,
+        membershipDate: new Date(),
       },
     });
   } catch (error) {
