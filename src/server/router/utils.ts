@@ -1,28 +1,6 @@
 import { HorseForm } from '@/utils/zodschemas';
-import { Horse, Prisma, Status } from '@prisma/client';
+import { Horse, Status } from '@prisma/client';
 import { MyPrismaClient } from '../prisma';
-
-export function prepareCombos(
-  combos: Array<Prisma.RiderComboCreateManyInput> | undefined
-) {
-  if (!combos) {
-    return [];
-  }
-
-  return combos.map(combo => {
-    return { horseName: combo.horseName, division: combo.division };
-  });
-}
-
-// eslint-disable-next-line
-export function groupBy<TObj>(arr: Array<TObj>, fn: (item: TObj) => any) {
-  return arr.reduce<Record<string, Array<TObj>>>((prev, curr) => {
-    const groupKey = fn(curr);
-    const group = prev[groupKey] || [];
-    group.push(curr);
-    return { ...prev, [groupKey]: group };
-  }, {});
-}
 
 export function groupByFunc<
   RetType extends PropertyKey,

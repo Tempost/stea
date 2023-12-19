@@ -4,7 +4,7 @@ import { NonMemberHorseOwnerOptionalDefaultsSchema } from '@/server/prisma/zod-g
 import { MemberOptionalDefaultsSchema } from '@/server/prisma/zod-generated/modelSchema/MemberSchema';
 import { DivisionSchema } from '@/server/prisma/zod-generated/inputTypeSchemas/DivisionSchema';
 import { ShowTypeSchema } from '@/server/prisma/zod-generated/inputTypeSchemas/ShowTypeSchema';
-import { EntrySchema } from '@/server/utils';
+import { CSVEntrySchema } from '@/server/utils';
 
 export const HorseFormSchema = HorseOptionalDefaultsSchema.omit({
   memberName: true,
@@ -27,13 +27,13 @@ export type MemberForm = z.infer<typeof MemberFormSchema>;
 export type OwnerHorseForm = z.infer<typeof OwnerHorseFormSchema>;
 export type HorseForm = z.infer<typeof HorseFormSchema>;
 
-export const EntryReviewSchema = z.object({
+const EntryReviewSchema = z.object({
   fullName: z.string(),
   horseRN: z.string(),
   division: DivisionSchema,
   countInDivision: z.number(),
   rideType: ShowTypeSchema,
-  placing: EntrySchema.shape.placing,
+  placing: CSVEntrySchema.shape.placing,
   points: z.number(),
 });
 export type EntryReviewType = z.infer<typeof EntryReviewSchema>;

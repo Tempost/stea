@@ -2,7 +2,7 @@ import { DashboardLayout } from '@/components/layout/DashboardLayout';
 
 import { ReactElement, useReducer } from 'react';
 import Select from '@/components/styled-ui/Select';
-import { Entry } from '@/server/utils';
+import { CSVEntry } from '@/server/utils';
 import { isZodFieldError, ZodFieldErrors } from '@/types/common';
 import { readableDateTime } from '@/utils/helpers';
 import useZodForm from '@/utils/usezodform';
@@ -38,19 +38,19 @@ const initOptions: ReactPayPalScriptOptions = {
 type StatusMessage = 'SUCCESS' | 'ERROR' | 'INIT';
 interface ComponentActions {
   type: 'REVIEW' | 'SUBMIT' | 'RESET' | 'ERROR';
-  data?: string | SubmitPointsError | EntryReviewType[];
+  data?: string | SubmitPointsError | Array<EntryReviewType>;
   totalEntries?: number;
 }
 
 interface SubmitPointsError {
   message: string;
-  errors?: ZodFieldErrors<Entry>;
+  errors?: ZodFieldErrors<CSVEntry>;
 }
 
 interface SubmitPointsState {
   reviewStatus: StatusMessage;
   submissionStatus: StatusMessage;
-  entries: EntryReviewType[] | undefined;
+  entries: Array<EntryReviewType> | undefined;
   totalEntries: number;
   error: SubmitPointsError | undefined;
 }
@@ -150,7 +150,7 @@ function SubmitPoints() {
       if (!res.ok) {
         const error = await res.json().then(data => data);
         dispatch({ type: 'RESET' });
-        if (isZodFieldError<Entry>(error.data)) {
+        if (isZodFieldError<CSVEntry>(error.data)) {
           console.log(error.data);
           dispatch({
             type: 'ERROR',

@@ -3,13 +3,8 @@ import { ShowType } from '@prisma/client';
 import { PropsWithChildren } from 'react';
 import { typeToFlattenedError } from 'zod';
 
-export class ParseError extends Error {}
-
-export const FORMTYPE = ['Individual', 'Business', 'Horse'] as const;
+const FORMTYPE = ['Individual', 'Business', 'Horse'] as const;
 export type FormType = (typeof FORMTYPE)[number];
-
-export const STATUS = ['Life', 'Annual', 'Renew'] as const;
-export type Statuskey = (typeof STATUS)[number];
 
 export type ZodFieldErrors<T> = typeToFlattenedError<T, string>['fieldErrors'];
 export function isZodFieldError<T>(
@@ -31,4 +26,3 @@ export type GroupedEntries = Record<
 export type PointsMap = Record<ShowType, Record<CSVEntry['placing'], number>>;
 
 export type LayoutProps = PropsWithChildren;
-export interface HeaderProps extends PropsWithChildren {}

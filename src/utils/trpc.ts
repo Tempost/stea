@@ -44,11 +44,6 @@ export const trpc = createTRPCNext<AppRouter>({
 
 export type RouterInput = inferRouterInputs<AppRouter>;
 export type RouterOutputs = inferRouterOutputs<AppRouter>;
-export type RouterSomething = inferRouterDef<AppRouter>;
+export type RouterDef = inferRouterDef<AppRouter>;
 
 export type AppQueries = AppRouter['_def']['procedures'];
-
-// Name the different routers available
-export type TRouters = keyof AppQueries;
-
-export type MemberAddMutation = AppQueries['members']['add'];

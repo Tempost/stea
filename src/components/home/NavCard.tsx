@@ -2,7 +2,7 @@ import NextLink, { LinkProps } from 'next/link';
 import Image from 'next/image';
 import { ReactNode } from 'react';
 
-export interface NavCardProps extends LinkProps {
+interface NavCardProps extends LinkProps {
   img: string;
   bodyText: ReactNode;
 }

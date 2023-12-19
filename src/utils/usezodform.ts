@@ -7,7 +7,7 @@ import type { ZodSchema, TypeOf } from 'zod';
  * This will be passed to the base UseFormProps type, omitting
  * the resolver field.
  */
-export interface UseZodFormProps<TSchema extends ZodSchema>
+interface UseZodFormProps<TSchema extends ZodSchema>
   extends Exclude<UseFormProps<TypeOf<TSchema>>, 'resolver'> {
   schema: TSchema;
 }

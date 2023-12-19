@@ -1,4 +1,4 @@
-export interface ContactCardProps {
+interface ContactCardProps {
   name: string | null;
   position: string;
   email: string | null;

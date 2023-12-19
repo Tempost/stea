@@ -12,11 +12,11 @@ import type { Session } from 'next-auth';
 import type { AppProps } from 'next/app';
 import type { PropsWithChildren, ReactElement, ReactNode } from 'react';
 
-export type NextPageWithLayout = NextPage & {
+type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
 
-export interface AppPropsWithLayout extends AppProps<{ session?: Session }> {
+interface AppPropsWithLayout extends AppProps<{ session?: Session }> {
   Component: NextPageWithLayout;
 }
 

@@ -1,10 +1,9 @@
-import { Fragment, PropsWithChildren } from 'react';
 import { Hamburger, MobileMenu } from '@/components/icons';
 import LinkWrapper from '@/components/LinkWrapper';
-import { publicMenuItems, dashMenuItems } from '@/components/MenuItems';
+import { dashMenuItems, publicMenuItems } from '@/components/MenuItems';
 import Link from 'next/link';
+import { Fragment, PropsWithChildren } from 'react';
 
-// TODO: Please type my props
 export const ResponsiveHeader = ({ children }: PropsWithChildren) => {
   return (
     <div className='drawer'>
@@ -68,29 +67,6 @@ export const ResponsiveHeader = ({ children }: PropsWithChildren) => {
     </div>
   );
 };
-
-export const DashboardHeader = () => (
-  <nav
-    className='navbar z-50 w-full bg-gradient-to-b from-blue-700 
-    to-blue-800 font-semibold text-gray-300 shadow-sm'
-  >
-    <div className='navbar-start dropdown'>
-      <ul className='dropdown-content menu rounded-box menu-horizontal p-0 lg:text-xl'>
-        {dashMenuItems.map(({ href, name, render }) => (
-          <Fragment key={name}>
-            {render ? (
-              render({ href, name })
-            ) : (
-              <li>
-                <LinkWrapper href={href}>{name}</LinkWrapper>
-              </li>
-            )}
-          </Fragment>
-        ))}
-      </ul>
-    </div>
-  </nav>
-);
 
 export const ResponsiveDashboardHeader = () => (
   <div

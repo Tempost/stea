@@ -9,9 +9,8 @@ const t = initTRPC.context<Context>().create({
 
 export const router = t.router;
 export const procedure = t.procedure;
-export const merge = t.mergeRouters;
 
-export const isBoardMember = t.middleware(async ({ ctx, next }) => {
+const isBoardMember = t.middleware(async ({ ctx, next }) => {
   if (!ctx.token) {
     throw new TRPCError({ code: 'UNAUTHORIZED' });
   }

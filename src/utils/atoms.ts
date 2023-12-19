@@ -123,7 +123,7 @@ const changeSelectionAtom = atom(
   (_get, set, newSelection: string) => set(ownerTypeAtom, newSelection)
 );
 
-const entryAtom = atom<EntryReviewType[] | undefined>(undefined);
+const entryAtom = atom<Array<EntryReviewType> | undefined>(undefined);
 
 export {
   formState,

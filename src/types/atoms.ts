@@ -22,8 +22,6 @@ export interface HorsePayload {
 
 export type MemberPayload = Status;
 
-export type ValidDir = 'left' | 'right';
-
 export interface MonthAction {
   dir: string;
 }
