@@ -39,8 +39,32 @@ const defaultCols: Array<ColumnDef<Horse>> = [
   },
 ];
 
+function getRegistrationEnd() {
+  const currDate = new Date();
+  const registrationEnd = new Date(currDate.getFullYear(), 10, 30);
+
+  // If the current month is decemeber
+  if (currDate.getMonth() == 11) {
+    registrationEnd.setFullYear(registrationEnd.getFullYear() + 1);
+  }
+
+  return registrationEnd;
+}
+
 function HorseTable({ overRideDefaultCols, ...props }: HorseTableProps) {
-  const horses = trpc.horses.all.useQuery();
+  const horses = trpc.horses.all.useQuery({
+    where: {
+      OR: [{ regType: 'Life' }, { registrationEnd: getRegistrationEnd() }],
+    },
+    select: {
+      horseRN: true,
+      regType: true,
+      owner: true,
+    },
+    orderBy: {
+      regType: 'asc',
+    },
+  });
 
   return (
     <TableWithData
