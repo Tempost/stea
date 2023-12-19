@@ -62,8 +62,8 @@ interface EntryParseResults {
   failed: Array<ValidationError>;
 }
 
-async function nodeCsvParser(csv: string): EntryParseResults {
-  const entries = {
+async function nodeCsvParser(csv: string) {
+  const entries: EntryParseResults = {
     successful: [],
     failed: [],
   };
