@@ -149,13 +149,6 @@ function NewMemberForm() {
             {...register('email')}
           />
 
-          <Input
-            className='input-bordered input-primary input w-full md:input-sm'
-            type='text'
-            label='USEA Member ID'
-            {...register('useaMemberID', { valueAsNumber: true })}
-          />
-
           <ControlledDatePicker
             name='dateOfBirth'
             label='Date of Birth'
