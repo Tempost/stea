@@ -1,6 +1,6 @@
 import { prisma } from '@/server/prisma';
 import { getKeys, groupByFunc } from '@/server/router/utils';
-import { CSVEntry, CSVEntrySchema, Entry } from '@/server/utils';
+import { CSVEntry, CSVEntrySchema } from '@/server/utils';
 import {
   EntriesRideType,
   EntriesRideTypeDivison,
@@ -27,7 +27,7 @@ export default async function handler(
 
   const token = await getToken({ req });
   if (!token) {
-    console.error('Attempted to access api protected by auth.');
+    console.warn('Attempted to access api protected by auth.');
     return res.status(401).end();
   }
 
@@ -35,6 +35,7 @@ export default async function handler(
     const entries = await nodeCsvParser(req.body);
 
     if (entries.failed.length != 0) {
+      console.warn('Trouble parsing csv', entries.failed);
       return res.status(412).json({ success: false, data: entries.failed });
     }
 
@@ -61,8 +62,8 @@ interface EntryParseResults {
   failed: Array<ValidationError>;
 }
 
-async function nodeCsvParser(csv: string) {
-  const entries: EntryParseResults = {
+async function nodeCsvParser(csv: string): EntryParseResults {
+  const entries = {
     successful: [],
     failed: [],
   };
@@ -97,7 +98,7 @@ async function nodeCsvParser(csv: string) {
   return entries;
 }
 
-function groupEntries(entries: Array<Entry>) {
+function groupEntries(entries: Array<CSVEntry>) {
   // Group each entry by the type of ride they did (CT/HT/Derby)
   const rideTypes: EntriesRideType = groupByFunc(entries, e => e.rideType);
 
@@ -141,6 +142,7 @@ const POINTS: PointsMap = {
     E: 0,
     W: 0,
     RF: 0,
+    TE: 0,
   },
   Derby: {
     '1': 4.5,
@@ -155,6 +157,7 @@ const POINTS: PointsMap = {
     E: 0,
     W: 0,
     RF: 0,
+    TE: 0,
   },
   HT: {
     '1': 6,
@@ -169,11 +172,12 @@ const POINTS: PointsMap = {
     E: 0,
     W: 0,
     RF: 0,
+    TE: 0,
   },
 };
 
 function calculatePoints(
-  placing: Entry['placing'],
+  placing: CSVEntry['placing'],
   showType: ShowType,
   countInDivison: number
 ): number {
@@ -237,9 +241,9 @@ async function checkforMembership(entries: GroupedEntries) {
               )
               .catch(error => {
                 if (error instanceof Prisma.PrismaClientKnownRequestError) {
-                  console.log(error.message);
+                  console.error(error.message);
                 } else {
-                  console.log('Unexpected erorr', error);
+                  console.error('Unexpected erorr', error);
                 }
               })
           );

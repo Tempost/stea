@@ -3,7 +3,7 @@ import { Horse, Prisma, Status } from '@prisma/client';
 import { MyPrismaClient } from '../prisma';
 
 export function prepareCombos(
-  combos: Prisma.RiderComboCreateManyInput[] | undefined
+  combos: Array<Prisma.RiderComboCreateManyInput> | undefined
 ) {
   if (!combos) {
     return [];
@@ -15,8 +15,8 @@ export function prepareCombos(
 }
 
 // eslint-disable-next-line
-export function groupBy<TObj>(arr: TObj[], fn: (item: TObj) => any) {
-  return arr.reduce<Record<string, TObj[]>>((prev, curr) => {
+export function groupBy<TObj>(arr: Array<TObj>, fn: (item: TObj) => any) {
+  return arr.reduce<Record<string, Array<TObj>>>((prev, curr) => {
     const groupKey = fn(curr);
     const group = prev[groupKey] || [];
     group.push(curr);
@@ -28,7 +28,7 @@ export function groupByFunc<
   RetType extends PropertyKey,
   TObj,
   Func extends (arg: TObj) => RetType
->(arr: TObj[], mapper: Func): Record<RetType, TObj[]> {
+>(arr: Array<TObj>, mapper: Func): Record<RetType, Array<TObj>> {
   return arr.reduce((accumulator, val) => {
     const groupedKey = mapper(val);
     if (!accumulator[groupedKey]) {
@@ -36,7 +36,7 @@ export function groupByFunc<
     }
     accumulator[groupedKey].push(val);
     return accumulator;
-  }, {} as Record<RetType, TObj[]>);
+  }, {} as Record<RetType, Array<TObj>>);
 }
 
 // Get Keys and assert correct key types instead of just string
@@ -54,7 +54,7 @@ export async function checkForExistingMember(
   });
 }
 
-export const horseNames = (horses: HorseForm | Horse[]) =>
+export const horseNames = (horses: HorseForm | Array<Horse>) =>
   horses.map(horse => horse.horseRN);
 
 export async function checkExistingHorses(

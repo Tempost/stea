@@ -25,7 +25,7 @@ export default async function handler(
 
   const token = await getToken({ req });
   if (!token) {
-    console.error('Attempted to access api protected by auth.');
+    console.warn('Attempted to access api protected by auth.');
     return res.status(401).json({ message: 'Access Not Allowed.' });
   }
 
@@ -41,7 +41,7 @@ export default async function handler(
   });
 
   if (!existingShow) {
-    console.error("Attempted to update show that doesn't exist.");
+    console.warn("Attempted to update show that doesn't exist.");
     return res.status(400).json({
       message: 'Selected show not found or points were already submitted.',
     });
@@ -55,8 +55,6 @@ export default async function handler(
   if (year == currentDate.getFullYear() && existingShow.showDate > capDate) {
     year += 1;
   }
-
-  console.log(year);
 
   for (const entry of body) {
     const relations = {
