@@ -1,7 +1,7 @@
 import Input from '@/components/data-entry/Input';
 import Form from '@/components/forms/Form';
 import TableWithData from '@/components/tables/BaseTable';
-import { Boardmember, BoardmemberSchema } from '@/server/prisma/zod-generated';
+import { Boardmember, BoardmemberSchema } from '@/server/prisma/zod-generated/modelSchema/BoardmemberSchema';
 import { mapping } from '@/server/utils';
 import { RouterOutputs, trpc } from '@/utils/trpc';
 import useZodForm from '@/utils/usezodform';
