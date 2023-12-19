@@ -12,7 +12,6 @@ export const MemberUncheckedCreateWithoutHorseInputSchema: z.ZodType<Prisma.Memb
   firstName: z.string().trim().min(1, { message: "First Name is required" }),
   lastName: z.string().trim().min(1, { message: "Last Name is required" }),
   fullName: z.string().trim(),
-  boardMember: z.boolean().optional(),
   address: z.string().trim().min(1, { message: "Address is required" }),
   city: z.string().trim().min(1, { message: "City is required" }),
   state: z.string().trim().min(1, { message: "State is required" }),
@@ -29,7 +28,6 @@ export const MemberUncheckedCreateWithoutHorseInputSchema: z.ZodType<Prisma.Memb
   memberStatusType: z.lazy(() => StatusTypeSchema),
   dateOfBirth: z.coerce.date().optional().nullable(),
   zip: z.number().int({message: "Zipcode is required"}),
-  useaMemberID: z.number().int().optional().nullable(),
   RiderCombo: z.lazy(() => RiderComboUncheckedCreateNestedManyWithoutMemberInputSchema).optional()
 }).strict();
 

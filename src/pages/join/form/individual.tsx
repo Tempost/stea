@@ -23,7 +23,6 @@ import RegistrationYearSelect from '@/components/forms/RegistrationYearSelect';
 function IndividualRegistration() {
   const [payment, togglePayment] = useState(false);
   const [isRegHorse, toggleRegHorse] = useState(false);
-  const [isUSEAMember, toggleUSEAInput] = useState(false);
   const update = useSetAtom(updateFormState);
 
   const checkMember = trpc.members.exists.useMutation({
@@ -41,7 +40,6 @@ function IndividualRegistration() {
     defaultValues: {
       memberInput: {
         businessName: null,
-        useaMemberID: null,
         dateOfBirth: null,
         memberType: 'Individual',
         membershipEnd: null,
@@ -72,16 +70,6 @@ function IndividualRegistration() {
 
   function handleRegHorseCheck() {
     toggleRegHorse(curr => !curr);
-  }
-
-  function handleUSEACheck() {
-    if (isUSEAMember) {
-      form.resetField('memberInput.useaMemberID');
-    }
-
-    toggleUSEAInput(curr => {
-      return !curr;
-    });
   }
 
   return (
@@ -211,25 +199,6 @@ function IndividualRegistration() {
             <MemberType register={register('memberInput.memberStatusType')} />
 
             <Under18 dateName='memberInput.dateOfBirth' />
-          </div>
-
-          <div className='flex gap-2'>
-            <Checkbox
-              label='Current USEA Member?'
-              checked={isUSEAMember}
-              onChange={handleUSEACheck}
-            />
-
-            {isUSEAMember && (
-              <Input
-                type='number'
-                className='input-bordered input-primary input w-full md:input-sm'
-                placeholder='USEA Member ID'
-                {...register('memberInput.useaMemberID', {
-                  valueAsNumber: true,
-                })}
-              />
-            )}
           </div>
 
           <Checkbox

@@ -11,7 +11,6 @@ export const MemberOrderByWithRelationInputSchema: z.ZodType<Prisma.MemberOrderB
   firstName: z.lazy(() => SortOrderSchema).optional(),
   lastName: z.lazy(() => SortOrderSchema).optional(),
   fullName: z.lazy(() => SortOrderSchema).optional(),
-  boardMember: z.lazy(() => SortOrderSchema).optional(),
   address: z.lazy(() => SortOrderSchema).optional(),
   city: z.lazy(() => SortOrderSchema).optional(),
   state: z.lazy(() => SortOrderSchema).optional(),
@@ -28,7 +27,6 @@ export const MemberOrderByWithRelationInputSchema: z.ZodType<Prisma.MemberOrderB
   memberStatusType: z.lazy(() => SortOrderSchema).optional(),
   dateOfBirth: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   zip: z.lazy(() => SortOrderSchema).optional(),
-  useaMemberID: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   RiderCombo: z.lazy(() => RiderComboOrderByRelationAggregateInputSchema).optional(),
   Horse: z.lazy(() => HorseOrderByRelationAggregateInputSchema).optional()
 }).strict();

@@ -8,7 +8,6 @@ export const MemberMaxOrderByAggregateInputSchema: z.ZodType<Prisma.MemberMaxOrd
   firstName: z.lazy(() => SortOrderSchema).optional(),
   lastName: z.lazy(() => SortOrderSchema).optional(),
   fullName: z.lazy(() => SortOrderSchema).optional(),
-  boardMember: z.lazy(() => SortOrderSchema).optional(),
   address: z.lazy(() => SortOrderSchema).optional(),
   city: z.lazy(() => SortOrderSchema).optional(),
   state: z.lazy(() => SortOrderSchema).optional(),
@@ -24,8 +23,7 @@ export const MemberMaxOrderByAggregateInputSchema: z.ZodType<Prisma.MemberMaxOrd
   memberStatus: z.lazy(() => SortOrderSchema).optional(),
   memberStatusType: z.lazy(() => SortOrderSchema).optional(),
   dateOfBirth: z.lazy(() => SortOrderSchema).optional(),
-  zip: z.lazy(() => SortOrderSchema).optional(),
-  useaMemberID: z.lazy(() => SortOrderSchema).optional()
+  zip: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export default MemberMaxOrderByAggregateInputSchema;

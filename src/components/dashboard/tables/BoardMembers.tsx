@@ -7,7 +7,7 @@ import { RouterOutputs, trpc } from '@/utils/trpc';
 import useZodForm from '@/utils/usezodform';
 import { ColumnDef, flexRender } from '@tanstack/react-table';
 import { SetStateAction } from 'jotai';
-import { getSession, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { Dispatch, useState } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 

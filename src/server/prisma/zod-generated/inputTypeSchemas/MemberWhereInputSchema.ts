@@ -2,10 +2,10 @@ import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
 import { DateTimeNullableFilterSchema } from './DateTimeNullableFilterSchema';
 import { StringFilterSchema } from './StringFilterSchema';
-import { BoolFilterSchema } from './BoolFilterSchema';
 import { EnumPhoneTypeFilterSchema } from './EnumPhoneTypeFilterSchema';
 import { PhoneTypeSchema } from './PhoneTypeSchema';
 import { StringNullableFilterSchema } from './StringNullableFilterSchema';
+import { BoolFilterSchema } from './BoolFilterSchema';
 import { EnumTypeFilterSchema } from './EnumTypeFilterSchema';
 import { TypeSchema } from './TypeSchema';
 import { EnumStatusFilterSchema } from './EnumStatusFilterSchema';
@@ -13,7 +13,6 @@ import { StatusSchema } from './StatusSchema';
 import { EnumStatusTypeFilterSchema } from './EnumStatusTypeFilterSchema';
 import { StatusTypeSchema } from './StatusTypeSchema';
 import { IntFilterSchema } from './IntFilterSchema';
-import { IntNullableFilterSchema } from './IntNullableFilterSchema';
 import { RiderComboListRelationFilterSchema } from './RiderComboListRelationFilterSchema';
 import { HorseListRelationFilterSchema } from './HorseListRelationFilterSchema';
 
@@ -26,7 +25,6 @@ export const MemberWhereInputSchema: z.ZodType<Prisma.MemberWhereInput> = z.obje
   firstName: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   lastName: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   fullName: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  boardMember: z.union([ z.lazy(() => BoolFilterSchema),z.boolean() ]).optional(),
   address: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   city: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   state: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
@@ -43,7 +41,6 @@ export const MemberWhereInputSchema: z.ZodType<Prisma.MemberWhereInput> = z.obje
   memberStatusType: z.union([ z.lazy(() => EnumStatusTypeFilterSchema),z.lazy(() => StatusTypeSchema) ]).optional(),
   dateOfBirth: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
   zip: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
-  useaMemberID: z.union([ z.lazy(() => IntNullableFilterSchema),z.number() ]).optional().nullable(),
   RiderCombo: z.lazy(() => RiderComboListRelationFilterSchema).optional(),
   Horse: z.lazy(() => HorseListRelationFilterSchema).optional()
 }).strict();

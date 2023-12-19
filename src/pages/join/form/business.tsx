@@ -36,7 +36,6 @@ function BusinessRegistration() {
     schema: MemberFormSchema,
     defaultValues: {
       memberInput: {
-        useaMemberID: null,
         dateOfBirth: null,
         memberType: 'Business',
         memberStatusType: 'Professional',

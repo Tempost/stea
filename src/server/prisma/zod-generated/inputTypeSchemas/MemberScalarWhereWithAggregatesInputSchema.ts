@@ -2,10 +2,10 @@ import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
 import { DateTimeNullableWithAggregatesFilterSchema } from './DateTimeNullableWithAggregatesFilterSchema';
 import { StringWithAggregatesFilterSchema } from './StringWithAggregatesFilterSchema';
-import { BoolWithAggregatesFilterSchema } from './BoolWithAggregatesFilterSchema';
 import { EnumPhoneTypeWithAggregatesFilterSchema } from './EnumPhoneTypeWithAggregatesFilterSchema';
 import { PhoneTypeSchema } from './PhoneTypeSchema';
 import { StringNullableWithAggregatesFilterSchema } from './StringNullableWithAggregatesFilterSchema';
+import { BoolWithAggregatesFilterSchema } from './BoolWithAggregatesFilterSchema';
 import { EnumTypeWithAggregatesFilterSchema } from './EnumTypeWithAggregatesFilterSchema';
 import { TypeSchema } from './TypeSchema';
 import { EnumStatusWithAggregatesFilterSchema } from './EnumStatusWithAggregatesFilterSchema';
@@ -13,7 +13,6 @@ import { StatusSchema } from './StatusSchema';
 import { EnumStatusTypeWithAggregatesFilterSchema } from './EnumStatusTypeWithAggregatesFilterSchema';
 import { StatusTypeSchema } from './StatusTypeSchema';
 import { IntWithAggregatesFilterSchema } from './IntWithAggregatesFilterSchema';
-import { IntNullableWithAggregatesFilterSchema } from './IntNullableWithAggregatesFilterSchema';
 
 export const MemberScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.MemberScalarWhereWithAggregatesInput> = z.object({
   AND: z.union([ z.lazy(() => MemberScalarWhereWithAggregatesInputSchema),z.lazy(() => MemberScalarWhereWithAggregatesInputSchema).array() ]).optional(),
@@ -24,7 +23,6 @@ export const MemberScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.Member
   firstName: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   lastName: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   fullName: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
-  boardMember: z.union([ z.lazy(() => BoolWithAggregatesFilterSchema),z.boolean() ]).optional(),
   address: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   city: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   state: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
@@ -41,7 +39,6 @@ export const MemberScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.Member
   memberStatusType: z.union([ z.lazy(() => EnumStatusTypeWithAggregatesFilterSchema),z.lazy(() => StatusTypeSchema) ]).optional(),
   dateOfBirth: z.union([ z.lazy(() => DateTimeNullableWithAggregatesFilterSchema),z.coerce.date() ]).optional().nullable(),
   zip: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
-  useaMemberID: z.union([ z.lazy(() => IntNullableWithAggregatesFilterSchema),z.number() ]).optional().nullable(),
 }).strict();
 
 export default MemberScalarWhereWithAggregatesInputSchema;

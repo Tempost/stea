@@ -30,10 +30,6 @@ export const MemberSchema = z.object({
   firstName: z.string().trim().min(1, { message: "First Name is required" }),
   lastName: z.string().trim().min(1, { message: "Last Name is required" }),
   fullName: z.string().trim(),
-  /**
-   * Field to determine who is a board member, very few
-   */
-  boardMember: z.boolean(),
   address: z.string().trim().min(1, { message: "Address is required" }),
   city: z.string().trim().min(1, { message: "City is required" }),
   state: z.string().trim().min(1, { message: "State is required" }),
@@ -49,7 +45,6 @@ export const MemberSchema = z.object({
   membershipEnd: z.coerce.date().nullable(),
   dateOfBirth: z.coerce.date().nullable(),
   zip: z.number().int({message: "Zipcode is required"}),
-  useaMemberID: z.number().int().nullable(),
 })
 
 export type Member = z.infer<typeof MemberSchema>
@@ -70,10 +65,6 @@ export const MemberOptionalDefaultsSchema = MemberSchema.merge(z.object({
   phoneType: PhoneTypeSchema.optional(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  /**
-   * Field to determine who is a board member, very few
-   */
-  boardMember: z.boolean().optional(),
   /**
    * Member needs to be confirmed by boardmember from dashboard
    */
