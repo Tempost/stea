@@ -35,12 +35,10 @@ function NewMemberForm() {
     },
   });
 
-  // TODO: Better type after creating form
   function onSubmit(formValues: z.infer<typeof MemberFormSchema.shape.memberInput>) {
     insert.mutate(formValues);
   }
 
-  // Issue with using space-x-1 with the buttons
   return (
     <Modal
       id='new-member-form'

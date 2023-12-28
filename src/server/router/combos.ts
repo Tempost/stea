@@ -61,18 +61,6 @@ export const riders = router({
     .input(RiderComboWhereUniqueInputSchema)
     .mutation(async ({ input, ctx }) => {
       await fetchRiderCombo(input, ctx.prisma);
-
-      // TODO: Find out why this returns empty obj
-      // return await prisma.riderCombo.delete({
-      //   where: {
-      //     uid: rider.uid,
-      //   },
-      //   select: {
-      //     memberName: true,
-      //     horseName: true,
-      //     division: true,
-      //   },
-      // });
     }),
 });
 

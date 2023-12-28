@@ -3,21 +3,27 @@ import TableWithData from '@/components/tables/BaseTable';
 import { readableDateTime } from '@/utils/helpers';
 import { RouterOutputs, trpc } from '@/utils/trpc';
 import { ColumnDef } from '@tanstack/react-table';
+import { ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
 
 type Member = RouterOutputs['members']['all'][number];
 
-interface EmailListProps {
+interface EmailListProps
+  extends DetailedHTMLProps<
+    ButtonHTMLAttributes<HTMLButtonElement>,
+    HTMLButtonElement
+  > {
   emails: Array<string>;
 }
 
-function EmailList({ emails }: EmailListProps) {
+function EmailList({ emails, className, ...props }: EmailListProps) {
   const noDupes = emails.filter(
     (item, idx, self) => idx === self.indexOf(item)
   );
 
   return (
     <button
-      className='btn-primary btn-sm btn'
+      {...props}
+      className={`btn-primary btn-sm btn ${className ? className : ''}`}
       onClick={() => navigator.clipboard.writeText(noDupes.join('\n'))}
     >
       Email List
@@ -110,15 +116,14 @@ function DashboardMembers() {
 
   return (
     <div>
-      <div
-        className='tooltip'
-        data-tip='Copied!'
-      >
+      <div>
         <EmailList
+          className='tooltip'
+          data-tip='Copied!'
           emails={members.data ? members.data?.map(member => member.email) : []}
         />
+        <NewMemberForm />
       </div>
-      <NewMemberForm />
       <TableWithData
         extraTableOpts={{
           columns,
