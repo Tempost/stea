@@ -1,49 +1,34 @@
 import { ChangeEvent, useState } from 'react';
 import ControlledDatePicker from '../data-entry/Date';
-import Radio from '../data-entry/Radio';
+import Checkbox from '../data-entry/Checkbox';
 
 interface Props {
   dateName: string;
 }
 
 function Under18({ dateName }: Props) {
-  const [radioState, setRadioState] = useState(true);
+  const [isUnder18, setIsUnder18] = useState(true);
 
   function handleRadioChange(e: ChangeEvent<HTMLInputElement>) {
-    const isTrue = e.target.value === 'true' && true;
-    setRadioState(!isTrue);
+    setIsUnder18(e.target.checked);
   }
 
-  // TODO: Change from radio to checkbox
   return (
     <>
-      <div className='mt-3 w-fit'>
-        <h3>Is applicant under 18*</h3>
-        <Radio
-          name='age'
-          label='Yes'
-          value='true'
-          className='radio-primary radio align-middle md:radio-sm'
-          onChange={handleRadioChange}
-        />
+      <Checkbox
+        name='age'
+        label='Is the applicant under 18?'
+        value='true'
+        className='checkbox-primary checkbox align-middle md:checkbox-sm'
+        onChange={handleRadioChange}
+      />
 
-        <Radio
-          name='age'
-          label='No'
-          value='false'
-          className='radio-primary radio align-middle md:radio-sm'
-          onChange={handleRadioChange}
-        />
-      </div>
-
-      <div className='w-fit'>
-        <ControlledDatePicker
-          name={dateName}
-          hidden={Boolean(radioState)}
-          placeholderText='Date of Birth'
-          labelAlt='Membership year runs from Dec 1st to Nov 30th of each show year.'
-        />
-      </div>
+      <ControlledDatePicker
+        name={dateName}
+        hidden={isUnder18}
+        placeholderText='Date of Birth'
+        labelAlt='Membership year runs from Dec 1st to Nov 30th of each show year.'
+      />
     </>
   );
 }

@@ -21,9 +21,9 @@ function ControlledDatePicker({
 }: DatePickerProps) {
   const { control } = useFormContext();
   return (
-    <div className={`${hidden ? 'hidden' : ''} `}>
+    <div className={`${hidden ? '' : 'hidden'} `}>
       <Controller
-        name={name ?? ''}
+        name={name}
         control={control}
         render={props => {
           return (
