@@ -152,6 +152,14 @@ function Home() {
                 sizes='100vw, 50vw'
                 alt='Logo for riding warehouse, outline of horse head with "Sneak Away Riding Club".'
               />
+
+              <Image
+                src='/diamond_riding.png'
+                width={300}
+                height={300}
+                sizes='100vw, 50vw'
+                alt='Logo for riding warehouse, outline of horse head with "Sneak Away Riding Club".'
+              />
             </div>
           </div>
         </section>

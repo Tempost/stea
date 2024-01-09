@@ -9,7 +9,6 @@
   "parser": "@typescript-eslint/parser",
   "ignorePatterns": [
     "**/src/server/prisma/zod-generated",
-    "**/src/tests/**",
     "**/src/utils/seed"
   ],
   "rules": {
