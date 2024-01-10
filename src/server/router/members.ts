@@ -96,25 +96,30 @@ export const members = router({
       if (existingHorses) {
         const signedUp: typeof existingHorses | undefined = [];
         existingHorses.forEach(existingHorse => {
-          if (existingHorse.regType === 'Life') signedUp.push(existingHorse);
-          if (existingHorse.registrationEnd) {
-            const horseInput = input.horses?.find(
-              h => h.horseRN === existingHorse.horseRN
-            );
-            if (horseInput && horseInput.registrationEnd) {
-              if (
-                existingHorse.registrationEnd.getFullYear() >=
-                horseInput.registrationEnd.getFullYear()
-              ) {
-                signedUp.push(existingHorse);
+          if (existingHorse.regType === 'Life') {
+            signedUp.push(existingHorse);
+          } else {
+            // NOTE: This is here just incase registrationEnd is null/empty
+            if (existingHorse.registrationEnd) {
+              const horseInput = input.horses?.find(
+                h => h.horseRN === existingHorse.horseRN
+              );
+              if (horseInput && horseInput.registrationEnd) {
+                if (
+                  existingHorse.registrationEnd.getFullYear() >=
+                  horseInput.registrationEnd.getFullYear()
+                ) {
+                  signedUp.push(existingHorse);
+                }
               }
             }
           }
         });
 
         if (signedUp.length > 0) {
-          const message = `${horseNames(signedUp)}
-        ${signedUp.length > 1 ? 'have' : 'has'} already been registered.`;
+          const message = `${horseNames(signedUp)} ${
+            signedUp.length > 1 ? 'have' : 'has'
+          } already been registered.`;
 
           throw new TRPCError({
             code: 'CONFLICT',

@@ -82,6 +82,7 @@ function NewHorseForm() {
     defaultValues: {
       memberName: null,
       owner: null,
+      registrationEnd: null,
     },
   });
 
@@ -95,7 +96,7 @@ function NewHorseForm() {
   const utils = trpc.useContext();
   const insert = trpc.horses.add.useMutation({
     onSuccess() {
-      utils.members.invalidate();
+      utils.horses.invalidate();
       resetForm();
     },
   });

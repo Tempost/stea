@@ -4,7 +4,7 @@ import { HorseFormSchema } from '@/utils/zodschemas';
 import { HorseFindManyArgsSchema } from '../prisma/zod-generated/outputTypeSchemas/HorseFindManyArgsSchema';
 import { HorseWhereUniqueInputSchema } from '../prisma/zod-generated/inputTypeSchemas/HorseWhereUniqueInputSchema';
 import { HorseOptionalDefaultsSchema } from '../prisma/zod-generated/modelSchema/HorseSchema';
-import { checkExistingHorses, horseNames } from './utils';
+import { checkExistingHorses, horseNames, setMembershipYear } from './utils';
 
 export const horses = router({
   all: procedure
@@ -46,12 +46,17 @@ export const horses = router({
   add: dashboardProcedure
     .input(HorseOptionalDefaultsSchema)
     .mutation(async ({ input, ctx }) => {
+      if (input.regType === "Annual") {
+        input.registrationEnd = setMembershipYear();
+      }
+
       if (input.memberName !== null) {
         return await ctx.prisma.horse.create({
           data: {
             horseRN: input.horseRN,
             regType: input.regType,
             horseAKA: input.horseAKA,
+            registrationEnd: input.registrationEnd,
             memberOwner: {
               connect: {
                 fullName: input.memberName,
@@ -67,6 +72,7 @@ export const horses = router({
             horseRN: input.horseRN,
             regType: input.regType,
             horseAKA: input.horseAKA,
+            registrationEnd: input.registrationEnd,
             ownerRec: {
               connect: {
                 fullName: input.owner,
