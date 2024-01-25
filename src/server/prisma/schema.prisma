@@ -63,7 +63,7 @@ enum Position {
   AdultMemberAtLarge @map("Adult Member At Large")
   JuniorMemberAtLarge @map("Junior Member At Large")
   SocialMediaManager @map("Social Media Manager")
-  Membership
+  AwardsCoordinator @map("Awards Coordinator")
   Points
 }
 
