@@ -27,7 +27,7 @@ export default async function handler(
   // if (!token) {
   //   console.warn('Attempted to access api protected by auth.');
   //   return res.status(401).json({ message: 'Access Not Allowed.' });
-  }
+  // }
 
   const existingShow = await prisma.show.findUnique({
     where: {
