@@ -18,7 +18,8 @@ function Under18({ dateName }: Props) {
       <Checkbox
         name='age'
         label='Is the applicant under 18?'
-        value='true'
+        value='false'
+        defaultValue='off'
         className='checkbox-primary checkbox align-middle md:checkbox-sm'
         onChange={handleRadioChange}
       />
