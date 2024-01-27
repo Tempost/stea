@@ -25,11 +25,11 @@ export default async function handler(
     return res.status(405).end();
   }
 
-  // const token = await getToken({ req });
-  // if (!token) {
-  //   console.warn('Attempted to access api protected by auth.');
-  //   return res.status(401).end();
-  // }
+  const token = await getToken({ req });
+  if (!token) {
+    console.warn('Attempted to access api protected by auth.');
+    return res.status(401).end();
+  }
 
   try {
     const entries = await nodeCsvParser(req.body);

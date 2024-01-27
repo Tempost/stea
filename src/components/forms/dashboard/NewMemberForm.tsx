@@ -14,14 +14,21 @@ import { StatusTypeSchema } from '@/server/prisma/zod-generated/inputTypeSchemas
 import { trpc } from '@/utils/trpc';
 import { z } from 'zod';
 import { optionsFromObject } from '@/components/helpers';
+import { MemberOptionalDefaultsSchema } from '@/server/prisma/zod-generated';
+import Under18 from '../Under18';
 
 function NewMemberForm() {
   const form = useZodForm({
     reValidateMode: 'onSubmit',
     shouldFocusError: true,
-    schema: MemberFormSchema.shape.memberInput,
+    schema: MemberOptionalDefaultsSchema.omit({
+      fullName: true,
+      comments: true,
+    }),
     defaultValues: {
       businessName: null,
+      membershipEnd: null,
+      dateOfBirth: null,
     },
   });
 
@@ -35,9 +42,13 @@ function NewMemberForm() {
     },
   });
 
-  function onSubmit(formValues: z.infer<typeof MemberFormSchema.shape.memberInput>) {
+  function onSubmit(
+    formValues: z.infer<typeof MemberFormSchema.shape.memberInput>
+  ) {
     insert.mutate(formValues);
   }
+
+  console.log(form.formState.errors);
 
   return (
     <Modal
@@ -177,7 +188,10 @@ function NewMemberForm() {
             >
               {optionsFromObject(StatusTypeSchema.enum)}
             </Select>
+
           </span>
+
+          <Under18 dateName='dateOfBirth' />
         </div>
       </Form>
     </Modal>

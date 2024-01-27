@@ -23,11 +23,11 @@ export default async function handler(
     return res.status(500).json({ message: 'Invalid query param passed.' });
   }
 
-  // const token = await getToken({ req });
-  // if (!token) {
-  //   console.warn('Attempted to access api protected by auth.');
-  //   return res.status(401).json({ message: 'Access Not Allowed.' });
-  // }
+  const token = await getToken({ req });
+  if (!token) {
+    console.warn('Attempted to access api protected by auth.');
+    return res.status(401).json({ message: 'Access Not Allowed.' });
+  }
 
   const existingShow = await prisma.show.findUnique({
     where: {
@@ -114,6 +114,8 @@ export default async function handler(
     );
   }
 
+  // TODO(Cody): Needs to be done in a transaction show it can rollback if any errors
+  // Will submit everyone and then skip the errored records 
   await Promise.all(dbActions).then(() =>
     prisma.show.update({
       where: { uid: existingShow.uid },
