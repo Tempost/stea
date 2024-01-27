@@ -23,11 +23,11 @@ export default async function handler(
     return res.status(500).json({ message: 'Invalid query param passed.' });
   }
 
-  const token = await getToken({ req });
-  if (!token) {
-    console.warn('Attempted to access api protected by auth.');
-    return res.status(401).json({ message: 'Access Not Allowed.' });
-  }
+  // const token = await getToken({ req });
+  // if (!token) {
+  //   console.warn('Attempted to access api protected by auth.');
+  //   return res.status(401).json({ message: 'Access Not Allowed.' });
+  // }
 
   const existingShow = await prisma.show.findUnique({
     where: {
