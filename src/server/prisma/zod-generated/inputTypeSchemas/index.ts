@@ -385,6 +385,7 @@ export { RiderComboScalarFieldEnumSchema } from './RiderComboScalarFieldEnumSche
 export { PointsScalarFieldEnumSchema } from './PointsScalarFieldEnumSchema';
 export { ShowScalarFieldEnumSchema } from './ShowScalarFieldEnumSchema';
 export { SortOrderSchema } from './SortOrderSchema';
+export { QueryModeSchema } from './QueryModeSchema';
 export { NullsOrderSchema } from './NullsOrderSchema';
 export { StatusSchema } from './StatusSchema';
 export { StatusTypeSchema } from './StatusTypeSchema';

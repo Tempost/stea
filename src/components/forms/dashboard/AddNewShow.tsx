@@ -94,6 +94,9 @@ function AddNewShow() {
         </div>
 
         <div className='grid grid-flow-col'>
+          {
+            // TODO: FIX THE WEIRD BUG WITH HIDDEN ATTRIBUTE
+          }
           <ControlledDatePicker
             name='showDate'
             label='Show Date*'

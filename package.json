@@ -17,10 +17,12 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^2.9.11",
+    "@neondatabase/serverless": "^0.9.0",
     "@paypal/paypal-js": "^5.1.5",
     "@paypal/react-paypal-js": "^7.8.2",
-    "@prisma/client": "5.4.1",
-    "@prisma/extension-accelerate": "^0.6.2",
+    "@prisma/adapter-neon": "^5.11.0",
+    "@prisma/client": "5.11.0",
+    "@prisma/extension-accelerate": "^1.0.0",
     "@sendgrid/mail": "^7.7.0",
     "@tanstack/match-sorter-utils": "^8.8.4",
     "@tanstack/react-query": "^4.28.0",
@@ -43,6 +45,7 @@
     "react-hook-form": "^7.43.8",
     "react-query": "^3.39.3",
     "superjson": "^1.12.2",
+    "ws": "^8.16.0",
     "zod": "3.21.1",
     "zod-validation-error": "^2.1.0"
   },
@@ -55,6 +58,7 @@
     "@types/react": "^18.0.29",
     "@types/react-datepicker": "^4.10.0",
     "@types/react-dom": "18.0.11",
+    "@types/ws": "^8.5.10",
     "@typescript-eslint/eslint-plugin": "^6.10.0",
     "@typescript-eslint/parser": "^6.10.0",
     "autoprefixer": "^10.4.16",
@@ -69,7 +73,7 @@
     "postcss": "^8.4.31",
     "prettier": "^2.8.7",
     "prettier-plugin-tailwindcss": "^0.2.5",
-    "prisma": "5.4.1",
+    "prisma": "5.11.0",
     "tailwindcss": "^3.3.5",
     "ts-jest": "^29.0.5",
     "ts-node": "^10.9.1",
@@ -77,7 +81,6 @@
     "zod-prisma-types": "2.7.9"
   },
   "prisma": {
-    "schema": "./src/server/prisma/schema.prisma",
-    "seed": "dotenv -e .env.local -- ts-node --project src/utils/seed/tsconfig.json src/utils/seed/seed_db.ts"
+    "schema": "./src/server/prisma/schema.prisma"
   }
 }
