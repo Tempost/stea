@@ -1,11 +1,11 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
-  provider     = "mysql"
+  provider     = "postgresql"
   url          = env("DATABASE_URL")
-  directUrl    = env("DIRECT_URL")
   relationMode = "prisma"
 }
 
@@ -57,13 +57,13 @@ enum Division {
 
 enum Position {
   President
-  VicePresident @map("Vice President")
+  VicePresident       @map("Vice President")
   Secretary
   Treasurer
-  AdultMemberAtLarge @map("Adult Member At Large")
+  AdultMemberAtLarge  @map("Adult Member At Large")
   JuniorMemberAtLarge @map("Junior Member At Large")
-  SocialMediaManager @map("Social Media Manager")
-  AwardsCoordinator @map("Awards Coordinator")
+  SocialMediaManager  @map("Social Media Manager")
+  AwardsCoordinator   @map("Awards Coordinator")
   Points
 }
 
@@ -129,8 +129,8 @@ model Member {
 }
 
 model Boardmember {
-  name String? @db.VarChar(100)
-  email String? @db.VarChar(100)
+  name     String?  @db.VarChar(100)
+  email    String?  @db.VarChar(100)
   position Position
 
   @@id([position])

@@ -1,8 +1,19 @@
+import { Pool, neonConfig } from '@neondatabase/serverless';
+import { PrismaNeon } from '@prisma/adapter-neon';
+import ws from 'ws';
 import { PrismaClient } from '@prisma/client';
 import { withAccelerate } from '@prisma/extension-accelerate';
 
+neonConfig.webSocketConstructor = ws;
+const connectionString = `${process.env.DATABASE_URL}`;
+const schema = new URL(connectionString).searchParams.get('schema');
+
+const pool = new Pool({ connectionString });
+const adapter = new PrismaNeon(pool, schema ? { schema } : undefined);
+
 const prismaClientSingleton = () => {
   return new PrismaClient({
+    adapter: adapter,
     log:
       process.env.NODE_ENV === 'development'
         ? ['info', 'error', 'warn']
