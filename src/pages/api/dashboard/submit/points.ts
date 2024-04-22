@@ -189,21 +189,26 @@ function calculatePoints(
 }
 
 async function riderExists(fullName: string, horseRN: string, endDate: Date) {
-  const memberExists = prisma.member.findUniqueOrThrow({
+  const member = await prisma.member.findFirst({
     where: {
       fullName,
       OR: [{ membershipEnd: endDate }, { memberStatus: 'Life' }],
     },
   });
 
-  const horseExists = prisma.horse.findUniqueOrThrow({
+  if (member === null) {
+    throw Error(`Member ${fullName} not found.`)
+  }
+
+  const horse = await prisma.horse.findFirst({
     where: {
       horseRN,
       OR: [{ registrationEnd: endDate }, { regType: 'Life' }],
     },
   });
-
-  return !(await memberExists) && !(await horseExists);
+  if (horse === null) {
+    throw Error(`Horse ${horseRN} not found.`)
+  }
 }
 
 async function checkforMembership(entries: GroupedEntries) {
@@ -239,13 +244,7 @@ async function checkforMembership(entries: GroupedEntries) {
                   ),
                 })
               )
-              .catch(error => {
-                if (error instanceof Prisma.PrismaClientKnownRequestError) {
-                  console.error(error.message);
-                } else {
-                  console.error('Unexpected erorr', error);
-                }
-              })
+              .catch(e => console.log(e.message))
           );
         }
       }
