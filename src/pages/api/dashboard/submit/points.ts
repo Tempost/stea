@@ -221,7 +221,6 @@ async function checkforMembership(entries: GroupedEntries) {
   if (currDate.getMonth() == 11) {
     membershipEnd.setFullYear(membershipEnd.getFullYear() + 1);
   }
-  console.log(membershipEnd);
 
   for (const [, divisions] of Object.entries(entries)) {
     for (const [, groups] of Object.entries(divisions)) {
