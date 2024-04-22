@@ -8,7 +8,7 @@ import {
   PointsMap,
 } from '@/types/common';
 import { EntryReviewType } from '@/utils/zodschemas';
-import { Prisma, ShowType } from '@prisma/client';
+import { ShowType } from '@prisma/client';
 import { parse } from 'csv';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getToken } from 'next-auth/jwt';
@@ -221,6 +221,7 @@ async function checkforMembership(entries: GroupedEntries) {
   if (currDate.getMonth() == 11) {
     membershipEnd.setFullYear(membershipEnd.getFullYear() + 1);
   }
+  console.log(membershipEnd);
 
   for (const [, divisions] of Object.entries(entries)) {
     for (const [, groups] of Object.entries(divisions)) {
