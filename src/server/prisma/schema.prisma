@@ -113,7 +113,7 @@ model Member {
   /// @zod.string.trim().min(1, { message: "Business name is required" })
   businessName     String?      @db.VarChar(100)
   membershipDate   DateTime?    @default(now())
-  membershipEnd    DateTime?
+  membershipEnd    DateTime? @db.Date
   memberType       Type
   memberStatus     Status
   memberStatusType StatusType
@@ -152,7 +152,7 @@ model Horse {
   regType          Status
   RiderCombo       RiderCombo[]
   owner            String?
-  registrationEnd  DateTime?
+  registrationEnd  DateTime? @db.Date
 
   @@index([owner])
   @@index([memberName])
