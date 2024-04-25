@@ -17,6 +17,7 @@
     "no-constant-binary-expression": "error",
     "no-const-assign": "error",
     "no-dupe-else-if": "error",
+    "@typescript-eslint/no-explicit-any": "warn",
     "@typescript-eslint/array-type": [
       "warn",
       { "default": "generic", "readonly": "generic" }
