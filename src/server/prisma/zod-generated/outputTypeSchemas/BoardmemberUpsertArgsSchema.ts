@@ -19,6 +19,6 @@ export const BoardmemberUpsertArgsSchema: z.ZodType<Prisma.BoardmemberUpsertArgs
   where: BoardmemberWhereUniqueInputSchema,
   create: z.union([ BoardmemberCreateInputSchema,BoardmemberUncheckedCreateInputSchema ]),
   update: z.union([ BoardmemberUpdateInputSchema,BoardmemberUncheckedUpdateInputSchema ]),
-}).strict()
+}).strict() ;
 
 export default BoardmemberUpsertArgsSchema;

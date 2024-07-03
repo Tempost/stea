@@ -33,6 +33,6 @@ export const RiderComboFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.RiderComboF
   select: RiderComboSelectSchema.optional(),
   include: RiderComboIncludeSchema.optional(),
   where: RiderComboWhereUniqueInputSchema,
-}).strict()
+}).strict() ;
 
 export default RiderComboFindUniqueOrThrowArgsSchema;

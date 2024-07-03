@@ -1,4 +1,5 @@
 import type { Prisma } from '@prisma/client';
+
 import { z } from 'zod';
 import { MemberCreateWithoutRiderComboInputSchema } from './MemberCreateWithoutRiderComboInputSchema';
 import { MemberUncheckedCreateWithoutRiderComboInputSchema } from './MemberUncheckedCreateWithoutRiderComboInputSchema';

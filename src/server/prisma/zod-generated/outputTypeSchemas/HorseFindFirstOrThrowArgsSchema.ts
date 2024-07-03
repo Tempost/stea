@@ -37,6 +37,6 @@ export const HorseFindFirstOrThrowArgsSchema: z.ZodType<Prisma.HorseFindFirstOrT
   take: z.number().optional(),
   skip: z.number().optional(),
   distinct: z.union([ HorseScalarFieldEnumSchema,HorseScalarFieldEnumSchema.array() ]).optional(),
-}).strict()
+}).strict() ;
 
 export default HorseFindFirstOrThrowArgsSchema;

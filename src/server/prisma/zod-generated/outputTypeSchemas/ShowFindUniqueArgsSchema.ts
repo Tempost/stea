@@ -27,6 +27,6 @@ export const ShowFindUniqueArgsSchema: z.ZodType<Prisma.ShowFindUniqueArgs> = z.
   select: ShowSelectSchema.optional(),
   include: ShowIncludeSchema.optional(),
   where: ShowWhereUniqueInputSchema,
-}).strict()
+}).strict() ;
 
 export default ShowFindUniqueArgsSchema;

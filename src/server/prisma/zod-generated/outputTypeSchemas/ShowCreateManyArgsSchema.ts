@@ -5,6 +5,6 @@ import { ShowCreateManyInputSchema } from '../inputTypeSchemas/ShowCreateManyInp
 export const ShowCreateManyArgsSchema: z.ZodType<Prisma.ShowCreateManyArgs> = z.object({
   data: z.union([ ShowCreateManyInputSchema,ShowCreateManyInputSchema.array() ]),
   skipDuplicates: z.boolean().optional(),
-}).strict()
+}).strict() ;
 
 export default ShowCreateManyArgsSchema;

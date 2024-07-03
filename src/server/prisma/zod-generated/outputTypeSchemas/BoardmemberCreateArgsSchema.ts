@@ -14,6 +14,6 @@ export const BoardmemberSelectSchema: z.ZodType<Prisma.BoardmemberSelect> = z.ob
 export const BoardmemberCreateArgsSchema: z.ZodType<Prisma.BoardmemberCreateArgs> = z.object({
   select: BoardmemberSelectSchema.optional(),
   data: z.union([ BoardmemberCreateInputSchema,BoardmemberUncheckedCreateInputSchema ]),
-}).strict()
+}).strict() ;
 
 export default BoardmemberCreateArgsSchema;

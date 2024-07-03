@@ -10,6 +10,6 @@ export const MemberAggregateArgsSchema: z.ZodType<Prisma.MemberAggregateArgs> = 
   cursor: MemberWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
-}).strict()
+}).strict() ;
 
 export default MemberAggregateArgsSchema;

@@ -1,4 +1,5 @@
 import type { Prisma } from '@prisma/client';
+
 import { z } from 'zod';
 import { StatusSchema } from './StatusSchema';
 import { NestedEnumStatusFilterSchema } from './NestedEnumStatusFilterSchema';

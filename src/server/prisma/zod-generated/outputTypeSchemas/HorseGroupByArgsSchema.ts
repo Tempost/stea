@@ -12,6 +12,6 @@ export const HorseGroupByArgsSchema: z.ZodType<Prisma.HorseGroupByArgs> = z.obje
   having: HorseScalarWhereWithAggregatesInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
-}).strict()
+}).strict() ;
 
 export default HorseGroupByArgsSchema;

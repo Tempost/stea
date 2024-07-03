@@ -29,6 +29,6 @@ export const HorseDeleteArgsSchema: z.ZodType<Prisma.HorseDeleteArgs> = z.object
   select: HorseSelectSchema.optional(),
   include: HorseIncludeSchema.optional(),
   where: HorseWhereUniqueInputSchema,
-}).strict()
+}).strict() ;
 
 export default HorseDeleteArgsSchema;

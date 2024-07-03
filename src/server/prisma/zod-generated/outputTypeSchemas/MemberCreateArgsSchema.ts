@@ -40,6 +40,6 @@ export const MemberCreateArgsSchema: z.ZodType<Prisma.MemberCreateArgs> = z.obje
   select: MemberSelectSchema.optional(),
   include: MemberIncludeSchema.optional(),
   data: z.union([ MemberCreateInputSchema,MemberUncheckedCreateInputSchema ]),
-}).strict()
+}).strict() ;
 
 export default MemberCreateArgsSchema;

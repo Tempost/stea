@@ -5,6 +5,6 @@ import { HorseCreateManyInputSchema } from '../inputTypeSchemas/HorseCreateManyI
 export const HorseCreateManyArgsSchema: z.ZodType<Prisma.HorseCreateManyArgs> = z.object({
   data: z.union([ HorseCreateManyInputSchema,HorseCreateManyInputSchema.array() ]),
   skipDuplicates: z.boolean().optional(),
-}).strict()
+}).strict() ;
 
 export default HorseCreateManyArgsSchema;

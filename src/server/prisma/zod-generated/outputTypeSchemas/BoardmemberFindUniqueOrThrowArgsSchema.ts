@@ -13,6 +13,6 @@ export const BoardmemberSelectSchema: z.ZodType<Prisma.BoardmemberSelect> = z.ob
 export const BoardmemberFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.BoardmemberFindUniqueOrThrowArgs> = z.object({
   select: BoardmemberSelectSchema.optional(),
   where: BoardmemberWhereUniqueInputSchema,
-}).strict()
+}).strict() ;
 
 export default BoardmemberFindUniqueOrThrowArgsSchema;

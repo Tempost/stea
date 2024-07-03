@@ -1,4 +1,5 @@
 import type { Prisma } from '@prisma/client';
+
 import { z } from 'zod';
 import { SortOrderSchema } from './SortOrderSchema';
 import { NullsOrderSchema } from './NullsOrderSchema';

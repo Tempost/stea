@@ -1,4 +1,5 @@
 import type { Prisma } from '@prisma/client';
+
 import { z } from 'zod';
 import { ShowUpdateWithoutPointsInputSchema } from './ShowUpdateWithoutPointsInputSchema';
 import { ShowUncheckedUpdateWithoutPointsInputSchema } from './ShowUncheckedUpdateWithoutPointsInputSchema';

@@ -24,6 +24,6 @@ export const PointsUpdateArgsSchema: z.ZodType<Prisma.PointsUpdateArgs> = z.obje
   include: PointsIncludeSchema.optional(),
   data: z.union([ PointsUpdateInputSchema,PointsUncheckedUpdateInputSchema ]),
   where: PointsWhereUniqueInputSchema,
-}).strict()
+}).strict() ;
 
 export default PointsUpdateArgsSchema;

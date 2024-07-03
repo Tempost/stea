@@ -10,6 +10,6 @@ export const NonMemberHorseOwnerAggregateArgsSchema: z.ZodType<Prisma.NonMemberH
   cursor: NonMemberHorseOwnerWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
-}).strict()
+}).strict() ;
 
 export default NonMemberHorseOwnerAggregateArgsSchema;

@@ -12,6 +12,6 @@ export const NonMemberHorseOwnerGroupByArgsSchema: z.ZodType<Prisma.NonMemberHor
   having: NonMemberHorseOwnerScalarWhereWithAggregatesInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
-}).strict()
+}).strict() ;
 
 export default NonMemberHorseOwnerGroupByArgsSchema;

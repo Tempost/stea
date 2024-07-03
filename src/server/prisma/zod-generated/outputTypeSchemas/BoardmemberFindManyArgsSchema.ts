@@ -21,6 +21,6 @@ export const BoardmemberFindManyArgsSchema: z.ZodType<Prisma.BoardmemberFindMany
   take: z.number().optional(),
   skip: z.number().optional(),
   distinct: z.union([ BoardmemberScalarFieldEnumSchema,BoardmemberScalarFieldEnumSchema.array() ]).optional(),
-}).strict()
+}).strict() ;
 
 export default BoardmemberFindManyArgsSchema;

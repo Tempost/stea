@@ -30,6 +30,6 @@ export const HorseCreateArgsSchema: z.ZodType<Prisma.HorseCreateArgs> = z.object
   select: HorseSelectSchema.optional(),
   include: HorseIncludeSchema.optional(),
   data: z.union([ HorseCreateInputSchema,HorseUncheckedCreateInputSchema ]),
-}).strict()
+}).strict() ;
 
 export default HorseCreateArgsSchema;

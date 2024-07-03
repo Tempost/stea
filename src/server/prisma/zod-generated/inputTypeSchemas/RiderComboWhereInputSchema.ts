@@ -1,4 +1,5 @@
 import type { Prisma } from '@prisma/client';
+
 import { z } from 'zod';
 import { StringFilterSchema } from './StringFilterSchema';
 import { DateTimeNullableFilterSchema } from './DateTimeNullableFilterSchema';

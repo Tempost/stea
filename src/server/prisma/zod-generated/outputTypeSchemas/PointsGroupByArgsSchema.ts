@@ -12,6 +12,6 @@ export const PointsGroupByArgsSchema: z.ZodType<Prisma.PointsGroupByArgs> = z.ob
   having: PointsScalarWhereWithAggregatesInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
-}).strict()
+}).strict() ;
 
 export default PointsGroupByArgsSchema;

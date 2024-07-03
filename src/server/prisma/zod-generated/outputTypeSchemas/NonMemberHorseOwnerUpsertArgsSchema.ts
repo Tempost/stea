@@ -30,6 +30,6 @@ export const NonMemberHorseOwnerUpsertArgsSchema: z.ZodType<Prisma.NonMemberHors
   where: NonMemberHorseOwnerWhereUniqueInputSchema,
   create: z.union([ NonMemberHorseOwnerCreateInputSchema,NonMemberHorseOwnerUncheckedCreateInputSchema ]),
   update: z.union([ NonMemberHorseOwnerUpdateInputSchema,NonMemberHorseOwnerUncheckedUpdateInputSchema ]),
-}).strict()
+}).strict() ;
 
 export default NonMemberHorseOwnerUpsertArgsSchema;

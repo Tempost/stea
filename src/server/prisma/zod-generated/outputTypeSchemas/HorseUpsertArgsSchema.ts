@@ -35,6 +35,6 @@ export const HorseUpsertArgsSchema: z.ZodType<Prisma.HorseUpsertArgs> = z.object
   where: HorseWhereUniqueInputSchema,
   create: z.union([ HorseCreateInputSchema,HorseUncheckedCreateInputSchema ]),
   update: z.union([ HorseUpdateInputSchema,HorseUncheckedUpdateInputSchema ]),
-}).strict()
+}).strict() ;
 
 export default HorseUpsertArgsSchema;

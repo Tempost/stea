@@ -7,6 +7,6 @@ import { HorseWhereInputSchema } from '../inputTypeSchemas/HorseWhereInputSchema
 export const HorseUpdateManyArgsSchema: z.ZodType<Prisma.HorseUpdateManyArgs> = z.object({
   data: z.union([ HorseUpdateManyMutationInputSchema,HorseUncheckedUpdateManyInputSchema ]),
   where: HorseWhereInputSchema.optional(),
-}).strict()
+}).strict() ;
 
 export default HorseUpdateManyArgsSchema;

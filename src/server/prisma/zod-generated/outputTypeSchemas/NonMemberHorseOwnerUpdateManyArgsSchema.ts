@@ -7,6 +7,6 @@ import { NonMemberHorseOwnerWhereInputSchema } from '../inputTypeSchemas/NonMemb
 export const NonMemberHorseOwnerUpdateManyArgsSchema: z.ZodType<Prisma.NonMemberHorseOwnerUpdateManyArgs> = z.object({
   data: z.union([ NonMemberHorseOwnerUpdateManyMutationInputSchema,NonMemberHorseOwnerUncheckedUpdateManyInputSchema ]),
   where: NonMemberHorseOwnerWhereInputSchema.optional(),
-}).strict()
+}).strict() ;
 
 export default NonMemberHorseOwnerUpdateManyArgsSchema;

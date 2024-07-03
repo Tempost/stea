@@ -47,6 +47,6 @@ export const MemberFindFirstOrThrowArgsSchema: z.ZodType<Prisma.MemberFindFirstO
   take: z.number().optional(),
   skip: z.number().optional(),
   distinct: z.union([ MemberScalarFieldEnumSchema,MemberScalarFieldEnumSchema.array() ]).optional(),
-}).strict()
+}).strict() ;
 
 export default MemberFindFirstOrThrowArgsSchema;

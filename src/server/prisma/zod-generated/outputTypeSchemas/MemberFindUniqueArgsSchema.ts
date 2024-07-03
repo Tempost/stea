@@ -39,6 +39,6 @@ export const MemberFindUniqueArgsSchema: z.ZodType<Prisma.MemberFindUniqueArgs> 
   select: MemberSelectSchema.optional(),
   include: MemberIncludeSchema.optional(),
   where: MemberWhereUniqueInputSchema,
-}).strict()
+}).strict() ;
 
 export default MemberFindUniqueArgsSchema;

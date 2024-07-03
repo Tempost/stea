@@ -29,6 +29,6 @@ export const PointsFindManyArgsSchema: z.ZodType<Prisma.PointsFindManyArgs> = z.
   take: z.number().optional(),
   skip: z.number().optional(),
   distinct: z.union([ PointsScalarFieldEnumSchema,PointsScalarFieldEnumSchema.array() ]).optional(),
-}).strict()
+}).strict() ;
 
 export default PointsFindManyArgsSchema;

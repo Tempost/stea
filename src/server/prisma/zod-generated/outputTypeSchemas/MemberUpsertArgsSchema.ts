@@ -45,6 +45,6 @@ export const MemberUpsertArgsSchema: z.ZodType<Prisma.MemberUpsertArgs> = z.obje
   where: MemberWhereUniqueInputSchema,
   create: z.union([ MemberCreateInputSchema,MemberUncheckedCreateInputSchema ]),
   update: z.union([ MemberUpdateInputSchema,MemberUncheckedUpdateInputSchema ]),
-}).strict()
+}).strict() ;
 
 export default MemberUpsertArgsSchema;

@@ -1,4 +1,5 @@
 import type { Prisma } from '@prisma/client';
+
 import { z } from 'zod';
 
 export const PointsUncheckedCreateInputSchema: z.ZodType<Prisma.PointsUncheckedCreateInput> = z.object({

@@ -42,6 +42,6 @@ export const MemberUpdateArgsSchema: z.ZodType<Prisma.MemberUpdateArgs> = z.obje
   include: MemberIncludeSchema.optional(),
   data: z.union([ MemberUpdateInputSchema,MemberUncheckedUpdateInputSchema ]),
   where: MemberWhereUniqueInputSchema,
-}).strict()
+}).strict() ;
 
 export default MemberUpdateArgsSchema;

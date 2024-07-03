@@ -30,6 +30,6 @@ export const ShowUpdateArgsSchema: z.ZodType<Prisma.ShowUpdateArgs> = z.object({
   include: ShowIncludeSchema.optional(),
   data: z.union([ ShowUpdateInputSchema,ShowUncheckedUpdateInputSchema ]),
   where: ShowWhereUniqueInputSchema,
-}).strict()
+}).strict() ;
 
 export default ShowUpdateArgsSchema;

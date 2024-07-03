@@ -12,6 +12,6 @@ export const RiderComboGroupByArgsSchema: z.ZodType<Prisma.RiderComboGroupByArgs
   having: RiderComboScalarWhereWithAggregatesInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
-}).strict()
+}).strict() ;
 
 export default RiderComboGroupByArgsSchema;

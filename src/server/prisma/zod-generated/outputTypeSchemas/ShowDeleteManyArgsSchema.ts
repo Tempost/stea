@@ -4,6 +4,6 @@ import { ShowWhereInputSchema } from '../inputTypeSchemas/ShowWhereInputSchema'
 
 export const ShowDeleteManyArgsSchema: z.ZodType<Prisma.ShowDeleteManyArgs> = z.object({
   where: ShowWhereInputSchema.optional(),
-}).strict()
+}).strict() ;
 
 export default ShowDeleteManyArgsSchema;

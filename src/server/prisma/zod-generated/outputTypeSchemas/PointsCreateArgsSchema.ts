@@ -22,6 +22,6 @@ export const PointsCreateArgsSchema: z.ZodType<Prisma.PointsCreateArgs> = z.obje
   select: PointsSelectSchema.optional(),
   include: PointsIncludeSchema.optional(),
   data: z.union([ PointsCreateInputSchema,PointsUncheckedCreateInputSchema ]),
-}).strict()
+}).strict() ;
 
 export default PointsCreateArgsSchema;
