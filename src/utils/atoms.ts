@@ -10,6 +10,7 @@ import {
 } from '@/types/atoms';
 import { FormType } from '@/types/common';
 import { EntryReviewType } from './zodschemas';
+import type { Status } from '@prisma/client';
 
 export const costs = {
   Life: {
@@ -69,16 +70,13 @@ const updateFormState = atom(null, (_get, set, action: ReducerAction) => {
   console.log(action);
   switch (action.type) {
     case 'FORMTYPE':
-      //@ts-expect-error fix me
-      set(updateFormType, action.payload);
+      set(updateFormType, action.payload as FormType);
       break;
     case 'STATUS':
-      //@ts-expect-error fix me
-      set(updateSignupCost, action.payload);
+      set(updateSignupCost, action.payload as Status);
       break;
     case 'HORSE':
-      //@ts-expect-error fix me
-      set(updateHorseCost, action.payload);
+      set(updateHorseCost, action.payload as HorsePayload);
       break;
     case 'RESET':
       set(formState, initFormState);
