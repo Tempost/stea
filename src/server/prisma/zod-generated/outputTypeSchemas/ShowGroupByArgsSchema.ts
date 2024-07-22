@@ -12,6 +12,6 @@ export const ShowGroupByArgsSchema: z.ZodType<Prisma.ShowGroupByArgs> = z.object
   having: ShowScalarWhereWithAggregatesInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
-}).strict()
+}).strict() ;
 
 export default ShowGroupByArgsSchema;

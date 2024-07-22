@@ -21,6 +21,6 @@ export const PointsDeleteArgsSchema: z.ZodType<Prisma.PointsDeleteArgs> = z.obje
   select: PointsSelectSchema.optional(),
   include: PointsIncludeSchema.optional(),
   where: PointsWhereUniqueInputSchema,
-}).strict()
+}).strict() ;
 
 export default PointsDeleteArgsSchema;

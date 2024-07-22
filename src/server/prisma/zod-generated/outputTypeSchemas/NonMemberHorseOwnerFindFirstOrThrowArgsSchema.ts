@@ -32,6 +32,6 @@ export const NonMemberHorseOwnerFindFirstOrThrowArgsSchema: z.ZodType<Prisma.Non
   take: z.number().optional(),
   skip: z.number().optional(),
   distinct: z.union([ NonMemberHorseOwnerScalarFieldEnumSchema,NonMemberHorseOwnerScalarFieldEnumSchema.array() ]).optional(),
-}).strict()
+}).strict() ;
 
 export default NonMemberHorseOwnerFindFirstOrThrowArgsSchema;

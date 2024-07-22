@@ -10,6 +10,6 @@ export const BoardmemberAggregateArgsSchema: z.ZodType<Prisma.BoardmemberAggrega
   cursor: BoardmemberWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
-}).strict()
+}).strict() ;
 
 export default BoardmemberAggregateArgsSchema;

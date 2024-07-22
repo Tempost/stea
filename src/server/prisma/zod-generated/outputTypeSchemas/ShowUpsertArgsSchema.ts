@@ -33,6 +33,6 @@ export const ShowUpsertArgsSchema: z.ZodType<Prisma.ShowUpsertArgs> = z.object({
   where: ShowWhereUniqueInputSchema,
   create: z.union([ ShowCreateInputSchema,ShowUncheckedCreateInputSchema ]),
   update: z.union([ ShowUpdateInputSchema,ShowUncheckedUpdateInputSchema ]),
-}).strict()
+}).strict() ;
 
 export default ShowUpsertArgsSchema;

@@ -39,6 +39,6 @@ export const MemberDeleteArgsSchema: z.ZodType<Prisma.MemberDeleteArgs> = z.obje
   select: MemberSelectSchema.optional(),
   include: MemberIncludeSchema.optional(),
   where: MemberWhereUniqueInputSchema,
-}).strict()
+}).strict() ;
 
 export default MemberDeleteArgsSchema;

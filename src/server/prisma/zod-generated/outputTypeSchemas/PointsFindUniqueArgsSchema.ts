@@ -21,6 +21,6 @@ export const PointsFindUniqueArgsSchema: z.ZodType<Prisma.PointsFindUniqueArgs> 
   select: PointsSelectSchema.optional(),
   include: PointsIncludeSchema.optional(),
   where: PointsWhereUniqueInputSchema,
-}).strict()
+}).strict() ;
 
 export default PointsFindUniqueArgsSchema;

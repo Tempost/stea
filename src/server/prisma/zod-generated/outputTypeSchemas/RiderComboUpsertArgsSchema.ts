@@ -39,6 +39,6 @@ export const RiderComboUpsertArgsSchema: z.ZodType<Prisma.RiderComboUpsertArgs> 
   where: RiderComboWhereUniqueInputSchema,
   create: z.union([ RiderComboCreateInputSchema,RiderComboUncheckedCreateInputSchema ]),
   update: z.union([ RiderComboUpdateInputSchema,RiderComboUncheckedUpdateInputSchema ]),
-}).strict()
+}).strict() ;
 
 export default RiderComboUpsertArgsSchema;

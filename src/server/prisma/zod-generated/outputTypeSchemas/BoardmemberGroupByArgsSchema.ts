@@ -12,6 +12,6 @@ export const BoardmemberGroupByArgsSchema: z.ZodType<Prisma.BoardmemberGroupByAr
   having: BoardmemberScalarWhereWithAggregatesInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
-}).strict()
+}).strict() ;
 
 export default BoardmemberGroupByArgsSchema;

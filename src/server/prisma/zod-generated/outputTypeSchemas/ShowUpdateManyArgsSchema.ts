@@ -7,6 +7,6 @@ import { ShowWhereInputSchema } from '../inputTypeSchemas/ShowWhereInputSchema'
 export const ShowUpdateManyArgsSchema: z.ZodType<Prisma.ShowUpdateManyArgs> = z.object({
   data: z.union([ ShowUpdateManyMutationInputSchema,ShowUncheckedUpdateManyInputSchema ]),
   where: ShowWhereInputSchema.optional(),
-}).strict()
+}).strict() ;
 
 export default ShowUpdateManyArgsSchema;

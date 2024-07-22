@@ -36,6 +36,6 @@ export const RiderComboUpdateArgsSchema: z.ZodType<Prisma.RiderComboUpdateArgs> 
   include: RiderComboIncludeSchema.optional(),
   data: z.union([ RiderComboUpdateInputSchema,RiderComboUncheckedUpdateInputSchema ]),
   where: RiderComboWhereUniqueInputSchema,
-}).strict()
+}).strict() ;
 
 export default RiderComboUpdateArgsSchema;

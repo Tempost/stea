@@ -47,6 +47,6 @@ export const MemberFindFirstArgsSchema: z.ZodType<Prisma.MemberFindFirstArgs> = 
   take: z.number().optional(),
   skip: z.number().optional(),
   distinct: z.union([ MemberScalarFieldEnumSchema,MemberScalarFieldEnumSchema.array() ]).optional(),
-}).strict()
+}).strict() ;
 
 export default MemberFindFirstArgsSchema;

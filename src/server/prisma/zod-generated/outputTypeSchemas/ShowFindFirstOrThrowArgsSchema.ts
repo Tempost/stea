@@ -35,6 +35,6 @@ export const ShowFindFirstOrThrowArgsSchema: z.ZodType<Prisma.ShowFindFirstOrThr
   take: z.number().optional(),
   skip: z.number().optional(),
   distinct: z.union([ ShowScalarFieldEnumSchema,ShowScalarFieldEnumSchema.array() ]).optional(),
-}).strict()
+}).strict() ;
 
 export default ShowFindFirstOrThrowArgsSchema;

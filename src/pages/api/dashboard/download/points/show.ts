@@ -72,7 +72,8 @@ export default async function handler(
     });
 
     if (points.length === 0) {
-      return res.status(204).end();
+      res.status(204).end();
+      return;
     }
 
     const filename = `${points[0].show.showName}-${readableDateTime(

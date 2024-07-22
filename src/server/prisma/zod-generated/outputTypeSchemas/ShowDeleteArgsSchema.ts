@@ -27,6 +27,6 @@ export const ShowDeleteArgsSchema: z.ZodType<Prisma.ShowDeleteArgs> = z.object({
   select: ShowSelectSchema.optional(),
   include: ShowIncludeSchema.optional(),
   where: ShowWhereUniqueInputSchema,
-}).strict()
+}).strict() ;
 
 export default ShowDeleteArgsSchema;

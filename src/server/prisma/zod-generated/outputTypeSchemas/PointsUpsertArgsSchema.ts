@@ -27,6 +27,6 @@ export const PointsUpsertArgsSchema: z.ZodType<Prisma.PointsUpsertArgs> = z.obje
   where: PointsWhereUniqueInputSchema,
   create: z.union([ PointsCreateInputSchema,PointsUncheckedCreateInputSchema ]),
   update: z.union([ PointsUpdateInputSchema,PointsUncheckedUpdateInputSchema ]),
-}).strict()
+}).strict() ;
 
 export default PointsUpsertArgsSchema;

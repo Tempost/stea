@@ -10,6 +10,6 @@ export const PointsAggregateArgsSchema: z.ZodType<Prisma.PointsAggregateArgs> = 
   cursor: PointsWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
-}).strict()
+}).strict() ;
 
 export default PointsAggregateArgsSchema;

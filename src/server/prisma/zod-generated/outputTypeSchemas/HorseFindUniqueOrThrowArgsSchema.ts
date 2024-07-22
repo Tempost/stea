@@ -29,6 +29,6 @@ export const HorseFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.HorseFindUniqueO
   select: HorseSelectSchema.optional(),
   include: HorseIncludeSchema.optional(),
   where: HorseWhereUniqueInputSchema,
-}).strict()
+}).strict() ;
 
 export default HorseFindUniqueOrThrowArgsSchema;

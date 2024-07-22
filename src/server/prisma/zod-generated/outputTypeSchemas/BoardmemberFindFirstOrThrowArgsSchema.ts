@@ -21,6 +21,6 @@ export const BoardmemberFindFirstOrThrowArgsSchema: z.ZodType<Prisma.Boardmember
   take: z.number().optional(),
   skip: z.number().optional(),
   distinct: z.union([ BoardmemberScalarFieldEnumSchema,BoardmemberScalarFieldEnumSchema.array() ]).optional(),
-}).strict()
+}).strict() ;
 
 export default BoardmemberFindFirstOrThrowArgsSchema;

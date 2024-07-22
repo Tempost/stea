@@ -5,6 +5,6 @@ import { PointsCreateManyInputSchema } from '../inputTypeSchemas/PointsCreateMan
 export const PointsCreateManyArgsSchema: z.ZodType<Prisma.PointsCreateManyArgs> = z.object({
   data: z.union([ PointsCreateManyInputSchema,PointsCreateManyInputSchema.array() ]),
   skipDuplicates: z.boolean().optional(),
-}).strict()
+}).strict() ;
 
 export default PointsCreateManyArgsSchema;

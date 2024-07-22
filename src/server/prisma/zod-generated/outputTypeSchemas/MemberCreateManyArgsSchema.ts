@@ -5,6 +5,6 @@ import { MemberCreateManyInputSchema } from '../inputTypeSchemas/MemberCreateMan
 export const MemberCreateManyArgsSchema: z.ZodType<Prisma.MemberCreateManyArgs> = z.object({
   data: z.union([ MemberCreateManyInputSchema,MemberCreateManyInputSchema.array() ]),
   skipDuplicates: z.boolean().optional(),
-}).strict()
+}).strict() ;
 
 export default MemberCreateManyArgsSchema;

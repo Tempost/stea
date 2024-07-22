@@ -5,6 +5,6 @@ import { NonMemberHorseOwnerCreateManyInputSchema } from '../inputTypeSchemas/No
 export const NonMemberHorseOwnerCreateManyArgsSchema: z.ZodType<Prisma.NonMemberHorseOwnerCreateManyArgs> = z.object({
   data: z.union([ NonMemberHorseOwnerCreateManyInputSchema,NonMemberHorseOwnerCreateManyInputSchema.array() ]),
   skipDuplicates: z.boolean().optional(),
-}).strict()
+}).strict() ;
 
 export default NonMemberHorseOwnerCreateManyArgsSchema;

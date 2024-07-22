@@ -7,6 +7,6 @@ import { MemberWhereInputSchema } from '../inputTypeSchemas/MemberWhereInputSche
 export const MemberUpdateManyArgsSchema: z.ZodType<Prisma.MemberUpdateManyArgs> = z.object({
   data: z.union([ MemberUpdateManyMutationInputSchema,MemberUncheckedUpdateManyInputSchema ]),
   where: MemberWhereInputSchema.optional(),
-}).strict()
+}).strict() ;
 
 export default MemberUpdateManyArgsSchema;

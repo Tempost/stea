@@ -24,6 +24,6 @@ export const NonMemberHorseOwnerDeleteArgsSchema: z.ZodType<Prisma.NonMemberHors
   select: NonMemberHorseOwnerSelectSchema.optional(),
   include: NonMemberHorseOwnerIncludeSchema.optional(),
   where: NonMemberHorseOwnerWhereUniqueInputSchema,
-}).strict()
+}).strict() ;
 
 export default NonMemberHorseOwnerDeleteArgsSchema;

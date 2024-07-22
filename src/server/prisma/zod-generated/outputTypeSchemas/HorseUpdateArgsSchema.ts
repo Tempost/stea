@@ -32,6 +32,6 @@ export const HorseUpdateArgsSchema: z.ZodType<Prisma.HorseUpdateArgs> = z.object
   include: HorseIncludeSchema.optional(),
   data: z.union([ HorseUpdateInputSchema,HorseUncheckedUpdateInputSchema ]),
   where: HorseWhereUniqueInputSchema,
-}).strict()
+}).strict() ;
 
 export default HorseUpdateArgsSchema;

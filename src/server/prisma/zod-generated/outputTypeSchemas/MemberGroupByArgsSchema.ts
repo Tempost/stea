@@ -12,6 +12,6 @@ export const MemberGroupByArgsSchema: z.ZodType<Prisma.MemberGroupByArgs> = z.ob
   having: MemberScalarWhereWithAggregatesInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
-}).strict()
+}).strict() ;
 
 export default MemberGroupByArgsSchema;

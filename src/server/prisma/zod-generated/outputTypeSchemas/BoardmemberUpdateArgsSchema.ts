@@ -16,6 +16,6 @@ export const BoardmemberUpdateArgsSchema: z.ZodType<Prisma.BoardmemberUpdateArgs
   select: BoardmemberSelectSchema.optional(),
   data: z.union([ BoardmemberUpdateInputSchema,BoardmemberUncheckedUpdateInputSchema ]),
   where: BoardmemberWhereUniqueInputSchema,
-}).strict()
+}).strict() ;
 
 export default BoardmemberUpdateArgsSchema;

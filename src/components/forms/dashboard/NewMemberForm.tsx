@@ -14,8 +14,8 @@ import { StatusTypeSchema } from '@/server/prisma/zod-generated/inputTypeSchemas
 import { trpc } from '@/utils/trpc';
 import { z } from 'zod';
 import { optionsFromObject } from '@/components/helpers';
-import { MemberOptionalDefaultsSchema } from '@/server/prisma/zod-generated';
 import Under18 from '../Under18';
+import { MemberOptionalDefaultsSchema } from '@/server/prisma/zod-generated/modelSchema/MemberSchema';
 
 function NewMemberForm() {
   const form = useZodForm({
@@ -62,7 +62,7 @@ function NewMemberForm() {
         <button
           form='member-form'
           type='submit'
-          className={`btn-sm btn
+          className={`btn btn-sm
             ${
               insert.isError
                 ? 'btn-error'
@@ -84,14 +84,14 @@ function NewMemberForm() {
         <div className='flex flex-col gap-1'>
           <span className='flex space-x-5'>
             <Input
-              className='input-bordered input-primary input w-full md:input-sm'
+              className='input input-bordered input-primary w-full md:input-sm'
               type='text'
               label='First Name'
               {...register('firstName')}
             />
 
             <Input
-              className='input-bordered input-primary input w-full md:input-sm'
+              className='input input-bordered input-primary w-full md:input-sm'
               type='text'
               label='Last Name'
               {...register('lastName')}
@@ -99,7 +99,7 @@ function NewMemberForm() {
           </span>
 
           <Input
-            className='input-bordered input-primary input w-full md:input-sm'
+            className='input input-bordered input-primary w-full md:input-sm'
             type='text'
             placeholder='Address Line 1'
             {...register('address')}
@@ -107,14 +107,14 @@ function NewMemberForm() {
 
           <span className='flex space-x-5'>
             <Input
-              className='input-bordered input-primary input w-full md:input-sm'
+              className='input input-bordered input-primary w-full md:input-sm'
               type='text'
               placeholder='City'
               {...register('city')}
             />
 
             <Select
-              className='select-bordered select-primary select w-full md:select-sm'
+              className='select select-bordered select-primary w-full md:select-sm'
               {...register('state')}
             >
               {states.map(state => (
@@ -128,7 +128,7 @@ function NewMemberForm() {
             </Select>
 
             <Input
-              className='input-bordered input-primary input w-full md:input-sm'
+              className='input input-bordered input-primary w-full md:input-sm'
               type='numeric'
               placeholder='Zip Code'
               {...register('zip', { valueAsNumber: true })}
@@ -138,14 +138,14 @@ function NewMemberForm() {
           <span className='flex space-x-5'>
             <Select
               label='Phone Type*'
-              className='select-bordered select-primary select md:select-sm'
+              className='select select-bordered select-primary md:select-sm'
               {...register('phoneType')}
             >
               {optionsFromObject(PhoneTypeSchema.enum)}
             </Select>
 
             <Input
-              className='input-bordered input-primary input w-full md:input-sm'
+              className='input input-bordered input-primary w-full md:input-sm'
               type='text'
               label='Phone Number'
               {...register('phone')}
@@ -153,7 +153,7 @@ function NewMemberForm() {
           </span>
 
           <Input
-            className='input-bordered input-primary input w-full md:input-sm'
+            className='input input-bordered input-primary w-full md:input-sm'
             type='text'
             label='Email'
             {...register('email')}
@@ -167,7 +167,7 @@ function NewMemberForm() {
           <span className='flex space-x-1'>
             <Select
               label='Membership Level'
-              className='select-bordered select-primary select md:select-sm'
+              className='select select-bordered select-primary md:select-sm'
               {...register('memberStatus')}
             >
               {optionsFromObject(StatusSchema.enum)}
@@ -175,7 +175,7 @@ function NewMemberForm() {
 
             <Select
               label='Member Type'
-              className='select-bordered select-primary select md:select-sm'
+              className='select select-bordered select-primary md:select-sm'
               {...register('memberType')}
             >
               {optionsFromObject(TypeSchema.enum)}
@@ -183,12 +183,11 @@ function NewMemberForm() {
 
             <Select
               label='Rider Level'
-              className='select-bordered select-primary select md:select-sm'
+              className='select select-bordered select-primary md:select-sm'
               {...register('memberStatusType')}
             >
               {optionsFromObject(StatusTypeSchema.enum)}
             </Select>
-
           </span>
 
           <Under18 dateName='dateOfBirth' />

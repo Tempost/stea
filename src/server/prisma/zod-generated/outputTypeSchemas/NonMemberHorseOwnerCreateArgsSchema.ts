@@ -25,6 +25,6 @@ export const NonMemberHorseOwnerCreateArgsSchema: z.ZodType<Prisma.NonMemberHors
   select: NonMemberHorseOwnerSelectSchema.optional(),
   include: NonMemberHorseOwnerIncludeSchema.optional(),
   data: z.union([ NonMemberHorseOwnerCreateInputSchema,NonMemberHorseOwnerUncheckedCreateInputSchema ]),
-}).strict()
+}).strict() ;
 
 export default NonMemberHorseOwnerCreateArgsSchema;

@@ -4,6 +4,6 @@ import { HorseWhereInputSchema } from '../inputTypeSchemas/HorseWhereInputSchema
 
 export const HorseDeleteManyArgsSchema: z.ZodType<Prisma.HorseDeleteManyArgs> = z.object({
   where: HorseWhereInputSchema.optional(),
-}).strict()
+}).strict() ;
 
 export default HorseDeleteManyArgsSchema;

@@ -4,6 +4,6 @@ import { BoardmemberWhereInputSchema } from '../inputTypeSchemas/BoardmemberWher
 
 export const BoardmemberDeleteManyArgsSchema: z.ZodType<Prisma.BoardmemberDeleteManyArgs> = z.object({
   where: BoardmemberWhereInputSchema.optional(),
-}).strict()
+}).strict() ;
 
 export default BoardmemberDeleteManyArgsSchema;

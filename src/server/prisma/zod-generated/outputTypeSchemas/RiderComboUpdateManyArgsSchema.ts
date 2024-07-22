@@ -7,6 +7,6 @@ import { RiderComboWhereInputSchema } from '../inputTypeSchemas/RiderComboWhereI
 export const RiderComboUpdateManyArgsSchema: z.ZodType<Prisma.RiderComboUpdateManyArgs> = z.object({
   data: z.union([ RiderComboUpdateManyMutationInputSchema,RiderComboUncheckedUpdateManyInputSchema ]),
   where: RiderComboWhereInputSchema.optional(),
-}).strict()
+}).strict() ;
 
 export default RiderComboUpdateManyArgsSchema;

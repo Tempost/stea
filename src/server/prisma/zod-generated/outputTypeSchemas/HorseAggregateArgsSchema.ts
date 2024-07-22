@@ -10,6 +10,6 @@ export const HorseAggregateArgsSchema: z.ZodType<Prisma.HorseAggregateArgs> = z.
   cursor: HorseWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
-}).strict()
+}).strict() ;
 
 export default HorseAggregateArgsSchema;

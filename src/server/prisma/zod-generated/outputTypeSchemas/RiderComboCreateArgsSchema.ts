@@ -34,6 +34,6 @@ export const RiderComboCreateArgsSchema: z.ZodType<Prisma.RiderComboCreateArgs> 
   select: RiderComboSelectSchema.optional(),
   include: RiderComboIncludeSchema.optional(),
   data: z.union([ RiderComboCreateInputSchema,RiderComboUncheckedCreateInputSchema ]),
-}).strict()
+}).strict() ;
 
 export default RiderComboCreateArgsSchema;

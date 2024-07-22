@@ -41,6 +41,6 @@ export const RiderComboFindFirstArgsSchema: z.ZodType<Prisma.RiderComboFindFirst
   take: z.number().optional(),
   skip: z.number().optional(),
   distinct: z.union([ RiderComboScalarFieldEnumSchema,RiderComboScalarFieldEnumSchema.array() ]).optional(),
-}).strict()
+}).strict() ;
 
 export default RiderComboFindFirstArgsSchema;

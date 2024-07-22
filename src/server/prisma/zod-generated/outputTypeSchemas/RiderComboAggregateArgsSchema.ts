@@ -10,6 +10,6 @@ export const RiderComboAggregateArgsSchema: z.ZodType<Prisma.RiderComboAggregate
   cursor: RiderComboWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
-}).strict()
+}).strict() ;
 
 export default RiderComboAggregateArgsSchema;

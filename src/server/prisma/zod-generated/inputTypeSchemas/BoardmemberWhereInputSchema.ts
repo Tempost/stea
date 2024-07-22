@@ -1,4 +1,5 @@
 import type { Prisma } from '@prisma/client';
+
 import { z } from 'zod';
 import { StringNullableFilterSchema } from './StringNullableFilterSchema';
 import { EnumPositionFilterSchema } from './EnumPositionFilterSchema';

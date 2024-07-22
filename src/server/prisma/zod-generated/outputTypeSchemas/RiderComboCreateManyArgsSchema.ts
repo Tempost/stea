@@ -5,6 +5,6 @@ import { RiderComboCreateManyInputSchema } from '../inputTypeSchemas/RiderComboC
 export const RiderComboCreateManyArgsSchema: z.ZodType<Prisma.RiderComboCreateManyArgs> = z.object({
   data: z.union([ RiderComboCreateManyInputSchema,RiderComboCreateManyInputSchema.array() ]),
   skipDuplicates: z.boolean().optional(),
-}).strict()
+}).strict() ;
 
 export default RiderComboCreateManyArgsSchema;

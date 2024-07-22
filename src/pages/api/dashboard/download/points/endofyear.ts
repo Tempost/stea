@@ -66,7 +66,8 @@ export default async function handler(
     });
 
     if (riderEndofYear.length === 0) {
-      return res.status(204).end();
+      res.status(204).end();
+      return;
     }
 
     const filename = `Points_For_${params.data.year}.csv`;

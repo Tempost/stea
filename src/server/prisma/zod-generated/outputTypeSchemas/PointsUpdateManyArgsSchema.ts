@@ -7,6 +7,6 @@ import { PointsWhereInputSchema } from '../inputTypeSchemas/PointsWhereInputSche
 export const PointsUpdateManyArgsSchema: z.ZodType<Prisma.PointsUpdateManyArgs> = z.object({
   data: z.union([ PointsUpdateManyMutationInputSchema,PointsUncheckedUpdateManyInputSchema ]),
   where: PointsWhereInputSchema.optional(),
-}).strict()
+}).strict() ;
 
 export default PointsUpdateManyArgsSchema;

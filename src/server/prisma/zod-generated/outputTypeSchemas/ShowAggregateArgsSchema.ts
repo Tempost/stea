@@ -10,6 +10,6 @@ export const ShowAggregateArgsSchema: z.ZodType<Prisma.ShowAggregateArgs> = z.ob
   cursor: ShowWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
-}).strict()
+}).strict() ;
 
 export default ShowAggregateArgsSchema;

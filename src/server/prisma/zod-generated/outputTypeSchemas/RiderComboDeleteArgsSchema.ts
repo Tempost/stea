@@ -33,6 +33,6 @@ export const RiderComboDeleteArgsSchema: z.ZodType<Prisma.RiderComboDeleteArgs> 
   select: RiderComboSelectSchema.optional(),
   include: RiderComboIncludeSchema.optional(),
   where: RiderComboWhereUniqueInputSchema,
-}).strict()
+}).strict() ;
 
 export default RiderComboDeleteArgsSchema;
