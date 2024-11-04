@@ -15,7 +15,7 @@ interface Props
   control: any;
 }
 
-const today = new Date(2023, 9, 2);
+const today = new Date();
 const curr = new Date(today.getFullYear(), 10, 30);
 const next = new Date(today.getFullYear() + 1, 10, 30);
 const from = new Date(today.getFullYear(), 8, 1);
@@ -39,14 +39,14 @@ function RegistrationYearSelect({
         <Radio
           label={`Current Year (${curr.getFullYear()})`}
           value={curr.toString()}
-          className='radio-primary radio align-middle md:radio-sm'
+          className='radio radio-primary align-middle md:radio-sm'
           onClick={onClick}
           {...register}
         />
         <Radio
           label={`Coming Year (${next.getFullYear()})`}
           value={next.toString()}
-          className='radio-primary radio align-middle md:radio-sm'
+          className='radio radio-primary align-middle md:radio-sm'
           onClick={onClick}
           {...register}
         />
