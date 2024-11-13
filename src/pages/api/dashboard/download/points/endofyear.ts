@@ -40,7 +40,8 @@ export default async function handler(
       { key: 'memberName', header: 'Member Name' },
       { key: 'horseName', header: 'Horse Rode' },
       { key: 'totalShows', header: 'Shows Attended' },
-      { key: 'division', header: 'division' },
+      { key: 'division', header: 'Division' },
+      { key: 'member.memberStatusType', header: 'Status' },
       { key: 'totalPoints', header: 'Points' },
     ],
   });
@@ -56,10 +57,20 @@ export default async function handler(
         totalShows: true,
         horseName: true,
         division: true,
+        member: {
+          select: {
+            memberStatusType: true,
+          },
+        },
       },
       orderBy: [
         {
           division: 'desc',
+        },
+        {
+          member: {
+            memberStatusType: 'asc',
+          },
         },
         { totalPoints: 'desc' },
       ],

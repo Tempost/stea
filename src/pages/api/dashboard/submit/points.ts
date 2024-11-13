@@ -191,23 +191,29 @@ function calculatePoints(
 async function riderExists(fullName: string, horseRN: string, endDate: Date) {
   const member = await prisma.member.findFirst({
     where: {
-      fullName,
+      fullName: {
+        equals: fullName,
+        mode: 'insensitive',
+      },
       OR: [{ membershipEnd: endDate }, { memberStatus: 'Life' }],
     },
   });
 
   if (member === null) {
-    throw Error(`Member ${fullName} not found.`)
+    throw Error(`Member ${fullName} not found.`);
   }
 
   const horse = await prisma.horse.findFirst({
     where: {
-      horseRN,
+      horseRN: {
+        equals: horseRN,
+        mode: 'insensitive',
+      },
       OR: [{ registrationEnd: endDate }, { regType: 'Life' }],
     },
   });
   if (horse === null) {
-    throw Error(`Horse ${horseRN} not found.`)
+    throw Error(`Horse ${horseRN} not found.`);
   }
 }
 
