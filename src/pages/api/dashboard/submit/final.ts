@@ -87,35 +87,40 @@ export default async function handler(
     };
 
     dbActions.push(
-      prisma.riderCombo.upsert({
-        where: {
-          memberName_horseName_division_showYear: {
-            memberName: entry.fullName,
-            horseName: entry.horseRN,
-            division: entry.division,
-            showYear: existingShow.showDate.getFullYear(),
+      prisma.riderCombo
+        .upsert({
+          where: {
+            memberName_horseName_division_showYear: {
+              memberName: entry.fullName,
+              horseName: entry.horseRN,
+              division: entry.division,
+              showYear: existingShow.showDate.getFullYear(),
+            },
           },
-        },
-        update: {
-          division: entry.division,
-          totalPoints: { increment: entry.points },
-          totalShows: { increment: 1 },
-          completedHT: entry.rideType === 'HT',
-          ...relations,
-        },
-        create: {
-          division: entry.division,
-          totalPoints: entry.points,
-          totalShows: 1,
-          showYear: year,
-          ...relations,
-        },
-      })
+          update: {
+            division: entry.division,
+            totalPoints: { increment: entry.points },
+            totalShows: { increment: 1 },
+            completedHT: entry.rideType === 'HT',
+            ...relations,
+          },
+          create: {
+            division: entry.division,
+            totalPoints: entry.points,
+            totalShows: 1,
+            showYear: year,
+            ...relations,
+          },
+        })
+        .catch(e => {
+          console.log(e);
+          console.log(entry.fullName, entry.horseRN);
+        })
     );
   }
 
   // TODO(Cody): Needs to be done in a transaction show it can rollback if any errors
-  // Will submit everyone and then skip the errored records 
+  // Will submit everyone and then skip the errored records
   await Promise.all(dbActions).then(() =>
     prisma.show.update({
       where: { uid: existingShow.uid },
