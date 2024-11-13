@@ -215,6 +215,8 @@ async function riderExists(fullName: string, horseRN: string, endDate: Date) {
   if (horse === null) {
     throw Error(`Horse ${horseRN} not found.`);
   }
+
+  return { member, horse };
 }
 
 async function checkforMembership(entries: GroupedEntries) {
@@ -235,10 +237,10 @@ async function checkforMembership(entries: GroupedEntries) {
           const entryName = `${entry.firstName} ${entry.lastName}`;
           promises.push(
             riderExists(entryName, entry.horseName, membershipEnd)
-              .then(() =>
+              .then(({ member, horse }) =>
                 updatedMemberPoints.push({
-                  fullName: entryName,
-                  horseRN: entry.horseName,
+                  fullName: member.fullName,
+                  horseRN: horse.horseRN,
                   division: entry.division,
                   countInDivision: entryList.length,
                   rideType: entry.rideType,
