@@ -55,7 +55,7 @@ function Tables() {
   };
 
   return (
-    <div className='flex flex-col w-full gap-10'>
+    <div className='flex w-full flex-col gap-10'>
       <div
         className='btn-group mx-auto'
         //@ts-expect-error wtf does this even mean

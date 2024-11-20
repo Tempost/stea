@@ -46,7 +46,7 @@ export const horses = router({
   add: dashboardProcedure
     .input(HorseOptionalDefaultsSchema)
     .mutation(async ({ input, ctx }) => {
-      if (input.regType === "Annual") {
+      if (input.regType === 'Annual') {
         input.registrationEnd = setMembershipYear();
       }
 

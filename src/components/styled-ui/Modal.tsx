@@ -12,7 +12,7 @@ function Modal({ buttonLabel, onClick, ok, id, children }: ModalProps) {
     <>
       <label
         htmlFor={id}
-        className='btn-primary btn-sm btn'
+        className='btn btn-primary btn-sm'
       >
         {buttonLabel ?? 'Open'}
       </label>
@@ -27,11 +27,11 @@ function Modal({ buttonLabel, onClick, ok, id, children }: ModalProps) {
         <div className='modal-box overflow-visible'>
           {children}
           <div className='modal-action'>
-            {ok ?? <button className='btn-sm btn'>Ok</button>}
+            {ok ?? <button className='btn btn-sm'>Ok</button>}
 
             <label
               htmlFor={id}
-              className='btn-sm btn'
+              className='btn btn-sm'
             >
               Close
             </label>

@@ -234,7 +234,7 @@ function SubmitPoints() {
               {shows.isSuccess && (
                 <Select
                   id='show-select'
-                  className='select-primary select select-sm lg:select-md'
+                  className='select select-primary select-sm lg:select-md'
                   {...methods.register('showUID', { required: true })}
                 >
                   {shows.data.map(show => (
@@ -259,7 +259,7 @@ function SubmitPoints() {
                 type='file'
                 accept='text/csv'
                 id='file-input'
-                className='file-input-primary file-input file-input-xs lg:file-input-md'
+                className='file-input file-input-primary file-input-xs lg:file-input-md'
                 {...methods.register('file', { required: true })}
               />
             </span>
@@ -276,7 +276,7 @@ function SubmitPoints() {
           <button
             type='reset'
             form='review-form'
-            className={`btn-secondary btn mt-5 w-fit normal-case ${
+            className={`btn btn-secondary mt-5 w-fit normal-case ${
               state.entries ? '' : 'hidden'
             }`}
             onClick={() => {
@@ -297,7 +297,7 @@ function SubmitPoints() {
               <button
                 type='submit'
                 form='review-form'
-                className={`btn-primary btn mt-5 w-fit normal-case ${
+                className={`btn btn-primary mt-5 w-fit normal-case ${
                   state.error ? 'btn-error' : ''
                 }`}
               >

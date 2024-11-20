@@ -32,19 +32,19 @@ function MonthSelector() {
   return (
     <div className='grid grid-flow-col place-content-between border-b-2 pb-2'>
       <button
-        className='btn-secondary btn-sm btn p-1'
+        className='btn btn-secondary btn-sm p-1'
         id='left'
         onClick={handleMonthChange}
       >
         {ChevLeft}
       </button>
 
-      <h2 className='btn-secondary btn-sm btn w-36 p-1'>
+      <h2 className='btn btn-secondary btn-sm w-36 p-1'>
         {MONTHS.at(monthState)}
       </h2>
 
       <button
-        className='btn-secondary btn-sm btn p-1'
+        className='btn btn-secondary btn-sm p-1'
         id='right'
         onClick={handleMonthChange}
       >

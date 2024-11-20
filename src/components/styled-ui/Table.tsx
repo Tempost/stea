@@ -106,7 +106,7 @@ function Table<TData>({
                         {extras && headerGroup.depth === 0 && extras}
                         {headerGroup.depth === 0 && search && (
                           <DebouncedInput
-                            className='input-primary input input-sm w-36 ml-auto'
+                            className='input input-primary input-sm ml-auto w-36'
                             type='text'
                             placeholder='Search'
                             value={globalFilter ?? ''}
@@ -134,7 +134,7 @@ function Table<TData>({
             <div className='flex w-full items-center justify-between gap-2'>
               <div className='flex gap-2'>
                 <button
-                  className='btn-secondary btn-xs btn'
+                  className='btn btn-secondary btn-xs'
                   onClick={() => table.previousPage()}
                   disabled={!table.getCanPreviousPage()}
                 >
@@ -142,7 +142,7 @@ function Table<TData>({
                 </button>
 
                 <button
-                  className='btn-primary btn-xs btn'
+                  className='btn btn-primary btn-xs'
                   onClick={() => table.nextPage()}
                   disabled={!table.getCanNextPage()}
                 >
@@ -152,7 +152,7 @@ function Table<TData>({
 
               <div className='flex flex-col items-center'>
                 <select
-                  className='select-secondary select select-xs lg:select-sm'
+                  className='select select-secondary select-xs lg:select-sm'
                   value={table.getState().pagination.pageSize}
                   onChange={e => {
                     table.setPageSize(Number(e.target.value));

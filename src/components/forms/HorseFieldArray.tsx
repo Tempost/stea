@@ -6,7 +6,7 @@ import Input from '../data-entry/Input';
 import RegistrationYearSelect from './RegistrationYearSelect';
 
 type Horses = {
-  horses: Prisma.HorseCreateManyInput[];
+  horses: Array<Prisma.HorseCreateManyInput>;
 };
 
 export default function HorseFieldArray() {
@@ -37,7 +37,7 @@ export default function HorseFieldArray() {
           <h2 className='card-title ml-3 mt-3'>
             Horse {index + 1}
             <button
-              className='btn-link btn-xs btn text-red-500'
+              className='btn btn-link btn-xs text-red-500'
               type='button'
               onClick={() => remove(index)}
             >
@@ -66,7 +66,7 @@ export default function HorseFieldArray() {
                 label='Registered Name*'
                 type='text'
                 altLabel='Horses registered name must be used when entering a show.'
-                className='input-bordered input-primary input input-sm w-full'
+                className='input input-bordered input-primary input-sm w-full'
                 {...register(`horses.${index}.horseRN` as const, {
                   required: true,
                 })}
@@ -75,7 +75,7 @@ export default function HorseFieldArray() {
               <Input
                 label='Barn Name'
                 type='text'
-                className='input-bordered input-primary input input-sm w-full'
+                className='input input-bordered input-primary input-sm w-full'
                 {...register(`horses.${index}.horseAKA` as const)}
               />
             </span>
@@ -87,7 +87,7 @@ export default function HorseFieldArray() {
         {errors.horses?.message}
       </p>
       <button
-        className='btn-secondary btn-xs btn mb-5 w-full'
+        className='btn btn-secondary btn-xs mb-5 w-full'
         type='button'
         onClick={() =>
           append({

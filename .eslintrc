@@ -7,10 +7,7 @@
     "plugin:@typescript-eslint/recommended"
   ],
   "parser": "@typescript-eslint/parser",
-  "ignorePatterns": [
-    "**/src/server/prisma/zod-generated",
-    "**/src/utils/seed"
-  ],
+  "ignorePatterns": ["**/src/server/prisma/zod-generated", "**/src/utils/seed"],
   "rules": {
     "react/no-unescaped-entities": "off",
     "react/prop-types": "off",

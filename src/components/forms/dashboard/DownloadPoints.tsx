@@ -5,7 +5,7 @@ interface DownloadPointsProps {
 export default function DownloadPoints({ uid }: DownloadPointsProps) {
   return (
     <a
-      className='btn-secondary btn btn-xs'
+      className='btn btn-secondary btn-xs'
       href={
         '/api/dashboard/download/points/show?' +
         new URLSearchParams({ show: uid })

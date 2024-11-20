@@ -35,7 +35,7 @@ function Home() {
               href={'/join'}
               prefetch={false}
             >
-              <button className='btn-primary btn btn-lg text-xl md:btn-xl md:text-2xl'>
+              <button className='btn btn-primary btn-lg text-xl md:btn-xl md:text-2xl'>
                 Join Today!
               </button>
             </NextLink>
@@ -62,22 +62,22 @@ function Home() {
           />
         </section>
 
-        <div className='flex flex-col md:flex-row gap-5 md:gap-10'>
-          <section className='card-compact container card mx-auto w-fit border shadow-xl md:shadow-2xl'>
+        <div className='flex flex-col gap-5 md:flex-row md:gap-10'>
+          <section className='container card card-compact mx-auto w-fit border shadow-xl md:shadow-2xl'>
             <div className='card-body'>
               <h2 className='text-center text-xl font-bold md:text-2xl lg:text-3xl'>
                 Announcements
               </h2>
 
-              <div className='divider mt-0 mb-0'></div>
+              <div className='divider mb-0 mt-0'></div>
 
-              <div className='inline-grid place-content-center text-xl md:text-2xl text-center [&_h3]:mb-2'>
+              <div className='inline-grid place-content-center text-center text-xl md:text-2xl [&_h3]:mb-2'>
                 <div>
                   <h3 className='text-lg md:text-xl lg:text-xl'>
                     2023 Stea Award Winners
                   </h3>
                   <a
-                    className='btn btn-primary btn-sm md:btn-xs w-fit place-self-center'
+                    className='btn btn-primary btn-sm w-fit place-self-center md:btn-xs'
                     href='/stea_2023_year_end_award_winners.docx'
                   >
                     Download
@@ -91,7 +91,7 @@ function Home() {
                     Keep up to date on STEA rules
                   </h3>
                   <a
-                    className='btn-primary btn btn-sm md:btn-xs w-fit place-self-center gap-2'
+                    className='btn btn-primary btn-sm w-fit gap-2 place-self-center md:btn-xs'
                     href='/stea_rule_book.pdf'
                     rel='noopener noreferrer'
                     target='_blank'
@@ -103,18 +103,18 @@ function Home() {
             </div>
           </section>
 
-          <section className='card-compact container card mx-auto w-fit border shadow-xl md:shadow-2xl'>
+          <section className='container card card-compact mx-auto w-fit border shadow-xl md:shadow-2xl'>
             <div className='card-body'>
               <h2 className='text-center text-xl font-bold md:text-2xl lg:text-3xl'>
                 Upcoming Events
               </h2>
-              <div className='divider mt-0 mb-0'></div>
+              <div className='divider mb-0 mt-0'></div>
               <UpcomingEvents />
               <NextLink
                 href='/calendar'
                 className='self-center'
               >
-                <button className='btn-primary btn-sm btn grid grid-flow-col place-content-center gap-2'>
+                <button className='btn btn-primary btn-sm grid grid-flow-col place-content-center gap-2'>
                   {CalendarIcon} View Full Calendar
                 </button>
               </NextLink>
@@ -122,12 +122,12 @@ function Home() {
           </section>
         </div>
 
-        <section className='card-compact container card mx-auto w-fit border shadow-xl md:shadow-2xl'>
+        <section className='container card card-compact mx-auto w-fit border shadow-xl md:shadow-2xl'>
           <div className='card-body'>
-            <h2 className='text-center text-xl font-bold mg:text-2xl lg:text-3xl'>
+            <h2 className='mg:text-2xl text-center text-xl font-bold lg:text-3xl'>
               Recognized vendors
             </h2>
-            <div className='divider mt-0 mb-0'></div>
+            <div className='divider mb-0 mt-0'></div>
             <div className='flex flex-row flex-wrap justify-center'>
               <Image
                 src='/riding_warehouse.jpg'

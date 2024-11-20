@@ -119,7 +119,7 @@ function PlacingsTable({ title, ...props }: PlacingsTableProps) {
         <select
           name='show-year'
           id='show-year'
-          className='select-bordered select-primary select w-fit select-xs ml-2'
+          className='select select-bordered select-primary select-xs ml-2 w-fit'
           value={yearSelect}
           onChange={e => {
             e.preventDefault();

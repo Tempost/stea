@@ -1,7 +1,10 @@
 import Input from '@/components/data-entry/Input';
 import Form from '@/components/forms/Form';
 import TableWithData from '@/components/tables/BaseTable';
-import { Boardmember, BoardmemberSchema } from '@/server/prisma/zod-generated/modelSchema/BoardmemberSchema';
+import {
+  Boardmember,
+  BoardmemberSchema,
+} from '@/server/prisma/zod-generated/modelSchema/BoardmemberSchema';
 import { mapping } from '@/server/utils';
 import { RouterOutputs, trpc } from '@/utils/trpc';
 import useZodForm from '@/utils/usezodform';
@@ -72,12 +75,12 @@ function BoardmemberModal({ isOpen, setIsOpen, form }: ModalProps) {
           }}
         >
           <Input
-            className='input-bordered input-primary input w-full md:input-sm'
+            className='input input-bordered input-primary w-full md:input-sm'
             label='Name'
             {...form.register('name')}
           />
           <Input
-            className='input-bordered input-primary input w-full md:input-sm'
+            className='input input-bordered input-primary w-full md:input-sm'
             label='Email'
             {...form.register('email')}
           />
@@ -87,13 +90,13 @@ function BoardmemberModal({ isOpen, setIsOpen, form }: ModalProps) {
           <button
             form='boardmember-form'
             type='submit'
-            className='btn-sm btn'
+            className='btn btn-sm'
           >
             Ok
           </button>
           <label
             htmlFor='boardmember-modal'
-            className='btn-sm btn'
+            className='btn btn-sm'
             onClick={() => {
               form.reset();
               setIsOpen(curr => !curr);
@@ -126,7 +129,7 @@ function BoardMembers() {
         setIsOpen={setIsOpen}
         form={form}
       />
-      <div className='w-fit mx-auto'>
+      <div className='mx-auto w-fit'>
         <TableWithData
           extraTableOpts={{
             columns,

@@ -52,9 +52,9 @@ function DashboardOwners() {
 
   return (
     <TableWithData
-        extraTableOpts={{
-          columns,
-        }}
+      extraTableOpts={{
+        columns,
+      }}
       query={owners}
       paginate
       search

@@ -22,7 +22,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => (
       ref={ref}
       id='checkbox-input'
       type='checkbox'
-      className={`checkbox-primary checkbox md:checkbox-sm ${props.className}`}
+      className={`checkbox checkbox-primary md:checkbox-sm ${props.className}`}
       {...props}
     />
   </div>

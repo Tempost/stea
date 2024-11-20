@@ -21,7 +21,12 @@ export type EntriesRideTypeDivison = Record<
 
 export type GroupedEntries = Record<
   CSVEntry['rideType'],
-  Partial<Record<CSVEntry['division'], Partial<Record<CSVEntry['group'], Array<CSVEntry>>>>>
+  Partial<
+    Record<
+      CSVEntry['division'],
+      Partial<Record<CSVEntry['group'], Array<CSVEntry>>>
+    >
+  >
 >;
 export type PointsMap = Record<ShowType, Record<CSVEntry['placing'], number>>;
 

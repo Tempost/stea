@@ -17,7 +17,7 @@ export const ResponsiveHeader = ({ children }: PropsWithChildren) => {
           <div className='flex-none lg:hidden'>
             <label
               htmlFor='my-drawer-3'
-              className='btn-ghost btn-square btn'
+              className='btn btn-square btn-ghost'
             >
               {Hamburger}
             </label>
@@ -77,7 +77,7 @@ export const ResponsiveDashboardHeader = () => (
       <div className='dropdown'>
         <label
           tabIndex={0}
-          className='btn-ghost btn lg:hidden'
+          className='btn btn-ghost lg:hidden'
         >
           {MobileMenu}
         </label>
@@ -100,7 +100,7 @@ export const ResponsiveDashboardHeader = () => (
       </div>
       <Link
         href='/'
-        className='btn-ghost btn text-xl normal-case'
+        className='btn btn-ghost text-xl normal-case'
       >
         Home
       </Link>

@@ -75,7 +75,7 @@ function Payment({ showPayment, children, formMutation }: PaymentProps) {
           />
           <button
             type='submit'
-            className='btn-primary btn w-full'
+            className='btn btn-primary w-full'
           >
             Move to payment
           </button>

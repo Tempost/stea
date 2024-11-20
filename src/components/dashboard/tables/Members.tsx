@@ -23,7 +23,7 @@ function EmailList({ emails, className, ...props }: EmailListProps) {
   return (
     <button
       {...props}
-      className={`btn-primary btn-sm btn ${className ? className : ''}`}
+      className={`btn btn-primary btn-sm ${className ? className : ''}`}
       onClick={() => navigator.clipboard.writeText(noDupes.join('\n'))}
     >
       Email List

@@ -73,14 +73,14 @@ function HorseRegistration() {
             <Input
               type='text'
               label='First Name*'
-              className='input-bordered input-primary input input-sm w-full'
+              className='input input-bordered input-primary input-sm w-full'
               {...register('owner.firstName')}
             />
 
             <Input
               type='text'
               label='Last Name*'
-              className='input-bordered input-primary input input-sm w-full'
+              className='input input-bordered input-primary input-sm w-full'
               {...register('owner.lastName')}
             />
           </div>
@@ -89,7 +89,7 @@ function HorseRegistration() {
             <Input
               label='Email'
               type='text'
-              className='input-bordered input-primary input input-sm w-full'
+              className='input input-bordered input-primary input-sm w-full'
               altLabel='This will be the primary method of contact.'
               {...register('owner.email')}
             />
@@ -97,7 +97,7 @@ function HorseRegistration() {
             <span className='flex gap-2'>
               <Select
                 label='Phone Type*'
-                className='select-bordered select-primary select md:select-sm'
+                className='select select-bordered select-primary md:select-sm'
                 {...register('owner.phoneType')}
               >
                 {Object.keys(PhoneTypeSchema.enum).map(type => (
@@ -113,7 +113,7 @@ function HorseRegistration() {
               <Input
                 label='Phone Number*'
                 type='tel'
-                className='input-bordered input-primary input input-sm w-full'
+                className='input input-bordered input-primary input-sm w-full'
                 {...register('owner.phone')}
               />
             </span>

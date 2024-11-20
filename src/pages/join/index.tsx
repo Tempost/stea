@@ -26,7 +26,10 @@ function JoinStea() {
         <h3>Membership Application type:</h3>
         <div onChange={handleRadioClick}>
           {radioSelections.map(selection => (
-            <div className='form-control flex-row'>
+            <div
+              key={selection}
+              className='form-control flex-row'
+            >
               <label
                 htmlFor={`${selection}-id`}
                 aria-label={selection}
@@ -35,7 +38,7 @@ function JoinStea() {
               >
                 <Radio
                   id={`${selection}-id`}
-                  className='radio-primary radio radio-md md:radio-sm'
+                  className='radio radio-primary radio-md md:radio-sm'
                   value={selection}
                   name='app-select'
                 />
@@ -47,7 +50,7 @@ function JoinStea() {
       </div>
 
       <button
-        className='btn-primary btn w-full'
+        className='btn btn-primary w-full'
         onClick={() => {
           if (state.type) {
             router.push(`${router.pathname}/form/${state.type?.toLowerCase()}`);
