@@ -99,7 +99,7 @@ function BusinessRegistration() {
           <h3 className='text-sm'>Name of Business*</h3>
           <Input
             type='text'
-            className='input-bordered input-primary input w-full md:input-sm'
+            className='input input-bordered input-primary w-full md:input-sm'
             {...register('memberInput.businessName')}
           />
 
@@ -107,14 +107,14 @@ function BusinessRegistration() {
           <div className='flex flex-col gap-2'>
             <Input
               type='text'
-              className='input-bordered input-primary input w-full md:input-sm'
+              className='input input-bordered input-primary w-full md:input-sm'
               placeholder='Address Line 1'
               {...register('memberInput.address')}
             />
 
             <Input
               type='text'
-              className='input-bordered input-primary input w-full md:input-sm'
+              className='input input-bordered input-primary w-full md:input-sm'
               placeholder='Address Line 2'
               name='temp'
             />
@@ -122,13 +122,13 @@ function BusinessRegistration() {
             <div className='flex gap-1'>
               <Input
                 type='text'
-                className='input-bordered input-primary input w-full md:input-sm'
+                className='input input-bordered input-primary w-full md:input-sm'
                 placeholder='City'
                 {...register('memberInput.city')}
               />
 
               <Select
-                className='select-bordered select-primary select w-full md:select-sm'
+                className='select select-bordered select-primary w-full md:select-sm'
                 {...register('memberInput.state')}
               >
                 {states.map(state => (
@@ -143,7 +143,7 @@ function BusinessRegistration() {
 
               <Input
                 type='numeric'
-                className='input-bordered input-primary input w-full md:input-sm'
+                className='input input-bordered input-primary w-full md:input-sm'
                 placeholder='Zip Code'
                 {...register('memberInput.zip', { valueAsNumber: true })}
               />
@@ -156,21 +156,21 @@ function BusinessRegistration() {
               <Input
                 type='text'
                 label='First Name*'
-                className='input-bordered input-primary input w-full md:input-sm'
+                className='input input-bordered input-primary w-full md:input-sm'
                 {...register('memberInput.firstName')}
               />
 
               <Input
                 type='text'
                 label='Last Name*'
-                className='input-bordered input-primary input w-full md:input-sm'
+                className='input input-bordered input-primary w-full md:input-sm'
                 {...register('memberInput.lastName')}
               />
             </div>
             <div className='flex gap-2'>
               <Select
                 label='Phone Type*'
-                className='select-bordered select-primary select md:select-sm'
+                className='select select-bordered select-primary md:select-sm'
                 {...register('memberInput.phoneType')}
               >
                 {Object.keys(PhoneTypeSchema.enum).map(type => (
@@ -186,7 +186,7 @@ function BusinessRegistration() {
               <Input
                 label='Phone Number*'
                 type='tel'
-                className='input-bordered input-primary input w-full md:input-sm'
+                className='input input-bordered input-primary w-full md:input-sm'
                 {...register('memberInput.phone')}
               />
             </div>
@@ -194,7 +194,7 @@ function BusinessRegistration() {
             <Input
               label='Email*'
               type='text'
-              className='input-bordered input-primary input w-full md:input-sm'
+              className='input input-bordered input-primary w-full md:input-sm'
               altLabel={'This will be the primary method of contact.'}
               {...register('memberInput.email')}
             />
@@ -203,7 +203,6 @@ function BusinessRegistration() {
               register={register('memberInput.memberStatus')}
               formType='Business'
             />
-
 
             <RegistrationYearSelect
               heading='Which year are you registering for?'
@@ -215,7 +214,7 @@ function BusinessRegistration() {
 
           <Checkbox
             label='Do you plan to register your horse(s)?'
-            className='checkbox-primary checkbox md:checkbox-sm'
+            className='checkbox checkbox-primary md:checkbox-sm'
             checked={isRegHorse}
             onChange={handleCheck}
           />

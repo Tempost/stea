@@ -91,14 +91,14 @@ function IndividualRegistration() {
           <Input
             type='text'
             label='First Name*'
-            className='input-bordered input-primary input w-full md:input-sm'
+            className='input input-bordered input-primary w-full md:input-sm'
             {...register('memberInput.firstName')}
           />
 
           <Input
             type='text'
             label='Last Name*'
-            className='input-bordered input-primary input w-full md:input-sm'
+            className='input input-bordered input-primary w-full md:input-sm'
             {...register('memberInput.lastName')}
           />
         </div>
@@ -107,14 +107,14 @@ function IndividualRegistration() {
         <div className='flex flex-col gap-2'>
           <Input
             type='text'
-            className='input-bordered input-primary input w-full md:input-sm'
+            className='input input-bordered input-primary w-full md:input-sm'
             placeholder='Address Line 1'
             {...register('memberInput.address')}
           />
 
           <Input
             type='text'
-            className='input-bordered input-primary input w-full md:input-sm'
+            className='input input-bordered input-primary w-full md:input-sm'
             placeholder='Address Line 2'
             name='temp'
           />
@@ -122,13 +122,13 @@ function IndividualRegistration() {
           <div className='flex flex-col gap-1 md:flex-row'>
             <Input
               type='text'
-              className='input-bordered input-primary input w-full md:input-sm'
+              className='input input-bordered input-primary w-full md:input-sm'
               placeholder='City'
               {...register('memberInput.city')}
             />
 
             <Select
-              className='select-bordered select-primary select w-full md:select-sm'
+              className='select select-bordered select-primary w-full md:select-sm'
               {...register('memberInput.state')}
             >
               {states.map(state => (
@@ -143,7 +143,7 @@ function IndividualRegistration() {
 
             <Input
               type='numeric'
-              className='input-bordered input-primary input w-full md:input-sm'
+              className='input input-bordered input-primary w-full md:input-sm'
               placeholder='Zip Code'
               {...register('memberInput.zip', { valueAsNumber: true })}
             />
@@ -153,7 +153,7 @@ function IndividualRegistration() {
             <div className='flex gap-2'>
               <Select
                 label='Phone Type*'
-                className='select-bordered select-primary select md:select-sm'
+                className='select select-bordered select-primary md:select-sm'
                 {...register('memberInput.phoneType')}
               >
                 {Object.keys(PhoneTypeSchema.enum).map(type => (
@@ -169,7 +169,7 @@ function IndividualRegistration() {
               <Input
                 label='Phone Number*'
                 type='tel'
-                className='input-bordered input-primary input w-full md:input-sm'
+                className='input input-bordered input-primary w-full md:input-sm'
                 {...register('memberInput.phone')}
               />
             </div>
@@ -177,7 +177,7 @@ function IndividualRegistration() {
             <Input
               label='Email*'
               type='text'
-              className='input-bordered input-primary input w-full md:input-sm'
+              className='input input-bordered input-primary w-full md:input-sm'
               altLabel={'This will be the primary method of contact.'}
               {...register('memberInput.email')}
             />
@@ -203,7 +203,7 @@ function IndividualRegistration() {
 
           <Checkbox
             label='Do you plan to register your horse(s)?'
-            className='checkbox-primary checkbox md:checkbox-sm'
+            className='checkbox checkbox-primary md:checkbox-sm'
             checked={isRegHorse}
             onChange={handleRegHorseCheck}
           />

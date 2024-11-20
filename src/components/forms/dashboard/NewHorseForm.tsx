@@ -19,7 +19,7 @@ function MemberSelection() {
 
   return (
     <Select
-      className='select-bordered select-primary select w-full md:select-sm'
+      className='select select-bordered select-primary w-full md:select-sm'
       label='Members'
       {...register('memberName')}
     >
@@ -49,7 +49,7 @@ function OwnerSelection() {
 
   return (
     <Select
-      className='select-bordered select-primary select w-full md:select-sm'
+      className='select select-bordered select-primary w-full md:select-sm'
       label='Non-Members'
       {...register('owner')}
     >
@@ -123,7 +123,7 @@ function NewHorseForm() {
         <button
           form='horse-form'
           type='submit'
-          className={`btn-sm btn
+          className={`btn btn-sm
             ${
               insert.isError
                 ? 'btn-error'
@@ -145,14 +145,14 @@ function NewHorseForm() {
         <div className='flex flex-col gap-2'>
           <span className='flex space-x-5'>
             <Input
-              className='input-bordered input-primary input w-full md:input-sm'
+              className='input input-bordered input-primary w-full md:input-sm'
               type='text'
               label='Horse RN'
               {...register('horseRN')}
             />
 
             <Input
-              className='input-bordered input-primary input w-full md:input-sm'
+              className='input input-bordered input-primary w-full md:input-sm'
               type='text'
               label='Horse Barn Name'
               {...register('horseAKA')}
@@ -161,7 +161,7 @@ function NewHorseForm() {
 
           <Select
             label='Type of Member'
-            className='select-bordered select-primary select w-full md:select-sm'
+            className='select select-bordered select-primary w-full md:select-sm'
             name='owner-type'
             onChange={handleSelection}
           >
@@ -178,14 +178,14 @@ function NewHorseForm() {
           <Radio
             label='Annual'
             value='Annual'
-            className='radio-primary radio align-middle md:radio-sm'
+            className='radio radio-primary align-middle md:radio-sm'
             {...register('regType')}
           />
 
           <Radio
             label='Life'
             value='Life'
-            className='radio-primary radio align-middle md:radio-sm'
+            className='radio radio-primary align-middle md:radio-sm'
             {...register('regType')}
           />
         </div>

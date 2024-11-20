@@ -31,7 +31,7 @@ function SteaPoints() {
           </h2>
           <div className='card-actions justify-center'>
             <a
-              className='btn-primary btn btn-sm md:btn-md'
+              className='btn btn-primary btn-sm md:btn-md'
               href='/stea_points.pdf'
               rel='noopener noreferrer'
               target='_blank'

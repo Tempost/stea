@@ -21,7 +21,7 @@ function ControlledDatePicker({
 }: DatePickerProps) {
   const { control } = useFormContext();
   return (
-    <div className={`${hidden ? '' : 'hidden'} `}>
+    <div className={`${hidden ? 'hidden' : ''} `}>
       <Controller
         name={name}
         control={control}
@@ -39,7 +39,7 @@ function ControlledDatePicker({
                 }}
                 selected={props.field.value}
                 customInput={
-                  <Input className='input-bordered input-primary input w-fit md:input-sm' />
+                  <Input className='input input-bordered input-primary w-fit md:input-sm' />
                 }
               />
               <label className='label'>

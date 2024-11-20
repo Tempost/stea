@@ -7,8 +7,14 @@ import MemberTable from '@/components/tables/Members';
 function MembersAnHorses() {
   return (
     <div className='md:grid md:grid-flow-col md:place-content-evenly'>
-      <MemberTable search paginate />
-      <HorseTable search paginate />
+      <MemberTable
+        search
+        paginate
+      />
+      <HorseTable
+        search
+        paginate
+      />
     </div>
   );
 }

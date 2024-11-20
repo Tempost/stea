@@ -38,7 +38,7 @@ function EndOfYearPoints() {
         <select
           name='show-year'
           id='show-year'
-          className='select-bordered select-primary select w-fit md:select-sm'
+          className='select select-bordered select-primary w-fit md:select-sm'
           value={yearSelect}
           onChange={e => {
             e.preventDefault();

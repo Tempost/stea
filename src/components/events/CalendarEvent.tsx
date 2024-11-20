@@ -18,13 +18,13 @@ function CalendarEvents({ show }: CalendarEventsProps) {
       <h3>
         {show.showName} ({show.showType})
       </h3>
-      <div className='divider mt-0 mb-0'></div>
+      <div className='divider mb-0 mt-0'></div>
       <p className='m-2 text-lg'>{date}</p>
 
       {show.url && (
         <Link
           href={show.url}
-          className='btn-primary btn-sm btn'
+          className='btn btn-primary btn-sm'
         >
           Register
         </Link>

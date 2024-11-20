@@ -47,7 +47,7 @@ function AddNewShow() {
       }}
       ok={
         <button
-          className={`btn-sm btn
+          className={`btn btn-sm
             ${
               addNew.isError
                 ? 'btn-error'
@@ -71,14 +71,14 @@ function AddNewShow() {
       >
         <div className='flex flex-row gap-5'>
           <Input
-            className='input-bordered input-primary input w-full md:input-sm'
+            className='input input-bordered input-primary w-full md:input-sm'
             placeholder='Enter show name'
             label='Show Name*'
             {...register('showName')}
           />
 
           <Select
-            className='select-bordered select-primary select w-fit md:select-sm'
+            className='select select-bordered select-primary w-fit md:select-sm'
             label='Show Type*'
             {...register('showType')}
           >
@@ -94,9 +94,6 @@ function AddNewShow() {
         </div>
 
         <div className='grid grid-flow-col'>
-          {
-            // TODO: FIX THE WEIRD BUG WITH HIDDEN ATTRIBUTE
-          }
           <ControlledDatePicker
             name='showDate'
             label='Show Date*'
@@ -110,7 +107,7 @@ function AddNewShow() {
         </div>
 
         <Input
-          className='input-bordered input-primary input w-full md:input-sm'
+          className='input input-bordered input-primary w-full md:input-sm'
           placeholder='Registration Link'
           label='Registration Link'
           {...register('url')}

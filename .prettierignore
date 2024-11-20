@@ -5,3 +5,4 @@ public/
 *.yml
 *.yaml
 *.json
+.vercel/
