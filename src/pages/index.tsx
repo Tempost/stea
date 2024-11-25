@@ -74,11 +74,11 @@ function Home() {
               <div className='inline-grid place-content-center text-center text-xl md:text-2xl [&_h3]:mb-2'>
                 <div>
                   <h3 className='text-lg md:text-xl lg:text-xl'>
-                    2023 Stea Award Winners
+                    2024 STEA Year End Scores
                   </h3>
                   <a
                     className='btn btn-primary btn-sm w-fit place-self-center md:btn-xs'
-                    href='/stea_2023_year_end_award_winners.docx'
+                    href='/stea_points_2024.csv'
                   >
                     Download
                   </a>
