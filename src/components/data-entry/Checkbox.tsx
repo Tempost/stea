@@ -6,26 +6,38 @@ interface CheckboxProps
     InputHTMLAttributes<HTMLInputElement>,
     HTMLInputElement
   > {
-  label: string | ReactNode;
+  label?: string | ReactNode;
 }
 
 const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => (
-  <div className='flex items-center gap-2'>
-    <label
-      className='label'
-      htmlFor='checkbox-input'
-    >
-      <span className='label-text'>{props.label}</span>
-    </label>
+  <>
+    {props.label ? (
+      <div className='flex items-center gap-2'>
+        <label
+          className='label'
+          htmlFor='checkbox-input'
+        >
+          <span className='label-text'>{props.label}</span>
+        </label>
 
-    <input
-      ref={ref}
-      id='checkbox-input'
-      type='checkbox'
-      className={`checkbox checkbox-primary md:checkbox-sm ${props.className}`}
-      {...props}
-    />
-  </div>
+        <input
+          ref={ref}
+          id='checkbox-input'
+          type='checkbox'
+          className={`checkbox checkbox-primary md:checkbox-sm ${props.className}`}
+          {...props}
+        />
+      </div>
+    ) : (
+      <input
+        ref={ref}
+        id='checkbox-input'
+        type='checkbox'
+        className={`checkbox checkbox-primary md:checkbox-sm ${props.className}`}
+        {...props}
+      />
+    )}
+  </>
 ));
 
 Checkbox.displayName = 'Checkbox';

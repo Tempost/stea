@@ -1,17 +1,31 @@
+import { RowSelectionState } from '@tanstack/react-table';
+
 interface DownloadPointsProps {
-  uid: string;
+  year: number;
+  showSelection: RowSelectionState;
 }
 
-export default function DownloadPoints({ uid }: DownloadPointsProps) {
+export default function DownloadPoints({
+  year,
+  showSelection,
+}: DownloadPointsProps) {
+  const disabled = Object.keys(showSelection).length > 1;
+  let label = 'Download';
+  const searchParams = new URLSearchParams();
+
+  if (!disabled && Object.keys(showSelection).length !== 0) {
+    label = 'Download Selected';
+    searchParams.set('show', Object.keys(showSelection)[0]);
+  } else {
+    searchParams.set('year', year.toString());
+  }
+
   return (
-    <a
-      className='btn btn-secondary btn-xs'
-      href={
-        '/api/dashboard/download/points/show?' +
-        new URLSearchParams({ show: uid })
-      }
+    <button
+      className='btn btn-primary btn-sm'
+      disabled={disabled}
     >
-      Download
-    </a>
+      <a href={'/api/dashboard/download/points?' + searchParams}>{label}</a>
+    </button>
   );
 }

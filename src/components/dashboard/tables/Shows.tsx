@@ -1,60 +1,33 @@
-import EndOfYearPoints from '@/components/dashboard/EndOfYearPoints';
+import Checkbox from '@/components/data-entry/Checkbox';
 import AddNewShow from '@/components/forms/dashboard/AddNewShow';
 import DownloadPoints from '@/components/forms/dashboard/DownloadPoints';
 import TableWithData from '@/components/tables/BaseTable';
 import { readableDateTime } from '@/utils/helpers';
 import { RouterOutputs, trpc } from '@/utils/trpc';
-import type { ColumnDef } from '@tanstack/react-table';
+import type { ColumnDef, RowSelectionState } from '@tanstack/react-table';
+import { useMemo, useState } from 'react';
+import RemoveSelected from '@/components/dashboard/RemoveSelected';
+
+const currYear = new Date().getFullYear();
+const years = Array.from({ length: 10 }, (_, i) => i + 2022);
 
 type Show = RouterOutputs['shows']['all'][number];
-const columns: Array<ColumnDef<Show>> = [
-  {
-    header: 'Shows',
-    columns: [
-      {
-        accessorKey: 'showDate',
-        id: 'showDate',
-        cell: info => {
-          const date: Date | undefined = info.getValue();
 
-          return date ? readableDateTime(date) : '';
-        },
-        header: () => <span> Show Date </span>,
-      },
-      {
-        accessorKey: 'showEndDate',
-        id: 'showEndDate',
-        cell: info => {
-          const date: Date | undefined = info.getValue();
-
-          return date ? readableDateTime(date) : '';
-        },
-        header: () => <span> End Date </span>,
-      },
-      {
-        accessorKey: 'showName',
-        id: 'showName',
-        cell: info => info.getValue(),
-        header: () => <span> Show Name </span>,
-      },
-      {
-        accessorKey: 'showType',
-        id: 'showType',
-        cell: info => info.getValue(),
-        header: () => <span> Type </span>,
-      },
-      {
-        accessorKey: 'uid',
-        id: 'uid',
-        cell: info => <DownloadPoints uid={info.getValue()} />,
-        header: () => <></>,
-      },
-    ],
-  },
-];
-
+// TODO: Show 'Remove Selected' button as disabled.
+//       Select shows with check box.
+//       Enabled 'Remove Selected'
+//       Click button and show model with small table of selected shows
+//       Cancel or Confirm delete
 function ShowsTable() {
+  const [yearSelect, setYearSelect] = useState(currYear);
+  const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
   const shows = trpc.shows.all.useQuery({
+    where: {
+      showDate: {
+        lte: new Date(yearSelect, 11, 31),
+        gte: new Date(yearSelect, 0, 1),
+      },
+    },
     orderBy: {
       showDate: 'asc',
     },
@@ -64,14 +37,100 @@ function ShowsTable() {
     },
   });
 
+  const columns = useMemo<Array<ColumnDef<Show>>>(
+    () => [
+      {
+        id: 'header',
+        columns: [
+          {
+            id: 'select',
+            cell: ({ row }) => (
+              <Checkbox
+                key={row.id}
+                checked={row.getIsSelected()}
+                onChange={row.getToggleSelectedHandler()}
+              />
+            ),
+          },
+          {
+            accessorKey: 'showDate',
+            id: 'showDate',
+            cell: info => {
+              const date: Date | undefined = info.getValue();
+
+              return date ? readableDateTime(date) : '';
+            },
+            header: () => <span> Show Date </span>,
+          },
+          {
+            accessorKey: 'showEndDate',
+            id: 'showEndDate',
+            cell: info => {
+              const date: Date | undefined = info.getValue();
+
+              return date ? readableDateTime(date) : '';
+            },
+            header: () => <span> End Date </span>,
+          },
+          {
+            accessorKey: 'showName',
+            id: 'showName',
+            cell: info => info.getValue(),
+            header: () => <span> Show Name </span>,
+          },
+          {
+            accessorKey: 'showType',
+            id: 'showType',
+            cell: info => info.getValue(),
+            header: () => <span> Type </span>,
+          },
+        ],
+      },
+    ],
+    []
+  );
+
   return (
     <div>
-      <AddNewShow />
-      <EndOfYearPoints />
       <TableWithData
         extraTableOpts={{
           columns,
+          enableRowSelection: true,
+          onRowSelectionChange: setRowSelection,
+          getRowId: row => row.uid,
+          state: {
+            rowSelection,
+          },
         }}
+        extras={
+          <div className='flex space-x-1'>
+            <select
+              name='show-year'
+              id='show-year'
+              className='select select-bordered select-primary select-sm w-fit'
+              value={yearSelect}
+              onChange={e => {
+                e.preventDefault();
+                setYearSelect(Number.parseInt(e.target.value));
+              }}
+            >
+              {years.map(year => (
+                <option
+                  key={year}
+                  value={year}
+                >
+                  {year}
+                </option>
+              ))}
+            </select>
+            <DownloadPoints
+              year={yearSelect}
+              showSelection={rowSelection}
+            />
+            <AddNewShow />
+            <RemoveSelected showSelection={rowSelection} />
+          </div>
+        }
         query={shows}
         paginate
         search
