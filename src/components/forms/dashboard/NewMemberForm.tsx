@@ -48,8 +48,6 @@ function NewMemberForm() {
     insert.mutate(formValues);
   }
 
-  console.log(form.formState.errors);
-
   return (
     <Modal
       id='new-member-form'

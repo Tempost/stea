@@ -4,6 +4,7 @@ import RegType from './RegType';
 import { AddIcon, TrashIcon } from '../icons';
 import Input from '../data-entry/Input';
 import RegistrationYearSelect from './RegistrationYearSelect';
+import { setMembershipYear } from '@/server/router/utils';
 
 type Horses = {
   horses: Array<Prisma.HorseCreateManyInput>;
@@ -13,6 +14,7 @@ export default function HorseFieldArray() {
   const {
     register,
     control,
+    setValue,
     formState: { errors },
   } = useFormContext<Horses>();
 
@@ -52,6 +54,16 @@ export default function HorseFieldArray() {
                 required: true,
               })}
               formType='Horse'
+              onClick={event => {
+                if (event.currentTarget.value === null) {
+                  setValue(`horses.${index}.registrationEnd`, null);
+                } else {
+                  setValue(
+                    `horses.${index}.registrationEnd`,
+                    setMembershipYear()
+                  );
+                }
+              }}
             />
 
             <RegistrationYearSelect
@@ -94,6 +106,7 @@ export default function HorseFieldArray() {
             horseRN: '',
             horseAKA: '',
             regType: 'Annual' as Status,
+            registrationEnd: setMembershipYear(),
           })
         }
       >
