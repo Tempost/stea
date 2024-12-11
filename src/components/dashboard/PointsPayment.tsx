@@ -32,8 +32,7 @@ function PointsPayment({ pointsCount, approveHandler }: PointsPaymentProps) {
   }
 
   async function onApprove(_data: OnApproveData, actions: OnApproveActions) {
-    return actions.order!.capture().then(details => {
-      const name = details.payer.name?.given_name;
+    return actions.order!.capture().then(() => {
       approveHandler();
     });
   }

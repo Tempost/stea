@@ -1,18 +1,34 @@
-import { PropsWithChildren, ReactNode } from 'react';
+import { join } from '@/utils/helpers';
+import {
+  HTMLAttributes,
+  MouseEventHandler,
+  PropsWithChildren,
+  ReactNode,
+} from 'react';
 
-interface ModalProps extends PropsWithChildren {
+interface ModalProps<T> extends PropsWithChildren {
   buttonLabel?: ReactNode;
   onClick?: () => void;
   ok?: ReactNode;
+  onClose?: MouseEventHandler<HTMLLabelElement>;
   id: string;
+  buttonClassName?: HTMLAttributes<T>['className'];
 }
 
-function Modal({ buttonLabel, onClick, ok, id, children }: ModalProps) {
+function Modal<T>({
+  buttonClassName,
+  buttonLabel,
+  onClick,
+  onClose,
+  ok,
+  id,
+  children,
+}: ModalProps<T>) {
   return (
     <>
       <label
         htmlFor={id}
-        className='btn btn-primary btn-sm'
+        className={join('btn btn-primary btn-sm', buttonClassName)}
       >
         {buttonLabel ?? 'Open'}
       </label>
@@ -32,6 +48,7 @@ function Modal({ buttonLabel, onClick, ok, id, children }: ModalProps) {
             <label
               htmlFor={id}
               className='btn btn-sm'
+              onClick={onClose}
             >
               Close
             </label>

@@ -25,7 +25,7 @@ function AddNewShow() {
   const { register } = form;
   const utils = trpc.useContext();
 
-  const addNew = trpc.shows.add.useMutation({
+  const add = trpc.shows.add.useMutation({
     onSuccess() {
       utils.shows.invalidate();
       form.reset();
@@ -34,7 +34,7 @@ function AddNewShow() {
   });
 
   function submitForm(values: ShowOptionalDefaults) {
-    addNew.mutate(values);
+    add.mutate(values);
   }
 
   return (
@@ -45,16 +45,11 @@ function AddNewShow() {
         form.clearErrors();
         form.reset();
       }}
+      onClose={() => add.reset()}
       ok={
         <button
           className={`btn btn-sm
-            ${
-              addNew.isError
-                ? 'btn-error'
-                : addNew.isSuccess
-                ? 'btn-success'
-                : ''
-            }`}
+            ${add.isError ? 'btn-error' : add.isSuccess ? 'btn-success' : ''}`}
           form='show-form'
           type='submit'
         >
@@ -69,7 +64,7 @@ function AddNewShow() {
         onSubmit={submitForm}
         id='show-form'
       >
-        <div className='flex flex-row gap-5'>
+        <div className='flex w-full gap-5'>
           <Input
             className='input input-bordered input-primary w-full md:input-sm'
             placeholder='Enter show name'
@@ -96,7 +91,6 @@ function AddNewShow() {
         <div className='grid grid-flow-col'>
           <ControlledDatePicker
             name='showDate'
-            label='Show Date*'
             placeholderText='Start Date'
           />
 
@@ -114,8 +108,8 @@ function AddNewShow() {
         />
 
         <Alert
-          message={addNew.error?.message}
-          visible={addNew.isError}
+          message={add.error?.message}
+          visible={add.isError}
         />
       </Form>
     </Modal>

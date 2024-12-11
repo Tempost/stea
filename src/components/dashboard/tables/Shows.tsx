@@ -6,18 +6,13 @@ import { readableDateTime } from '@/utils/helpers';
 import { RouterOutputs, trpc } from '@/utils/trpc';
 import type { ColumnDef, RowSelectionState } from '@tanstack/react-table';
 import { useMemo, useState } from 'react';
-import RemoveSelected from '@/components/dashboard/RemoveSelected';
+import RemoveSelectedShows from '@/components/dashboard/RemoveSelectedShows';
 
 const currYear = new Date().getFullYear();
 const years = Array.from({ length: 10 }, (_, i) => i + 2022);
 
 type Show = RouterOutputs['shows']['all'][number];
 
-// TODO: Show 'Remove Selected' button as disabled.
-//       Select shows with check box.
-//       Enabled 'Remove Selected'
-//       Click button and show model with small table of selected shows
-//       Cancel or Confirm delete
 function ShowsTable() {
   const [yearSelect, setYearSelect] = useState(currYear);
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
@@ -44,9 +39,16 @@ function ShowsTable() {
         columns: [
           {
             id: 'select',
+            header: ({ table }) => {
+              const selectionLen =
+                table.getFilteredSelectedRowModel().rows.length;
+              if (selectionLen === 0) return <></>;
+
+              return <span>{selectionLen}</span>;
+            },
             cell: ({ row }) => (
               <Checkbox
-                key={row.id}
+                id={row.id}
                 checked={row.getIsSelected()}
                 onChange={row.getToggleSelectedHandler()}
               />
@@ -123,12 +125,15 @@ function ShowsTable() {
                 </option>
               ))}
             </select>
+            <AddNewShow />
             <DownloadPoints
               year={yearSelect}
               showSelection={rowSelection}
             />
-            <AddNewShow />
-            <RemoveSelected showSelection={rowSelection} />
+            <RemoveSelectedShows
+              showSelection={rowSelection}
+              clearSelection={() => setRowSelection({})}
+            />
           </div>
         }
         query={shows}

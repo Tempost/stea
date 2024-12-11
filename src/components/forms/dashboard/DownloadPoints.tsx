@@ -10,7 +10,7 @@ export default function DownloadPoints({
   showSelection,
 }: DownloadPointsProps) {
   const disabled = Object.keys(showSelection).length > 1;
-  let label = 'Download';
+  let label = 'Download Year';
   const searchParams = new URLSearchParams();
 
   if (!disabled && Object.keys(showSelection).length !== 0) {

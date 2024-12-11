@@ -92,8 +92,10 @@ export const shows = router({
     }),
 
   remove: dashboardProcedure
-    .input(z.object({ uid: z.string().cuid() }))
+    .input(z.array(z.string().cuid()))
     .mutation(async ({ input, ctx }) => {
-      return await ctx.prisma.show.delete({ where: { uid: input.uid } });
+      return await ctx.prisma.show.deleteMany({
+        where: { uid: { in: input } },
+      });
     }),
 });

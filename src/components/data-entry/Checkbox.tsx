@@ -1,3 +1,4 @@
+import { join } from '@/utils/helpers';
 import { forwardRef } from 'react';
 import type { ReactNode, DetailedHTMLProps, InputHTMLAttributes } from 'react';
 
@@ -24,7 +25,10 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => (
           ref={ref}
           id='checkbox-input'
           type='checkbox'
-          className={`checkbox checkbox-primary md:checkbox-sm ${props.className}`}
+          className={join(
+            'checkbox checkbox-primary md:checkbox-sm',
+            props.className
+          )}
           {...props}
         />
       </div>
@@ -33,7 +37,10 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => (
         ref={ref}
         id='checkbox-input'
         type='checkbox'
-        className={`checkbox checkbox-primary md:checkbox-sm ${props.className}`}
+        className={join(
+          'checkbox checkbox-primary md:checkbox-sm',
+          props.className
+        )}
         {...props}
       />
     )}
