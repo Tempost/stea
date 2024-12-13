@@ -1,7 +1,7 @@
 import { Hamburger, MobileMenu } from '@/components/icons';
 import LinkWrapper from '@/components/LinkWrapper';
 import { dashMenuItems, publicMenuItems } from '@/components/MenuItems';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import { Fragment, PropsWithChildren } from 'react';
 
 export const ResponsiveHeader = ({ children }: PropsWithChildren) => {
@@ -98,12 +98,12 @@ export const ResponsiveDashboardHeader = () => (
           ))}
         </ul>
       </div>
-      <Link
+      <NextLink
         href='/'
         className='btn btn-ghost text-xl normal-case'
       >
         Home
-      </Link>
+      </NextLink>
     </div>
     <div className='navbar-start hidden lg:flex'>
       <ul className='menu menu-horizontal p-0'>

@@ -1,36 +1,30 @@
 import { z } from 'zod';
 import { ShowCreateInputSchema } from '@/server/prisma/zod-generated/inputTypeSchemas/ShowCreateInputSchema';
-import { TRPCError } from '@trpc/server';
-import { Prisma } from '@prisma/client';
-import { readableDateTime } from '@/utils/helpers';
 import { dashboardProcedure, procedure, router } from '@/server/trpc';
 import {
   ShowFindManyArgsSchema,
   ShowUpdateArgsSchema,
   ShowWhereUniqueInputSchema,
 } from '../prisma/zod-generated';
+import { getOne, create, update, deleteMany } from '../prisma/queries/shows';
+import { findMany } from '../prisma/queries/shared';
+import { Prisma } from '@prisma/client';
+import { TRPCError } from '@trpc/server';
 
+// TODO: Remove the use of TRPCError from the prisma query and move it here
+//import { TRPCError } from '@trpc/server';
 export const shows = router({
   all: procedure
     .input(ShowFindManyArgsSchema.optional())
     .query(async ({ input, ctx }) => {
-      const shows = await ctx.prisma.show
-        .findMany(input)
-        .then(shows => shows)
-        .catch(err => {
-          throw err;
-        });
-
-      return shows;
+      return findMany('Show', input, ctx.prisma);
     }),
 
   get: procedure
     .input(ShowWhereUniqueInputSchema)
     .query(async ({ input, ctx }) => {
       try {
-        return await ctx.prisma.show.findUniqueOrThrow({
-          where: input,
-        });
+        return getOne(input, ctx.prisma);
       } catch (error) {
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
           if (error.code === 'P2001') {
@@ -55,47 +49,18 @@ export const shows = router({
   add: dashboardProcedure
     .input(ShowCreateInputSchema)
     .mutation(async ({ input, ctx }) => {
-      console.info('Adding new show...', input);
-
-      try {
-        return await ctx.prisma.show.create({
-          data: input,
-        });
-      } catch (error) {
-        if (error instanceof Prisma.PrismaClientKnownRequestError) {
-          if (error.code === 'P2002') {
-            const showDate = readableDateTime(input.showDate);
-
-            throw new TRPCError({
-              code: 'CONFLICT',
-              message: `A show at ${input.showName} on ${showDate} already exists, check the table and verify.`,
-              cause: error,
-            });
-          } else {
-            throw new TRPCError({
-              code: 'CONFLICT',
-              message: `Something went wrong adding show ${input.showName}.`,
-              cause: error,
-            });
-          }
-        }
-
-        throw error;
-      }
+      return create(input, ctx.prisma);
     }),
 
   update: dashboardProcedure
     .input(ShowUpdateArgsSchema)
     .mutation(async ({ input, ctx }) => {
-      console.log(input);
-      return await ctx.prisma.show.update(input);
+      return update(input, ctx.prisma);
     }),
 
   remove: dashboardProcedure
     .input(z.array(z.string().cuid()))
     .mutation(async ({ input, ctx }) => {
-      return await ctx.prisma.show.deleteMany({
-        where: { uid: { in: input } },
-      });
+      return deleteMany({ where: { uid: { in: input } } }, ctx.prisma);
     }),
 });

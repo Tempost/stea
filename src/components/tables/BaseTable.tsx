@@ -1,34 +1,25 @@
-import { getCoreRowModel, TableOptions } from '@tanstack/react-table';
-import { UseTRPCQueryResult } from '@trpc/react-query/shared';
+'use client';
+import { TableOptions } from '@tanstack/react-table';
 import Table, { TableProps } from '../styled-ui/Table';
 
-interface TableWithDataProps<TData, TError>
+interface TableWithDataProps<TData>
   extends Omit<TableProps<TData>, 'tableOptions'> {
-  query: UseTRPCQueryResult<Array<TData> | TData, TError>;
+  data: Array<TData>;
   extraTableOpts: Pick<Partial<TableOptions<TData>>, 'data'> &
     Omit<TableOptions<TData>, 'getCoreRowModel' | 'data'>;
 }
 
-function TableWithData<TData, TError>({
-  query,
+function TableWithData<TData>({
+  data,
   extraTableOpts,
   ...props
-}: TableWithDataProps<TData, TError>) {
-  if (query.isLoading) {
-    return <div className='rounded-b-lg p-5 shadow-xl'>Loading...</div>;
-  }
-
-  if (query.isError) {
-    return <div className='rounded-b-lg p-5 shadow-xl'>Error...</div>;
-  }
-
+}: TableWithDataProps<TData>) {
   return (
     <Table
       {...props}
       tableOptions={{
         ...extraTableOpts,
-        data: query.data as Array<TData>,
-        getCoreRowModel: getCoreRowModel(),
+        data: data,
       }}
     />
   );

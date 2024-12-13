@@ -1,5 +1,6 @@
-import { trpc } from '@/utils/trpc';
 import CalendarEvents from '../events/CalendarEvent';
+import { findMany } from '@/server/prisma/queries/shared';
+import { use } from 'react';
 
 const CURR_MONTH = new Date();
 const MONTH_FROM_CURR = new Date(
@@ -9,47 +10,36 @@ const MONTH_FROM_CURR = new Date(
 );
 
 function UpcomingEvents() {
-  const shows = trpc.shows.all.useQuery({
-    where: {
-      showDate: {
-        lte: MONTH_FROM_CURR,
-        gte: CURR_MONTH,
+  const shows = use(
+    findMany('Show', {
+      where: {
+        showDate: {
+          lte: MONTH_FROM_CURR,
+          gte: CURR_MONTH,
+        },
       },
-      reviewed: false,
-    },
-    orderBy: {
-      showDate: 'asc',
-    },
-    select: {
-      showDate: true,
-      showEndDate: true,
-      showName: true,
-      showType: true,
-    },
-  });
+      orderBy: {
+        showDate: 'asc',
+      },
+      select: {
+        showDate: true,
+        showEndDate: true,
+        showName: true,
+        showType: true,
+      },
+    })
+  );
 
-  if (shows.isError) {
-    return <span className='my-12 text-center'>Unable to load shows</span>;
-  }
-
-  if (shows.isLoading) {
-    return <span className='my-12 text-center'>Loading...</span>;
-  }
-
-  if (shows.data) {
-    return (
-      <>
-        {shows.data.map(show => (
-          <CalendarEvents
-            key={`${show.showName}-${show.showDate}`}
-            show={show}
-          />
-        ))}
-      </>
-    );
-  }
-
-  return <></>;
+  return (
+    <>
+      {shows.map(show => (
+        <CalendarEvents
+          key={`${show.showName}-${show.showDate}`}
+          show={show}
+        />
+      ))}
+    </>
+  );
 }
 
 export default UpcomingEvents;

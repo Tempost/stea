@@ -1,7 +1,9 @@
+'use client';
 import { rankItem } from '@tanstack/match-sorter-utils';
 import {
   FilterFn,
   flexRender,
+  getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   Row,
@@ -18,7 +20,7 @@ interface RowRenderProps<TData> {
 export interface TableProps<TData> {
   paginate?: boolean;
   search?: boolean;
-  tableOptions: TableOptions<TData>;
+  tableOptions: Omit<TableOptions<TData>, 'getCoreRowModel'>;
   extras?: ReactElement;
   rowRender?: (props: RowRenderProps<TData>) => ReactNode;
 }
@@ -48,6 +50,7 @@ function Table<TData>({
 
   const defaultOptions: TableOptions<TData> = {
     ...opts,
+    getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: paginate ? getPaginationRowModel() : undefined,
     getFilteredRowModel: getFilteredRowModel(),
     globalFilterFn: fuzzyFilter,

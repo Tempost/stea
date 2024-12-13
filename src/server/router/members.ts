@@ -13,48 +13,40 @@ import {
   horseNames,
 } from './utils';
 import { MyPrismaClient } from '../prisma';
+import { findMany } from '../prisma/queries/shared';
+import { findUniqueOrThrow } from '../prisma/queries/members';
 
 export const members = router({
   all: procedure
     .input(MemberFindManyArgsSchema.optional())
     .query(async ({ input, ctx }) => {
-      return await ctx.prisma.member.findMany(input).catch(error => {
-        if (error instanceof Prisma.PrismaClientKnownRequestError) {
-          throw new TRPCError({
-            code: 'INTERNAL_SERVER_ERROR',
-            message: 'Failed to fetch member list',
-            cause: error,
-          });
-        } else {
-          throw error;
-        }
-      });
+      return findMany('Member', input, ctx.prisma);
     }),
 
   get: procedure
     .input(MemberWhereUniqueInputSchema)
     .query(async ({ input, ctx }) => {
-      return await ctx.prisma.member
-        .findUniqueOrThrow({ where: input })
-        .catch(error => {
-          if (error instanceof Prisma.PrismaClientKnownRequestError) {
-            if (error.code === 'P2001') {
-              throw new TRPCError({
-                code: 'NOT_FOUND',
-                message: `${input.fullName} not found.`,
-                cause: error,
-              });
-            } else {
-              throw new TRPCError({
-                code: 'INTERNAL_SERVER_ERROR',
-                message: `Something went wrong fetching ${input.fullName}`,
-                cause: error,
-              });
-            }
+      try {
+        return findUniqueOrThrow(input, ctx.prisma);
+      } catch (error) {
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+          if (error.code === 'P2001') {
+            throw new TRPCError({
+              code: 'NOT_FOUND',
+              message: `${input.fullName} not found.`,
+              cause: error,
+            });
           } else {
-            throw error;
+            throw new TRPCError({
+              code: 'INTERNAL_SERVER_ERROR',
+              message: `Something went wrong fetching ${input.fullName}`,
+              cause: error,
+            });
           }
-        });
+        } else {
+          throw error;
+        }
+      }
     }),
 
   exists: procedure.input(MemberFormSchema).mutation(async ({ input, ctx }) => {

@@ -1,16 +1,19 @@
-import { RouterOutputs, trpc } from '@/utils/trpc';
+'use client';
+import { RouterOutputs } from '@/utils/trpc';
 import TableWithData from './BaseTable';
 
 import type { ColumnDef } from '@tanstack/react-table';
 
+// TODO: REMOVE THIS, PREFER THE PRISMA TYPE
 type Member = RouterOutputs['members']['all'][number];
 interface MemberTableProps {
   overRideDefaultCols?: Array<ColumnDef<Member>>;
   search?: boolean;
   paginate?: boolean;
+  members: Array<Member>;
 }
 
-const defaultCols: Array<ColumnDef<Member>> = [
+const columns: Array<ColumnDef<Member>> = [
   {
     header: 'Members',
     columns: [
@@ -43,42 +46,13 @@ const defaultCols: Array<ColumnDef<Member>> = [
   },
 ];
 
-function getMembershipEnd() {
-  const currDate = new Date();
-  const membershipEnd = new Date(currDate.getFullYear(), 10, 30);
-
-  // If the current month is decemeber
-  if (currDate.getMonth() == 11) {
-    membershipEnd.setFullYear(membershipEnd.getFullYear() + 1);
-  }
-
-  return membershipEnd;
-}
-
-function MemberTable({ overRideDefaultCols, ...props }: MemberTableProps) {
-  const members = trpc.members.all.useQuery({
-    where: {
-      OR: [{ memberStatus: 'Life' }, { membershipEnd: getMembershipEnd() }],
-    },
-    select: {
-      fullName: true,
-      memberStatusType: true,
-      memberStatus: true,
-    },
-    orderBy: [
-      {
-        memberStatusType: 'asc',
-      },
-      { memberStatus: 'asc' },
-    ],
-  });
-
+function MemberTable({ members, ...props }: MemberTableProps) {
   return (
     <TableWithData
       extraTableOpts={{
-        columns: overRideDefaultCols ?? defaultCols,
+        columns,
       }}
-      query={members}
+      data={members}
       {...props}
     />
   );

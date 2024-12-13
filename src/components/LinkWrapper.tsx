@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import NextLink from 'next/link';
 import { ReactNode } from 'react';
 
 interface WrapperProps {
@@ -8,12 +8,12 @@ interface WrapperProps {
 
 function LinkWrapper({ href, children }: WrapperProps) {
   return (
-    <Link
+    <NextLink
       href={href ? href : ''}
       rel='noopener noreferrer'
     >
       {children}
-    </Link>
+    </NextLink>
   );
 }
 

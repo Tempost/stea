@@ -1,8 +1,7 @@
 {
   "git": {
     "deploymentEnabled": {
-      "points-download": false,
-      "node-csv-parsing": false
+      "app-dir": false
     }
   }
 }
