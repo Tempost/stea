@@ -1,16 +1,53 @@
 import Image from 'next/image';
-import { ReactElement } from 'react';
+import { use } from 'react';
 
-import { PublicLayout } from '@/components/layout/PublicLayout';
 import PlacingsTable from '@/components/tables/Placings';
+import { findMany } from '@/server/prisma/queries/shared';
 
 function SteaPoints() {
+  const riders = use(
+    findMany('RiderCombo', {
+      orderBy: [
+        {
+          division: 'desc',
+        },
+        {
+          member: {
+            memberStatusType: 'asc',
+          },
+        },
+        {
+          totalPoints: 'desc',
+        },
+      ],
+      select: {
+        member: {
+          select: {
+            fullName: true,
+            memberStatusType: true,
+          },
+        },
+        horse: {
+          select: {
+            horseRN: true,
+          },
+        },
+        shows: true,
+        totalPoints: true,
+        totalShows: true,
+        division: true,
+        showYear: true,
+      },
+    })
+  );
+
   return (
     <div className='grid w-full place-items-center gap-20'>
       <PlacingsTable
         title='Current Points'
         search
         paginate
+        riders={riders}
       />
 
       <div className='card w-[20em] shadow-2xl sm:w-[30em] md:w-[40em] lg:w-[45em]'>
@@ -44,9 +81,5 @@ function SteaPoints() {
     </div>
   );
 }
-
-SteaPoints.getLayout = (page: ReactElement) => {
-  return <PublicLayout>{page}</PublicLayout>;
-};
 
 export default SteaPoints;
