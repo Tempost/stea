@@ -10,7 +10,12 @@ export function ContactCard({ name, position, email }: ContactCardProps) {
       <p className='text-lg font-semibold'>{position}</p>
       <span className='divider my-1 w-full' />
       <p>{name ? name : 'Open Position'}</p>
-      <p className='underline'>{email}</p>
+      <a
+        className='link underline'
+        href={`mailto:${email}`}
+      >
+        {email}
+      </a>
     </span>
   );
 }
