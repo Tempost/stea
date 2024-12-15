@@ -6,7 +6,6 @@ import {
   ReducerAction,
   HorsePayload,
   MemberPayload,
-  MonthAction,
 } from '@/types/atoms';
 import { FormType } from '@/types/common';
 import { EntryReviewType } from './zodschemas';
@@ -86,35 +85,6 @@ const updateFormState = atom(null, (_get, set, action: ReducerAction) => {
   }
 });
 
-const currMonth = new Date().getMonth();
-const month = atom(currMonth);
-const selectedMonth = atom(get => get(month));
-
-const incMonth = atom(null, (_get, set) => {
-  set(month, prev => (prev + 1) % 12);
-});
-
-const decMonth = atom(null, (_get, set) => {
-  // Goofy math to prevent negative value in return
-  // happens with the the modulus is negative
-  // -a % b <-- required ((-a % b) + b)a % b
-  // to get positive return value
-  set(month, prev => (((prev - 1) % 12) + 12) % 12);
-});
-
-const changeMonth = atom(null, (_get, set, action: MonthAction) => {
-  switch (action.dir) {
-    case 'left':
-      set(decMonth);
-      break;
-    case 'right':
-      set(incMonth);
-      break;
-    default:
-      throw new Error(`Unsupported action :: action:${action.dir}`);
-  }
-});
-
 const ownerTypeAtom = atom('none');
 const changeSelectionAtom = atom(
   get => get(ownerTypeAtom),
@@ -126,8 +96,6 @@ const entryAtom = atom<Array<EntryReviewType> | undefined>(undefined);
 export {
   formState,
   updateFormState,
-  selectedMonth,
-  changeMonth,
   changeSelectionAtom,
   ownerTypeAtom,
   entryAtom,

@@ -21,7 +21,3 @@ export interface HorsePayload {
 }
 
 export type MemberPayload = Status;
-
-export interface MonthAction {
-  dir: string;
-}

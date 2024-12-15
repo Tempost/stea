@@ -1,7 +1,7 @@
 import { RouterOutputs } from '@/utils/trpc';
 
 export function filterByMonths(
-  shows: RouterOutputs['shows']['all'] | undefined,
+  shows: RouterOutputs['shows']['all'],
   currMonth: number
 ) {
   if (!shows) return;
