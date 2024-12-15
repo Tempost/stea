@@ -1,17 +1,17 @@
-import { RouterOutputs, trpc } from '@/utils/trpc';
+'use client';
 import TableWithData from './BaseTable';
 
 import type { ColumnDef } from '@tanstack/react-table';
-
-type Horse = RouterOutputs['horses']['all'][number];
+import { Horse } from '@prisma/client';
 
 interface HorseTableProps {
   overRideDefaultCols?: Array<ColumnDef<Horse>>;
   search?: boolean;
   paginate?: boolean;
+  horses: Array<Horse>;
 }
 
-const defaultCols: Array<ColumnDef<Horse>> = [
+const columns: Array<ColumnDef<Horse>> = [
   {
     header: 'Horses',
     columns: [
@@ -39,39 +39,13 @@ const defaultCols: Array<ColumnDef<Horse>> = [
   },
 ];
 
-function getRegistrationEnd() {
-  const currDate = new Date();
-  const registrationEnd = new Date(currDate.getFullYear(), 10, 30);
-
-  // If the current month is decemeber
-  if (currDate.getMonth() == 11) {
-    registrationEnd.setFullYear(registrationEnd.getFullYear() + 1);
-  }
-
-  return registrationEnd;
-}
-
-function HorseTable({ overRideDefaultCols, ...props }: HorseTableProps) {
-  const horses = trpc.horses.all.useQuery({
-    where: {
-      OR: [{ regType: 'Life' }, { registrationEnd: getRegistrationEnd() }],
-    },
-    select: {
-      horseRN: true,
-      regType: true,
-      owner: true,
-    },
-    orderBy: {
-      regType: 'asc',
-    },
-  });
-
+function HorseTable({ horses, ...props }: HorseTableProps) {
   return (
     <TableWithData
       extraTableOpts={{
-        columns: overRideDefaultCols ?? defaultCols,
+        columns: columns,
       }}
-      query={horses}
+      data={horses}
       {...props}
     />
   );

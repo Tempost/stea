@@ -1,11 +1,9 @@
 'use client';
-import { RouterOutputs } from '@/utils/trpc';
 import TableWithData from './BaseTable';
 
 import type { ColumnDef } from '@tanstack/react-table';
+import { Member } from '@prisma/client';
 
-// TODO: REMOVE THIS, PREFER THE PRISMA TYPE
-type Member = RouterOutputs['members']['all'][number];
 interface MemberTableProps {
   overRideDefaultCols?: Array<ColumnDef<Member>>;
   search?: boolean;

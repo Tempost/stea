@@ -3,7 +3,7 @@ import { ResponsiveHeader } from '@/components/layout/Header';
 import { LayoutProps } from '@/types/common';
 import '@/styles/globals.css';
 
-export default function PublicLayout({ children }: LayoutProps) {
+export default function Root({ children }: LayoutProps) {
   return (
     <html lang='en'>
       <body>

@@ -25,7 +25,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 4,
     },
     {
-      url: url + '/calender',
+      url: url + '/calendar',
       changeFrequency: 'monthly',
       priority: 5,
     },
