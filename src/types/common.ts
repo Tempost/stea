@@ -3,7 +3,7 @@ import { ShowType } from '@prisma/client';
 import { PropsWithChildren } from 'react';
 import { typeToFlattenedError } from 'zod';
 
-const FORMTYPE = ['Individual', 'Business', 'Horse'] as const;
+export const FORMTYPE = ['Individual', 'Business', 'Horse'] as const;
 export type FormType = (typeof FORMTYPE)[number];
 
 export type ZodFieldErrors<T> = typeToFlattenedError<T, string>['fieldErrors'];

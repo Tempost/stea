@@ -6,5 +6,5 @@ export default function ChildLayout({ children }: LayoutProps) {
 
 export const metadata = {
   title: 'Join',
-  description: '',
+  description: 'Form selection for different types of sign ups to stea',
 };

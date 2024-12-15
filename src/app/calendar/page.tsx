@@ -1,10 +1,14 @@
 import { use } from 'react';
 import { findMany } from '@/server/prisma/queries/shared';
 import Calendar from '@/components/Calendar';
+import { unstable_cache } from 'next/cache';
 
-function CalendarPage() {
-  const shows = use(
-    findMany('Show', {
+// TODO: Need to use revalidateTag('shows') when adding
+// new shows from the dashboard
+
+const getShows = unstable_cache(
+  async () => {
+    return await findMany('Show', {
       orderBy: {
         showDate: 'asc',
       },
@@ -17,8 +21,14 @@ function CalendarPage() {
         showName: true,
         showType: true,
       },
-    })
-  );
+    });
+  },
+  ['shows'],
+  { revalidate: 3600, tags: ['shows'] }
+);
+
+function CalendarPage() {
+  const shows = use(getShows());
 
   return (
     <section className='flex h-full flex-col items-center justify-center'>

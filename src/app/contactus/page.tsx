@@ -1,10 +1,24 @@
 import { ContactCard } from '@/components/ContactCard';
 import { findMany } from '@/server/prisma/queries/shared';
 import { mapping } from '@/server/utils';
+import { unstable_cache } from 'next/cache';
 import { use } from 'react';
 
+// TODO: Need to use revalidateTag('boardmembers') when
+// adding/updating board members
+
+export const revalidate = 3600;
+
+const getBoardMembers = unstable_cache(
+  async () => {
+    return await findMany('Boardmember');
+  },
+  ['boardmembers'],
+  { revalidate: 3600, tags: ['boardmembers'] }
+);
+
 function ContactUs() {
-  const boardmembers = use(findMany('Boardmember'));
+  const boardmembers = use(getBoardMembers());
 
   return (
     <section>
