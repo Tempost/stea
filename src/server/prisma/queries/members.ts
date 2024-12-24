@@ -1,23 +1,23 @@
-import { Prisma, Status } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import { MyPrismaClient, prisma } from '@/server/prisma';
 
-async function findUniqueOrThrow(
-  args: Prisma.MemberWhereUniqueInput,
-  prismaClient: MyPrismaClient = prisma
-) {
-  return await prismaClient.member.findUniqueOrThrow({
-    where: args,
-  });
+interface FindUniqueOrThrowArgs extends Prisma.MemberFindUniqueOrThrowArgs {
+  client?: MyPrismaClient;
 }
 
-async function findUnique(
-  fullName: string,
-  db: MyPrismaClient,
-  memberStatus?: Status
-) {
-  return await db.member.findUnique({
-    where: { fullName, memberStatus },
-  });
+function findUniqueOrThrow({
+  client = prisma,
+  ...opts
+}: FindUniqueOrThrowArgs) {
+  return client.member.findUniqueOrThrow(opts);
+}
+
+interface FindUniqueArgs extends Prisma.MemberFindUniqueArgs {
+  client?: MyPrismaClient;
+}
+
+function findUnique({ client = prisma, ...opts }: FindUniqueArgs) {
+  return client.member.findUnique(opts);
 }
 
 export { findUniqueOrThrow, findUnique };

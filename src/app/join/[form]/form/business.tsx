@@ -52,11 +52,11 @@ function BusinessRegistration() {
   function onSubmit(formValues: MemberForm) {
     if (formValues.horses) {
       const lifeCount = formValues.horses.filter(
-        horse => horse.regType === 'Life'
+        horse => horse.regType === 'Life',
       ).length;
 
       const annualCount = formValues.horses.filter(
-        horse => horse.regType === 'Annual'
+        horse => horse.regType === 'Annual',
       ).length;
 
       update({
@@ -80,7 +80,7 @@ function BusinessRegistration() {
     >
       <Payment
         showPayment={payment}
-        formMutation={{
+        formState={{
           error: checkMember.isError,
           message: checkMember.error?.message,
           mutateFn: () => add.mutate(form.getValues()),

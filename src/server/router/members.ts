@@ -7,13 +7,11 @@ import {
   MemberFindManyArgsSchema,
   MemberWhereUniqueInputSchema,
 } from '../prisma/zod-generated';
-import { checkExistingHorses, horseNames } from './utils';
+import { horseNames } from './utils';
+import { checkExistingHorses } from '../prisma/queries/horses';
 import { MyPrismaClient } from '../prisma';
 import { findMany } from '../prisma/queries/shared';
-import {
-  findUniqueOrThrow,
-  findUnique,
-} from '../prisma/queries/members';
+import { findUniqueOrThrow, findUnique } from '../prisma/queries/members';
 
 export const members = router({
   all: procedure
@@ -55,7 +53,7 @@ export const members = router({
 
     console.info(`Checking if ${fullName} is a member.`);
 
-    const existingMember = await findUnique(fullName, ctx.prisma);
+    const existingMember = await findUnique({ fullName }, ctx.prisma);
     if (existingMember) {
       if (existingMember.memberStatus === 'Life') {
         throw new TRPCError({
@@ -81,7 +79,7 @@ export const members = router({
       console.log(`Checking for horses... ${horseNames(input.horses)}`);
       const existingHorses = await checkExistingHorses(
         input.horses,
-        ctx.prisma
+        ctx.prisma,
       );
 
       if (existingHorses) {
@@ -93,7 +91,7 @@ export const members = router({
             // NOTE: This is here just incase registrationEnd is null/empty
             if (existingHorse.registrationEnd) {
               const horseInput = input.horses?.find(
-                h => h.horseRN === existingHorse.horseRN
+                h => h.horseRN === existingHorse.horseRN,
               );
               if (horseInput && horseInput.registrationEnd) {
                 if (
@@ -126,7 +124,9 @@ export const members = router({
     .mutation(async ({ input: { memberInput, horses }, ctx }) => {
       console.info(`Member: ${JSON.stringify(memberInput)}`);
       console.info(
-        horses ? `Horses: ${JSON.stringify(horses)}` : 'Did not register horses'
+        horses
+          ? `Horses: ${JSON.stringify(horses)}`
+          : 'Did not register horses',
       );
 
       const fullName =
@@ -150,7 +150,7 @@ export const members = router({
               where: { horseRN: horse.horseRN },
               create: { ...horse, memberName: fullName },
               update: { ...horse, registrationDate: today },
-            })
+            }),
           );
 
           if (queries) {
@@ -228,7 +228,7 @@ export const members = router({
     .input(MemberPartialSchema)
     .mutation(async ({ input: { fullName, ...data }, ctx }) => {
       console.info(
-        `Updating member ${fullName}...\n${JSON.stringify(data, null, 2)}`
+        `Updating member ${fullName}...\n${JSON.stringify(data, null, 2)}`,
       );
 
       try {
@@ -262,7 +262,7 @@ export const members = router({
 
 async function addMember(
   { memberInput, horses }: MemberForm,
-  prisma: MyPrismaClient
+  prisma: MyPrismaClient,
 ) {
   try {
     return prisma.member.upsert({

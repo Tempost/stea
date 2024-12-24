@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { useSetAtom } from 'jotai';
 import { ReactElement, useState } from 'react';
 
@@ -37,11 +37,11 @@ function HorseRegistration() {
   function onSubmit(formValues: OwnerHorseForm) {
     if (formValues.horses) {
       const lifeCount = formValues.horses.filter(
-        horse => horse.regType === 'Life'
+        horse => horse.regType === 'Life',
       ).length;
 
       const annualCount = formValues.horses.filter(
-        horse => horse.regType === 'Annual'
+        horse => horse.regType === 'Annual',
       ).length;
 
       update({
@@ -60,7 +60,7 @@ function HorseRegistration() {
     >
       <Payment
         showPayment={payment}
-        formMutation={{
+        formState={{
           error: check.isError,
           message: check.error?.message,
           mutateFn: () => insert.mutate(form.getValues()),

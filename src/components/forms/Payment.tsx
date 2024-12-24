@@ -1,6 +1,5 @@
 import { PropsWithChildren } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAtom } from 'jotai';
 import {
   CreateOrderActions,
   CreateOrderData,
@@ -8,7 +7,6 @@ import {
   OnApproveData,
 } from '@paypal/paypal-js';
 
-import { formState } from '@/utils/atoms';
 import Alert from './Alert';
 import PayPalButton from '../styled-ui/PayPalButton';
 import { Button } from '../styled-ui/Button';
@@ -16,14 +14,20 @@ import {
   PayPalScriptProvider,
   ReactPayPalScriptOptions,
 } from '@paypal/react-paypal-js';
+import { MemberForm, OwnerHorseForm } from '@/utils/zodschemas';
+import { costs } from '@/utils/atoms';
+import { FormType } from '@/types/common';
+import { cn } from '@/utils/helpers';
 
 interface PaymentProps extends PropsWithChildren {
   showPayment: boolean;
-  formMutation: {
+  formState: {
     error: boolean;
     message?: string;
-    mutateFn: () => void;
+    data: MemberForm | OwnerHorseForm | undefined;
   };
+  onPayment: () => void;
+  pending: boolean;
 }
 
 const initOptions: ReactPayPalScriptOptions = {
@@ -34,13 +38,36 @@ const initOptions: ReactPayPalScriptOptions = {
   'data-react-paypal-script-id': 'paypal-button',
 };
 
-function Payment({ showPayment, children, formMutation }: PaymentProps) {
+function Payment({
+  showPayment,
+  children,
+  formState,
+  onPayment,
+  pending,
+}: PaymentProps) {
   const history = useRouter();
 
-  const [state] = useAtom(formState);
+  let amountOwed = 0;
+  if (formState.data && 'memberStatus' in formState.data) {
+    const memberCost =
+      costs[formState.data.memberStatus][
+        formState.data.memberType.toLocaleLowerCase() as FormType
+      ];
 
-  const amountOwed =
-    state.memberCost + state.horses.lifeCost + state.horses.annualCost;
+    amountOwed += memberCost;
+  }
+
+  if (formState.data?.horses) {
+    const lifeCount = formState.data.horses.filter(
+      horse => horse.regType === 'Life',
+    ).length;
+    amountOwed += lifeCount * costs.Life['horse'];
+
+    const annualCount = formState.data.horses.filter(
+      horse => horse.regType === 'Annual',
+    ).length;
+    amountOwed += annualCount * costs.Annual['horse'];
+  }
 
   function createOrder(_: CreateOrderData, actions: CreateOrderActions) {
     return actions.order.create({
@@ -60,9 +87,11 @@ function Payment({ showPayment, children, formMutation }: PaymentProps) {
     });
   }
 
+  // TODO: Instead of redirecting to home page how about in the same window
+  // acknowledge that payment was a success
   async function onApprove(_data: OnApproveData, actions: OnApproveActions) {
     return actions.order!.capture().then(() => {
-      formMutation.mutateFn();
+      onPayment();
       history.push('/');
     });
   }
@@ -84,14 +113,15 @@ function Payment({ showPayment, children, formMutation }: PaymentProps) {
           <>
             {children}
             <Alert
-              message={formMutation.message ?? ''}
-              visible={formMutation.error}
+              message={formState.message ?? ''}
+              visible={formState.error}
             />
             <Button
               type='submit'
-              className='w-full'
+              className={cn('w-full', { loading: pending })}
+              disabled={pending}
             >
-              Move to payment
+              {pending ? '' : 'Move to payment'}
             </Button>
           </>
         )}

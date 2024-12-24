@@ -26,7 +26,6 @@ export const MemberFormSchema = z
     MemberOptionalDefaultsSchema.omit({
       fullName: true,
       comments: true,
-      businessName: true,
     }),
   );
 
@@ -53,7 +52,7 @@ export type EntryReviewType = z.infer<typeof EntryReviewSchema>;
 export const EntrySubmissionSchema = z.array(EntryReviewSchema);
 
 export function isEntrySubmissionType(
-  o: any
+  o: any,
 ): o is z.infer<typeof EntrySubmissionSchema> {
   return Array.isArray(o) && o.every(x => !!x.placing);
 }

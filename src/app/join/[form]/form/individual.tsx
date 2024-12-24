@@ -1,9 +1,7 @@
 'use client';
-import { useSetAtom } from 'jotai';
 import { useState, useTransition } from 'react';
 
 import { MemberForm, MemberFormSchema } from '@/utils/zodschemas';
-import { updateFormState } from '@/utils/atoms';
 import { capitalize } from '@/utils/helpers';
 import states from '@/utils/states.json';
 import useZodForm from '@/utils/usezodform';
@@ -18,7 +16,7 @@ import Under18 from '@/components/forms/Under18';
 import Checkbox from '@/components/data-entry/Checkbox';
 import HorseFieldArray from '@/components/forms/HorseFieldArray';
 import RegistrationYearSelect from '@/components/forms/RegistrationYearSelect';
-import { checkForExistingMember } from '@/app/action';
+import { addNewMember, checkForExistingMember } from '@/app/action';
 import { Label } from '@/components/styled-ui/Label';
 
 export interface ActionState {
@@ -33,14 +31,14 @@ export const initialState: ActionState = {
   data: undefined,
 };
 
+const today = new Date();
+const curr = new Date(today.getFullYear(), 10, 30);
+
 function IndividualRegistration() {
   const [payment, togglePayment] = useState(false);
   const [isRegHorse, toggleRegHorse] = useState(false);
-  const update = useSetAtom(updateFormState);
 
   const [pending, startTransition] = useTransition();
-
-  const add: any = () => {};
 
   const form = useZodForm({
     reValidateMode: 'onSubmit',
@@ -49,7 +47,8 @@ function IndividualRegistration() {
     defaultValues: {
       dateOfBirth: null,
       memberType: 'Individual',
-      membershipEnd: null,
+      membershipEnd: curr,
+      businessName: null,
     },
   });
 
@@ -57,21 +56,6 @@ function IndividualRegistration() {
   const [actionState, setActionState] = useState(initialState);
 
   function onSubmit(formValues: MemberForm) {
-    if (formValues.horses) {
-      const lifeCount = formValues.horses.filter(
-        horse => horse.regType === 'Life',
-      ).length;
-
-      const annualCount = formValues.horses.filter(
-        horse => horse.regType === 'Annual',
-      ).length;
-
-      update({
-        type: 'HORSE',
-        payload: { lifeCount: lifeCount, annualCount: annualCount },
-      });
-    }
-
     startTransition(async () => {
       const test = await checkForExistingMember(formValues);
       setActionState(test);
@@ -81,10 +65,13 @@ function IndividualRegistration() {
     });
   }
 
-  console.log(pending);
-
-  function handleRegHorseCheck() {
-    toggleRegHorse(curr => !curr);
+  function addMember() {
+    startTransition(async () => {
+      if (actionState.data) {
+        const test = await addNewMember(actionState.data);
+        setActionState(test);
+      }
+    });
   }
 
   return (
@@ -94,11 +81,9 @@ function IndividualRegistration() {
     >
       <Payment
         showPayment={payment}
-        formMutation={{
-          error: actionState.error,
-          message: actionState.message,
-          mutateFn: () => add.mutate(form.getValues()),
-        }}
+        formState={actionState}
+        pending={pending}
+        onPayment={addMember}
       >
         <h2 className='divider'>Individual Membership</h2>
 
@@ -210,7 +195,7 @@ function IndividualRegistration() {
           <Checkbox
             label='Do you plan to register your horse(s)?'
             checked={isRegHorse}
-            onChange={handleRegHorseCheck}
+            onChange={() => toggleRegHorse(curr => !curr)}
           />
 
           {isRegHorse && <HorseFieldArray />}

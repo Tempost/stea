@@ -4,7 +4,8 @@ import { HorseFormSchema } from '@/utils/zodschemas';
 import { HorseFindManyArgsSchema } from '../prisma/zod-generated/outputTypeSchemas/HorseFindManyArgsSchema';
 import { HorseWhereUniqueInputSchema } from '../prisma/zod-generated/inputTypeSchemas/HorseWhereUniqueInputSchema';
 import { HorseOptionalDefaultsSchema } from '../prisma/zod-generated/modelSchema/HorseSchema';
-import { checkExistingHorses, horseNames, setMembershipYear } from './utils';
+import { horseNames, setMembershipYear } from './utils';
+import { checkExistingHorses } from '../prisma/queries/horses';
 
 export const horses = router({
   all: procedure
