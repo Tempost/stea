@@ -1,0 +1,498 @@
+'use client';
+import Input from '@/components/styled-ui/Input';
+import { AltLabel, Label } from '@/components/styled-ui/Label';
+import { MemberOptionalDefaultsSchema } from '@/server/prisma/zod-generated/modelSchema/MemberSchema';
+import { HorseFormSchema } from '@/utils/zodschemas';
+import {
+  FieldComponent,
+  mergeForm,
+  useTransform,
+  useStore,
+  useForm,
+} from '@tanstack/react-form';
+import { initialFormState } from '@tanstack/react-form/nextjs';
+import { TypeOf, z } from 'zod';
+import states from '@/utils/states.json';
+import { capitalize } from '@/utils/helpers';
+import { PhoneTypeSchema } from '@/server/prisma/zod-generated/inputTypeSchemas/PhoneTypeSchema';
+import Radio from '@/components/styled-ui/Radio';
+import { costs } from '@/utils/atoms';
+import { Button } from '@/components/styled-ui/Button';
+import { Status, StatusType } from '@prisma/client';
+import { useActionState, useState } from 'react';
+import DatePicker from 'react-datepicker';
+
+import 'react-datepicker/dist/react-datepicker.css';
+import Checkbox from '@/components/styled-ui/Checkbox';
+import { AddIcon, TrashIcon } from '@/components/icons';
+import { setMembershipYear } from '@/server/router/utils';
+import { checkForExistingRegistration } from '@/app/actions';
+import { formOpts } from '@/server/utils';
+import SelectField from '@/components/form/Select';
+import FieldInfo from '@/components/form/FieldInfo';
+import InputField from '@/components/form/Input';
+
+const today = new Date();
+const curr = new Date(today.getFullYear(), 10, 30);
+const next = new Date(today.getFullYear() + 1, 10, 30);
+const from = new Date(today.getFullYear(), 8, 1);
+const to = new Date(today.getFullYear(), 11, 1);
+
+export const MemberFormSchema = z
+  .object({
+    horses: z.lazy(() => HorseFormSchema).optional(),
+  })
+  .merge(
+    MemberOptionalDefaultsSchema.omit({
+      fullName: true,
+      comments: true,
+      businessName: true,
+    }),
+  );
+
+function IndividualRegistration() {
+  const showComponent = today >= from && today <= to;
+  const [state, action] = useActionState(
+    checkForExistingRegistration,
+    initialFormState,
+  );
+
+  const form = useForm({
+    transform: useTransform(base => mergeForm(base, state!), [state]),
+    ...formOpts,
+  });
+
+  const formErrors = useStore(form.store, formState => formState.errors);
+
+  const [regType, setRegType] = useState<Status>(Status.Life);
+  const [isRegHorse, toggleRegHorse] = useState(false);
+
+  console.log(form.state);
+
+  return (
+    <>
+      <h2 className='divider'>Individual Membership</h2>
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+          e.stopPropagation();
+        }}
+      >
+        <div className='flex gap-1 md:gap-5'>
+          <form.Field name='membershipEnd'>
+            {() => <Input className='hidden' />}
+          </form.Field>
+          <form.Field name='memberType'>
+            {() => <Input className='hidden' />}
+          </form.Field>
+          <InputField
+            name='firstName'
+            form={form}
+            label='First Name*'
+          />
+          <InputField
+            name='lastName'
+            form={form}
+            label='Last Name*'
+          />
+        </div>
+
+        <h3 className='mt-3 pb-2 text-sm'>Address*</h3>
+        <div className='flex flex-col gap-2'>
+          <InputField
+            name='address'
+            form={form}
+            placeholder='Address Line 1'
+          />
+          <InputField
+            name='city'
+            form={form}
+            placeholder='City'
+            aria-label='city'
+          />
+          <SelectField
+            name='state'
+            form={form}
+            aria-label='State select'
+            options={states.map(state => (
+              <option
+                key={state.value}
+                value={state.value}
+                aria-label={state.value}
+              >
+                {capitalize(state.label)}
+              </option>
+            ))}
+          />
+          <InputField
+            name='zip'
+            form={form}
+            type='numeric'
+            placeholder='Zip Code'
+            aria-label='zip code'
+          />
+          <div className='flex flex-col gap-2'>
+            <div className='flex gap-2'>
+              <SelectField
+                name='phoneType'
+                form={form}
+                label='Phone Type*'
+                options={Object.keys(PhoneTypeSchema.enum).map(type => (
+                  <option
+                    key={type}
+                    value={type}
+                    aria-label={type}
+                  >
+                    {type}
+                  </option>
+                ))}
+              />
+              <InputField
+                name='phone'
+                form={form}
+                label='Phone Number*'
+              />
+            </div>
+            <InputField
+              name='email'
+              form={form}
+              label='Email*'
+              altlabel='This will be the primary method of contact'
+            />
+            <form.Field name='memberStatus'>
+              {field => (
+                <>
+                  <h3 aria-label='Registration type'>Registration Type*</h3>
+                  <FieldInfo fieldMeta={field.state.meta} />
+                  <Label
+                    htmlFor='memberstatus-annual'
+                    className='cursor-pointer disabled:cursor-not-allowed'
+                  >
+                    <Radio
+                      id='memberstatus-annual'
+                      name='memberStatus'
+                      className='md:radio-sm align-text-top'
+                      value={Status.Annual}
+                      onChange={e => {
+                        setRegType(e.target.value as Status);
+                        field.handleChange(e.target.value as Status);
+                      }}
+                      onBlur={field.handleBlur}
+                    />
+                    {`Annual ($${costs.Annual['individual']})`}
+                  </Label>
+                  <Label
+                    htmlFor='memberstatus-life'
+                    className='cursor-pointer disabled:cursor-not-allowed'
+                  >
+                    <Radio
+                      id='memberstatus-life'
+                      name='memberStatus'
+                      className='md:radio-sm align-text-top'
+                      value={Status.Life}
+                      onChange={e => {
+                        setRegType(e.target.value as Status);
+                        field.handleChange(e.target.value as Status);
+                      }}
+                      onBlur={field.handleBlur}
+                    />
+                    {`Life ($${costs.Life['individual']})`}
+                  </Label>
+                </>
+              )}
+            </form.Field>
+
+            {showComponent && regType === 'Annual' ? (
+              <form.Field name='membershipEnd'>
+                {field => (
+                  <>
+                    <h3>
+                      Which year are you registering for? (New year starts
+                      Novemeber 30th)
+                    </h3>
+                    <FieldInfo fieldMeta={field.state.meta} />
+                    <Label
+                      htmlFor='membershipend-curr'
+                      className='cursor-pointer disabled:cursor-not-allowed'
+                    >
+                      <Radio
+                        id='membershipend-curr'
+                        name={field.name}
+                        className='md:radio-sm align-text-top'
+                        onChange={() => field.handleChange(curr)}
+                        onBlur={field.handleBlur}
+                      />
+                      {`Current Year (${curr.getFullYear()})`}
+                    </Label>
+                    <Label
+                      htmlFor='membershipend-next'
+                      className='cursor-pointer disabled:cursor-not-allowed'
+                    >
+                      <Radio
+                        id='membershipend-next'
+                        name={field.name}
+                        className='md:radio-sm align-text-top'
+                        onChange={() => field.handleChange(next)}
+                        onBlur={field.handleBlur}
+                      />
+                      {`Coming Year (${next.getFullYear()})`}
+                    </Label>
+                  </>
+                )}
+              </form.Field>
+            ) : null}
+
+            <h3>Member Type*</h3>
+            <form.Field name='memberStatusType'>
+              {field => (
+                <>
+                  <FieldInfo fieldMeta={field.state.meta} />
+                  {Object.keys(StatusType).map(type => (
+                    <Label
+                      htmlFor={type}
+                      className='cursor-pointer disabled:cursor-not-allowed'
+                      key={type}
+                    >
+                      <Radio
+                        id={type}
+                        name='memberStatusType'
+                        className='md:radio-sm align-text-top'
+                        value={type}
+                        onBlur={field.handleBlur}
+                        onChange={e =>
+                          field.handleChange(e.target.value as StatusType)
+                        }
+                      />
+                      {
+                        //TODO: This needs to be fixed in the db one day
+                      }
+                      {type === 'AdultAmateur' ? 'Adult Amateur' : type}
+                    </Label>
+                  ))}
+                </>
+              )}
+            </form.Field>
+            {
+              //<BirthDate Field={form.Field} />
+            }
+
+            <form.Field
+              name='horses'
+              mode='array'
+            >
+              {field => (
+                <div>
+                  <div className='flex items-center gap-2'>
+                    <Label>Do you plan to register your horse(s)?</Label>
+                    <Checkbox
+                      checked={isRegHorse}
+                      onChange={() => toggleRegHorse(curr => !curr)}
+                    />
+                  </div>
+                  {isRegHorse ? (
+                    <div className='grid gap-2'>
+                      <h2 className='text-sm font-bold'>
+                        List the horses you are registering.
+                        <br />
+                        Note that the horse’s registered name MUST match when
+                        entering a show.
+                      </h2>
+                      {field.state.value
+                        ? field.state.value.map((value, i) => (
+                            <div
+                              key={i}
+                              className='card card-compact bg-base-200'
+                            >
+                              <h2 className='card-title ml-3 mt-3'>
+                                Horse {i + 1}
+                                <button
+                                  className='btn btn-link btn-xs text-red-500'
+                                  type='button'
+                                  onClick={() => field.removeValue(i)}
+                                >
+                                  {TrashIcon}
+                                </button>
+                              </h2>
+
+                              <div className='card-body'>
+                                <form.Field name={`horses[${i}].regType`}>
+                                  {field => (
+                                    <>
+                                      <h3 aria-label='Registration type'>
+                                        Registration Type*
+                                      </h3>
+                                      <FieldInfo fieldMeta={field.state.meta} />
+                                      <Label
+                                        htmlFor={`horse-${i}-annual`}
+                                        className='cursor-pointer disabled:cursor-not-allowed'
+                                      >
+                                        <Radio
+                                          id={`horse-${i}-annual`}
+                                          name={`${field.name}-${i}`}
+                                          value={Status.Annual}
+                                          onBlur={field.handleBlur}
+                                          onChange={e =>
+                                            field.handleChange(
+                                              e.target.value as Status,
+                                            )
+                                          }
+                                          className='md:radio-sm align-text-top'
+                                        />
+                                        {`Annual ($${costs.Annual['horse']})`}
+                                      </Label>
+                                      <Label
+                                        htmlFor={`horse-${i}-life`}
+                                        className='cursor-pointer disabled:cursor-not-allowed'
+                                      >
+                                        <Radio
+                                          id={`horse-${i}-life`}
+                                          name={`${field.name}-${i}`}
+                                          value={Status.Life}
+                                          onBlur={field.handleBlur}
+                                          onChange={e =>
+                                            field.handleChange(
+                                              e.target.value as Status,
+                                            )
+                                          }
+                                          className='md:radio-sm align-text-top'
+                                        />
+                                        {`Life ($${costs.Life['horse']})`}
+                                      </Label>
+                                    </>
+                                  )}
+                                </form.Field>
+                                <form.Field name={`horses[${i}].horseRN`}>
+                                  {field => (
+                                    <div className='form-control'>
+                                      <Label htmlFor={`horse-${i}-rn`}>
+                                        Registered Name*
+                                      </Label>
+                                      <Input
+                                        id={`horse-${i}-rn`}
+                                        type='text'
+                                        defaultValue={field.state.value}
+                                        onChange={e =>
+                                          field.handleChange(e.target.value)
+                                        }
+                                        onBlur={field.handleBlur}
+                                      />
+                                      <FieldInfo fieldMeta={field.state.meta} />
+                                    </div>
+                                  )}
+                                </form.Field>
+                                <form.Field name={`horses[${i}].horseAKA`}>
+                                  {field => (
+                                    <div className='form-control'>
+                                      <Label htmlFor={`horse-${i}-aka`}>
+                                        Barn Name*
+                                      </Label>
+                                      <Input
+                                        id={`horse-${i}-aka`}
+                                        type='text'
+                                        defaultValue={field.state.value ?? ''}
+                                        onChange={e =>
+                                          field.handleChange(e.target.value)
+                                        }
+                                        onBlur={field.handleBlur}
+                                      />
+                                      <FieldInfo fieldMeta={field.state.meta} />
+                                    </div>
+                                  )}
+                                </form.Field>
+                              </div>
+                            </div>
+                          ))
+                        : null}
+                      <Button
+                        className='mb-5 w-full'
+                        variant='secondary'
+                        size='xs'
+                        onClick={() =>
+                          field.pushValue({
+                            horseRN: '',
+                            horseAKA: '',
+                            regType: 'Annual' as Status,
+                            registrationEnd: setMembershipYear(),
+                          })
+                        }
+                      >
+                        {AddIcon} Add Horse
+                      </Button>
+                    </div>
+                  ) : null}
+                </div>
+              )}
+            </form.Field>
+          </div>
+        </div>
+        <Button
+          onClick={() => {
+            console.log(form.state.values);
+            form.handleSubmit();
+          }}
+        >
+          Submit
+        </Button>
+      </form>
+    </>
+  );
+}
+
+function BirthDate({
+  Field,
+}: {
+  Field: FieldComponent<TypeOf<typeof MemberFormSchema>>;
+}) {
+  const [checked, setChecked] = useState(false);
+  return (
+    <Field
+      name='dateOfBirth'
+      validators={{
+        onSubmit: () => {
+          console.log(checked);
+          if (checked) {
+            console.log('Please enter a date.');
+            return 'Please enter your birth date';
+          }
+        },
+      }}
+    >
+      {field => (
+        <div>
+          <div className='flex items-center gap-2'>
+            <Label>Is the applicant under 18?</Label>
+            <Checkbox
+              className='md:checkbox-sm'
+              checked={checked}
+              onChange={() => {
+                if (checked) {
+                  field.setValue(null);
+                }
+
+                setChecked(curr => !curr);
+              }}
+            />
+          </div>
+          <div className={`${checked ? '' : 'hidden'}`}>
+            <FieldInfo fieldMeta={field.state.meta} />
+            <DatePicker
+              showPopperArrow={false}
+              placeholderText='Date of Birth'
+              onChange={(date: Date | null) => {
+                field.handleChange(date);
+              }}
+              onBlur={field.handleBlur}
+              selected={field.state.value}
+              customInput={<Input />}
+            />
+            <AltLabel className='w-fit'>
+              Membership year runs from Dec 1st to Nov 30th of each show year.
+            </AltLabel>
+          </div>
+        </div>
+      )}
+    </Field>
+  );
+}
+
+export default IndividualRegistration;

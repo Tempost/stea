@@ -1,18 +1,25 @@
 import { PropsWithChildren } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { AltLabel, Label } from '../styled-ui/Label';
+import { cn } from '@/utils/helpers';
 
 export interface UseFormFieldProps extends PropsWithChildren {
+  id?: string;
   name: string;
   label?: string;
   altLabel?: string;
   labelStyle?: string;
 }
 
-export const useFormField = <TProps extends UseFormFieldProps>(
-  props: TProps
+export const useFormField = <TFieldProps extends UseFormFieldProps>(
+  props: TFieldProps,
 ) => {
   const { label, name, altLabel, labelStyle, ...otherProps } = props;
-  const id = name;
+  let { id } = props;
+
+  if (!id) {
+    id = name;
+  }
 
   return {
     formFieldProps: { id, name, label, labelStyle, altLabel },
@@ -38,25 +45,25 @@ export const FormField = ({
   return (
     <div className='form-control w-full'>
       {label && (
-        <label
+        <Label
           htmlFor={id}
           aria-label={label}
-          className={`label ${labelStyle}`}
+          className={labelStyle}
         >
-          <span className='label-text'>{label}</span>
-        </label>
+          {label}
+        </Label>
       )}
       {children}
-      {state.error && <p className='text-error'>{state.error.message}</p>}
       {altLabel && (
-        <label
+        <AltLabel
           htmlFor={id}
           aria-label={altLabel}
-          className={`w-fill label-text-alt rounded-md bg-info/25 p-0.5 ${labelStyle}`}
+          className='w-fit'
         >
-          <span className='label-text-alt text-sm md:text-xs'>{altLabel}</span>
-        </label>
+          {altLabel}
+        </AltLabel>
       )}
+      {state.error && <p className='text-error'>{state.error.message}</p>}
     </div>
   );
 };
@@ -74,14 +81,17 @@ export const RadioFormField = ({
   return (
     <div className='form-control flex-row'>
       {label && (
-        <label
+        <Label
           htmlFor={id}
           aria-label={label}
-          className={`label cursor-pointer ${labelStyle}`}
+          className={cn(
+            'cursor-pointer disabled:cursor-not-allowed',
+            labelStyle,
+          )}
         >
           {children}
-          <span className='label-text ml-2'>{label}</span>
-        </label>
+          <span>{label}</span>
+        </Label>
       )}
       {state.error && <p className='text-error'>{state.error.message}</p>}
     </div>

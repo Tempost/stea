@@ -1,16 +1,8 @@
 import { z } from 'zod';
-import type { RiderComboWithRelations } from './RiderComboSchema'
-import type { RiderComboPartialWithRelations } from './RiderComboSchema'
-import type { RiderComboOptionalDefaultsWithRelations } from './RiderComboSchema'
-import type { ShowWithRelations } from './ShowSchema'
-import type { ShowPartialWithRelations } from './ShowSchema'
-import type { ShowOptionalDefaultsWithRelations } from './ShowSchema'
-import { RiderComboWithRelationsSchema } from './RiderComboSchema'
-import { RiderComboPartialWithRelationsSchema } from './RiderComboSchema'
-import { RiderComboOptionalDefaultsWithRelationsSchema } from './RiderComboSchema'
-import { ShowWithRelationsSchema } from './ShowSchema'
-import { ShowPartialWithRelationsSchema } from './ShowSchema'
-import { ShowOptionalDefaultsWithRelationsSchema } from './ShowSchema'
+import { RiderComboWithRelationsSchema, RiderComboPartialWithRelationsSchema, RiderComboOptionalDefaultsWithRelationsSchema } from './RiderComboSchema'
+import type { RiderComboWithRelations, RiderComboPartialWithRelations, RiderComboOptionalDefaultsWithRelations } from './RiderComboSchema'
+import { ShowWithRelationsSchema, ShowPartialWithRelationsSchema, ShowOptionalDefaultsWithRelationsSchema } from './ShowSchema'
+import type { ShowWithRelations, ShowPartialWithRelations, ShowOptionalDefaultsWithRelations } from './ShowSchema'
 
 /////////////////////////////////////////
 // POINTS SCHEMA

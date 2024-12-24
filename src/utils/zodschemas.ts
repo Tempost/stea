@@ -11,12 +11,24 @@ export const HorseFormSchema = HorseOptionalDefaultsSchema.omit({
   owner: true,
 }).array();
 
-export const MemberFormSchema = z.object({
-  memberInput: z.lazy(() =>
-    MemberOptionalDefaultsSchema.omit({ fullName: true, comments: true })
-  ),
-  horses: z.lazy(() => HorseFormSchema).optional(),
-});
+//export const MemberFormSchema = z.object({
+//  memberInput: z.lazy(() =>
+//    MemberOptionalDefaultsSchema.omit({ fullName: true, comments: true })
+//  ),
+//  horses: z.lazy(() => HorseFormSchema).optional(),
+//});
+
+export const MemberFormSchema = z
+  .object({
+    horses: z.lazy(() => HorseFormSchema).optional(),
+  })
+  .merge(
+    MemberOptionalDefaultsSchema.omit({
+      fullName: true,
+      comments: true,
+      businessName: true,
+    }),
+  );
 
 export const OwnerHorseFormSchema = z.object({
   owner: NonMemberHorseOwnerOptionalDefaultsSchema.omit({ fullName: true }),

@@ -1,3 +1,4 @@
+'use client';
 import { useSetAtom } from 'jotai';
 import { ChangeEvent, ReactElement, useState } from 'react';
 
@@ -13,7 +14,7 @@ import { PhoneTypeSchema } from '@/server/prisma/zod-generated/inputTypeSchemas/
 import Payment from '@/components/forms/Payment';
 import Input from '@/components/data-entry/Input';
 import Select from '@/components/data-entry/Select';
-import RegType from '@/components/forms/RegType';
+import RegistrationSelect from '@/components/forms/RegType';
 import Checkbox from '@/components/data-entry/Checkbox';
 import HorseFieldArray from '@/components/forms/HorseFieldArray';
 import RegistrationYearSelect from '@/components/forms/RegistrationYearSelect';
@@ -199,7 +200,7 @@ function BusinessRegistration() {
               {...register('memberInput.email')}
             />
 
-            <RegType
+            <RegistrationSelect
               register={register('memberInput.memberStatus')}
               formType='Business'
             />

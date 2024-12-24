@@ -6,9 +6,9 @@ import { StringFilterSchema } from './StringFilterSchema';
 import { StringNullableFilterSchema } from './StringNullableFilterSchema';
 import { EnumStatusFilterSchema } from './EnumStatusFilterSchema';
 import { StatusSchema } from './StatusSchema';
-import { NonMemberHorseOwnerNullableRelationFilterSchema } from './NonMemberHorseOwnerNullableRelationFilterSchema';
+import { NonMemberHorseOwnerNullableScalarRelationFilterSchema } from './NonMemberHorseOwnerNullableScalarRelationFilterSchema';
 import { NonMemberHorseOwnerWhereInputSchema } from './NonMemberHorseOwnerWhereInputSchema';
-import { MemberNullableRelationFilterSchema } from './MemberNullableRelationFilterSchema';
+import { MemberNullableScalarRelationFilterSchema } from './MemberNullableScalarRelationFilterSchema';
 import { MemberWhereInputSchema } from './MemberWhereInputSchema';
 import { RiderComboListRelationFilterSchema } from './RiderComboListRelationFilterSchema';
 
@@ -25,8 +25,8 @@ export const HorseWhereInputSchema: z.ZodType<Prisma.HorseWhereInput> = z.object
   regType: z.union([ z.lazy(() => EnumStatusFilterSchema),z.lazy(() => StatusSchema) ]).optional(),
   owner: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   registrationEnd: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
-  ownerRec: z.union([ z.lazy(() => NonMemberHorseOwnerNullableRelationFilterSchema),z.lazy(() => NonMemberHorseOwnerWhereInputSchema) ]).optional().nullable(),
-  memberOwner: z.union([ z.lazy(() => MemberNullableRelationFilterSchema),z.lazy(() => MemberWhereInputSchema) ]).optional().nullable(),
+  ownerRec: z.union([ z.lazy(() => NonMemberHorseOwnerNullableScalarRelationFilterSchema),z.lazy(() => NonMemberHorseOwnerWhereInputSchema) ]).optional().nullable(),
+  memberOwner: z.union([ z.lazy(() => MemberNullableScalarRelationFilterSchema),z.lazy(() => MemberWhereInputSchema) ]).optional().nullable(),
   RiderCombo: z.lazy(() => RiderComboListRelationFilterSchema).optional()
 }).strict();
 

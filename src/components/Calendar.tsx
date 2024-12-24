@@ -77,9 +77,9 @@ export default function Calendar({ shows }: CalendarProps) {
         </button>
       </div>
 
-      {filteredShows!.map(show => (
+      {filteredShows!.map((show, index) => (
         <CalendarEvents
-          key={show.uid}
+          key={`${show.showName}-${index}`}
           show={show}
         />
       ))}

@@ -35,8 +35,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 3,
     },
     {
-      url: url + '/join/benefits',
-      changeFrequency: 'monthly',
+      url: url + '/benefits',
+      changeFrequency: 'never',
       priority: 6,
     },
     {

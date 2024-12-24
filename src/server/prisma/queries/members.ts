@@ -1,4 +1,4 @@
-import { Prisma } from '@prisma/client';
+import { Prisma, Status } from '@prisma/client';
 import { MyPrismaClient, prisma } from '@/server/prisma';
 
 async function findUniqueOrThrow(
@@ -10,4 +10,14 @@ async function findUniqueOrThrow(
   });
 }
 
-export { findUniqueOrThrow };
+async function findUnique(
+  fullName: string,
+  db: MyPrismaClient,
+  memberStatus?: Status
+) {
+  return await db.member.findUnique({
+    where: { fullName, memberStatus },
+  });
+}
+
+export { findUniqueOrThrow, findUnique };

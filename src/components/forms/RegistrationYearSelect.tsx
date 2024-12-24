@@ -11,7 +11,6 @@ interface Props
   watchFieldName: string;
   register: UseFormRegisterReturn;
   // TODO: Find proper type for this prop
-  // eslint-disable-next-line
   control: any;
 }
 
@@ -37,6 +36,7 @@ function RegistrationYearSelect({
       <section>
         <h3>{heading} (New year starts Novemeber 30th)</h3>
         <Radio
+          id={`${register.name}-${curr.getFullYear()}`}
           label={`Current Year (${curr.getFullYear()})`}
           value={curr.toString()}
           className='radio radio-primary align-middle md:radio-sm'
@@ -44,6 +44,7 @@ function RegistrationYearSelect({
           {...register}
         />
         <Radio
+          id={`${register.name}-${next.getFullYear()}`}
           label={`Coming Year (${next.getFullYear()})`}
           value={next.toString()}
           className='radio radio-primary align-middle md:radio-sm'

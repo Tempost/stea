@@ -8,7 +8,7 @@ interface Menu {
   render?(menu: Menu): ReactNode;
 }
 
-export const publicMenuItems: Menu[] = [
+export const publicMenuItems: Array<Menu> = [
   {
     href: '/',
     name: 'Home',
@@ -37,11 +37,11 @@ export const publicMenuItems: Menu[] = [
             text: 'Apply for STEA Membership',
           },
           {
-            href: '/join/benefits',
+            href: '/benefits',
             text: 'Member Benefits',
           },
           {
-            href: '/join/scholarship',
+            href: '/scholarship',
             text: 'STEA Scholarship',
           },
         ]}
@@ -54,7 +54,7 @@ export const publicMenuItems: Menu[] = [
   },
 ];
 
-export const dashMenuItems: Menu[] = [
+export const dashMenuItems: Array<Menu> = [
   {
     name: 'Applications',
     href: '/dashboard/review/applications',

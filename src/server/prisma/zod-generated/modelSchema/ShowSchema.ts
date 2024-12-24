@@ -1,17 +1,9 @@
 import { z } from 'zod';
 import { ShowTypeSchema } from '../inputTypeSchemas/ShowTypeSchema'
-import type { RiderComboWithRelations } from './RiderComboSchema'
-import type { RiderComboPartialWithRelations } from './RiderComboSchema'
-import type { RiderComboOptionalDefaultsWithRelations } from './RiderComboSchema'
-import type { PointsWithRelations } from './PointsSchema'
-import type { PointsPartialWithRelations } from './PointsSchema'
-import type { PointsOptionalDefaultsWithRelations } from './PointsSchema'
-import { RiderComboWithRelationsSchema } from './RiderComboSchema'
-import { RiderComboPartialWithRelationsSchema } from './RiderComboSchema'
-import { RiderComboOptionalDefaultsWithRelationsSchema } from './RiderComboSchema'
-import { PointsWithRelationsSchema } from './PointsSchema'
-import { PointsPartialWithRelationsSchema } from './PointsSchema'
-import { PointsOptionalDefaultsWithRelationsSchema } from './PointsSchema'
+import { RiderComboWithRelationsSchema, RiderComboPartialWithRelationsSchema, RiderComboOptionalDefaultsWithRelationsSchema } from './RiderComboSchema'
+import type { RiderComboWithRelations, RiderComboPartialWithRelations, RiderComboOptionalDefaultsWithRelations } from './RiderComboSchema'
+import { PointsWithRelationsSchema, PointsPartialWithRelationsSchema, PointsOptionalDefaultsWithRelationsSchema } from './PointsSchema'
+import type { PointsWithRelations, PointsPartialWithRelations, PointsOptionalDefaultsWithRelations } from './PointsSchema'
 
 /////////////////////////////////////////
 // SHOW SCHEMA

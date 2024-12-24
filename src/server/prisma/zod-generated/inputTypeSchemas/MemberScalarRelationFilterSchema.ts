@@ -3,9 +3,9 @@ import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
 import { MemberWhereInputSchema } from './MemberWhereInputSchema';
 
-export const MemberRelationFilterSchema: z.ZodType<Prisma.MemberRelationFilter> = z.object({
+export const MemberScalarRelationFilterSchema: z.ZodType<Prisma.MemberScalarRelationFilter> = z.object({
   is: z.lazy(() => MemberWhereInputSchema).optional(),
   isNot: z.lazy(() => MemberWhereInputSchema).optional()
 }).strict();
 
-export default MemberRelationFilterSchema;
+export default MemberScalarRelationFilterSchema;

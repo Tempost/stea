@@ -1,5 +1,4 @@
 import { atom } from 'jotai';
-// TODO: Replace with jotai-immer ?
 import produce from 'immer';
 import {
   FormState,
@@ -13,14 +12,14 @@ import type { Status } from '@prisma/client';
 
 export const costs = {
   Life: {
-    Individual: 500,
-    Business: 500,
-    Horse: 150,
+    individual: 500,
+    business: 500,
+    horse: 150,
   },
   Annual: {
-    Individual: 55,
-    Business: 65,
-    Horse: 25,
+    individual: 55,
+    business: 65,
+    horse: 25,
   },
 };
 
@@ -57,8 +56,8 @@ const updateHorseCost = atom(null, (get, set, updateValue: HorsePayload) => {
   const prev = get(formState);
   const newState = produce(prev, draft => {
     draft.horses = {
-      lifeCost: updateValue.lifeCount * costs.Life.Horse,
-      annualCost: updateValue.annualCount * costs.Annual.Horse,
+      lifeCost: updateValue.lifeCount * costs.Life.horse,
+      annualCost: updateValue.annualCount * costs.Annual.horse,
     };
   });
 

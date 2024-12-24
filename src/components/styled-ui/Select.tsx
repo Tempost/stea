@@ -1,14 +1,20 @@
-import { ComponentProps, forwardRef } from 'react';
+import { cn } from '@/utils/helpers';
+import { forwardRef } from 'react';
 
-export interface Props extends ComponentProps<'select'> {}
+export type Props = React.SelectHTMLAttributes<HTMLSelectElement>;
 
-const Select = forwardRef<HTMLSelectElement, Props>((props, ref) => (
-  <select
-    className='select select-bordered'
-    {...props}
-    ref={ref}
-  />
-));
+const Select = forwardRef<HTMLSelectElement, Props>(
+  ({ className, ...props }, ref) => (
+    <select
+      className={cn(
+        'select select-bordered select-primary w-full md:select-sm',
+        className,
+      )}
+      {...props}
+      ref={ref}
+    />
+  ),
+);
 
-Select.displayName = 'Styled-Select';
+Select.displayName = 'Select';
 export default Select;

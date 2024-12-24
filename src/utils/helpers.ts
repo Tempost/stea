@@ -1,4 +1,7 @@
-export function removeUndefined<T>(data: (T | undefined)[]) {
+import clsx, { ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+export function removeUndefined<T>(data: Array<T | undefined>) {
   return data.filter((item: T | undefined): item is T => item !== undefined);
 }
 
@@ -19,6 +22,6 @@ export function capitalize(s: string) {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
-export function join(...args: any[]) {
-  return args.filter(Boolean).join(' ');
+export function cn(...inputs: Array<ClassValue>) {
+  return twMerge(clsx(inputs));
 }

@@ -1,4 +1,4 @@
-import { join } from '@/utils/helpers';
+import { cn } from '@/utils/helpers';
 import {
   HTMLAttributes,
   MouseEventHandler,
@@ -28,7 +28,7 @@ function Modal<T>({
     <>
       <label
         htmlFor={id}
-        className={join('btn btn-primary btn-sm', buttonClassName)}
+        className={cn('btn btn-primary btn-sm', buttonClassName)}
       >
         {buttonLabel ?? 'Open'}
       </label>

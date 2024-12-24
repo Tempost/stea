@@ -1,11 +1,7 @@
 import { z } from 'zod';
 import { PhoneTypeSchema } from '../inputTypeSchemas/PhoneTypeSchema'
-import type { HorseWithRelations } from './HorseSchema'
-import type { HorsePartialWithRelations } from './HorseSchema'
-import type { HorseOptionalDefaultsWithRelations } from './HorseSchema'
-import { HorseWithRelationsSchema } from './HorseSchema'
-import { HorsePartialWithRelationsSchema } from './HorseSchema'
-import { HorseOptionalDefaultsWithRelationsSchema } from './HorseSchema'
+import { HorseWithRelationsSchema, HorsePartialWithRelationsSchema, HorseOptionalDefaultsWithRelationsSchema } from './HorseSchema'
+import type { HorseWithRelations, HorsePartialWithRelations, HorseOptionalDefaultsWithRelations } from './HorseSchema'
 
 /////////////////////////////////////////
 // NON MEMBER HORSE OWNER SCHEMA

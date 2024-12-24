@@ -1,6 +1,7 @@
 import { DetailedHTMLProps, InputHTMLAttributes } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 import Radio from '../data-entry/Radio';
+import { StatusType } from '@prisma/client';
 
 interface Props
   extends DetailedHTMLProps<
@@ -12,31 +13,19 @@ interface Props
 
 function MemberType({ register, onClick }: Props) {
   return (
-    <section className='mt-3 w-fit'>
+    <section>
       <h3>Member Type*</h3>
-      <Radio
-        label='Adult Amateur'
-        value='AdultAmateur'
-        className='radio radio-primary align-middle md:radio-sm'
-        onClick={onClick}
-        {...register}
-      />
-
-      <Radio
-        label='Professional'
-        value='Professional'
-        className='radio radio-primary align-middle md:radio-sm'
-        onClick={onClick}
-        {...register}
-      />
-
-      <Radio
-        label='Junior'
-        value='Junior'
-        className='radio radio-primary align-middle md:radio-sm'
-        onClick={onClick}
-        {...register}
-      />
+      {Object.keys(StatusType).map(type => (
+        <Radio
+          key={type}
+          id={type}
+          label={type === 'AdultAmateur' ? 'Adult Amateur' : type}
+          className='md:radio-sm'
+          value={type}
+          onClick={onClick}
+          {...register}
+        />
+      ))}
     </section>
   );
 }

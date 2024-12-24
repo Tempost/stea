@@ -1,3 +1,4 @@
+'use client';
 import { ChangeEvent } from 'react';
 import { z } from 'zod';
 import { useAtomValue, useSetAtom } from 'jotai';
@@ -12,6 +13,7 @@ import { HorseOptionalDefaultsSchema } from '@/server/prisma/zod-generated/model
 import Select from '@/components/data-entry/Select';
 import { changeSelectionAtom, ownerTypeAtom } from '@/utils/atoms';
 import Radio from '@/components/data-entry/Radio';
+import { cn } from '@/utils/helpers';
 
 function MemberSelection() {
   const members = trpc.members.all.useQuery({ select: { fullName: true } });
@@ -128,8 +130,8 @@ function NewHorseForm() {
               insert.isError
                 ? 'btn-error'
                 : insert.isSuccess
-                ? 'btn-success'
-                : ''
+                  ? 'btn-success'
+                  : ''
             }`}
         >
           Add
@@ -170,7 +172,7 @@ function NewHorseForm() {
             <option value='non-member'>Non-Member</option>
           </Select>
 
-          <span className={`${state === 'none' ? 'hidden' : ''}`}>
+          <span className={cn({ hidden: state === 'none' })}>
             {state === 'member' ? <MemberSelection /> : <OwnerSelection />}
           </span>
 

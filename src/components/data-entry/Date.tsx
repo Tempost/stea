@@ -3,6 +3,8 @@ import { Controller, useFormContext } from 'react-hook-form';
 
 import Input from '@/components/styled-ui/Input';
 import 'react-datepicker/dist/react-datepicker.css';
+import { AltLabel, Label } from '../styled-ui/Label';
+import { cn } from '@/utils/helpers';
 
 interface DatePickerProps {
   name: string;
@@ -23,33 +25,27 @@ function ControlledDatePicker({
   const state = getFieldState(name);
 
   return (
-    <div className={`${hidden ? 'hidden' : ''} `}>
-      <label className='label'>
-        <span className='label-text'>{label}</span>
-      </label>
+    <div className={cn({ hidden: hidden })}>
       <Controller
         name={name}
         control={control}
         render={props => (
           <>
+            {label ? <Label>{label}</Label> : null}
+            {state.error && <p className='text-error'>{state.error.message}</p>}
             <DatePicker
               showPopperArrow={false}
               placeholderText={placeholderText}
-              onChange={(date: Date) => {
+              onChange={(date: Date | null) => {
                 props.field.onChange(date);
               }}
               selected={props.field.value}
-              customInput={
-                <Input className='input input-bordered input-primary w-fit md:input-sm' />
-              }
+              customInput={<Input />}
             />
+            <AltLabel className='w-fit'>{labelAlt}</AltLabel>
           </>
         )}
       />
-      {state.error && <p className='text-error'>{state.error.message}</p>}
-      <label className='label'>
-        <span className='label-text-alt'>{labelAlt}</span>
-      </label>
     </div>
   );
 }

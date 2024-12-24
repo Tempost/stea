@@ -104,7 +104,7 @@ function Table<TData>({
                         {!header.isPlaceholder &&
                           flexRender(
                             header.column.columnDef.header,
-                            header.getContext()
+                            header.getContext(),
                           )}
                         {extras && headerGroup.depth === 0 && extras}
                         {headerGroup.depth === 0 && search && (

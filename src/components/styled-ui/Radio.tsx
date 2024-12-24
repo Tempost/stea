@@ -1,18 +1,19 @@
-import { ComponentProps, forwardRef } from 'react';
+import { cn } from '@/utils/helpers';
+import { forwardRef } from 'react';
 
-export interface Props extends ComponentProps<'input'> {
-  name: string;
-}
+export type Props = React.InputHTMLAttributes<HTMLInputElement>;
 
-const Radio = forwardRef<HTMLInputElement, Props>(({ id, ...props }, ref) => (
-  <input
-    className='radio radio-primary'
-    {...props}
-    id={id}
-    ref={ref}
-    type='radio'
-  />
-));
+const Radio = forwardRef<HTMLInputElement, Props>(
+  ({ id, className, ...props }, ref) => (
+    <input
+      className={cn('radio radio-primary', className)}
+      {...props}
+      id={id}
+      ref={ref}
+      type='radio'
+    />
+  ),
+);
 
-Radio.displayName = 'Styled-Radio';
+Radio.displayName = 'Radio';
 export default Radio;

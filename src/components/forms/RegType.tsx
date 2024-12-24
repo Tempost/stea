@@ -1,10 +1,8 @@
 import { UseFormRegisterReturn } from 'react-hook-form';
 
 import Radio from '@/components/data-entry/Radio';
-import { useSetAtom } from 'jotai';
-import { costs, updateFormState } from '@/utils/atoms';
-import { Status } from '@prisma/client';
-import { ChangeEvent, DetailedHTMLProps, InputHTMLAttributes } from 'react';
+import { costs } from '@/utils/atoms';
+import { DetailedHTMLProps, InputHTMLAttributes } from 'react';
 import { FormType } from '@/types/common';
 
 interface Props
@@ -13,38 +11,31 @@ interface Props
     HTMLInputElement
   > {
   register: UseFormRegisterReturn;
-  noAtomUpdate?: boolean;
   formType: FormType;
 }
 
-function RegType({ register, noAtomUpdate, onClick, formType }: Props) {
-  const update = useSetAtom(updateFormState);
+const RegistrationSelect = ({ register, onClick, formType }: Props) => (
+  <section>
+    <h3>Registration Type*</h3>
+    <Radio
+      id={`${register.name}-life`}
+      label={`Annual ($${costs.Annual[formType]})`}
+      value='Annual'
+      className='md:radio-sm'
+      onClick={onClick}
+      {...register}
+    />
 
-  function handleRadioClick(e: ChangeEvent<HTMLInputElement>) {
-    !noAtomUpdate &&
-      update({ type: 'STATUS', payload: e.target.value as Status });
-  }
+    <Radio
+      id={`${register.name}-annual`}
+      label={`Life ($${costs.Life[formType]})`}
+      value='Life'
+      className='md:radio-sm'
+      onClick={onClick}
+      {...register}
+    />
+  </section>
+);
+RegistrationSelect.displayName = 'RegistrationSelection'
 
-  return (
-    <section onChange={handleRadioClick}>
-      <h3>Registration Type*</h3>
-      <Radio
-        label={`Annual ($${costs.Annual[formType]})`}
-        value='Annual'
-        className='radio radio-primary align-middle md:radio-sm'
-        onClick={onClick}
-        {...register}
-      />
-
-      <Radio
-        label={`Life ($${costs.Life[formType]})`}
-        value='Life'
-        className='radio radio-primary align-middle md:radio-sm'
-        onClick={onClick}
-        {...register}
-      />
-    </section>
-  );
-}
-
-export default RegType;
+export default RegistrationSelect;

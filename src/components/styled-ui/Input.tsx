@@ -1,16 +1,22 @@
-import { ComponentProps, forwardRef } from 'react';
+import { cn } from '@/utils/helpers';
+import { forwardRef } from 'react';
 
-export interface Props extends ComponentProps<'input'> {}
+export type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
 
-const Input = forwardRef<HTMLInputElement, Props>(({ id, ...props }, ref) => (
-  <input
-    className='input input-bordered'
-    {...props}
-    id={id}
-    ref={ref}
-  />
-));
+const Input = forwardRef<HTMLInputElement, InputProps>(
+  ({ id, className, ...props }, ref) => (
+    <input
+      className={cn(
+        'input input-bordered input-primary w-full md:input-sm',
+        className,
+      )}
+      {...props}
+      id={id}
+      ref={ref}
+    />
+  ),
+);
 
-Input.displayName = 'Styled-Input';
+Input.displayName = 'Input';
 
 export default Input;

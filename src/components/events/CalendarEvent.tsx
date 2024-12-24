@@ -9,27 +9,27 @@ interface CalendarEventsProps {
 function CalendarEvents({ show }: CalendarEventsProps) {
   const date = show.showEndDate
     ? `${readableDateTime(show.showDate)} - ${readableDateTime(
-        show.showEndDate
+        show.showEndDate,
       )}`
     : readableDateTime(show.showDate);
 
   return (
-    <div className='m-4 flex flex-col rounded-lg border p-2 text-center text-lg shadow-xl'>
-      <h3>
-        {show.showName} ({show.showType})
-      </h3>
-      <div className='divider mb-0 mt-0'></div>
-      <p className='m-2 text-lg'>{date}</p>
+      <div className='m-4 flex flex-col rounded-lg border p-2 text-center text-lg shadow-xl'>
+        <h3>
+          {show.showName} ({show.showType})
+        </h3>
+        <div className='divider mb-0 mt-0'></div>
+        <p className='m-2 text-lg'>{date}</p>
 
-      {show.url && (
-        <Link
-          href={show.url}
-          className='btn btn-primary btn-sm'
-        >
-          Register
-        </Link>
-      )}
-    </div>
+        {show.url && (
+          <Link
+            href={show.url}
+            className='btn btn-primary btn-sm'
+          >
+            Register
+          </Link>
+        )}
+      </div>
   );
 }
 

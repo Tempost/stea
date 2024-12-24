@@ -4,9 +4,9 @@ import { z } from 'zod';
 import { PointsWhereInputSchema } from './PointsWhereInputSchema';
 import { StringFilterSchema } from './StringFilterSchema';
 import { FloatFilterSchema } from './FloatFilterSchema';
-import { RiderComboRelationFilterSchema } from './RiderComboRelationFilterSchema';
+import { RiderComboScalarRelationFilterSchema } from './RiderComboScalarRelationFilterSchema';
 import { RiderComboWhereInputSchema } from './RiderComboWhereInputSchema';
-import { ShowRelationFilterSchema } from './ShowRelationFilterSchema';
+import { ShowScalarRelationFilterSchema } from './ShowScalarRelationFilterSchema';
 import { ShowWhereInputSchema } from './ShowWhereInputSchema';
 
 export const PointsWhereUniqueInputSchema: z.ZodType<Prisma.PointsWhereUniqueInput> = z.object({
@@ -21,8 +21,8 @@ export const PointsWhereUniqueInputSchema: z.ZodType<Prisma.PointsWhereUniqueInp
   points: z.union([ z.lazy(() => FloatFilterSchema),z.number() ]).optional(),
   place: z.union([ z.lazy(() => StringFilterSchema),z.string().trim() ]).optional(),
   showUid: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  RiderCombo: z.union([ z.lazy(() => RiderComboRelationFilterSchema),z.lazy(() => RiderComboWhereInputSchema) ]).optional(),
-  show: z.union([ z.lazy(() => ShowRelationFilterSchema),z.lazy(() => ShowWhereInputSchema) ]).optional(),
+  RiderCombo: z.union([ z.lazy(() => RiderComboScalarRelationFilterSchema),z.lazy(() => RiderComboWhereInputSchema) ]).optional(),
+  show: z.union([ z.lazy(() => ShowScalarRelationFilterSchema),z.lazy(() => ShowWhereInputSchema) ]).optional(),
 }).strict());
 
 export default PointsWhereUniqueInputSchema;

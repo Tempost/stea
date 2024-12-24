@@ -1,4 +1,5 @@
 import { ZodFieldErrors } from '@/types/common';
+import { cn } from '@/utils/helpers';
 
 function Alert<T>({
   message,
@@ -9,9 +10,9 @@ function Alert<T>({
 }) {
   return (
     <div
-      className={`alert alert-error my-2 p-2 shadow-lg ${
-        visible ? '' : 'hidden'
-      }`}
+      className={cn('alert alert-error my-2 p-2 shadow-lg', {
+        hidden: !visible,
+      })}
     >
       <div>
         <svg
@@ -28,7 +29,7 @@ function Alert<T>({
           />
         </svg>
         <span className='text-sm'>
-          Error! {typeof message === 'string' ? message : 'Fancy Errors soon'}
+          {typeof message === 'string' ? message : 'Fancy Errors soon'}
         </span>
       </div>
     </div>

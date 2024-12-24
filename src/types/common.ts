@@ -1,9 +1,10 @@
 import { CSVEntry } from '@/server/utils';
 import { ShowType } from '@prisma/client';
+import { useForm, Validator } from '@tanstack/react-form';
 import { PropsWithChildren } from 'react';
 import { typeToFlattenedError } from 'zod';
 
-export const FORMTYPE = ['Individual', 'Business', 'Horse'] as const;
+export const FORMTYPE = ['individual', 'business', 'horse'] as const;
 export type FormType = (typeof FORMTYPE)[number];
 
 export type ZodFieldErrors<T> = typeToFlattenedError<T, string>['fieldErrors'];
@@ -31,3 +32,9 @@ export type GroupedEntries = Record<
 export type PointsMap = Record<ShowType, Record<CSVEntry['placing'], number>>;
 
 export type LayoutProps = PropsWithChildren;
+
+export type FormReturnType<TForm, TFormValidator> = TFormValidator extends
+  | Validator<TForm, unknown>
+  | undefined
+  ? ReturnType<typeof useForm<TForm, TFormValidator>>
+  : never;

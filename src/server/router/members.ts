@@ -7,14 +7,13 @@ import {
   MemberFindManyArgsSchema,
   MemberWhereUniqueInputSchema,
 } from '../prisma/zod-generated';
-import {
-  checkForExistingMember,
-  checkExistingHorses,
-  horseNames,
-} from './utils';
+import { checkExistingHorses, horseNames } from './utils';
 import { MyPrismaClient } from '../prisma';
 import { findMany } from '../prisma/queries/shared';
-import { findUniqueOrThrow } from '../prisma/queries/members';
+import {
+  findUniqueOrThrow,
+  findUnique,
+} from '../prisma/queries/members';
 
 export const members = router({
   all: procedure
@@ -56,7 +55,7 @@ export const members = router({
 
     console.info(`Checking if ${fullName} is a member.`);
 
-    const existingMember = await checkForExistingMember(fullName, ctx.prisma);
+    const existingMember = await findUnique(fullName, ctx.prisma);
     if (existingMember) {
       if (existingMember.memberStatus === 'Life') {
         throw new TRPCError({
