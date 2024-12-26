@@ -23,7 +23,6 @@
     "@prisma/adapter-neon": "^6.1.0",
     "@prisma/client": "6.1.0",
     "@prisma/extension-accelerate": "^1.2.1",
-    "@radix-ui/react-slot": "^1.1.1",
     "@sendgrid/mail": "^7.7.0",
     "@tanstack/match-sorter-utils": "^8.19.4",
     "@tanstack/react-query": "^4.36.1",
@@ -49,7 +48,6 @@
     "react-query": "^3.39.3",
     "superjson": "^1.13.3",
     "tailwind-merge": "^2.5.5",
-    "type-fest": "^4.30.2",
     "ws": "^8.18.0",
     "zod": "3.24.1",
     "zod-validation-error": "^3.4.0"
