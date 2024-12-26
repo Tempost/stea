@@ -39,13 +39,14 @@ export default function HorseFieldArray() {
         >
           <h2 className='card-title ml-3 mt-3'>
             Horse {index + 1}
-            <button
-              className='btn btn-link btn-xs text-red-500'
-              type='button'
+            <Button
+              className='text-red-500'
+              variant='link'
+              size='xs'
               onClick={() => remove(index)}
             >
               {TrashIcon}
-            </button>
+            </Button>
           </h2>
 
           <div className='card-body'>
@@ -95,7 +96,9 @@ export default function HorseFieldArray() {
         {errors.horses?.message}
       </p>
       <Button
-        className='btn-secondary btn-xs mb-5'
+        className='mb-5'
+        variant='secondary'
+        size='xs'
         onClick={() =>
           append({
             horseRN: '',

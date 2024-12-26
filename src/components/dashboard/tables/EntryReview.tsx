@@ -7,7 +7,7 @@ import { EntryReviewType } from '@/utils/zodschemas';
 import Table from '@/components/styled-ui/Table';
 
 interface EntryReviewProps {
-  entries: EntryReviewType[];
+  entries: Array<EntryReviewType>;
 }
 
 const columnHelper = createColumnHelper<EntryReviewType>();

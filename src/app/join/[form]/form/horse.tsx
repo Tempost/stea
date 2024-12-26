@@ -1,28 +1,30 @@
 'use client';
-import { useSetAtom } from 'jotai';
-import { ReactElement, useState } from 'react';
+import { useState, useTransition } from 'react';
 
 import Input from '@/components/data-entry/Input';
 import Select from '@/components/data-entry/Select';
-import { FormLayout } from '@/components/layout/FormLayout';
 import { OwnerHorseFormSchema, OwnerHorseForm } from '@/utils/zodschemas';
-import { updateFormState } from '@/utils/atoms';
-import { trpc } from '@/utils/trpc';
 import useZodForm from '@/utils/usezodform';
 import Form from '@/components/forms/Form';
 import { PhoneTypeSchema } from '@/server/prisma/zod-generated/inputTypeSchemas/PhoneTypeSchema';
 import Payment from '@/components/forms/Payment';
 import HorseFieldArray from '@/components/forms/HorseFieldArray';
+import {
+  OwnerActionState,
+  addOwner,
+  checkForExistingHorses,
+} from './horse.action';
+
+const initialState: OwnerActionState = {
+  message: undefined,
+  error: false,
+  data: undefined,
+};
 
 function HorseRegistration() {
   const [payment, togglePayment] = useState(false);
-  const check = trpc.horses.exists.useMutation({
-    onSuccess() {
-      togglePayment(true);
-    },
-  });
-
-  const insert = trpc.nonMemberHorseOwners.add.useMutation();
+  const [pending, startTransition] = useTransition();
+  const [actionState, setActionState] = useState(initialState);
 
   const form = useZodForm({
     reValidateMode: 'onSubmit',
@@ -31,40 +33,38 @@ function HorseRegistration() {
   });
 
   const { register } = form;
+  console.log(form.getValues());
 
-  const update = useSetAtom(updateFormState);
-
-  function onSubmit(formValues: OwnerHorseForm) {
-    if (formValues.horses) {
-      const lifeCount = formValues.horses.filter(
-        horse => horse.regType === 'Life',
-      ).length;
-
-      const annualCount = formValues.horses.filter(
-        horse => horse.regType === 'Annual',
-      ).length;
-
-      update({
-        type: 'HORSE',
-        payload: { lifeCount: lifeCount, annualCount: annualCount },
+  const onFormSubmit = (formValues: OwnerHorseForm) =>
+    startTransition(async () => {
+      const res = await checkForExistingHorses(formValues.horses);
+      setActionState({
+        ...res,
+        data: formValues,
       });
+      if (!res.error) {
+        togglePayment(curr => !curr);
+      }
+    });
 
-      check.mutate(formValues.horses);
-    }
-  }
+  const onPaymentSuccess = () =>
+    startTransition(async () => {
+      if (actionState.data) {
+        const res = await addOwner(actionState.data);
+        setActionState(res);
+      }
+    });
 
   return (
     <Form
       form={form}
-      onSubmit={onSubmit}
+      onSubmit={onFormSubmit}
     >
       <Payment
         showPayment={payment}
-        formState={{
-          error: check.isError,
-          message: check.error?.message,
-          mutateFn: () => insert.mutate(form.getValues()),
-        }}
+        formState={actionState}
+        pending={pending}
+        onPayment={onPaymentSuccess}
       >
         <h2 className='divider'>Horse Registration</h2>
         <section className='flex flex-col gap-2'>
@@ -74,15 +74,13 @@ function HorseRegistration() {
             <Input
               type='text'
               label='First Name*'
-              className='input input-bordered input-primary input-sm w-full'
-              {...register('owner.firstName')}
+              {...register('firstName')}
             />
 
             <Input
               type='text'
               label='Last Name*'
-              className='input input-bordered input-primary input-sm w-full'
-              {...register('owner.lastName')}
+              {...register('lastName')}
             />
           </div>
 
@@ -90,16 +88,14 @@ function HorseRegistration() {
             <Input
               label='Email'
               type='text'
-              className='input input-bordered input-primary input-sm w-full'
               altLabel='This will be the primary method of contact.'
-              {...register('owner.email')}
+              {...register('email')}
             />
 
             <span className='flex gap-2'>
               <Select
                 label='Phone Type*'
-                className='select select-bordered select-primary md:select-sm'
-                {...register('owner.phoneType')}
+                {...register('phoneType')}
               >
                 {Object.keys(PhoneTypeSchema.enum).map(type => (
                   <option
@@ -114,8 +110,7 @@ function HorseRegistration() {
               <Input
                 label='Phone Number*'
                 type='tel'
-                className='input input-bordered input-primary input-sm w-full'
-                {...register('owner.phone')}
+                {...register('phone')}
               />
             </span>
           </div>
@@ -128,9 +123,5 @@ function HorseRegistration() {
     </Form>
   );
 }
-
-HorseRegistration.getLayout = (page: ReactElement) => {
-  return <FormLayout>{page}</FormLayout>;
-};
 
 export default HorseRegistration;

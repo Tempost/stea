@@ -16,27 +16,24 @@ import Under18 from '@/components/forms/Under18';
 import Checkbox from '@/components/data-entry/Checkbox';
 import HorseFieldArray from '@/components/forms/HorseFieldArray';
 import RegistrationYearSelect from '@/components/forms/RegistrationYearSelect';
-import { addNewMember, checkForExistingMember } from '@/app/action';
+import {
+  ActionState,
+  addNewMember,
+  checkForExistingMember,
+} from '@/app/join/[form]/form/member.action';
 import { Label } from '@/components/styled-ui/Label';
+import { setMembershipYear } from '@/server/router/utils';
 
-export interface ActionState {
-  message: string | undefined;
-  error: boolean;
-  data: MemberForm | undefined;
-}
-
-export const initialState: ActionState = {
+const initialState: ActionState = {
   message: undefined,
   error: false,
   data: undefined,
 };
 
-const today = new Date();
-const curr = new Date(today.getFullYear(), 10, 30);
-
 function IndividualRegistration() {
   const [payment, togglePayment] = useState(false);
   const [isRegHorse, toggleRegHorse] = useState(false);
+  const [actionState, setActionState] = useState(initialState);
 
   const [pending, startTransition] = useTransition();
 
@@ -47,43 +44,40 @@ function IndividualRegistration() {
     defaultValues: {
       dateOfBirth: null,
       memberType: 'Individual',
-      membershipEnd: curr,
+      membershipEnd: setMembershipYear(),
       businessName: null,
     },
   });
 
   const { register, control } = form;
-  const [actionState, setActionState] = useState(initialState);
 
-  function onSubmit(formValues: MemberForm) {
+  const onFormSubmit = (formValues: MemberForm) =>
     startTransition(async () => {
-      const test = await checkForExistingMember(formValues);
-      setActionState(test);
-      if (!test.error) {
+      const res = await checkForExistingMember(formValues);
+      setActionState(res);
+      if (!res.error) {
         togglePayment(curr => !curr);
       }
     });
-  }
 
-  function addMember() {
+  const onPaymentSuccess = () =>
     startTransition(async () => {
       if (actionState.data) {
-        const test = await addNewMember(actionState.data);
-        setActionState(test);
+        const res = await addNewMember(actionState.data);
+        setActionState(res);
       }
     });
-  }
 
   return (
     <Form
       form={form}
-      onSubmit={onSubmit}
+      onSubmit={onFormSubmit}
     >
       <Payment
         showPayment={payment}
         formState={actionState}
         pending={pending}
-        onPayment={addMember}
+        onPayment={onPaymentSuccess}
       >
         <h2 className='divider'>Individual Membership</h2>
 

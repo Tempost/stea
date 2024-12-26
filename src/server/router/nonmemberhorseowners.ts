@@ -43,7 +43,7 @@ export const nonMemberHorseOwners = router({
       if (existingMember !== null) {
         // Existing member, update their horses instead
         console.log(
-          `Member exists adding horses to ${owner.firstName} ${owner.lastName}...`
+          `Member exists adding horses to ${owner.firstName} ${owner.lastName}...`,
         );
 
         try {
@@ -65,7 +65,7 @@ export const nonMemberHorseOwners = router({
           if (error instanceof Prisma.PrismaClientKnownRequestError) {
             if (error.code === 'P2002') {
               throw new Error(
-                'Something went wrong, contact us for more details.'
+                'Something went wrong, contact us for more details.',
               );
             }
           }
@@ -76,14 +76,14 @@ export const nonMemberHorseOwners = router({
         try {
           // otherwise create/update an owner record
           console.info(
-            `Adding new owner ${owner.firstName} ${owner.lastName}...`
+            `Adding new owner ${owner.firstName} ${owner.lastName}...`,
           );
           return await upsertOwner({ owner, horses }, ctx.prisma);
         } catch (error) {
           if (error instanceof Prisma.PrismaClientKnownRequestError) {
             if (error.code === 'P2002') {
               throw new Error(
-                'Something went wrong, contact us for more details.'
+                'Something went wrong, contact us for more details.',
               );
             }
           }
@@ -98,7 +98,7 @@ export const nonMemberHorseOwners = router({
       z.object({
         ownerName: z.string(),
         patch: NonMemberHorseOwnerPartialSchema,
-      })
+      }),
     )
     .mutation(async ({ input, ctx }) => {
       console.info(`Updating owner ${input.ownerName}...`);
@@ -139,7 +139,7 @@ export const nonMemberHorseOwners = router({
 
 async function upsertOwner(
   { horses, owner }: OwnerHorseForm,
-  db: MyPrismaClient
+  db: MyPrismaClient,
 ) {
   try {
     const newOwner = await db.nonMemberHorseOwner.upsert({

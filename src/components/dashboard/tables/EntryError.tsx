@@ -1,1 +1,2 @@
-export default {};
+const error = {};
+export default error;

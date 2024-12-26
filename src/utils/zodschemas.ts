@@ -11,13 +11,6 @@ export const HorseFormSchema = HorseOptionalDefaultsSchema.omit({
   owner: true,
 }).array();
 
-//export const MemberFormSchema = z.object({
-//  memberInput: z.lazy(() =>
-//    MemberOptionalDefaultsSchema.omit({ fullName: true, comments: true })
-//  ),
-//  horses: z.lazy(() => HorseFormSchema).optional(),
-//});
-
 export const MemberFormSchema = z
   .object({
     horses: z.lazy(() => HorseFormSchema).optional(),
@@ -29,10 +22,13 @@ export const MemberFormSchema = z
     }),
   );
 
-export const OwnerHorseFormSchema = z.object({
-  owner: NonMemberHorseOwnerOptionalDefaultsSchema.omit({ fullName: true }),
-  horses: HorseFormSchema.min(1, 'Horse is required'),
-});
+export const OwnerHorseFormSchema = z
+  .object({
+    horses: z.lazy(() =>
+      HorseFormSchema.min(1, 'Atleast one horse is required'),
+    ),
+  })
+  .merge(NonMemberHorseOwnerOptionalDefaultsSchema.omit({ fullName: true }));
 
 export type MemberForm = z.infer<typeof MemberFormSchema>;
 export type OwnerHorseForm = z.infer<typeof OwnerHorseFormSchema>;

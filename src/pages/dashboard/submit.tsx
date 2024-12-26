@@ -23,7 +23,7 @@ const ShowSubmitFormValue = z.object({
     file => {
       return file[0]?.type === 'text/csv';
     },
-    { message: 'Only csv files are allowed.' }
+    { message: 'Only csv files are allowed.' },
   ),
 });
 
@@ -65,7 +65,6 @@ const initState: SubmitPointsState = {
 
 type FormValues = z.infer<typeof ShowSubmitFormValue>;
 
-// eslint-disable-next-line
 function isSubmitPointsError(o: any): o is SubmitPointsError {
   return !!o && o?.message !== undefined;
 }
@@ -73,7 +72,7 @@ function isSubmitPointsError(o: any): o is SubmitPointsError {
 // TODO: Fix types in this reducer function
 function reducer(
   state: SubmitPointsState,
-  action: ComponentActions
+  action: ComponentActions,
 ): SubmitPointsState {
   switch (action.type) {
     case 'REVIEW':
@@ -157,7 +156,7 @@ function SubmitPoints() {
             data: {
               message: 'An entry does not conform to the legend.',
               errors: error.data.filter(
-                (e: { success: boolean }) => !e.success
+                (e: { success: boolean }) => !e.success,
               ),
             },
           });
@@ -202,7 +201,7 @@ function SubmitPoints() {
         new URLSearchParams({
           showUID: formValues.showUID,
         }),
-      opts
+      opts,
     ).then(res => {
       if (res.ok) {
         dispatch({ type: 'RESET' });

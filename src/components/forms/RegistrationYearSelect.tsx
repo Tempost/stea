@@ -39,7 +39,7 @@ function RegistrationYearSelect({
           id={`${register.name}-${curr.getFullYear()}`}
           label={`Current Year (${curr.getFullYear()})`}
           value={curr.toString()}
-          className='radio radio-primary align-middle md:radio-sm'
+          className='align-middle md:radio-sm'
           onClick={onClick}
           {...register}
         />
@@ -47,7 +47,7 @@ function RegistrationYearSelect({
           id={`${register.name}-${next.getFullYear()}`}
           label={`Coming Year (${next.getFullYear()})`}
           value={next.toString()}
-          className='radio radio-primary align-middle md:radio-sm'
+          className='align-middle md:radio-sm'
           onClick={onClick}
           {...register}
         />

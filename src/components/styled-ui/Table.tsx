@@ -25,7 +25,6 @@ export interface TableProps<TData> {
   rowRender?: (props: RowRenderProps<TData>) => ReactNode;
 }
 
-// eslint-disable-next-line
 const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   // Rank the item
   const itemRank = rankItem(row.getValue(columnId), value);

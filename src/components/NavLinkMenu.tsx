@@ -8,7 +8,7 @@ interface Link {
 
 interface NavLinkMenuProps {
   name: string;
-  subLinks: Link[];
+  subLinks: Array<Link>;
   drawer?: true;
 }
 

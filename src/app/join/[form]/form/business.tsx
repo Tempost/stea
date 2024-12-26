@@ -1,13 +1,9 @@
 'use client';
-import { useSetAtom } from 'jotai';
-import { ChangeEvent, ReactElement, useState } from 'react';
+import { useState, useTransition } from 'react';
 
-import { FormLayout } from '@/components/layout/FormLayout';
 import { MemberForm, MemberFormSchema } from '@/utils/zodschemas';
-import { updateFormState } from '@/utils/atoms';
 import { capitalize } from '@/utils/helpers';
 import states from '@/utils/states.json';
-import { trpc } from '@/utils/trpc';
 import useZodForm from '@/utils/usezodform';
 import Form from '@/components/forms/Form';
 import { PhoneTypeSchema } from '@/server/prisma/zod-generated/inputTypeSchemas/PhoneTypeSchema';
@@ -18,77 +14,71 @@ import RegistrationSelect from '@/components/forms/RegType';
 import Checkbox from '@/components/data-entry/Checkbox';
 import HorseFieldArray from '@/components/forms/HorseFieldArray';
 import RegistrationYearSelect from '@/components/forms/RegistrationYearSelect';
+import {
+  ActionState,
+  addNewMember,
+  checkForExistingMember,
+} from './member.action';
+import { setMembershipYear } from '@/server/router/utils';
+
+const initialState: ActionState = {
+  message: undefined,
+  error: false,
+  data: undefined,
+};
 
 function BusinessRegistration() {
   const [payment, togglePayment] = useState(false);
   const [isRegHorse, toggleRegHorse] = useState(false);
+  const [actionState, setActionState] = useState(initialState);
 
-  const checkMember = trpc.members.exists.useMutation({
-    onSuccess() {
-      togglePayment(true);
-    },
-  });
-
-  const add = trpc.members.add.useMutation();
+  const [pending, startTransition] = useTransition();
 
   const form = useZodForm({
     reValidateMode: 'onSubmit',
     shouldFocusError: true,
     schema: MemberFormSchema,
     defaultValues: {
-      memberInput: {
-        dateOfBirth: null,
-        memberType: 'Business',
-        memberStatusType: 'Professional',
-        membershipEnd: null,
-      },
+      dateOfBirth: null,
+      memberType: 'Business',
+      memberStatusType: 'Professional',
+      membershipEnd: setMembershipYear(),
     },
   });
 
   const { register, control } = form;
 
-  const update = useSetAtom(updateFormState);
+  const onFormSubmit = (formValues: MemberForm) =>
+    startTransition(async () => {
+      const res = await checkForExistingMember(formValues);
+      setActionState(res);
+      if (!res.error) {
+        togglePayment(curr => !curr);
+      }
+    });
 
-  function onSubmit(formValues: MemberForm) {
-    if (formValues.horses) {
-      const lifeCount = formValues.horses.filter(
-        horse => horse.regType === 'Life',
-      ).length;
-
-      const annualCount = formValues.horses.filter(
-        horse => horse.regType === 'Annual',
-      ).length;
-
-      update({
-        type: 'HORSE',
-        payload: { lifeCount: lifeCount, annualCount: annualCount },
-      });
-    }
-
-    checkMember.mutate(formValues);
-  }
-
-  function handleCheck(e: ChangeEvent<HTMLInputElement>) {
-    e.preventDefault;
-    toggleRegHorse(curr => !curr);
-  }
+  const onPaymentSuccess = () =>
+    startTransition(async () => {
+      if (actionState.data) {
+        const res = await addNewMember(actionState.data);
+        setActionState(res);
+      }
+    });
 
   return (
     <Form
       form={form}
-      onSubmit={onSubmit}
+      onSubmit={onFormSubmit}
     >
       <Payment
         showPayment={payment}
-        formState={{
-          error: checkMember.isError,
-          message: checkMember.error?.message,
-          mutateFn: () => add.mutate(form.getValues()),
-        }}
+        formState={actionState}
+        pending={pending}
+        onPayment={onPaymentSuccess}
       >
         <h2 className='divider'>Business Registration</h2>
 
-        <h3 className='mb-2 rounded-2xl border border-solid border-gray-400 bg-gray-100 p-4 text-center'>
+        <h3 className='mb-2 text-wrap rounded-2xl border border-solid border-gray-400 bg-gray-100 p-4 text-center'>
           As part of the membership you can submit
           <br />
           your company logo for our home page!
@@ -100,22 +90,19 @@ function BusinessRegistration() {
           <h3 className='text-sm'>Name of Business*</h3>
           <Input
             type='text'
-            className='input input-bordered input-primary w-full md:input-sm'
-            {...register('memberInput.businessName')}
+            {...register('businessName')}
           />
 
           <h3 className='text-sm'>Business Address*</h3>
           <div className='flex flex-col gap-2'>
             <Input
               type='text'
-              className='input input-bordered input-primary w-full md:input-sm'
               placeholder='Address Line 1'
-              {...register('memberInput.address')}
+              {...register('address')}
             />
 
             <Input
               type='text'
-              className='input input-bordered input-primary w-full md:input-sm'
               placeholder='Address Line 2'
               name='temp'
             />
@@ -123,15 +110,11 @@ function BusinessRegistration() {
             <div className='flex gap-1'>
               <Input
                 type='text'
-                className='input input-bordered input-primary w-full md:input-sm'
                 placeholder='City'
-                {...register('memberInput.city')}
+                {...register('city')}
               />
 
-              <Select
-                className='select select-bordered select-primary w-full md:select-sm'
-                {...register('memberInput.state')}
-              >
+              <Select {...register('state')}>
                 {states.map(state => (
                   <option
                     key={state.value}
@@ -144,9 +127,8 @@ function BusinessRegistration() {
 
               <Input
                 type='numeric'
-                className='input input-bordered input-primary w-full md:input-sm'
                 placeholder='Zip Code'
-                {...register('memberInput.zip', { valueAsNumber: true })}
+                {...register('zip', { valueAsNumber: true })}
               />
             </div>
           </div>
@@ -157,22 +139,19 @@ function BusinessRegistration() {
               <Input
                 type='text'
                 label='First Name*'
-                className='input input-bordered input-primary w-full md:input-sm'
-                {...register('memberInput.firstName')}
+                {...register('firstName')}
               />
 
               <Input
                 type='text'
                 label='Last Name*'
-                className='input input-bordered input-primary w-full md:input-sm'
-                {...register('memberInput.lastName')}
+                {...register('lastName')}
               />
             </div>
             <div className='flex gap-2'>
               <Select
                 label='Phone Type*'
-                className='select select-bordered select-primary md:select-sm'
-                {...register('memberInput.phoneType')}
+                {...register('phoneType')}
               >
                 {Object.keys(PhoneTypeSchema.enum).map(type => (
                   <option
@@ -187,37 +166,34 @@ function BusinessRegistration() {
               <Input
                 label='Phone Number*'
                 type='tel'
-                className='input input-bordered input-primary w-full md:input-sm'
-                {...register('memberInput.phone')}
+                {...register('phone')}
               />
             </div>
 
             <Input
               label='Email*'
               type='text'
-              className='input input-bordered input-primary w-full md:input-sm'
               altLabel={'This will be the primary method of contact.'}
-              {...register('memberInput.email')}
+              {...register('email')}
             />
 
             <RegistrationSelect
-              register={register('memberInput.memberStatus')}
-              formType='Business'
+              register={register('memberStatus')}
+              formType='business'
             />
 
             <RegistrationYearSelect
               heading='Which year are you registering for?'
-              watchFieldName='memberInput.memberStatus'
+              watchFieldName='memberStatus'
               control={control}
-              register={register('memberInput.membershipEnd')}
+              register={register('membershipEnd')}
             />
           </div>
 
           <Checkbox
             label='Do you plan to register your horse(s)?'
-            className='checkbox checkbox-primary md:checkbox-sm'
             checked={isRegHorse}
-            onChange={handleCheck}
+            onChange={() => toggleRegHorse(curr => !curr)}
           />
 
           {isRegHorse && <HorseFieldArray />}
@@ -226,9 +202,5 @@ function BusinessRegistration() {
     </Form>
   );
 }
-
-BusinessRegistration.getLayout = (page: ReactElement) => {
-  return <FormLayout>{page}</FormLayout>;
-};
 
 export default BusinessRegistration;

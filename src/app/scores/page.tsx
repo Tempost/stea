@@ -3,6 +3,7 @@ import { use } from 'react';
 
 import PlacingsTable from '@/components/tables/Placings';
 import { findMany } from '@/server/prisma/queries/shared';
+import { Button } from '@/components/styled-ui/Button';
 
 function SteaPoints() {
   const riders = use(
@@ -38,7 +39,7 @@ function SteaPoints() {
         division: true,
         showYear: true,
       },
-    })
+    }),
   );
 
   return (
@@ -68,12 +69,11 @@ function SteaPoints() {
           </h2>
           <div className='card-actions justify-center'>
             <a
-              className='btn btn-primary btn-sm md:btn-md'
               href='/stea_points.pdf'
               rel='noopener noreferrer'
               target='_blank'
             >
-              Download Guidelines
+              <Button className='sm md:btn-md'>Download Guidelines</Button>
             </a>
           </div>
         </div>

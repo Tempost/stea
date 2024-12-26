@@ -5,6 +5,7 @@ import { filterByMonths } from '@/utils/filterByMonths';
 import CalendarEvents from '@/components/events/CalendarEvent';
 import { Show } from '@prisma/client';
 import { ChevLeft, ChevRight } from '@/components/icons';
+import { Button } from './styled-ui/Button';
 
 interface CalendarProps {
   shows: Array<Show>;
@@ -56,25 +57,32 @@ export default function Calendar({ shows }: CalendarProps) {
   return (
     <>
       <div className='grid grid-flow-col place-content-between border-b-2 pb-2'>
-        <button
-          className='btn btn-secondary btn-sm p-1'
+        <Button
+          variant='secondary'
+          size='sm'
           id='left'
           onClick={handleMonthChange}
         >
           {ChevLeft}
-        </button>
+        </Button>
 
-        <h2 className='btn btn-secondary btn-sm w-36 p-1'>
+        <Button
+          className='w-36 cursor-default p-1'
+          variant='secondary'
+          size='sm'
+          id='middle'
+        >
           {MONTHS.at(month)}
-        </h2>
+        </Button>
 
-        <button
-          className='btn btn-secondary btn-sm p-1'
+        <Button
+          variant='secondary'
+          size='sm'
           id='right'
           onClick={handleMonthChange}
         >
           {ChevRight}
-        </button>
+        </Button>
       </div>
 
       {filteredShows!.map((show, index) => (
