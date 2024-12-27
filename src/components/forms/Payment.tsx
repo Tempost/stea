@@ -118,6 +118,7 @@ function Payment({
             />
             <Button
               type='submit'
+              variant='primary'
               className={cn('w-full', { loading: pending })}
               disabled={pending}
             >

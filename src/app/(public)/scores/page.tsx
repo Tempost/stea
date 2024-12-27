@@ -4,9 +4,10 @@ import { use } from 'react';
 import PlacingsTable from '@/components/tables/Placings';
 import { findMany } from '@/server/prisma/queries/shared';
 import { Button } from '@/components/styled-ui/Button';
+import { unstable_cache } from 'next/cache';
 
-function SteaPoints() {
-  const riders = use(
+const getRiders = unstable_cache(
+  async () =>
     findMany('RiderCombo', {
       orderBy: [
         {
@@ -40,7 +41,12 @@ function SteaPoints() {
         showYear: true,
       },
     }),
-  );
+  ['RiderCombos'],
+  { revalidate: 3600, tags: ['RiderCombos'] },
+);
+
+function SteaPoints() {
+  const riders = use(getRiders());
 
   return (
     <div className='grid w-full place-items-center gap-20'>
@@ -73,7 +79,12 @@ function SteaPoints() {
               rel='noopener noreferrer'
               target='_blank'
             >
-              <Button className='sm md:btn-md'>Download Guidelines</Button>
+              <Button
+                variant='primary'
+                className='sm md:btn-md'
+              >
+                Download Guidelines
+              </Button>
             </a>
           </div>
         </div>

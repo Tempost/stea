@@ -43,6 +43,7 @@ function FormSelector() {
         ))}
       </div>
       <Button
+        variant='primary'
         className='w-full'
         onClick={() => {
           if (type) {

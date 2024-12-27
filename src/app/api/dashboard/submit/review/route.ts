@@ -1,4 +1,4 @@
-import { prisma } from '@/server/prisma';
+import { findFirst } from '@/server/prisma/queries/shared';
 import { getKeys, groupByFunc } from '@/server/router/utils';
 import { CSVEntry, CSVEntrySchema } from '@/server/utils';
 import {
@@ -13,14 +13,21 @@ import { parse } from 'csv';
 import { NextRequest, NextResponse } from 'next/server';
 import { fromZodError, ValidationError } from 'zod-validation-error';
 
-export default async function POST(req: NextRequest) {
+export async function POST(req: NextRequest) {
   const res = NextResponse.next();
   res.headers.append('Content-Type', 'application/json; charset=utf-8');
 
-  console.log(req);
+  const file = await req.blob();
+
+  if (file.type !== 'text/csv') {
+    return NextResponse.json(
+      { success: false, message: 'Only csv files are allowed.' },
+      { status: 500 },
+    );
+  }
 
   try {
-    const entries = await nodeCsvParser('');
+    const entries = await nodeCsvParser(Buffer.from(await file.arrayBuffer()));
 
     if (entries.failed.length != 0) {
       console.warn('Trouble parsing csv', entries.failed);
@@ -56,7 +63,7 @@ interface EntryParseResults {
   failed: Array<ValidationError>;
 }
 
-async function nodeCsvParser(csv: string) {
+async function nodeCsvParser(csv: Buffer<ArrayBufferLike>) {
   const entries: EntryParseResults = {
     successful: [],
     failed: [],
@@ -183,7 +190,7 @@ function calculatePoints(
 }
 
 async function riderExists(fullName: string, horseRN: string, endDate: Date) {
-  const member = await prisma.member.findFirst({
+  const member = await findFirst('Member', {
     where: {
       fullName: {
         equals: fullName,
@@ -197,7 +204,7 @@ async function riderExists(fullName: string, horseRN: string, endDate: Date) {
     throw Error(`Member ${fullName} not found.`);
   }
 
-  const horse = await prisma.horse.findFirst({
+  const horse = await findFirst('Horse', {
     where: {
       horseRN: {
         equals: horseRN,

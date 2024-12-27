@@ -20,8 +20,8 @@ const getShows = unstable_cache(
       },
     });
   },
-  ['shows'],
-  { revalidate: 3600, tags: ['shows'] },
+  ['Shows'],
+  { revalidate: 3600, tags: ['Shows'] },
 );
 
 function CalendarPage() {

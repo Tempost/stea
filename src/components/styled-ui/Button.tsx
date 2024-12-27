@@ -5,7 +5,8 @@ import { forwardRef } from 'react';
 const buttonVariants = cva('btn', {
   variants: {
     variant: {
-      default: 'btn-primary',
+      default: '',
+      primary: 'btn-primary',
       secondary: 'btn-secondary',
       disabled: 'btn-disabled',
       ghost: 'btn-ghost',

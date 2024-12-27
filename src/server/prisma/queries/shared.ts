@@ -3,6 +3,7 @@ import { MyPrismaClient, prisma } from '@/server/prisma';
 import {
   CountArgs,
   DeleteManyArgs,
+  FindFirstArgs,
   FindManyArgs,
   FindUniqueArgs,
   FindUniqueOrThrowArgs,
@@ -19,6 +20,16 @@ export const getPrismaDelegate = <N extends Prisma.ModelName>(
   name: N,
   prisma: MyPrismaClient,
 ) => prisma[getPrismaModelProp(name)] as PrismaModelDelegate<N> as any; // For generic model delegate
+
+async function findFirst<T extends Prisma.ModelName>(
+  table: T,
+  findFirstArgs?: FindFirstArgs<T>,
+  prismaClient: MyPrismaClient = prisma,
+): Promise<PrismaModelPayload<T>['scalars']> {
+  return (prismaClient[getPrismaModelProp(table)] as any).findFirst(
+    findFirstArgs,
+  );
+}
 
 async function findMany<T extends Prisma.ModelName>(
   table: T,
@@ -88,6 +99,7 @@ export {
   findMany,
   findUnique,
   findUniqueOrThrow,
+  findFirst,
   count,
   upsert,
   update,

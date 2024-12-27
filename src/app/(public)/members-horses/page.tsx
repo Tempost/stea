@@ -3,24 +3,14 @@ import { use } from 'react';
 import MemberTable from '@/components/tables/Members';
 import { findMany } from '@/server/prisma/queries/shared';
 import HorseTable from '@/components/tables/Horses';
+import { unstable_cache } from 'next/cache';
+import { setMembershipYear } from '@/server/router/utils';
 
-function getAnnualEndDate() {
-  const currDate = new Date();
-  const cutOffDate = new Date(currDate.getFullYear(), 10, 30);
-
-  // If the current month is decemeber
-  if (currDate.getMonth() == 11) {
-    cutOffDate.setFullYear(cutOffDate.getFullYear() + 1);
-  }
-
-  return cutOffDate;
-}
-
-function MembersAnHorses() {
-  const members = use(
-    findMany('Member', {
+const getMembers = unstable_cache(
+  async () =>
+    await findMany('Member', {
       where: {
-        OR: [{ memberStatus: 'Life' }, { membershipEnd: getAnnualEndDate() }],
+        OR: [{ memberStatus: 'Life' }, { membershipEnd: setMembershipYear() }],
       },
       select: {
         fullName: true,
@@ -34,12 +24,15 @@ function MembersAnHorses() {
         { memberStatus: 'asc' },
       ],
     }),
-  );
+  ['Members'],
+  { revalidate: 3600, tags: ['Members'] },
+);
 
-  const horses = use(
+const getHorses = unstable_cache(
+  async () =>
     findMany('Horse', {
       where: {
-        OR: [{ regType: 'Life' }, { registrationEnd: getAnnualEndDate() }],
+        OR: [{ regType: 'Life' }, { registrationEnd: setMembershipYear() }],
       },
       select: {
         horseRN: true,
@@ -50,7 +43,14 @@ function MembersAnHorses() {
         regType: 'asc',
       },
     }),
-  );
+  ['Horses'],
+  { revalidate: 3600, tags: ['Horses'] },
+);
+
+function MembersAnHorses() {
+  const members = use(getMembers());
+
+  const horses = use(getHorses());
 
   return (
     <div className='md:grid md:grid-flow-col md:place-content-evenly'>

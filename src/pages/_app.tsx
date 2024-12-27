@@ -1,5 +1,3 @@
-import { Analytics } from '@vercel/analytics/react';
-import { SpeedInsights } from '@vercel/speed-insights/next';
 import { useAtomsDevtools } from 'jotai-devtools';
 import { SessionProvider } from 'next-auth/react';
 import Head from 'next/head';
@@ -53,8 +51,6 @@ function MyApp({
           {getLayout(
             <>
               <Component {...pageProps} />
-              <Analytics />
-              <SpeedInsights />
             </>,
           )}
         </SessionProvider>

@@ -1,6 +1,5 @@
 'use client';
 import { useReducer } from 'react';
-import Select from '@/components/styled-ui/Select';
 import { CSVEntry } from '@/server/utils';
 import { isZodFieldError, ZodFieldErrors } from '@/types/common';
 import { cn, readableDateTime } from '@/utils/helpers';
@@ -10,9 +9,10 @@ import Alert from '@/components/forms/Alert';
 import EntryReview from '@/components/dashboard/tables/EntryReview';
 import { EntryReviewType, isEntrySubmissionType } from '@/utils/zodschemas';
 import { Button } from '@/components/styled-ui/Button';
-import { revalidateTag } from 'next/cache';
 import { Show } from '@prisma/client';
-import FileInput from '@/components/styled-ui/FileInput';
+import Form from '@/components/forms/Form';
+import Select from '@/components/data-entry/Select';
+import FileInput from '@/components/data-entry/FileInput';
 
 const ShowSubmitFormValue = z.object({
   showUID: z.string().cuid(),
@@ -20,7 +20,7 @@ const ShowSubmitFormValue = z.object({
     file => {
       return file[0]?.type === 'text/csv';
     },
-    { message: 'Only csv files are allowed.' },
+    { message: 'A CSV file must be selected first.' },
   ),
 });
 
@@ -111,7 +111,7 @@ function reducer(
 function SubmitPoints({ shows }: { shows: Array<Show> }) {
   const [state, dispatch] = useReducer(reducer, initState);
 
-  const methods = useZodForm({
+  const form = useZodForm({
     reValidateMode: 'onSubmit',
     shouldFocusError: true,
     schema: ShowSubmitFormValue,
@@ -129,7 +129,7 @@ function SubmitPoints({ shows }: { shows: Array<Show> }) {
       body: formValues.file[0],
     };
 
-    fetch('/api/dashboard/submit/points', opts).then(async res => {
+    fetch('/api/dashboard/submit/review', opts).then(async res => {
       if (!res.ok) {
         const error = await res.json().then(data => data);
         dispatch({ type: 'RESET' });
@@ -168,7 +168,8 @@ function SubmitPoints({ shows }: { shows: Array<Show> }) {
     });
   }
 
-  function handleFinalSubmit(formValues: FormValues) {
+  function handleFinalSubmit() {
+    console.log('Final submit');
     const headers = new Headers();
     headers.set('Accept', '*/*');
     headers.set('Content-Type', 'application/json');
@@ -183,109 +184,108 @@ function SubmitPoints({ shows }: { shows: Array<Show> }) {
     fetch(
       '/api/dashboard/submit/final?' +
         new URLSearchParams({
-          showUID: formValues.showUID,
+          showUID: form.getValues().showUID,
         }),
       opts,
     ).then(res => {
       if (res.ok) {
         dispatch({ type: 'RESET' });
-        revalidateTag('shows');
       }
     });
   }
 
+  console.log(form.formState);
+
   return (
-    <div className='mx-auto sm:w-fit'>
-      <div className='rounded-lg p-5 shadow-xl'>
-        <Alert
-          visible={!!state.error?.message}
-          message={state.error?.message}
-        />
-        <form
-          id='review-form'
-          onSubmit={methods.handleSubmit(handleReviewSubmit)}
-        >
-          <div className='mx-auto flex flex-col items-center space-y-2'>
-            <span className='form-control'>
-              <label
-                htmlFor='show-select'
-                aria-label={'Select Show'}
-                className='label font-bold'
+    <>
+      <Alert
+        visible={!!state.error?.message}
+        message={state.error?.message}
+      />
+      <Form
+        id='review-form'
+        form={form}
+        onSubmit={handleReviewSubmit}
+      >
+        <div className='mx-auto flex flex-col items-center'>
+          <div className='form-control'>
+            {shows && (
+              <Select
+                id='show-select'
+                label='Select Show'
+                aria-label='Select Show'
+                labelStyle='font-bold'
+                {...form.register('showUID', { required: true })}
               >
-                <span className='label-text'>Select Show</span>
-              </label>
-              {shows && (
-                <Select
-                  id='show-select'
-                  {...methods.register('showUID', { required: true })}
-                >
-                  {shows.map(show => (
-                    <option
-                      key={show.uid}
-                      value={show.uid}
-                    >
-                      {show.showName + ' ' + readableDateTime(show.showDate)}
-                    </option>
-                  ))}
-                </Select>
-              )}
-
-              <label
-                htmlFor='file-input'
-                aria-label='Upload Points sheet'
-                className='label font-bold'
-              >
-                <span className='label-text'>Upload Points sheet</span>
-              </label>
-              <FileInput
-                type='file'
-                accept='text/csv'
-                id='file-input'
-                className='file-input-primary file-input-xs lg:file-input-md'
-                {...methods.register('file', { required: true })}
-              />
-            </span>
+                {shows.map(show => (
+                  <option
+                    key={show.uid}
+                    value={show.uid}
+                  >
+                    {show.showName + ' ' + readableDateTime(show.showDate)}
+                  </option>
+                ))}
+              </Select>
+            )}
+            <FileInput
+              type='file'
+              accept='text/csv'
+              id='file-input'
+              className='file-input-primary file-input-xs lg:file-input-md'
+              label='Upload Points sheet'
+              aria-label='Upload Points sheet'
+              labelStyle='font-bold'
+              {...form.register('file', { required: true })}
+            />
           </div>
-        </form>
+        </div>
+      </Form>
 
-        {state.entries && <EntryReview entries={state.entries} />}
+      {state.entries && <EntryReview entries={state.entries} />}
 
-        <span
-          className={`flex ${
-            state.entries ? 'justify-between' : 'justify-end'
-          }`}
+      <div
+        className={cn('flex', {
+          'justify-between': state.entries,
+          'justify-end': !state.entries,
+        })}
+      >
+        <Button
+          type='reset'
+          form='review-form'
+          className={cn('w-fit self-end normal-case', {
+            hidden: state.entries === undefined,
+          })}
+          variant='secondary'
+          onClick={() => {
+            dispatch({ type: 'RESET' });
+            form.reset();
+          }}
         >
-          <Button
-            type='reset'
-            form='review-form'
-            className={cn('mt-5 w-fit normal-case', {
-              hidden: state.entries !== undefined,
-            })}
-            variant='secondary'
-            onClick={() => {
-              dispatch({ type: 'RESET' });
-              methods.reset();
-            }}
-          >
-            Restart
-          </Button>
+          Restart
+        </Button>
 
-          {state.entries ? (
-            <Button onClick={() => methods.handleSubmit(handleFinalSubmit)} />
-          ) : (
-            <Button
-              type='submit'
-              form='review-form'
-              className={cn('mt-5 w-fit normal-case', {
-                'btn-error': state.entries !== undefined,
-              })}
-            >
-              Review
-            </Button>
-          )}
-        </span>
+        {state.entries ? (
+          <Button
+            variant='primary'
+            className={cn('w-fit self-end normal-case')}
+            onClick={() => handleFinalSubmit()}
+          >
+            Submit
+          </Button>
+        ) : (
+          <Button
+            type='submit'
+            form='review-form'
+            variant='primary'
+            className={cn('w-fit self-end normal-case', {
+              'btn-error': state.entries !== undefined,
+            })}
+          >
+            Review
+          </Button>
+        )}
       </div>
-    </div>
+    </>
   );
 }
 

@@ -12,15 +12,15 @@ const getShows = unstable_cache(
       orderBy: { showDate: 'asc' },
     });
   },
-  ['shows'],
-  { revalidate: 3600, tags: ['shows'] },
+  ['Shows'],
+  { revalidate: 3600, tags: ['Shows'] },
 );
 
 export default function Page() {
   const shows = use(getShows());
 
   return (
-    <div className='mx-auto sm:w-fit'>
+    <div className='mx-auto flex flex-col gap-2 rounded-lg p-5 shadow-xl sm:w-fit'>
       <SubmitPoints shows={shows} />
     </div>
   );

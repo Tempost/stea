@@ -1,33 +1,32 @@
-import { trpc } from '@/utils/trpc';
+import { Button } from '../styled-ui/Button';
+import { cn } from '@/utils/helpers';
+import { useTransition } from 'react';
+import { confirmMember } from '@/app/(auth)/dashboard/applications/action';
 
 interface CMProps {
   fullName: string;
 }
 
 function ConfirmMember({ fullName }: CMProps) {
-  const utils = trpc.useContext();
-  const update = trpc.members.dashboardUpdate.useMutation({
-    onSuccess() {
-      utils.members.invalidate();
-    },
-  });
+  const [pending, startTransition] = useTransition();
 
   function onClick() {
-    update.mutate({
-      fullName: fullName,
-      confirmed: true,
+    startTransition(async () => {
+      await confirmMember({ fullName, confirmed: true });
     });
   }
 
   return (
-    <button
-      className={`btn btn-primary btn-sm ${update.error ? 'btn-error' : ''} ${
-        update.isSuccess ? 'btn-success' : ''
-      }`}
+    <Button
+      size='sm'
+      variant='primary'
+      className={cn({
+        loading: pending,
+      })}
       onClick={onClick}
     >
       Confirm
-    </button>
+    </Button>
   );
 }
 

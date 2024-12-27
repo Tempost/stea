@@ -1,12 +1,9 @@
-import { trpc } from '@/utils/trpc';
+'use client';
 import { ColumnDef } from '@tanstack/react-table';
-
-import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import TableWithData from '@/components/tables/BaseTable';
 import ConfirmMember from '@/components/dashboard/ConfirmMember';
 
 import type { Member } from '@prisma/client';
-import type { ReactElement } from 'react';
 
 const columns: Array<ColumnDef<Member>> = [
   {
@@ -55,27 +52,21 @@ const columns: Array<ColumnDef<Member>> = [
   },
 ];
 
-function Applications() {
-  const members = trpc.members.all.useQuery({ where: { confirmed: false } });
-
+function Applications({ members }: { members: Array<Member> }) {
   return (
     <>
-      {members.data && members.data.length < 0 ? (
+      {members && members.length < 0 ? (
         <div className='rounded-lg p-5 shadow-xl'>No New Members...</div>
       ) : (
         <TableWithData
           extraTableOpts={{
             columns,
           }}
-          query={members}
+          data={members}
         />
       )}
     </>
   );
 }
-
-Applications.getLayout = (page: ReactElement) => {
-  return <DashboardLayout>{page}</DashboardLayout>;
-};
 
 export default Applications;

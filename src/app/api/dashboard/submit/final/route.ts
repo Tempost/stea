@@ -1,15 +1,17 @@
 import { findUnique, update, upsert } from '@/server/prisma/queries/shared';
 import { EntrySubmissionSchema } from '@/utils/zodschemas';
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidateTag } from 'next/cache';
 
 const currentDate = new Date();
 const capDate = new Date();
 capDate.setMonth(10);
 capDate.setDate(30);
 
-export default async function POST(req: NextRequest) {
+export async function POST(req: NextRequest) {
   console.log(req.url);
   const showUID = req.nextUrl.searchParams.get('showUID');
+  const body = req.json();
 
   if (!showUID) {
     console.log('Invalid query param', JSON.stringify(showUID, null, 0));
@@ -40,7 +42,7 @@ export default async function POST(req: NextRequest) {
     );
   }
 
-  const body = EntrySubmissionSchema.parse(req.body);
+  const entries = EntrySubmissionSchema.parse(await body);
 
   const dbActions = [];
   let year = existingShow.showDate.getFullYear();
@@ -49,7 +51,7 @@ export default async function POST(req: NextRequest) {
     year += 1;
   }
 
-  for (const entry of body) {
+  for (const entry of entries) {
     const relations = {
       member: {
         connect: {
@@ -119,5 +121,10 @@ export default async function POST(req: NextRequest) {
     }),
   );
 
-  return NextResponse.json({ success: true, message: '' }, { status: 200 });
+  revalidateTag('Shows');
+  revalidateTag('RiderCombos');
+  return NextResponse.json(
+    { success: true, message: 'Successfully updated points.' },
+    { status: 200 },
+  );
 }
