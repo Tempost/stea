@@ -1,11 +1,10 @@
-import NewMemberForm from '@/components/forms/dashboard/NewMemberForm';
+'use client';
+import NewMemberForm from '@/app/(auth)/dashboard/tables/members/NewMemberForm';
 import TableWithData from '@/components/tables/BaseTable';
 import { readableDateTime } from '@/utils/helpers';
-import { RouterOutputs, trpc } from '@/utils/trpc';
+import { Member } from '@prisma/client';
 import { ColumnDef } from '@tanstack/react-table';
 import { ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
-
-type Member = RouterOutputs['members']['all'][number];
 
 interface EmailListProps
   extends DetailedHTMLProps<
@@ -17,7 +16,7 @@ interface EmailListProps
 
 function EmailList({ emails, className, ...props }: EmailListProps) {
   const noDupes = emails.filter(
-    (item, idx, self) => idx === self.indexOf(item)
+    (item, idx, self) => idx === self.indexOf(item),
   );
 
   return (
@@ -98,29 +97,14 @@ const columns: Array<ColumnDef<Member>> = [
   },
 ];
 
-function DashboardMembers() {
-  const members = trpc.members.all.useQuery({
-    orderBy: {
-      memberStatusType: 'asc',
-    },
-    select: {
-      fullName: true,
-      memberStatusType: true,
-      memberStatus: true,
-      membershipDate: true,
-      memberType: true,
-      email: true,
-      phone: true,
-    },
-  });
-
+function DashboardMembers({ members }: { members: Array<Member> }) {
   return (
     <div>
       <div>
         <EmailList
           className='tooltip'
           data-tip='Copied!'
-          emails={members.data ? members.data?.map(member => member.email) : []}
+          emails={members.map(member => member.email)}
         />
         <NewMemberForm />
       </div>
@@ -128,7 +112,7 @@ function DashboardMembers() {
         extraTableOpts={{
           columns,
         }}
-        query={members}
+        data={members}
         paginate
         search
       />

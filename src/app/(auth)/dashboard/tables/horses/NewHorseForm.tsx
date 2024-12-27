@@ -125,14 +125,9 @@ function NewHorseForm() {
         <button
           form='horse-form'
           type='submit'
-          className={`btn btn-sm
-            ${
-              insert.isError
-                ? 'btn-error'
-                : insert.isSuccess
-                  ? 'btn-success'
-                  : ''
-            }`}
+          className={`btn btn-sm ${
+            insert.isError ? 'btn-error' : insert.isSuccess ? 'btn-success' : ''
+          }`}
         >
           Add
         </button>

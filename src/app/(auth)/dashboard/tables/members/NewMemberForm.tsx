@@ -1,30 +1,35 @@
+'use client';
 import Input from '@/components/data-entry/Input';
 import Select from '@/components/data-entry/Select';
 import Modal from '@/components/styled-ui/Modal';
 import { PhoneTypeSchema } from '@/server/prisma/zod-generated/inputTypeSchemas/PhoneTypeSchema';
 import useZodForm from '@/utils/usezodform';
-import { MemberFormSchema } from '@/utils/zodschemas';
-import Form from '../Form';
+import Form from '../../../../../components/forms/Form';
 import states from '@/utils/states.json';
-import { capitalize } from '@/utils/helpers';
+import { capitalize, cn } from '@/utils/helpers';
 import ControlledDatePicker from '@/components/data-entry/Date';
 import { TypeSchema } from '@/server/prisma/zod-generated/inputTypeSchemas/TypeSchema';
 import { StatusSchema } from '@/server/prisma/zod-generated/inputTypeSchemas/StatusSchema';
 import { StatusTypeSchema } from '@/server/prisma/zod-generated/inputTypeSchemas/StatusTypeSchema';
-import { trpc } from '@/utils/trpc';
 import { z } from 'zod';
 import { optionsFromObject } from '@/components/helpers';
-import Under18 from '../Under18';
+import Under18 from '../../../../../components/forms/Under18';
 import { MemberOptionalDefaultsSchema } from '@/server/prisma/zod-generated/modelSchema/MemberSchema';
+import add from './action';
+import { useTransition } from 'react';
+
+export const NewMemberSchema = MemberOptionalDefaultsSchema.omit({
+  fullName: true,
+  comments: true,
+});
 
 function NewMemberForm() {
+  const [pending, startTransition] = useTransition();
+
   const form = useZodForm({
     reValidateMode: 'onSubmit',
     shouldFocusError: true,
-    schema: MemberOptionalDefaultsSchema.omit({
-      fullName: true,
-      comments: true,
-    }),
+    schema: NewMemberSchema,
     defaultValues: {
       businessName: null,
       membershipEnd: null,
@@ -33,19 +38,12 @@ function NewMemberForm() {
   });
 
   const { register } = form;
-  const utils = trpc.useContext();
-  const insert = trpc.members.manualAdd.useMutation({
-    onSuccess() {
-      utils.members.invalidate();
-      form.clearErrors();
-      form.reset();
-    },
-  });
 
-  function onSubmit(
-    formValues: z.infer<typeof MemberFormSchema.shape.memberInput>
-  ) {
-    insert.mutate(formValues);
+  function onSubmit(formValues: z.infer<typeof NewMemberSchema>) {
+    startTransition(async () => {
+      const member = await add(formValues);
+      console.log(member);
+    });
   }
 
   return (
@@ -60,14 +58,7 @@ function NewMemberForm() {
         <button
           form='member-form'
           type='submit'
-          className={`btn btn-sm
-            ${
-              insert.isError
-                ? 'btn-error'
-                : insert.isSuccess
-                ? 'btn-success'
-                : ''
-            }`}
+          className={cn('btn btn-sm', { loading: pending })}
         >
           Add
         </button>
@@ -82,14 +73,12 @@ function NewMemberForm() {
         <div className='flex flex-col gap-1'>
           <span className='flex space-x-5'>
             <Input
-              className='input input-bordered input-primary w-full md:input-sm'
               type='text'
               label='First Name'
               {...register('firstName')}
             />
 
             <Input
-              className='input input-bordered input-primary w-full md:input-sm'
               type='text'
               label='Last Name'
               {...register('lastName')}
@@ -97,7 +86,6 @@ function NewMemberForm() {
           </span>
 
           <Input
-            className='input input-bordered input-primary w-full md:input-sm'
             type='text'
             placeholder='Address Line 1'
             {...register('address')}
@@ -105,16 +93,12 @@ function NewMemberForm() {
 
           <span className='flex space-x-5'>
             <Input
-              className='input input-bordered input-primary w-full md:input-sm'
               type='text'
               placeholder='City'
               {...register('city')}
             />
 
-            <Select
-              className='select select-bordered select-primary w-full md:select-sm'
-              {...register('state')}
-            >
+            <Select {...register('state')}>
               {states.map(state => (
                 <option
                   key={state.value}
@@ -126,7 +110,6 @@ function NewMemberForm() {
             </Select>
 
             <Input
-              className='input input-bordered input-primary w-full md:input-sm'
               type='numeric'
               placeholder='Zip Code'
               {...register('zip', { valueAsNumber: true })}
@@ -136,14 +119,12 @@ function NewMemberForm() {
           <span className='flex space-x-5'>
             <Select
               label='Phone Type*'
-              className='select select-bordered select-primary md:select-sm'
               {...register('phoneType')}
             >
               {optionsFromObject(PhoneTypeSchema.enum)}
             </Select>
 
             <Input
-              className='input input-bordered input-primary w-full md:input-sm'
               type='text'
               label='Phone Number'
               {...register('phone')}
@@ -151,7 +132,6 @@ function NewMemberForm() {
           </span>
 
           <Input
-            className='input input-bordered input-primary w-full md:input-sm'
             type='text'
             label='Email'
             {...register('email')}
@@ -165,7 +145,6 @@ function NewMemberForm() {
           <span className='flex space-x-1'>
             <Select
               label='Membership Level'
-              className='select select-bordered select-primary md:select-sm'
               {...register('memberStatus')}
             >
               {optionsFromObject(StatusSchema.enum)}
@@ -173,7 +152,6 @@ function NewMemberForm() {
 
             <Select
               label='Member Type'
-              className='select select-bordered select-primary md:select-sm'
               {...register('memberType')}
             >
               {optionsFromObject(TypeSchema.enum)}
@@ -181,7 +159,6 @@ function NewMemberForm() {
 
             <Select
               label='Rider Level'
-              className='select select-bordered select-primary md:select-sm'
               {...register('memberStatusType')}
             >
               {optionsFromObject(StatusTypeSchema.enum)}

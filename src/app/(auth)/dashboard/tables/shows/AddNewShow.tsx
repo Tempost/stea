@@ -48,8 +48,7 @@ function AddNewShow() {
       onClose={() => add.reset()}
       ok={
         <button
-          className={`btn btn-sm
-            ${add.isError ? 'btn-error' : add.isSuccess ? 'btn-success' : ''}`}
+          className={`btn btn-sm ${add.isError ? 'btn-error' : add.isSuccess ? 'btn-success' : ''}`}
           form='show-form'
           type='submit'
         >

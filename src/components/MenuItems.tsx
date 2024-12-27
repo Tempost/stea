@@ -57,10 +57,10 @@ export const publicMenuItems: Array<Menu> = [
 export const dashMenuItems: Array<Menu> = [
   {
     name: 'Applications',
-    href: '/dashboard/review/applications',
+    href: '/dashboard/applications',
   },
   {
-    href: '/dashboard/tables',
+    href: '/dashboard/tables/members',
     name: 'Tables',
   },
   {

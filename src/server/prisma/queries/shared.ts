@@ -2,6 +2,7 @@ import { Prisma } from '@prisma/client';
 import { MyPrismaClient, prisma } from '@/server/prisma';
 import {
   CountArgs,
+  CreateArgs,
   DeleteManyArgs,
   FindFirstArgs,
   FindManyArgs,
@@ -85,6 +86,14 @@ async function update<T extends Prisma.ModelName>(
   return (prismaClient[getPrismaModelProp(table)] as any).update(updateArgs);
 }
 
+async function create<T extends Prisma.ModelName>(
+  table: T,
+  createArgs?: CreateArgs<T>,
+  prismaClient: MyPrismaClient = prisma,
+): Promise<PrismaModelPayload<T>['scalars']> {
+  return (prismaClient[getPrismaModelProp(table)] as any).create(createArgs);
+}
+
 async function deleteMany<T extends Prisma.ModelName>(
   table: T,
   deleteManyArgs?: DeleteManyArgs<T>,
@@ -103,5 +112,6 @@ export {
   count,
   upsert,
   update,
+  create,
   deleteMany,
 };
