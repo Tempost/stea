@@ -14,7 +14,7 @@ const getBoardMembers = unstable_cache(
     return await findMany('Boardmember');
   },
   ['boardmembers'],
-  { revalidate: 3600, tags: ['boardmembers'] }
+  { revalidate: 3600, tags: ['boardmembers'] },
 );
 
 function ContactUs() {

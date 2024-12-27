@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import Root, { InputProps as RootProps } from '@/components/styled-ui/Input';
+import Root, { Props as RootProps } from '@/components/styled-ui/Input';
 import { FormField, useFormField, UseFormFieldProps } from './FormField';
 
 interface Props extends UseFormFieldProps, RootProps {

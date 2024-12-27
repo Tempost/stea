@@ -1,8 +1,11 @@
 'use server';
 
-import { checkExistingHorses } from '@/server/prisma/queries/horses';
-import { findUnique, update } from '@/server/prisma/queries/members';
-import { upsert } from '@/server/prisma/queries/owner';
+import {
+  findMany,
+  findUnique,
+  update,
+  upsert,
+} from '@/server/prisma/queries/shared';
 import { horseNames } from '@/server/router/utils';
 import { HorseForm, OwnerHorseForm } from '@/utils/zodschemas';
 import { Horse } from '@prisma/client';
@@ -24,16 +27,13 @@ export async function checkForExistingHorses(
   horses: HorseForm,
 ): Promise<HorseActionState> {
   console.log(`Checking for horses... ${horseNames(horses)}`);
-  const existingHorses = await checkExistingHorses({
+  const existingHorses = await findMany('Horse', {
     where: {
       horseRN: {
         in: horses.map(horse => horse.horseRN),
       },
     },
   });
-
-  console.log(existingHorses);
-  console.log(horses);
 
   if (existingHorses) {
     const signedUp: Array<Horse> = [];
@@ -88,13 +88,13 @@ export async function addOwner({
   // then we should update/add the horses for them (currently registered or not)
   // otherwise we can just upsert via the newHorseOwnerMember table
 
-  const existingMember = await findUnique({ where: { fullName } });
+  const existingMember = await findUnique('Member', { where: { fullName } });
   if (existingMember) {
     console.info(
       `Updating current member ${fullName} with horses ${horseNames(horses)}`,
     );
 
-    await update({
+    await update('Member', {
       where: { fullName },
       data: {
         Horse: {
@@ -111,7 +111,7 @@ export async function addOwner({
   } else {
     console.info(`Adding new owner ${fullName}...`);
     try {
-      await upsert({
+      await upsert('NonMemberHorseOwner', {
         where: { fullName },
         create: {
           fullName,

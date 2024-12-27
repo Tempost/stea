@@ -1,10 +1,7 @@
 'use server';
 import { MemberForm } from '@/utils/zodschemas';
-import {
-  findUnique,
-  upsert as upsertMember,
-} from '@/server/prisma/queries/members';
 import { checkForExistingHorses } from './horse.action';
+import { findUnique, upsert } from '@/server/prisma/queries/shared';
 
 export interface ActionState {
   message: string | undefined;
@@ -22,7 +19,7 @@ export async function checkForExistingMember(
     `Checking if ${fullName} has registered for the ${formData.membershipEnd?.getFullYear()} show year.`,
   );
 
-  const existingMember = await findUnique({ where: { fullName } });
+  const existingMember = await findUnique('Member', { where: { fullName } });
   if (existingMember) {
     if (existingMember.memberStatus === 'Life') {
       // TODO: Create an error class for this instead
@@ -86,7 +83,7 @@ export async function addNewMember({
     };
   });
 
-  await upsertMember({
+  await upsert('Member', {
     where: {
       fullName,
     },

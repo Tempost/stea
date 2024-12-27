@@ -36,6 +36,5 @@ export function setMembershipYear() {
     endDate.setFullYear(endDate.getFullYear() + 1);
   }
 
-  console.log(endDate);
   return endDate;
 }

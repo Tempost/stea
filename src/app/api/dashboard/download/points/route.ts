@@ -3,7 +3,6 @@ import { readableDateTime } from '@/utils/helpers';
 import { Prisma } from '@prisma/client';
 import { stringify } from 'csv';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getToken } from 'next-auth/jwt';
 import { z } from 'zod';
 
 const queryParams = z.object({
@@ -11,27 +10,13 @@ const queryParams = z.object({
   show: z.string().optional(),
 });
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function GET(req: NextApiRequest, res: NextApiResponse) {
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
-
-  if (req.method !== 'GET') {
-    console.warn('Attempted to access via unsupported method');
-    return res.status(405).json({ message: 'Method Not Allowed.' });
-  }
-
-  const token = await getToken({ req });
-  if (!token) {
-    console.warn('Attempted to access api protected by auth.');
-    return res.status(401).json({ message: 'Access Not Allowed.' });
-  }
 
   const params = queryParams.safeParse(req.query);
   if (!params.success) {
     console.warn(
-      `Attempted downloading points with ${JSON.stringify(req.query)}`
+      `Attempted downloading points with ${JSON.stringify(req.query)}`,
     );
     return res.status(400).json({ message: 'Incorrect query params.' });
   }
@@ -157,7 +142,7 @@ async function getPointsForShow(showUid: string, res: NextApiResponse) {
   }
 
   const filename = `${points[0].show.showName}-${readableDateTime(
-    points[0].show.showDate
+    points[0].show.showDate,
   )}.csv`;
 
   await new Promise(function (resolve) {

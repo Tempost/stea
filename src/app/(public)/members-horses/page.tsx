@@ -33,7 +33,7 @@ function MembersAnHorses() {
         },
         { memberStatus: 'asc' },
       ],
-    })
+    }),
   );
 
   const horses = use(
@@ -49,7 +49,7 @@ function MembersAnHorses() {
       orderBy: {
         regType: 'asc',
       },
-    })
+    }),
   );
 
   return (

@@ -1,20 +1,12 @@
 import { Prisma } from '@prisma/client';
 import { MyPrismaClient, prisma } from '@/server/prisma';
 
-interface FindManyHorseArgs extends Prisma.HorseFindManyArgs {
+interface CountHorsesArgs extends Prisma.HorseCountArgs {
   client?: MyPrismaClient;
 }
 
-async function checkExistingHorses({
-  client = prisma,
-  ...args
-}: FindManyHorseArgs) {
-  const matches = await client.horse.findMany(args);
-
-  if (matches.length !== 0) {
-    return matches;
-  }
-}
+const count = ({ client = prisma, ...args }: CountHorsesArgs) =>
+  client.horse.count(args);
 
 interface UpdateArgs extends Prisma.HorseUpdateArgs {
   client?: MyPrismaClient;
@@ -37,4 +29,4 @@ interface CreateArgs extends Prisma.HorseCreateArgs {
 const create = ({ client = prisma, ...args }: CreateArgs) =>
   client.horse.create(args);
 
-export { update, upsert, checkExistingHorses, create };
+export { update, upsert, count, create };

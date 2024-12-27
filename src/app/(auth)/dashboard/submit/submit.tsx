@@ -1,21 +1,18 @@
-import { DashboardLayout } from '@/components/layout/DashboardLayout';
-
-import { ReactElement, useReducer } from 'react';
+'use client';
+import { useReducer } from 'react';
 import Select from '@/components/styled-ui/Select';
 import { CSVEntry } from '@/server/utils';
 import { isZodFieldError, ZodFieldErrors } from '@/types/common';
-import { readableDateTime } from '@/utils/helpers';
+import { cn, readableDateTime } from '@/utils/helpers';
 import useZodForm from '@/utils/usezodform';
 import { z } from 'zod';
 import Alert from '@/components/forms/Alert';
 import EntryReview from '@/components/dashboard/tables/EntryReview';
-import { trpc } from '@/utils/trpc';
 import { EntryReviewType, isEntrySubmissionType } from '@/utils/zodschemas';
-import PointsPayment from '@/components/dashboard/PointsPayment';
-import {
-  PayPalScriptProvider,
-  ReactPayPalScriptOptions,
-} from '@paypal/react-paypal-js';
+import { Button } from '@/components/styled-ui/Button';
+import { revalidateTag } from 'next/cache';
+import { Show } from '@prisma/client';
+import FileInput from '@/components/styled-ui/FileInput';
 
 const ShowSubmitFormValue = z.object({
   showUID: z.string().cuid(),
@@ -26,14 +23,6 @@ const ShowSubmitFormValue = z.object({
     { message: 'Only csv files are allowed.' },
   ),
 });
-
-const initOptions: ReactPayPalScriptOptions = {
-  'client-id':
-    process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || process.env.PAYPAL_CLIENT_ID,
-  currency: 'USD',
-  intent: 'capture',
-  'data-react-paypal-script-id': 'paypal-button',
-};
 
 type StatusMessage = 'SUCCESS' | 'ERROR' | 'INIT';
 interface ComponentActions {
@@ -119,13 +108,8 @@ function reducer(
   }
 }
 
-function SubmitPoints() {
+function SubmitPoints({ shows }: { shows: Array<Show> }) {
   const [state, dispatch] = useReducer(reducer, initState);
-  const shows = trpc.shows.all.useQuery({
-    where: { reviewed: false },
-    orderBy: { showDate: 'asc' },
-  });
-  const utils = trpc.useContext().shows;
 
   const methods = useZodForm({
     reValidateMode: 'onSubmit',
@@ -205,7 +189,7 @@ function SubmitPoints() {
     ).then(res => {
       if (res.ok) {
         dispatch({ type: 'RESET' });
-        utils.invalidate();
+        revalidateTag('shows');
       }
     });
   }
@@ -230,13 +214,12 @@ function SubmitPoints() {
               >
                 <span className='label-text'>Select Show</span>
               </label>
-              {shows.isSuccess && (
+              {shows && (
                 <Select
                   id='show-select'
-                  className='select select-primary select-sm lg:select-md'
                   {...methods.register('showUID', { required: true })}
                 >
-                  {shows.data.map(show => (
+                  {shows.map(show => (
                     <option
                       key={show.uid}
                       value={show.uid}
@@ -254,11 +237,11 @@ function SubmitPoints() {
               >
                 <span className='label-text'>Upload Points sheet</span>
               </label>
-              <input
+              <FileInput
                 type='file'
                 accept='text/csv'
                 id='file-input'
-                className='file-input file-input-primary file-input-xs lg:file-input-md'
+                className='file-input-primary file-input-xs lg:file-input-md'
                 {...methods.register('file', { required: true })}
               />
             </span>
@@ -272,46 +255,38 @@ function SubmitPoints() {
             state.entries ? 'justify-between' : 'justify-end'
           }`}
         >
-          <button
+          <Button
             type='reset'
             form='review-form'
-            className={`btn btn-secondary mt-5 w-fit normal-case ${
-              state.entries ? '' : 'hidden'
-            }`}
+            className={cn('mt-5 w-fit normal-case', {
+              hidden: state.entries !== undefined,
+            })}
+            variant='secondary'
             onClick={() => {
               dispatch({ type: 'RESET' });
               methods.reset();
             }}
           >
             Restart
-          </button>
+          </Button>
 
-          <PayPalScriptProvider options={initOptions}>
-            {state.entries ? (
-              <PointsPayment
-                pointsCount={state.totalEntries}
-                approveHandler={methods.handleSubmit(handleFinalSubmit)}
-              />
-            ) : (
-              <button
-                type='submit'
-                form='review-form'
-                className={`btn btn-primary mt-5 w-fit normal-case ${
-                  state.error ? 'btn-error' : ''
-                }`}
-              >
-                Review
-              </button>
-            )}
-          </PayPalScriptProvider>
+          {state.entries ? (
+            <Button onClick={() => methods.handleSubmit(handleFinalSubmit)} />
+          ) : (
+            <Button
+              type='submit'
+              form='review-form'
+              className={cn('mt-5 w-fit normal-case', {
+                'btn-error': state.entries !== undefined,
+              })}
+            >
+              Review
+            </Button>
+          )}
         </span>
       </div>
     </div>
   );
 }
-
-SubmitPoints.getLayout = (page: ReactElement) => {
-  return <DashboardLayout>{page}</DashboardLayout>;
-};
 
 export default SubmitPoints;

@@ -55,7 +55,7 @@ function MyApp({
               <Component {...pageProps} />
               <Analytics />
               <SpeedInsights />
-            </>
+            </>,
           )}
         </SessionProvider>
       </AtomsDevTools>

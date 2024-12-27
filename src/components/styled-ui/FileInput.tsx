@@ -2,36 +2,36 @@ import { cn } from '@/utils/helpers';
 import { cva, VariantProps } from 'class-variance-authority';
 import { forwardRef } from 'react';
 
-const inputVariants = cva('input input-bordered w-full md:input-lg', {
+const inputFileVariants = cva('file-input w-full md:file-input-md', {
   variants: {
     variant: {
-      default: 'input-primary',
-      secondary: 'input-secondary',
-      disabled: 'input-disabled',
+      default: 'file-input-primary',
+      secondary: 'file-input-secondary',
+      disabled: 'file-input-disabled',
+      ghost: 'file-input-ghost',
     },
     size: {
-      default: '',
-      xs: 'input-xs',
-      sm: 'input-sm',
-      lg: 'input-lg',
-      xl: 'input-xl',
+      xs: 'file-input-xs',
+      sm: 'file-input-sm',
+      lg: 'file-input-lg',
+      xl: 'file-input-xl',
     },
   },
   defaultVariants: {
     variant: 'default',
-    size: 'default',
+    size: 'xs',
   },
 });
 
 export interface Props
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'>,
-    VariantProps<typeof inputVariants> {}
+    VariantProps<typeof inputFileVariants> {}
 
-const Input = forwardRef<HTMLInputElement, Props>(
+const FileInput = forwardRef<HTMLInputElement, Props>(
   ({ id, className, variant, size, ...props }, ref) => (
     <input
       className={cn(
-        inputVariants({
+        inputFileVariants({
           variant,
           size,
           className,
@@ -44,6 +44,6 @@ const Input = forwardRef<HTMLInputElement, Props>(
   ),
 );
 
-Input.displayName = 'Input';
+FileInput.displayName = 'FileInput';
 
-export default Input;
+export default FileInput;

@@ -4,18 +4,9 @@ import { DefaultArgs } from '@prisma/client/runtime/library';
 import { TRPCError } from '@trpc/server';
 import { readableDateTime } from '@/utils/helpers';
 
-async function getOne(
-  whereUniqueArgs: Prisma.ShowWhereUniqueInput,
-  prismaClient: MyPrismaClient = prisma
-) {
-  return await prismaClient.show.findUniqueOrThrow({
-    where: whereUniqueArgs,
-  });
-}
-
 async function create(
   createArgs: Prisma.ShowCreateInput,
-  prismaClient: MyPrismaClient = prisma
+  prismaClient: MyPrismaClient = prisma,
 ) {
   console.info('Adding new show...', createArgs);
 
@@ -46,18 +37,11 @@ async function create(
   }
 }
 
-async function update(
-  args: Prisma.ShowUpdateArgs<DefaultArgs>,
-  prismaClient: MyPrismaClient = prisma
-) {
-  return await prismaClient.show.update(args);
-}
-
 async function deleteMany(
   args: Prisma.ShowDeleteManyArgs<DefaultArgs>,
-  prismaClient: MyPrismaClient = prisma
+  prismaClient: MyPrismaClient = prisma,
 ) {
   return await prismaClient.show.deleteMany(args);
 }
 
-export { getOne, create, update, deleteMany };
+export { create, deleteMany };

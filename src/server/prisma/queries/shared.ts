@@ -1,27 +1,95 @@
 import { Prisma } from '@prisma/client';
 import { MyPrismaClient, prisma } from '@/server/prisma';
 import {
+  CountArgs,
+  DeleteManyArgs,
   FindManyArgs,
+  FindUniqueArgs,
+  FindUniqueOrThrowArgs,
   PrismaModelDelegate,
   PrismaModelPayload,
   PrismaModelProp,
+  UpdateArgs,
+  UpsertArgs,
 } from '@/server/prisma/utils/types';
 
 const getPrismaModelProp = <N extends Prisma.ModelName>(name: N) =>
   `${name.charAt(0).toLowerCase()}${name.slice(1)}` as PrismaModelProp<N>;
 export const getPrismaDelegate = <N extends Prisma.ModelName>(
   name: N,
-  prisma: MyPrismaClient
+  prisma: MyPrismaClient,
 ) => prisma[getPrismaModelProp(name)] as PrismaModelDelegate<N> as any; // For generic model delegate
 
 async function findMany<T extends Prisma.ModelName>(
   table: T,
   findManyArgs?: FindManyArgs<T>,
-  prismaClient: MyPrismaClient = prisma
+  prismaClient: MyPrismaClient = prisma,
 ): Promise<Array<PrismaModelPayload<T>['scalars']>> {
   return (prismaClient[getPrismaModelProp(table)] as any).findMany(
-    findManyArgs
+    findManyArgs,
   );
 }
 
-export { findMany };
+async function findUnique<T extends Prisma.ModelName>(
+  table: T,
+  findUniqueArgs?: FindUniqueArgs<T>,
+  prismaClient: MyPrismaClient = prisma,
+): Promise<PrismaModelPayload<T>['scalars']> {
+  return (prismaClient[getPrismaModelProp(table)] as any).findUnique(
+    findUniqueArgs,
+  );
+}
+
+async function findUniqueOrThrow<T extends Prisma.ModelName>(
+  table: T,
+  findUniqueOrThrowArgs?: FindUniqueOrThrowArgs<T>,
+  prismaClient: MyPrismaClient = prisma,
+): Promise<PrismaModelPayload<T>['scalars']> {
+  return (prismaClient[getPrismaModelProp(table)] as any).findUnique(
+    findUniqueOrThrowArgs,
+  );
+}
+
+async function count<T extends Prisma.ModelName>(
+  table: T,
+  coundArgs?: CountArgs<T>,
+  prismaClient: MyPrismaClient = prisma,
+): Promise<PrismaModelPayload<T>['scalars']> {
+  return (prismaClient[getPrismaModelProp(table)] as any).count(coundArgs);
+}
+
+async function upsert<T extends Prisma.ModelName>(
+  table: T,
+  upsertArgs?: UpsertArgs<T>,
+  prismaClient: MyPrismaClient = prisma,
+): Promise<PrismaModelPayload<T>['scalars']> {
+  return (prismaClient[getPrismaModelProp(table)] as any).upsert(upsertArgs);
+}
+
+async function update<T extends Prisma.ModelName>(
+  table: T,
+  updateArgs?: UpdateArgs<T>,
+  prismaClient: MyPrismaClient = prisma,
+): Promise<PrismaModelPayload<T>['scalars']> {
+  return (prismaClient[getPrismaModelProp(table)] as any).update(updateArgs);
+}
+
+async function deleteMany<T extends Prisma.ModelName>(
+  table: T,
+  deleteManyArgs?: DeleteManyArgs<T>,
+  prismaClient: MyPrismaClient = prisma,
+): Promise<PrismaModelPayload<T>['scalars']> {
+  return (prismaClient[getPrismaModelProp(table)] as any).deleteMany(
+    deleteManyArgs,
+  );
+}
+
+export {
+  findMany,
+  findUnique,
+  findUniqueOrThrow,
+  count,
+  upsert,
+  update,
+  deleteMany,
+};

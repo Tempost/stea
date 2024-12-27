@@ -1,8 +1,8 @@
-import { NextAuthOptions } from 'next-auth';
-import NextAuth from 'next-auth/next';
-import GoogleProvider from 'next-auth/providers/google';
+import NextAuth from 'next-auth';
+import Google from 'next-auth/providers/google';
 
-export const authOptions: NextAuthOptions = {
+export const { handlers, signIn, signOut, auth } = NextAuth({
+  trustHost: true,
   events: {
     async signIn(message) {
       console.info(`${message.user.name} signed in from ${message.user.email}`);
@@ -20,9 +20,7 @@ export const authOptions: NextAuthOptions = {
     },
   },
   providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    Google({
       authorization: {
         params: {
           prompt: 'consent',
@@ -32,6 +30,4 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
-};
-
-export default NextAuth(authOptions);
+});

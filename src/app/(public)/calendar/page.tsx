@@ -3,9 +3,6 @@ import { findMany } from '@/server/prisma/queries/shared';
 import Calendar from '@/components/Calendar';
 import { unstable_cache } from 'next/cache';
 
-// TODO: Need to use revalidateTag('shows') when adding
-// new shows from the dashboard
-
 const getShows = unstable_cache(
   async () => {
     return await findMany('Show', {
@@ -24,7 +21,7 @@ const getShows = unstable_cache(
     });
   },
   ['shows'],
-  { revalidate: 3600, tags: ['shows'] }
+  { revalidate: 3600, tags: ['shows'] },
 );
 
 function CalendarPage() {

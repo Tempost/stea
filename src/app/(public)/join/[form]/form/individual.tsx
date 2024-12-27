@@ -20,7 +20,7 @@ import {
   ActionState,
   addNewMember,
   checkForExistingMember,
-} from '@/app/join/[form]/form/member.action';
+} from '@/app/(public)/join/[form]/form/member.action';
 import { Label } from '@/components/styled-ui/Label';
 import { setMembershipYear } from '@/server/router/utils';
 

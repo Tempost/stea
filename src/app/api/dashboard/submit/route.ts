@@ -10,49 +10,43 @@ import {
 import { EntryReviewType } from '@/utils/zodschemas';
 import { ShowType } from '@prisma/client';
 import { parse } from 'csv';
-import type { NextApiRequest, NextApiResponse } from 'next';
-import { getToken } from 'next-auth/jwt';
+import { NextRequest, NextResponse } from 'next/server';
 import { fromZodError, ValidationError } from 'zod-validation-error';
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+export default async function POST(req: NextRequest) {
+  const res = NextResponse.next();
+  res.headers.append('Content-Type', 'application/json; charset=utf-8');
 
-  if (req.method !== 'POST') {
-    console.warn('Attempted to access via unsupported method');
-    return res.status(405).end();
-  }
-
-  const token = await getToken({ req });
-  if (!token) {
-    console.warn('Attempted to access api protected by auth.');
-    return res.status(401).end();
-  }
+  console.log(req);
 
   try {
-    const entries = await nodeCsvParser(req.body);
+    const entries = await nodeCsvParser('');
 
     if (entries.failed.length != 0) {
       console.warn('Trouble parsing csv', entries.failed);
-      return res.status(412).json({ success: false, data: entries.failed });
+      return NextResponse.json(
+        { success: false, data: entries.failed },
+        { status: 412 },
+      );
     }
 
     const entriesWithMembership = await checkforMembership(
-      groupEntries(entries.successful)
+      groupEntries(entries.successful),
     );
 
     console.log(entriesWithMembership);
-    return res.status(200).json({
-      success: true,
-      data: entriesWithMembership,
-      totalEntryCount: entries.successful.length,
-    });
+    return NextResponse.json(
+      {
+        success: true,
+        data: entriesWithMembership,
+        totalEntryCount: entries.successful.length,
+      },
+      { status: 200 },
+    );
   } catch (err) {
     if (err instanceof Error) {
       console.error(err);
-      return res.status(500).json({ message: err.message });
+      return NextResponse.json({ message: err.message }, { status: 500 });
     }
   }
 }
@@ -179,7 +173,7 @@ const POINTS: PointsMap = {
 function calculatePoints(
   placing: CSVEntry['placing'],
   showType: ShowType,
-  countInDivison: number
+  countInDivison: number,
 ): number {
   if (countInDivison >= 5) {
     return POINTS[showType][placing] * 2;
@@ -248,11 +242,11 @@ async function checkforMembership(entries: GroupedEntries) {
                   points: calculatePoints(
                     entry.placing,
                     entry.rideType,
-                    entryList.length
+                    entryList.length,
                   ),
-                })
+                }),
               )
-              .catch(e => console.log(e.message))
+              .catch(e => console.log(e.message)),
           );
         }
       }
