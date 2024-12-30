@@ -1,9 +1,9 @@
 'use client';
 import { ColumnDef } from '@tanstack/react-table';
 import TableWithData from '@/components/tables/BaseTable';
-import ConfirmMember from '@/components/dashboard/ConfirmMember';
 
 import type { Member } from '@prisma/client';
+import ConfirmMember from './ConfirmMember';
 
 const columns: Array<ColumnDef<Member>> = [
   {

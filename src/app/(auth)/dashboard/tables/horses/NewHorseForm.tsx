@@ -17,6 +17,7 @@ import useZodForm from '@/utils/usezodform';
 import { Member, NonMemberHorseOwner } from '@prisma/client';
 import useSWR, { Fetcher } from 'swr';
 import add, { ActionState } from './action';
+import Alert from '@/components/forms/Alert';
 
 const memberFetcher: Fetcher<Array<Member>, string> = (...args) =>
   fetch(...args).then(res => res.json());
@@ -148,7 +149,7 @@ function NewHorseForm() {
     >
       <Form
         form={form}
-        onSubmit={() => {}}
+        onSubmit={onSubmit}
         id='horse-form'
       >
         <h3 className='text-lg font-bold'>Enter Member Information</h3>
@@ -194,6 +195,10 @@ function NewHorseForm() {
             {...register('regType')}
           />
         </div>
+        <Alert
+          visible={state.error}
+          message={state.message}
+        />
       </Form>
     </Modal>
   );

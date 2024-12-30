@@ -20,7 +20,7 @@ const AltLabel = forwardRef<HTMLLabelElement, Props>(
   ({ className, children, ...props }, ref) => (
     <label
       ref={ref}
-      className={cn('label w-fill rounded-md bg-info/25 p-0.5', className)}
+      className={cn('label w-fit rounded-md bg-info/25 p-0.5', className)}
       {...props}
     >
       <span className='label-text-alt text-sm md:text-xs'>{children}</span>

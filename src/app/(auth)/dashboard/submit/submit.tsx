@@ -6,13 +6,13 @@ import { cn, readableDateTime } from '@/utils/helpers';
 import useZodForm from '@/utils/usezodform';
 import { z } from 'zod';
 import Alert from '@/components/forms/Alert';
-import EntryReview from '@/components/dashboard/tables/EntryReview';
 import { EntryReviewType, isEntrySubmissionType } from '@/utils/zodschemas';
 import { Button } from '@/components/styled-ui/Button';
 import { Show } from '@prisma/client';
 import Form from '@/components/forms/Form';
 import Select from '@/components/data-entry/Select';
 import FileInput from '@/components/data-entry/FileInput';
+import EntryReview from './EntryReview';
 
 const ShowSubmitFormValue = z.object({
   showUID: z.string().cuid(),

@@ -37,3 +37,6 @@ export type CreateArgs<N extends Prisma.ModelName> =
 
 export type DeleteManyArgs<N extends Prisma.ModelName> =
   PrismaModelType<N>['operations']['deleteMany']['args'];
+
+export type DeleteArgs<N extends Prisma.ModelName> =
+  PrismaModelType<N>['operations']['delete']['args'];

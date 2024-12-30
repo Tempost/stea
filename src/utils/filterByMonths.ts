@@ -1,9 +1,6 @@
-import { RouterOutputs } from '@/utils/trpc';
+import { Show } from '@prisma/client';
 
-export function filterByMonths(
-  shows: RouterOutputs['shows']['all'],
-  currMonth: number
-) {
+export function filterByMonths(shows: Array<Show>, currMonth: number) {
   if (!shows) return;
 
   return shows.filter(show => {

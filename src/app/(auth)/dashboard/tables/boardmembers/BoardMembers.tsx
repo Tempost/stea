@@ -1,21 +1,20 @@
+'use client';
 import Input from '@/components/data-entry/Input';
 import Form from '@/components/forms/Form';
 import TableWithData from '@/components/tables/BaseTable';
-import {
-  Boardmember,
-  BoardmemberSchema,
-} from '@/server/prisma/zod-generated/modelSchema/BoardmemberSchema';
 import { mapping } from '@/server/utils';
-import { RouterOutputs, trpc } from '@/utils/trpc';
 import useZodForm from '@/utils/usezodform';
+import { BoardmemberSchema } from '@/server/prisma/zod-generated/modelSchema/BoardmemberSchema';
+import { Boardmember } from '@prisma/client';
 import { ColumnDef, flexRender } from '@tanstack/react-table';
 import { SetStateAction } from 'jotai';
-import { useSession } from 'next-auth/react';
-import { Dispatch, useState } from 'react';
+import { Dispatch, useState, useTransition } from 'react';
 import { UseFormReturn } from 'react-hook-form';
+import { ActionState, update } from './actions';
+import { Button } from '@/components/styled-ui/Button';
+import { cn } from '@/utils/helpers';
 
-type Boardmembers = RouterOutputs['boardmember']['all'][number];
-const columns: Array<ColumnDef<Boardmembers>> = [
+const columns: Array<ColumnDef<Boardmember>> = [
   {
     header: 'Board Members',
     columns: [
@@ -47,14 +46,14 @@ interface ModalProps {
   form: UseFormReturn<Boardmember>;
 }
 
+const initialState: ActionState = {
+  message: '',
+  error: false,
+};
+
 function BoardmemberModal({ isOpen, setIsOpen, form }: ModalProps) {
-  const utils = trpc.useContext();
-  const add = trpc.boardmember.update.useMutation({
-    onSuccess: () => {
-      utils.boardmember.invalidate();
-      setIsOpen(curr => !curr);
-    },
-  });
+  const [pending, startTransition] = useTransition();
+  const [state, setState] = useState(initialState);
 
   return (
     <div
@@ -71,29 +70,34 @@ function BoardmemberModal({ isOpen, setIsOpen, form }: ModalProps) {
           form={form}
           id='boardmember-form'
           onSubmit={formValue => {
-            add.mutate(formValue);
+            startTransition(async () => {
+              const res = await update(formValue);
+              setState(res);
+            });
           }}
         >
           <Input
-            className='input input-bordered input-primary w-full md:input-sm'
             label='Name'
             {...form.register('name')}
           />
           <Input
-            className='input input-bordered input-primary w-full md:input-sm'
             label='Email'
             {...form.register('email')}
           />
         </Form>
 
         <div className='modal-action'>
-          <button
+          <Button
             form='boardmember-form'
             type='submit'
-            className='btn btn-sm'
+            size='sm'
+            className={cn({
+              loading: pending,
+              'btn-success': state.message === 'Success',
+            })}
           >
             Ok
-          </button>
+          </Button>
           <label
             htmlFor='boardmember-modal'
             className='btn btn-sm'
@@ -110,17 +114,14 @@ function BoardmemberModal({ isOpen, setIsOpen, form }: ModalProps) {
   );
 }
 
-function BoardMembers() {
+function BoardMembers({ boardmembers }: { boardmembers: Array<Boardmember> }) {
   const [isOpen, setIsOpen] = useState(false);
-  const session = useSession();
 
   const form = useZodForm({
     reValidateMode: 'onSubmit',
     shouldFocusError: true,
     schema: BoardmemberSchema,
   });
-
-  const get = trpc.boardmember.all.useQuery();
 
   return (
     <>
@@ -135,23 +136,16 @@ function BoardMembers() {
             columns,
             enableRowSelection: true,
           }}
-          query={get}
+          data={boardmembers}
           rowRender={({ row }) => (
             <tr
               className='border-b bg-white transition duration-300 ease-in-out hover:bg-primary/10'
               onClick={e => {
-                if (
-                  session.data?.user?.name === 'Cody Diamond' ||
-                  session.data?.user?.name === 'Lynette Diamond' ||
-                  session.data?.user?.name === 'Laura Sartwelle' ||
-                  session.data?.user?.name === 'Markie Owen'
-                ) {
-                  e.preventDefault();
-                  Object.entries(row.original).forEach(([key, value]) =>
-                    form.setValue(key as keyof Boardmembers, value)
-                  );
-                  setIsOpen(curr => !curr);
-                }
+                e.preventDefault();
+                Object.entries(row.original).forEach(([key, value]) =>
+                  form.setValue(key as keyof Boardmember, value),
+                );
+                setIsOpen(curr => !curr);
               }}
             >
               {row.getVisibleCells().map(cell => {

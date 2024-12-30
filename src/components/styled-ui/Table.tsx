@@ -23,6 +23,7 @@ export interface TableProps<TData> {
   tableOptions: Omit<TableOptions<TData>, 'getCoreRowModel'>;
   extras?: ReactElement;
   rowRender?: (props: RowRenderProps<TData>) => ReactNode;
+  loading?: boolean;
 }
 
 const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
@@ -43,6 +44,7 @@ function Table<TData>({
   search,
   tableOptions: { state, ...opts },
   extras,
+  loading,
   ...props
 }: TableProps<TData>) {
   const [globalFilter, setGlobalFilter] = useState('');
@@ -122,14 +124,18 @@ function Table<TData>({
               ))}
             </thead>
 
-            <tbody>
-              {table.getRowModel().rows.map(row => (
-                <RowRender
-                  key={row.id}
-                  row={row}
-                />
-              ))}
-            </tbody>
+            {loading ? (
+              'Loading...'
+            ) : (
+              <tbody>
+                {table.getRowModel().rows.map(row => (
+                  <RowRender
+                    key={row.id}
+                    row={row}
+                  />
+                ))}
+              </tbody>
+            )}
           </table>
 
           <div className='m-2'>

@@ -1,12 +1,10 @@
-import { RouterOutputs, trpc } from '@/utils/trpc';
-
-import TableWithData from './BaseTable';
-
-import type { ColumnDef } from '@tanstack/react-table';
+'use client';
 import { readableDateTime } from '@/utils/helpers';
+import type { ColumnDef } from '@tanstack/react-table';
+import TableWithData from '@/components/tables/BaseTable';
+import { NonMemberHorseOwner } from '@prisma/client';
 
-type Owner = RouterOutputs['nonMemberHorseOwners']['all'][number];
-const columns: Array<ColumnDef<Owner>> = [
+const columns: Array<ColumnDef<NonMemberHorseOwner>> = [
   {
     header: 'Horse Owners',
     columns: [
@@ -18,7 +16,7 @@ const columns: Array<ColumnDef<Owner>> = [
 
           return date ? readableDateTime(date) : '';
         },
-        header: () => <span> Registration Date </span>,
+        header: () => <span> Join Date </span>,
       },
       {
         accessorKey: 'fullName',
@@ -42,28 +40,17 @@ const columns: Array<ColumnDef<Owner>> = [
   },
 ];
 
-interface OwnerTableProps {
-  search?: boolean;
-  paginate?: boolean;
-}
-
-function OwnerTable(props: OwnerTableProps) {
-  const owners = trpc.nonMemberHorseOwners.all.useQuery({
-    select: {
-      fullName: true,
-      email: true,
-      phone: true,
-      createdAt: true,
-    },
-  });
-
+function DashboardOwners({ owners }: { owners: Array<NonMemberHorseOwner> }) {
   return (
     <TableWithData
-      extraTableOpts={{ columns }}
-      query={owners}
-      {...props}
+      extraTableOpts={{
+        columns,
+      }}
+      data={owners}
+      paginate
+      search
     />
   );
 }
 
-export default OwnerTable;
+export default DashboardOwners;

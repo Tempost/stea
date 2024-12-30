@@ -2,7 +2,6 @@ import ws from 'ws';
 import { Pool, neonConfig } from '@neondatabase/serverless';
 import { PrismaNeon } from '@prisma/adapter-neon';
 import { PrismaClient } from '@prisma/client';
-import { withAccelerate } from '@prisma/extension-accelerate';
 
 neonConfig.webSocketConstructor = ws;
 const connectionString = `${process.env.DATABASE_URL}`;
@@ -18,7 +17,7 @@ const prismaClientSingleton = () => {
       process.env.NODE_ENV === 'development'
         ? ['info', 'error', 'warn']
         : ['error'],
-  }).$extends(withAccelerate());
+  });
 };
 
 type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>;

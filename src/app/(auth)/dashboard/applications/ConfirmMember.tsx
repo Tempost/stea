@@ -1,7 +1,7 @@
-import { Button } from '../styled-ui/Button';
+import { confirmMember } from '@/app/(auth)/dashboard/applications/action';
+import { Button } from '@/components/styled-ui/Button';
 import { cn } from '@/utils/helpers';
 import { useTransition } from 'react';
-import { confirmMember } from '@/app/(auth)/dashboard/applications/action';
 
 interface CMProps {
   fullName: string;

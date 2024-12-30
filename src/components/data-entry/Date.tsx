@@ -25,7 +25,7 @@ function ControlledDatePicker({
   const state = getFieldState(name);
 
   return (
-    <div className={cn({ hidden: hidden })}>
+    <div className={cn('w-fit', { hidden: hidden })}>
       <Controller
         name={name}
         control={control}
@@ -42,7 +42,7 @@ function ControlledDatePicker({
               selected={props.field.value}
               customInput={<Input />}
             />
-            <AltLabel className='w-fit'>{labelAlt}</AltLabel>
+            {labelAlt ? <AltLabel>{labelAlt}</AltLabel> : null}
           </>
         )}
       />

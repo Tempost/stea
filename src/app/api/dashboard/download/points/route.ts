@@ -1,46 +1,57 @@
+import fs from 'fs';
 import { prisma } from '@/server/prisma';
-import { readableDateTime } from '@/utils/helpers';
-import { Prisma } from '@prisma/client';
+import { findMany } from '@/server/prisma/queries/shared';
 import { stringify } from 'csv';
-import { NextApiRequest, NextApiResponse } from 'next';
-import { z } from 'zod';
+import { NextRequest, NextResponse } from 'next/server';
+import { ReadableOptions } from 'stream';
 
-const queryParams = z.object({
-  year: z.string().optional(),
-  show: z.string().optional(),
-});
+function streamFile(
+  path: string,
+  options?: ReadableOptions,
+): ReadableStream<Uint8Array> {
+  const downloadStream = fs.createReadStream(path, options);
 
-export default async function GET(req: NextApiRequest, res: NextApiResponse) {
-  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  return new ReadableStream({
+    start(controller) {
+      downloadStream.on('data', (chunk: Buffer) =>
+        controller.enqueue(new Uint8Array(chunk)),
+      );
+      downloadStream.on('end', () => controller.close());
+      downloadStream.on('error', (error: NodeJS.ErrnoException) =>
+        controller.error(error),
+      );
+    },
+    cancel() {
+      downloadStream.destroy();
+    },
+  });
+}
 
-  const params = queryParams.safeParse(req.query);
-  if (!params.success) {
+export async function GET(req: NextRequest) {
+  const year = req.nextUrl.searchParams.get('year');
+  const show = req.nextUrl.searchParams.get('show');
+  if (!year && !show) {
     console.warn(
-      `Attempted downloading points with ${JSON.stringify(req.query)}`,
+      `Attempted downloading points with ${JSON.stringify(req.nextUrl.searchParams)}`,
     );
-    return res.status(400).json({ message: 'Incorrect query params.' });
+    return new NextResponse(null, { status: 400 });
   }
 
   try {
-    if (params.data.show) {
-      await getPointsForShow(params.data.show, res);
+    if (show) {
+      return await getPointsForShow(show);
     }
 
-    if (params.data.year) {
-      await getPointsForYear(Number.parseInt(params.data.year), res);
+    if (year) {
+      return await getPointsForYear(Number.parseInt(year));
     }
   } catch (e) {
-    res.status(500);
     console.error(e);
-    if (e instanceof Prisma.PrismaClientKnownRequestError) {
-      return res.json({ message: 'Unable to fetch points from database.' });
-    }
-
-    return res.json({ message: 'Internal Server Error.' });
+    return new NextResponse(null, { status: 500 });
   }
 }
 
-async function getPointsForYear(showYear: number, res: NextApiResponse) {
+async function getPointsForYear(showYear: number) {
   const CSV = stringify({
     header: true,
     columns: [
@@ -53,7 +64,7 @@ async function getPointsForYear(showYear: number, res: NextApiResponse) {
     ],
   });
 
-  const riderEndofYear = await prisma.riderCombo.findMany({
+  const riderEndofYear = await findMany('RiderCombo', {
     where: {
       showYear,
     },
@@ -83,24 +94,36 @@ async function getPointsForYear(showYear: number, res: NextApiResponse) {
   });
 
   if (riderEndofYear.length === 0) {
-    res.status(204).end();
-    return;
+    return new NextResponse(null, { status: 204 });
   }
 
   const filename = `Points_For_${showYear}.csv`;
+  const path = `/tmp/${filename}`;
 
-  await new Promise(function (resolve) {
+  await new Promise(resolve => {
     riderEndofYear.forEach(row => CSV.write(row));
 
-    res.setHeader('Content-Type', 'application/csv');
-
-    res.setHeader('Content-Disposition', `attachment; filename=${filename}`);
-    CSV.pipe(res).on('close', resolve);
+    const writeStream = fs.createWriteStream(path);
+    CSV.pipe(writeStream).on('close', resolve);
+    CSV.on('end', () => {
+      writeStream.close();
+    });
     CSV.end();
+  });
+
+  const stats = await fs.promises.stat(path);
+  const data = streamFile(path);
+
+  return new NextResponse(data, {
+    headers: new Headers({
+      'content-disposition': `attachment; filename=${filename}`,
+      'content-type': 'application/csv',
+      'content-length': stats.size + '',
+    }),
   });
 }
 
-async function getPointsForShow(showUid: string, res: NextApiResponse) {
+async function getPointsForShow(showUid: string) {
   const CSV = stringify({
     header: true,
     columns: [
@@ -137,21 +160,32 @@ async function getPointsForShow(showUid: string, res: NextApiResponse) {
   });
 
   if (points.length === 0) {
-    res.status(204).end();
-    return;
+    return new NextResponse(null, { status: 204 });
   }
 
-  const filename = `${points[0].show.showName}-${readableDateTime(
-    points[0].show.showDate,
-  )}.csv`;
+  const showDate = points[0].show.showDate;
+  const filename = `${points[0].show.showName}-${showDate.getMonth() + 1}-${showDate.getDate()}-${showDate.getFullYear()}.csv`;
+  const path = `/tmp/${filename}`;
 
-  await new Promise(function (resolve) {
+  await new Promise(resolve => {
     points.forEach(row => CSV.write(row));
 
-    res.setHeader('Content-Type', 'application/csv');
-
-    res.setHeader('Content-Disposition', `attachment; filename=${filename}`);
-    CSV.pipe(res).on('close', resolve);
+    const writeStream = fs.createWriteStream(path);
+    CSV.pipe(writeStream).on('close', resolve);
+    CSV.on('end', () => {
+      writeStream.close();
+    });
     CSV.end();
+  });
+
+  const stats = await fs.promises.stat(path);
+  const data = streamFile(path);
+
+  return new NextResponse(data, {
+    headers: new Headers({
+      'content-disposition': `attachment; filename=${filename}`,
+      'content-type': 'application/csv',
+      'content-length': stats.size + '',
+    }),
   });
 }

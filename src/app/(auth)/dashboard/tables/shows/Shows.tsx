@@ -1,36 +1,24 @@
+'use client';
 import Checkbox from '@/components/data-entry/Checkbox';
-import AddNewShow from '@/components/forms/dashboard/AddNewShow';
-import DownloadPoints from '@/components/forms/dashboard/DownloadPoints';
 import TableWithData from '@/components/tables/BaseTable';
 import { readableDateTime } from '@/utils/helpers';
-import { RouterOutputs, trpc } from '@/utils/trpc';
 import type { ColumnDef, RowSelectionState } from '@tanstack/react-table';
-import { useMemo, useState } from 'react';
-import RemoveSelectedShows from '@/components/dashboard/RemoveSelectedShows';
+import { useMemo, useState, useTransition } from 'react';
+import { Show } from '@prisma/client';
+import AddNewShow from './AddNewShow';
+import DownloadPoints from './DownloadPoints';
+import RemoveSelectedShows from './RemoveSelectedShows';
+import Select from '@/components/styled-ui/Select';
+import { getShowsByYear } from './action';
 
 const currYear = new Date().getFullYear();
 const years = Array.from({ length: 10 }, (_, i) => i + 2022);
 
-type Show = RouterOutputs['shows']['all'][number];
-
-function ShowsTable() {
-  const [yearSelect, setYearSelect] = useState(currYear);
+function ShowsTable({ data }: { data: Array<Show> }) {
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
-  const shows = trpc.shows.all.useQuery({
-    where: {
-      showDate: {
-        lte: new Date(yearSelect, 11, 31),
-        gte: new Date(yearSelect, 0, 1),
-      },
-    },
-    orderBy: {
-      showDate: 'asc',
-    },
-    include: {
-      riders: true,
-      points: true,
-    },
-  });
+  const [year, setYear] = useState(currYear);
+  const [shows, setShows] = useState(data);
+  const [pending, startTransition] = useTransition();
 
   const columns = useMemo<Array<ColumnDef<Show>>>(
     () => [
@@ -89,12 +77,13 @@ function ShowsTable() {
         ],
       },
     ],
-    []
+    [],
   );
 
   return (
     <div>
       <TableWithData
+        loading={pending}
         extraTableOpts={{
           columns,
           enableRowSelection: true,
@@ -106,14 +95,21 @@ function ShowsTable() {
         }}
         extras={
           <div className='flex space-x-1'>
-            <select
+            <Select
               name='show-year'
               id='show-year'
-              className='select select-bordered select-primary select-sm w-fit'
-              value={yearSelect}
+              className='w-fit'
+              value={year}
               onChange={e => {
                 e.preventDefault();
-                setYearSelect(Number.parseInt(e.target.value));
+                setYear(Number.parseInt(e.target.value));
+                startTransition(async () => {
+                  const newShows = await getShowsByYear(
+                    Number.parseInt(e.target.value),
+                  );
+                  console.log(newShows);
+                  setShows(newShows);
+                });
               }}
             >
               {years.map(year => (
@@ -124,10 +120,10 @@ function ShowsTable() {
                   {year}
                 </option>
               ))}
-            </select>
+            </Select>
             <AddNewShow />
             <DownloadPoints
-              year={yearSelect}
+              year={year}
               showSelection={rowSelection}
             />
             <RemoveSelectedShows
@@ -136,7 +132,7 @@ function ShowsTable() {
             />
           </div>
         }
-        query={shows}
+        data={shows}
         paginate
         search
       />

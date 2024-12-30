@@ -7,11 +7,8 @@ import {
   MemberFindManyArgsSchema,
   MemberWhereUniqueInputSchema,
 } from '../prisma/zod-generated';
-import { horseNames } from './utils';
-import { checkExistingHorses } from '../prisma/queries/horses';
 import { MyPrismaClient } from '../prisma';
-import { findMany } from '../prisma/queries/shared';
-import { findUniqueOrThrow, findUnique } from '../prisma/queries/members';
+import { findMany, findUniqueOrThrow } from '../prisma/queries/shared';
 
 export const members = router({
   all: procedure
@@ -24,7 +21,7 @@ export const members = router({
     .input(MemberWhereUniqueInputSchema)
     .query(async ({ input, ctx }) => {
       try {
-        return findUniqueOrThrow(input, ctx.prisma);
+        return findUniqueOrThrow('Member', { where: input }, ctx.prisma);
       } catch (error) {
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
           if (error.code === 'P2001') {
@@ -46,82 +43,88 @@ export const members = router({
       }
     }),
 
-  exists: procedure.input(MemberFormSchema).mutation(async ({ input, ctx }) => {
-    const fullName =
-      input.memberInput.businessName ??
-      `${input.memberInput.firstName} ${input.memberInput.lastName}`;
-
-    console.info(`Checking if ${fullName} is a member.`);
-
-    const existingMember = await findUnique({ fullName }, ctx.prisma);
-    if (existingMember) {
-      if (existingMember.memberStatus === 'Life') {
-        throw new TRPCError({
-          code: 'CONFLICT',
-          message: `${fullName} is already a lifetime member`,
-        });
-      }
-
-      if (existingMember.membershipEnd && input.memberInput.membershipEnd) {
-        if (
-          existingMember.membershipEnd.getFullYear() >=
-          input.memberInput.membershipEnd.getFullYear()
-        ) {
-          throw new TRPCError({
-            code: 'CONFLICT',
-            message: `You are already signed up for the selected year.`,
-          });
-        }
-      }
-    }
-
-    if (input.horses) {
-      console.log(`Checking for horses... ${horseNames(input.horses)}`);
-      const existingHorses = await checkExistingHorses(
-        input.horses,
-        ctx.prisma,
-      );
-
-      if (existingHorses) {
-        const signedUp: typeof existingHorses | undefined = [];
-        existingHorses.forEach(existingHorse => {
-          if (existingHorse.regType === 'Life') {
-            signedUp.push(existingHorse);
-          } else {
-            // NOTE: This is here just incase registrationEnd is null/empty
-            if (existingHorse.registrationEnd) {
-              const horseInput = input.horses?.find(
-                h => h.horseRN === existingHorse.horseRN,
-              );
-              if (horseInput && horseInput.registrationEnd) {
-                if (
-                  existingHorse.registrationEnd.getFullYear() >=
-                  horseInput.registrationEnd.getFullYear()
-                ) {
-                  signedUp.push(existingHorse);
-                }
-              }
-            }
-          }
-        });
-
-        if (signedUp.length > 0) {
-          const message = `${horseNames(signedUp)} ${
-            signedUp.length > 1 ? 'have' : 'has'
-          } already been registered.`;
-
-          throw new TRPCError({
-            code: 'CONFLICT',
-            message: message,
-          });
-        }
-      }
-    }
-  }),
+  // exists: procedure
+  //   .input(MemberFormSchema)
+  //   .mutation(async ({ input: { horses, ...memberInput }, ctx }) => {
+  //     const fullName =
+  //       memberInput.businessName ??
+  //       `${memberInput.firstName} ${memberInput.lastName}`;
+  //
+  //     console.info(`Checking if ${fullName} is a member.`);
+  //
+  //     const existingMember = await findUnique(
+  //       'Member',
+  //       { where: { fullName } },
+  //       ctx.prisma,
+  //     );
+  //     if (existingMember) {
+  //       if (existingMember.memberStatus === 'Life') {
+  //         throw new TRPCError({
+  //           code: 'CONFLICT',
+  //           message: `${fullName} is already a lifetime member`,
+  //         });
+  //       }
+  //
+  //       if (existingMember.membershipEnd && input.memberInput.membershipEnd) {
+  //         if (
+  //           existingMember.membershipEnd.getFullYear() >=
+  //           input.memberInput.membershipEnd.getFullYear()
+  //         ) {
+  //           throw new TRPCError({
+  //             code: 'CONFLICT',
+  //             message: `You are already signed up for the selected year.`,
+  //           });
+  //         }
+  //       }
+  //     }
+  //
+  //     if (input.horses) {
+  //       console.log(`Checking for horses... ${horseNames(input.horses)}`);
+  //       const existingHorses = await checkExistingHorses(
+  //         input.horses,
+  //         ctx.prisma,
+  //       );
+  //
+  //       if (existingHorses) {
+  //         const signedUp: typeof existingHorses | undefined = [];
+  //         existingHorses.forEach(existingHorse => {
+  //           if (existingHorse.regType === 'Life') {
+  //             signedUp.push(existingHorse);
+  //           } else {
+  //             // NOTE: This is here just incase registrationEnd is null/empty
+  //             if (existingHorse.registrationEnd) {
+  //               const horseInput = input.horses?.find(
+  //                 h => h.horseRN === existingHorse.horseRN,
+  //               );
+  //               if (horseInput && horseInput.registrationEnd) {
+  //                 if (
+  //                   existingHorse.registrationEnd.getFullYear() >=
+  //                   horseInput.registrationEnd.getFullYear()
+  //                 ) {
+  //                   signedUp.push(existingHorse);
+  //                 }
+  //               }
+  //             }
+  //           }
+  //         });
+  //
+  //         if (signedUp.length > 0) {
+  //           const message = `${horseNames(signedUp)} ${
+  //             signedUp.length > 1 ? 'have' : 'has'
+  //           } already been registered.`;
+  //
+  //           throw new TRPCError({
+  //             code: 'CONFLICT',
+  //             message: message,
+  //           });
+  //         }
+  //       }
+  //     }
+  //   }),
 
   add: procedure
     .input(MemberFormSchema)
-    .mutation(async ({ input: { memberInput, horses }, ctx }) => {
+    .mutation(async ({ input: { horses, ...memberInput }, ctx }) => {
       console.info(`Member: ${JSON.stringify(memberInput)}`);
       console.info(
         horses
@@ -158,12 +161,12 @@ export const members = router({
           }
         });
       } else {
-        await addMember({ memberInput, horses }, ctx.prisma);
+        await addMember({ ...memberInput, horses }, ctx.prisma);
       }
     }),
 
   manualAdd: dashboardProcedure
-    .input(MemberFormSchema.shape.memberInput)
+    .input(MemberFormSchema)
     .mutation(async ({ input, ctx }) => {
       const fullName = `${input.firstName} ${input.lastName}`;
       try {
@@ -261,7 +264,7 @@ export const members = router({
 });
 
 async function addMember(
-  { memberInput, horses }: MemberForm,
+  { horses, ...memberInput }: MemberForm,
   prisma: MyPrismaClient,
 ) {
   try {

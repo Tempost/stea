@@ -13,8 +13,8 @@ const getBoardMembers = unstable_cache(
   async () => {
     return await findMany('Boardmember');
   },
-  ['boardmembers'],
-  { revalidate: 3600, tags: ['boardmembers'] },
+  ['Boardmembers'],
+  { revalidate: 3600, tags: ['Boardmembers'] },
 );
 
 function ContactUs() {

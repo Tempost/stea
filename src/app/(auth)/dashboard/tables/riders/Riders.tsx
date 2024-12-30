@@ -1,9 +1,9 @@
+'use client';
 import TableWithData from '@/components/tables/BaseTable';
-import { RouterOutputs, trpc } from '@/utils/trpc';
+import { RiderCombo } from '@prisma/client';
 
 import type { ColumnDef } from '@tanstack/react-table';
 
-type RiderCombo = RouterOutputs['riders']['all'][number];
 const columns: Array<ColumnDef<RiderCombo>> = [
   {
     header: 'Riders',
@@ -33,6 +33,12 @@ const columns: Array<ColumnDef<RiderCombo>> = [
         header: () => <span> Shows Attended </span>,
       },
       {
+        accessorKey: 'showYear',
+        id: 'showYear',
+        cell: info => info.getValue(),
+        header: () => <span> Show year </span>,
+      },
+      {
         accessorKey: 'division',
         id: 'division',
         cell: info => info.getValue(),
@@ -42,15 +48,13 @@ const columns: Array<ColumnDef<RiderCombo>> = [
   },
 ];
 
-function DashboardRiders() {
-  const riders = trpc.riders.all.useQuery();
-
+function DashboardRiders({ riders }: { riders: Array<RiderCombo> }) {
   return (
     <TableWithData
       extraTableOpts={{
         columns,
       }}
-      query={riders}
+      data={riders}
       paginate
       search
     />

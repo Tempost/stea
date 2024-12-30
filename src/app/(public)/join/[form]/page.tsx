@@ -1,9 +1,8 @@
-import { FormType } from '@/types/common';
 import IndividualRegistration from './form/individual';
 import HorseRegistration from './form/horse';
 import BusinessRegistration from './form/business';
 
-async function FormPage({ params }: { params: { form: FormType } }) {
+async function FormPage({ params }: any) {
   const { form } = await params;
   if (form === 'individual') return <IndividualRegistration />;
   if (form === 'horse') return <HorseRegistration />;

@@ -1,11 +1,9 @@
 import { TRPCError } from '@trpc/server';
 import { dashboardProcedure, procedure, router } from '@/server/trpc';
-import { HorseFormSchema } from '@/utils/zodschemas';
 import { HorseFindManyArgsSchema } from '../prisma/zod-generated/outputTypeSchemas/HorseFindManyArgsSchema';
 import { HorseWhereUniqueInputSchema } from '../prisma/zod-generated/inputTypeSchemas/HorseWhereUniqueInputSchema';
 import { HorseOptionalDefaultsSchema } from '../prisma/zod-generated/modelSchema/HorseSchema';
-import { horseNames, setMembershipYear } from './utils';
-import { checkExistingHorses } from '../prisma/queries/horses';
+import { setMembershipYear } from './utils';
 
 export const horses = router({
   all: procedure
@@ -88,34 +86,34 @@ export const horses = router({
         message: 'Unable to add new horse.',
       });
     }),
-
-  exists: procedure.input(HorseFormSchema).mutation(async ({ input, ctx }) => {
-    console.log(`Checking for horses... ${horseNames(input)}`);
-    const existingHorses = await checkExistingHorses(input, ctx.prisma);
-
-    if (existingHorses) {
-      const signedUp: typeof existingHorses | undefined = [];
-      existingHorses.forEach(horse => {
-        if (horse.regType === 'Life') signedUp.push(horse);
-        if (horse.registrationEnd) {
-          const horseInput = input.find(h => h.horseRN === horse.horseRN);
-          if (horseInput && horseInput.registrationEnd) {
-            if (horse.registrationEnd >= horseInput.registrationEnd) {
-              signedUp.push(horse);
-            }
-          }
-        }
-      });
-
-      if (signedUp.length > 0) {
-        const message = `${horseNames(signedUp)}
-        ${signedUp.length > 1 ? 'have' : 'has'} already been registered.`;
-
-        throw new TRPCError({
-          code: 'CONFLICT',
-          message: message,
-        });
-      }
-    }
-  }),
+  //
+  // exists: procedure.input(HorseFormSchema).mutation(async ({ input, ctx }) => {
+  //   console.log(`Checking for horses... ${horseNames(input)}`);
+  //   const existingHorses = await checkExistingHorses(input, ctx.prisma);
+  //
+  //   if (existingHorses) {
+  //     const signedUp: typeof existingHorses | undefined = [];
+  //     existingHorses.forEach(horse => {
+  //       if (horse.regType === 'Life') signedUp.push(horse);
+  //       if (horse.registrationEnd) {
+  //         const horseInput = input.find(h => h.horseRN === horse.horseRN);
+  //         if (horseInput && horseInput.registrationEnd) {
+  //           if (horse.registrationEnd >= horseInput.registrationEnd) {
+  //             signedUp.push(horse);
+  //           }
+  //         }
+  //       }
+  //     });
+  //
+  //     if (signedUp.length > 0) {
+  //       const message = `${horseNames(signedUp)}
+  //       ${signedUp.length > 1 ? 'have' : 'has'} already been registered.`;
+  //
+  //       throw new TRPCError({
+  //         code: 'CONFLICT',
+  //         message: message,
+  //       });
+  //     }
+  //   }
+  // }),
 });

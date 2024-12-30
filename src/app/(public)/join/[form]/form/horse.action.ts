@@ -10,6 +10,7 @@ import { horseNames } from '@/server/router/utils';
 import { HorseForm, OwnerHorseForm } from '@/utils/zodschemas';
 import { Horse } from '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+import { revalidateTag } from 'next/cache';
 
 export interface OwnerActionState {
   message: string | undefined;
@@ -146,6 +147,8 @@ export async function addOwner({
     }
   }
 
+  revalidateTag('Owners');
+  revalidateTag('Horses');
   return {
     message: 'Success',
     error: false,

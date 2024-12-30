@@ -18,9 +18,10 @@ const getHorses = unstable_cache(
         owner: true,
       },
     }),
-  ['Members'],
-  { revalidate: 3600, tags: ['Members'] },
+  ['Horses'],
+  { revalidate: 3600, tags: ['Horses'] },
 );
+
 function Page() {
   const horses = use(getHorses());
 

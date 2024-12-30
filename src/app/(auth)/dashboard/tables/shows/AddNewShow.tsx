@@ -1,18 +1,28 @@
-import useZodForm from '@/utils/usezodform';
-import { trpc } from '@/utils/trpc';
+import ControlledDatePicker from '@/components/data-entry/Date';
+import Input from '@/components/data-entry/Input';
+import Select from '@/components/data-entry/Select';
 import Alert from '@/components/forms/Alert';
 import Form from '@/components/forms/Form';
+import { Button } from '@/components/styled-ui/Button';
+import Modal from '@/components/styled-ui/Modal';
+import { ShowTypeSchema } from '@/server/prisma/zod-generated/inputTypeSchemas/ShowTypeSchema';
 import {
   ShowOptionalDefaults,
   ShowOptionalDefaultsSchema,
 } from '@/server/prisma/zod-generated/modelSchema/ShowSchema';
-import Input from '@/components/data-entry/Input';
-import Select from '@/components/data-entry/Select';
-import ControlledDatePicker from '@/components/data-entry/Date';
-import { ShowTypeSchema } from '@/server/prisma/zod-generated/inputTypeSchemas/ShowTypeSchema';
-import Modal from '@/components/styled-ui/Modal';
+import { cn } from '@/utils/helpers';
+import useZodForm from '@/utils/usezodform';
+import { useState, useTransition } from 'react';
+import { add, ActionState } from './action';
+
+const initalState: ActionState = {
+  message: '',
+  error: false,
+};
 
 function AddNewShow() {
+  const [state, setState] = useState(initalState);
+  const [pending, startTransition] = useTransition();
   const form = useZodForm({
     reValidateMode: 'onSubmit',
     shouldFocusError: true,
@@ -23,18 +33,14 @@ function AddNewShow() {
   });
 
   const { register } = form;
-  const utils = trpc.useContext();
-
-  const add = trpc.shows.add.useMutation({
-    onSuccess() {
-      utils.shows.invalidate();
-      form.reset();
-      form.clearErrors();
-    },
-  });
 
   function submitForm(values: ShowOptionalDefaults) {
-    add.mutate(values);
+    startTransition(async () => {
+      const res = await add(values);
+      setState(res);
+    });
+    form.reset();
+    form.clearErrors();
   }
 
   return (
@@ -45,15 +51,20 @@ function AddNewShow() {
         form.clearErrors();
         form.reset();
       }}
-      onClose={() => add.reset()}
+      onClose={() => form.reset()}
       ok={
-        <button
-          className={`btn btn-sm ${add.isError ? 'btn-error' : add.isSuccess ? 'btn-success' : ''}`}
+        <Button
+          className={cn({
+            loading: pending,
+            'btn-error': state.error,
+            'btn-success': state.message === 'Success',
+          })}
+          size='sm'
           form='show-form'
           type='submit'
         >
           Add
-        </button>
+        </Button>
       }
     >
       <h3 className='text-lg font-bold'>Enter Show Information</h3>
@@ -72,7 +83,7 @@ function AddNewShow() {
           />
 
           <Select
-            className='select select-bordered select-primary w-fit md:select-sm'
+            className='w-fit'
             label='Show Type*'
             {...register('showType')}
           >
@@ -87,7 +98,7 @@ function AddNewShow() {
           </Select>
         </div>
 
-        <div className='grid grid-flow-col'>
+        <div className='mt-2 grid grid-flow-col'>
           <ControlledDatePicker
             name='showDate'
             placeholderText='Start Date'
@@ -100,15 +111,14 @@ function AddNewShow() {
         </div>
 
         <Input
-          className='input input-bordered input-primary w-full md:input-sm'
           placeholder='Registration Link'
           label='Registration Link'
           {...register('url')}
         />
 
         <Alert
-          message={add.error?.message}
-          visible={add.isError}
+          message={state.message}
+          visible={state.error}
         />
       </Form>
     </Modal>
