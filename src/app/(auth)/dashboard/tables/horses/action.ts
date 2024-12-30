@@ -1,7 +1,7 @@
 'use server';
 import { create } from '@/server/prisma/queries/shared';
 import { HorseOptionalDefaults } from '@/server/prisma/zod-generated/modelSchema/HorseSchema';
-import { setMembershipYear } from '@/server/router/utils';
+import { setMembershipYear } from '@/utils/setmembershipyear';
 import { Horse } from '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { revalidateTag } from 'next/cache';

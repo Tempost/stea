@@ -15,7 +15,7 @@ import {
   ReactPayPalScriptOptions,
 } from '@paypal/react-paypal-js';
 import { MemberForm, OwnerHorseForm } from '@/utils/zodschemas';
-import { costs } from '@/utils/atoms';
+import { costs } from '@/utils/costs';
 import { FormType } from '@/types/common';
 import { cn } from '@/utils/helpers';
 

@@ -19,7 +19,7 @@ import {
   addNewMember,
   checkForExistingMember,
 } from './member.action';
-import { setMembershipYear } from '@/server/router/utils';
+import { setMembershipYear } from '@/utils/setmembershipyear';
 
 const initialState: ActionState = {
   message: undefined,

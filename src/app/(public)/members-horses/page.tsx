@@ -4,7 +4,7 @@ import MemberTable from '@/components/tables/Members';
 import { findMany } from '@/server/prisma/queries/shared';
 import HorseTable from '@/components/tables/Horses';
 import { unstable_cache } from 'next/cache';
-import { setMembershipYear } from '@/server/router/utils';
+import { setMembershipYear } from '@/utils/setmembershipyear';
 
 const getMembers = unstable_cache(
   async () =>

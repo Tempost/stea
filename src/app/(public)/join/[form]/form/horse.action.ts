@@ -6,7 +6,7 @@ import {
   update,
   upsert,
 } from '@/server/prisma/queries/shared';
-import { horseNames } from '@/server/router/utils';
+import { horseNames } from '@/server/utils';
 import { HorseForm, OwnerHorseForm } from '@/utils/zodschemas';
 import { Horse } from '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';

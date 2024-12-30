@@ -1,7 +1,7 @@
 import { UseFormRegisterReturn } from 'react-hook-form';
 
 import Radio from '@/components/data-entry/Radio';
-import { costs } from '@/utils/atoms';
+import { costs } from '@/utils/costs';
 import { DetailedHTMLProps, InputHTMLAttributes } from 'react';
 import { FormType } from '@/types/common';
 
@@ -36,6 +36,6 @@ const RegistrationSelect = ({ register, onClick, formType }: Props) => (
     />
   </section>
 );
-RegistrationSelect.displayName = 'RegistrationSelection'
+RegistrationSelect.displayName = 'RegistrationSelection';
 
 export default RegistrationSelect;

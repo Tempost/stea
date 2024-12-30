@@ -17,7 +17,7 @@ import { MemberOptionalDefaultsSchema } from '@/server/prisma/zod-generated/mode
 import add, { ActionState } from './action';
 import { useState, useTransition } from 'react';
 import Alert from '@/components/forms/Alert';
-import { setMembershipYear } from '@/server/router/utils';
+import { setMembershipYear } from '@/utils/setmembershipyear';
 
 export const NewMemberSchema = MemberOptionalDefaultsSchema.omit({
   fullName: true,

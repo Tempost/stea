@@ -1,6 +1,8 @@
 import { z } from 'zod';
 import { ShowTypeSchema } from '@/server/prisma/zod-generated/inputTypeSchemas/ShowTypeSchema';
 import { DivisionSchema } from '@/server/prisma/zod-generated/inputTypeSchemas/DivisionSchema';
+import { HorseForm } from '@/utils/zodschemas';
+import { Horse } from '@prisma/client';
 
 export const CSVEntrySchema = z.object({
   firstName: z.string().trim(),
@@ -39,3 +41,27 @@ export const mapping = {
   SocialMediaManager: 'Social Media Manager',
   VicePresident: 'Vice President',
 };
+// Get Keys and assert correct key types instead of just string
+
+export const getKeys = Object.keys as <T extends object>(
+  obj: T,
+) => Array<keyof T>;
+export const horseNames = (horses: HorseForm | Array<Horse>) =>
+  horses.map(horse => horse.horseRN);
+export function groupByFunc<
+  RetType extends PropertyKey,
+  TObj,
+  Func extends (arg: TObj) => RetType,
+>(arr: Array<TObj>, mapper: Func): Record<RetType, Array<TObj>> {
+  return arr.reduce(
+    (accumulator, val) => {
+      const groupedKey = mapper(val);
+      if (!accumulator[groupedKey]) {
+        accumulator[groupedKey] = [];
+      }
+      accumulator[groupedKey].push(val);
+      return accumulator;
+    },
+    {} as Record<RetType, Array<TObj>>,
+  );
+}

@@ -4,7 +4,7 @@ import RegistrationSelect from './RegType';
 import { AddIcon, TrashIcon } from '../icons';
 import Input from '../data-entry/Input';
 import RegistrationYearSelect from './RegistrationYearSelect';
-import { setMembershipYear } from '@/server/router/utils';
+import { setMembershipYear } from '@/utils/setmembershipyear';
 import { Button } from '../styled-ui/Button';
 
 type Horses = {

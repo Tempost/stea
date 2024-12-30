@@ -22,7 +22,7 @@ import {
   checkForExistingMember,
 } from '@/app/(public)/join/[form]/form/member.action';
 import { Label } from '@/components/styled-ui/Label';
-import { setMembershipYear } from '@/server/router/utils';
+import { setMembershipYear } from '@/utils/setmembershipyear';
 
 const initialState: ActionState = {
   message: undefined,
