@@ -1,11 +1,10 @@
-import NewHorseForm from '@/components/forms/dashboard/NewHorseForm';
+'use client';
 import TableWithData from '@/components/tables/BaseTable';
 import { readableDateTime } from '@/utils/helpers';
-import { RouterOutputs, trpc } from '@/utils/trpc';
 
 import type { ColumnDef } from '@tanstack/react-table';
-
-type Horse = RouterOutputs['horses']['all'][number];
+import NewHorseForm from './NewHorseForm';
+import { Horse } from '@prisma/client';
 
 const columns: Array<ColumnDef<Horse>> = [
   {
@@ -15,7 +14,14 @@ const columns: Array<ColumnDef<Horse>> = [
         accessorKey: 'registrationDate',
         id: 'registrationDate',
         cell: info => readableDateTime(info.getValue()),
-        header: () => <span> Registered Date </span>,
+        header: () => <span> Join Date </span>,
+      },
+      {
+        accessorKey: 'registrationEnd',
+        id: 'registrationEnd',
+        cell: info =>
+          info.getValue() ? readableDateTime(info.getValue()) : '',
+        header: () => <span> Registation Ends </span>,
       },
       {
         accessorKey: 'horseRN',
@@ -30,8 +36,8 @@ const columns: Array<ColumnDef<Horse>> = [
         header: () => <span> Status </span>,
       },
       {
-        accessorFn: horseRec => {
-          return horseRec.memberName ?? horseRec.owner;
+        accessorFn: horse => {
+          return horse.memberName ?? horse.owner;
         },
         id: 'owner',
         cell: info => info.getValue(),
@@ -41,9 +47,7 @@ const columns: Array<ColumnDef<Horse>> = [
   },
 ];
 
-function DashboardHorses() {
-  const horses = trpc.horses.all.useQuery();
-
+function DashboardHorses({ horses }: { horses: Array<Horse> }) {
   return (
     <div>
       <NewHorseForm />
@@ -51,7 +55,7 @@ function DashboardHorses() {
         extraTableOpts={{
           columns,
         }}
-        query={horses}
+        data={horses}
         paginate
         search
       />

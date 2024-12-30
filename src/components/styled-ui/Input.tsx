@@ -2,7 +2,7 @@ import { cn } from '@/utils/helpers';
 import { cva, VariantProps } from 'class-variance-authority';
 import { forwardRef } from 'react';
 
-const inputVariants = cva('input input-bordered w-full md:input-lg', {
+const inputVariants = cva('input input-bordered w-full md:input-sm', {
   variants: {
     variant: {
       default: 'input-primary',
@@ -10,16 +10,16 @@ const inputVariants = cva('input input-bordered w-full md:input-lg', {
       disabled: 'input-disabled',
     },
     size: {
-      default: '',
       xs: 'input-xs',
       sm: 'input-sm',
+      md: 'input-md',
       lg: 'input-lg',
       xl: 'input-xl',
     },
   },
   defaultVariants: {
     variant: 'default',
-    size: 'default',
+    size: 'md',
   },
 });
 

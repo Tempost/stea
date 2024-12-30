@@ -1,7 +1,6 @@
 import Footer from '@/components/layout/Footer';
 import { ResponsiveHeader } from '@/components/layout/Header';
 import { LayoutProps } from '@/types/common';
-import '@/styles/globals.css';
 
 export default function Public({ children }: LayoutProps) {
   return (

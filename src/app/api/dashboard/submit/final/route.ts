@@ -9,7 +9,6 @@ capDate.setMonth(10);
 capDate.setDate(30);
 
 export async function POST(req: NextRequest) {
-  console.log(req.url);
   const showUID = req.nextUrl.searchParams.get('showUID');
   const body = req.json();
 

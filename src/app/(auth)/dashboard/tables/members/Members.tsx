@@ -37,12 +37,16 @@ const columns: Array<ColumnDef<Member>> = [
       {
         accessorKey: 'membershipDate',
         id: 'membershipDate',
-        cell: info => {
-          const date: Date | undefined = info.getValue();
-
-          return date ? readableDateTime(date) : '';
-        },
+        cell: info =>
+          info.getValue() ? readableDateTime(info.getValue()) : '',
         header: () => <span> Join Date </span>,
+      },
+      {
+        accessorKey: 'membershipEnd',
+        id: 'membershipEnd',
+        cell: info =>
+          info.getValue() ? readableDateTime(info.getValue()) : '',
+        header: () => <span> Registration Ends </span>,
       },
       {
         accessorKey: 'fullName',

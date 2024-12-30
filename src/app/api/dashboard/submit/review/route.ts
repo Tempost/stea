@@ -41,7 +41,6 @@ export async function POST(req: NextRequest) {
       groupEntries(entries.successful),
     );
 
-    console.log(entriesWithMembership);
     return NextResponse.json(
       {
         success: true,

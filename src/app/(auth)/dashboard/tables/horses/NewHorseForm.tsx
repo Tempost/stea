@@ -1,36 +1,46 @@
 'use client';
-import { ChangeEvent } from 'react';
-import { z } from 'zod';
-import { useAtomValue, useSetAtom } from 'jotai';
+import { ChangeEvent, useState, useTransition } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import Input from '@/components/data-entry/Input';
-import Modal from '@/components/styled-ui/Modal';
-import useZodForm from '@/utils/usezodform';
-import Form from '../Form';
-import { trpc } from '@/utils/trpc';
-import { HorseOptionalDefaultsSchema } from '@/server/prisma/zod-generated/modelSchema/HorseSchema';
-import Select from '@/components/data-entry/Select';
-import { changeSelectionAtom, ownerTypeAtom } from '@/utils/atoms';
 import Radio from '@/components/data-entry/Radio';
+import Select from '@/components/data-entry/Select';
+import Form from '@/components/forms/Form';
+import { Button } from '@/components/styled-ui/Button';
+import Modal from '@/components/styled-ui/Modal';
+import {
+  HorseOptionalDefaults,
+  HorseOptionalDefaultsSchema,
+} from '@/server/prisma/zod-generated/modelSchema/HorseSchema';
 import { cn } from '@/utils/helpers';
+import useZodForm from '@/utils/usezodform';
+import { Member, NonMemberHorseOwner } from '@prisma/client';
+import useSWR, { Fetcher } from 'swr';
+import add, { ActionState } from './action';
+
+const memberFetcher: Fetcher<Array<Member>, string> = (...args) =>
+  fetch(...args).then(res => res.json());
+
+const ownerFetcher: Fetcher<Array<NonMemberHorseOwner>, string> = (...args) =>
+  fetch(...args).then(res => res.json());
 
 function MemberSelection() {
-  const members = trpc.members.all.useQuery({ select: { fullName: true } });
+  const { data, error } = useSWR('/api/dashboard/members', memberFetcher, {
+    revalidateOnFocus: false,
+  });
   const { register } = useFormContext();
 
   return (
     <Select
-      className='select select-bordered select-primary w-full md:select-sm'
       label='Members'
       {...register('memberName')}
     >
-      {members.isLoading ? (
+      {!data ? (
         <option>Loading...</option>
-      ) : members.isError ? (
+      ) : error ? (
         <option>Error...</option>
       ) : (
-        members.data.map(member => (
+        data.map(member => (
           <option
             key={member.fullName}
             value={member.fullName}
@@ -44,23 +54,22 @@ function MemberSelection() {
 }
 
 function OwnerSelection() {
-  const owners = trpc.nonMemberHorseOwners.all.useQuery({
-    select: { fullName: true },
+  const { data, error } = useSWR('/api/dashboard/owners', ownerFetcher, {
+    revalidateOnFocus: false,
   });
   const { register } = useFormContext();
 
   return (
     <Select
-      className='select select-bordered select-primary w-full md:select-sm'
       label='Non-Members'
       {...register('owner')}
     >
-      {owners.isLoading ? (
+      {!data ? (
         <option>Loading...</option>
-      ) : owners.isError ? (
+      ) : error ? (
         <option>Error...</option>
       ) : (
-        owners.data.map(member => (
+        data.map(member => (
           <option
             key={member.fullName}
             value={member.fullName}
@@ -73,9 +82,15 @@ function OwnerSelection() {
   );
 }
 
+const initialState: ActionState = {
+  message: '',
+  error: false,
+};
+
 function NewHorseForm() {
-  const state = useAtomValue(ownerTypeAtom);
-  const update = useSetAtom(changeSelectionAtom);
+  const [memberType, setMemberType] = useState<string>('none');
+  const [pending, startTransition] = useTransition();
+  const [state, setState] = useState<ActionState>(initialState);
 
   const form = useZodForm({
     reValidateMode: 'onSubmit',
@@ -91,20 +106,15 @@ function NewHorseForm() {
   function resetForm() {
     form.clearErrors();
     form.reset();
-    update('none');
   }
 
   const { register } = form;
-  const utils = trpc.useContext();
-  const insert = trpc.horses.add.useMutation({
-    onSuccess() {
-      utils.horses.invalidate();
-      resetForm();
-    },
-  });
 
-  function onSubmit(formValues: z.infer<typeof HorseOptionalDefaultsSchema>) {
-    insert.mutate(formValues);
+  function onSubmit(formValues: HorseOptionalDefaults) {
+    startTransition(async () => {
+      const res = await add(formValues);
+      setState(res);
+    });
   }
 
   function handleSelection(e: ChangeEvent<HTMLSelectElement>) {
@@ -113,7 +123,7 @@ function NewHorseForm() {
     } else {
       form.resetField('memberName');
     }
-    update(e.target.value);
+    setMemberType(e.target.value);
   }
 
   return (
@@ -122,34 +132,35 @@ function NewHorseForm() {
       buttonLabel='Add Horse'
       onClick={() => resetForm()}
       ok={
-        <button
+        <Button
           form='horse-form'
           type='submit'
-          className={`btn btn-sm ${
-            insert.isError ? 'btn-error' : insert.isSuccess ? 'btn-success' : ''
-          }`}
+          size='sm'
+          className={cn({
+            loading: pending,
+            'btn-error': state.error,
+            'btn-success': state.message === 'Success',
+          })}
         >
           Add
-        </button>
+        </Button>
       }
     >
       <Form
         form={form}
-        onSubmit={onSubmit}
+        onSubmit={() => {}}
         id='horse-form'
       >
         <h3 className='text-lg font-bold'>Enter Member Information</h3>
         <div className='flex flex-col gap-2'>
           <span className='flex space-x-5'>
             <Input
-              className='input input-bordered input-primary w-full md:input-sm'
               type='text'
               label='Horse RN'
               {...register('horseRN')}
             />
 
             <Input
-              className='input input-bordered input-primary w-full md:input-sm'
               type='text'
               label='Horse Barn Name'
               {...register('horseAKA')}
@@ -158,7 +169,6 @@ function NewHorseForm() {
 
           <Select
             label='Type of Member'
-            className='select select-bordered select-primary w-full md:select-sm'
             name='owner-type'
             onChange={handleSelection}
           >
@@ -167,22 +177,20 @@ function NewHorseForm() {
             <option value='non-member'>Non-Member</option>
           </Select>
 
-          <span className={cn({ hidden: state === 'none' })}>
-            {state === 'member' ? <MemberSelection /> : <OwnerSelection />}
+          <span className={cn({ hidden: memberType === 'none' })}>
+            {memberType === 'member' ? <MemberSelection /> : <OwnerSelection />}
           </span>
 
           <h3>Registration Type*</h3>
           <Radio
             label='Annual'
             value='Annual'
-            className='radio radio-primary align-middle md:radio-sm'
             {...register('regType')}
           />
 
           <Radio
             label='Life'
             value='Life'
-            className='radio radio-primary align-middle md:radio-sm'
             {...register('regType')}
           />
         </div>

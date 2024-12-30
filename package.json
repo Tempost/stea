@@ -47,6 +47,7 @@
     "react-hook-form": "^7.54.2",
     "react-query": "^3.39.3",
     "superjson": "^1.13.3",
+    "swr": "^2.3.0",
     "tailwind-merge": "^2.5.5",
     "ws": "^8.18.0",
     "zod": "3.24.1",

@@ -13,18 +13,26 @@ import { StatusSchema } from '@/server/prisma/zod-generated/inputTypeSchemas/Sta
 import { StatusTypeSchema } from '@/server/prisma/zod-generated/inputTypeSchemas/StatusTypeSchema';
 import { z } from 'zod';
 import { optionsFromObject } from '@/components/helpers';
-import Under18 from '../../../../../components/forms/Under18';
 import { MemberOptionalDefaultsSchema } from '@/server/prisma/zod-generated/modelSchema/MemberSchema';
-import add from './action';
-import { useTransition } from 'react';
+import add, { ActionState } from './action';
+import { useState, useTransition } from 'react';
+import Alert from '@/components/forms/Alert';
+import { setMembershipYear } from '@/server/router/utils';
 
 export const NewMemberSchema = MemberOptionalDefaultsSchema.omit({
   fullName: true,
   comments: true,
 });
 
+const initialState: ActionState = {
+  message: '',
+  error: false,
+  data: undefined,
+};
+
 function NewMemberForm() {
   const [pending, startTransition] = useTransition();
+  const [state, setState] = useState(initialState);
 
   const form = useZodForm({
     reValidateMode: 'onSubmit',
@@ -32,7 +40,7 @@ function NewMemberForm() {
     schema: NewMemberSchema,
     defaultValues: {
       businessName: null,
-      membershipEnd: null,
+      membershipEnd: setMembershipYear(),
       dateOfBirth: null,
     },
   });
@@ -42,7 +50,12 @@ function NewMemberForm() {
   function onSubmit(formValues: z.infer<typeof NewMemberSchema>) {
     startTransition(async () => {
       const member = await add(formValues);
+      setState(member);
       console.log(member);
+
+      if (!member.error) {
+        form.reset();
+      }
     });
   }
 
@@ -58,7 +71,10 @@ function NewMemberForm() {
         <button
           form='member-form'
           type='submit'
-          className={cn('btn btn-sm', { loading: pending })}
+          className={cn('btn btn-sm', {
+            loading: pending,
+            'btn-success': state.message === 'Success',
+          })}
         >
           Add
         </button>
@@ -139,7 +155,7 @@ function NewMemberForm() {
 
           <ControlledDatePicker
             name='dateOfBirth'
-            label='Date of Birth'
+            label='Date of Birth (If under 18)'
           />
 
           <span className='flex space-x-1'>
@@ -164,10 +180,12 @@ function NewMemberForm() {
               {optionsFromObject(StatusTypeSchema.enum)}
             </Select>
           </span>
-
-          <Under18 dateName='dateOfBirth' />
         </div>
       </Form>
+      <Alert
+        visible={state.error}
+        message={state.message}
+      />
     </Modal>
   );
 }
