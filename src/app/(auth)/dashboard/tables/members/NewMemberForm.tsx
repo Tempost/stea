@@ -51,7 +51,6 @@ function NewMemberForm() {
     startTransition(async () => {
       const member = await add(formValues);
       setState(member);
-      console.log(member);
 
       if (!member.error) {
         form.reset();

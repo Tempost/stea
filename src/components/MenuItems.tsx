@@ -69,7 +69,6 @@ export const dashMenuItems: Array<Menu> = [
   },
   {
     name: 'Documents',
-    // TODO: Add download links to the download options
     render: ({ name }) => (
       <NavLinkSubMenu
         name={name}

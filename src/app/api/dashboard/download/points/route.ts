@@ -4,30 +4,9 @@ import { findMany } from '@/server/prisma/queries/shared';
 import { stringify } from 'csv';
 import { NextRequest, NextResponse } from 'next/server';
 import { ReadableOptions } from 'stream';
+import { checkAuth } from '@/auth';
 
-function streamFile(
-  path: string,
-  options?: ReadableOptions,
-): ReadableStream<Uint8Array> {
-  const downloadStream = fs.createReadStream(path, options);
-
-  return new ReadableStream({
-    start(controller) {
-      downloadStream.on('data', (chunk: Buffer) =>
-        controller.enqueue(new Uint8Array(chunk)),
-      );
-      downloadStream.on('end', () => controller.close());
-      downloadStream.on('error', (error: NodeJS.ErrnoException) =>
-        controller.error(error),
-      );
-    },
-    cancel() {
-      downloadStream.destroy();
-    },
-  });
-}
-
-export async function GET(req: NextRequest) {
+export const GET = checkAuth(async (req: NextRequest) => {
   const year = req.nextUrl.searchParams.get('year');
   const show = req.nextUrl.searchParams.get('show');
   if (!year && !show) {
@@ -49,7 +28,7 @@ export async function GET(req: NextRequest) {
     console.error(e);
     return new NextResponse(null, { status: 500 });
   }
-}
+});
 
 async function getPointsForYear(showYear: number) {
   const CSV = stringify({
@@ -120,6 +99,28 @@ async function getPointsForYear(showYear: number) {
       'content-type': 'application/csv',
       'content-length': stats.size + '',
     }),
+  });
+}
+
+function streamFile(
+  path: string,
+  options?: ReadableOptions,
+): ReadableStream<Uint8Array> {
+  const downloadStream = fs.createReadStream(path, options);
+
+  return new ReadableStream({
+    start(controller) {
+      downloadStream.on('data', (chunk: Buffer) =>
+        controller.enqueue(new Uint8Array(chunk)),
+      );
+      downloadStream.on('end', () => controller.close());
+      downloadStream.on('error', (error: NodeJS.ErrnoException) =>
+        controller.error(error),
+      );
+    },
+    cancel() {
+      downloadStream.destroy();
+    },
   });
 }
 

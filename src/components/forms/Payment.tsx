@@ -1,23 +1,24 @@
-import { PropsWithChildren } from 'react';
-import { useRouter } from 'next/navigation';
 import {
   CreateOrderActions,
   CreateOrderData,
   OnApproveActions,
   OnApproveData,
+  PurchaseUnit,
 } from '@paypal/paypal-js';
+import { useRouter } from 'next/navigation';
+import { PropsWithChildren } from 'react';
 
-import Alert from './Alert';
-import PayPalButton from '../styled-ui/PayPalButton';
-import { Button } from '../styled-ui/Button';
+import { FormType } from '@/types/common';
+import { costs } from '@/utils/costs';
+import { cn } from '@/utils/helpers';
+import { MemberForm, OwnerHorseForm } from '@/utils/zodschemas';
 import {
   PayPalScriptProvider,
   ReactPayPalScriptOptions,
 } from '@paypal/react-paypal-js';
-import { MemberForm, OwnerHorseForm } from '@/utils/zodschemas';
-import { costs } from '@/utils/costs';
-import { FormType } from '@/types/common';
-import { cn } from '@/utils/helpers';
+import { Button } from '../styled-ui/Button';
+import PayPalButton from '../styled-ui/PayPalButton';
+import Alert from './Alert';
 
 interface PaymentProps extends PropsWithChildren {
   showPayment: boolean;
@@ -69,21 +70,47 @@ function Payment({
     amountOwed += annualCount * costs.Annual['horse'];
   }
 
+  function createPurchaseUnits(data: PaymentProps['formState']['data']) {
+    const purchase_units: Array<PurchaseUnit> = [];
+    if (!data) return purchase_units;
+    const { horses, ...member } = data;
+
+    if ('memberType' in member) {
+      purchase_units.push({
+        description: `${member.memberStatus} membership for ${member.firstName} ${member.lastName}`,
+        amount: {
+          currency_code: 'USD',
+          value:
+            costs[member.memberStatus][
+              member.memberType.toLowerCase() as FormType
+            ].toString(),
+        },
+      });
+    }
+
+    if (horses) {
+      const test = horses.map(horse => {
+        return {
+          description: `${horse.regType} registration for ${horse.horseRN}`,
+          amount: {
+            currency_code: 'USD',
+            value: costs[horse.regType]['horse'].toString(),
+          },
+        };
+      });
+      purchase_units.push(...test);
+    }
+
+    return purchase_units;
+  }
+
   function createOrder(_: CreateOrderData, actions: CreateOrderActions) {
     return actions.order.create({
       intent: 'CAPTURE',
       application_context: {
         shipping_preference: 'NO_SHIPPING',
       },
-      purchase_units: [
-        {
-          amount: {
-            value: amountOwed.toString(),
-            currency_code: 'USD',
-          },
-          description: 'STEA registration',
-        },
-      ],
+      purchase_units: createPurchaseUnits(formState.data),
     });
   }
 

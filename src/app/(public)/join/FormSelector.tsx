@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import Radio from '@/components/styled-ui/Radio';
 import { FORMTYPE } from '@/types/common';
 import { Button } from '@/components/styled-ui/Button';
+import { Label } from '@/components/styled-ui/Label';
 
 function FormSelector() {
   const router = useRouter();
@@ -24,10 +25,10 @@ function FormSelector() {
             key={selection}
             className='form-control flex-row'
           >
-            <label
+            <Label
               htmlFor={`${selection}-id`}
               aria-label={selection}
-              className='label cursor-pointer space-x-5 capitalize'
+              innerClassName='capitalize space-x-5'
               key={selection}
             >
               <Radio
@@ -38,7 +39,7 @@ function FormSelector() {
                 onClick={() => setType(selection)}
               />
               <span className='label-text'>{selection}</span>
-            </label>
+            </Label>
           </div>
         ))}
       </div>

@@ -15,7 +15,7 @@ export async function update(boardmember: Boardmember) {
     data: { ...boardmember },
   });
 
-  revalidateTag('BoardMember');
+  revalidateTag('BoardMembers');
   return {
     message: 'Success',
     error: false,

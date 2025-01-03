@@ -1,3 +1,4 @@
+import { checkAuth } from '@/auth';
 import { findFirst } from '@/server/prisma/queries/shared';
 import { CSVEntry, CSVEntrySchema, getKeys, groupByFunc } from '@/server/utils';
 import {
@@ -10,9 +11,10 @@ import { EntryReviewType } from '@/utils/zodschemas';
 import { ShowType } from '@prisma/client';
 import { parse } from 'csv';
 import { NextRequest, NextResponse } from 'next/server';
+import { finished } from 'stream/promises';
 import { fromZodError, ValidationError } from 'zod-validation-error';
 
-export async function POST(req: NextRequest) {
+export const POST = checkAuth(async (req: NextRequest) => {
   const res = NextResponse.next();
   res.headers.append('Content-Type', 'application/json; charset=utf-8');
 
@@ -29,7 +31,6 @@ export async function POST(req: NextRequest) {
     const entries = await nodeCsvParser(Buffer.from(await file.arrayBuffer()));
 
     if (entries.failed.length != 0) {
-      console.warn('Trouble parsing csv', entries.failed);
       return NextResponse.json(
         { success: false, data: entries.failed },
         { status: 412 },
@@ -54,7 +55,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ message: err.message }, { status: 500 });
     }
   }
-}
+});
 
 interface EntryParseResults {
   successful: Array<CSVEntry>;
@@ -81,19 +82,24 @@ async function nodeCsvParser(csv: Buffer<ArrayBufferLike>) {
     from_line: 2,
     skip_empty_lines: true,
     skip_records_with_empty_values: true,
-    ignore_last_delimiters: true,
     trim: true,
+    relax_column_count: true,
     on_record: record => CSVEntrySchema.safeParse(record),
   });
 
-  for await (const record of parser) {
-    if (record.success) {
-      entries.successful.push(record.data);
-    } else {
-      const prettyZodError = fromZodError(record.error);
-      entries.failed.push(prettyZodError);
+  parser.on('readable', () => {
+    let record;
+    while ((record = parser.read()) !== null) {
+      if (record.success) {
+        entries.successful.push(record.data);
+      } else {
+        const prettyZodError = fromZodError(record.error);
+        entries.failed.push(prettyZodError);
+      }
     }
-  }
+  });
+
+  await finished(parser);
   return entries;
 }
 

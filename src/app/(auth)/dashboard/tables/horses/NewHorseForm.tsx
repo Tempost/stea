@@ -34,8 +34,15 @@ function MemberSelection() {
   return (
     <Select
       label='Members'
+      defaultValue=''
       {...register('memberName')}
     >
+      <option
+        value=''
+        disabled
+      >
+        Select a member
+      </option>
       {!data ? (
         <option>Loading...</option>
       ) : error ? (
@@ -63,8 +70,15 @@ function OwnerSelection() {
   return (
     <Select
       label='Non-Members'
+      defaultValue=''
       {...register('owner')}
     >
+      <option
+        value=''
+        disabled
+      >
+        Select an owner
+      </option>
       {!data ? (
         <option>Loading...</option>
       ) : error ? (
@@ -179,7 +193,11 @@ function NewHorseForm() {
           </Select>
 
           <span className={cn({ hidden: memberType === 'none' })}>
-            {memberType === 'member' ? <MemberSelection /> : <OwnerSelection />}
+            {memberType === 'member' ? (
+              <MemberSelection />
+            ) : memberType == 'non-member' ? (
+              <OwnerSelection />
+            ) : null}
           </span>
 
           <h3>Registration Type*</h3>

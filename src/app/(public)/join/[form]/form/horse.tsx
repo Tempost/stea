@@ -33,7 +33,6 @@ function HorseRegistration() {
   });
 
   const { register } = form;
-  console.log(form.getValues());
 
   const onFormSubmit = (formValues: OwnerHorseForm) =>
     startTransition(async () => {

@@ -1,16 +1,20 @@
 import { cn } from '@/utils/helpers';
 import { forwardRef } from 'react';
 
-export type Props = React.LabelHTMLAttributes<HTMLLabelElement>;
+export interface Props extends React.LabelHTMLAttributes<HTMLLabelElement> {
+  innerClassName?: React.LabelHTMLAttributes<HTMLLabelElement>['className'];
+}
 
 const Label = forwardRef<HTMLLabelElement, Props>(
-  ({ className, children, ...props }, ref) => (
+  ({ className, children, innerClassName, ...props }, ref) => (
     <label
       ref={ref}
       className={cn('label', className)}
       {...props}
     >
-      <span className='label-text flex gap-2'>{children}</span>
+      <span className={cn('label-text flex gap-2', innerClassName)}>
+        {children}
+      </span>
     </label>
   ),
 );

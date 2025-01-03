@@ -107,7 +107,6 @@ function ShowsTable({ data }: { data: Array<Show> }) {
                   const newShows = await getShowsByYear(
                     Number.parseInt(e.target.value),
                   );
-                  console.log(newShows);
                   setShows(newShows);
                 });
               }}

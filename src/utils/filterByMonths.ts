@@ -4,7 +4,7 @@ export function filterByMonths(shows: Array<Show>, currMonth: number) {
   if (!shows) return;
 
   return shows.filter(show => {
-    if (show.showDate.getMonth() === currMonth) {
+    if (new Date(show.showDate).getMonth() === currMonth) {
       return true;
     }
     return false;

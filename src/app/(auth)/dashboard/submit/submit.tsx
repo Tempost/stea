@@ -58,15 +58,15 @@ function isSubmitPointsError(o: any): o is SubmitPointsError {
   return !!o && o?.message !== undefined;
 }
 
-// TODO: Fix types in this reducer function
 function reducer(
   state: SubmitPointsState,
   action: ComponentActions,
 ): SubmitPointsState {
+  let newState = state;
   switch (action.type) {
     case 'REVIEW':
       if (isEntrySubmissionType(action.data)) {
-        return {
+        newState = {
           ...state,
           error: undefined,
           reviewStatus: 'SUCCESS',
@@ -74,16 +74,17 @@ function reducer(
           totalEntries: action.totalEntries ?? 0,
         };
       }
-    // eslint-disable-next-line
+      break;
     case 'SUBMIT':
-      return {
+      newState = {
         ...state,
         submissionStatus: 'SUCCESS',
       };
+      break;
     case 'ERROR':
       if (state.reviewStatus === 'INIT') {
         if (isSubmitPointsError(action.data)) {
-          return {
+          newState = {
             ...state,
             reviewStatus: 'ERROR',
             error: action.data,
@@ -93,19 +94,22 @@ function reducer(
 
       if (state.submissionStatus === 'INIT') {
         if (isSubmitPointsError(action.data)) {
-          return {
+          newState = {
             ...state,
             submissionStatus: 'ERROR',
             error: action.data,
           };
         }
       }
-    // eslint-disable-next-line
+      break;
     case 'RESET':
-      return initState;
+      newState = initState;
+      break;
     default:
       throw new Error(`Unsupported action :: ${action.type}`);
   }
+
+  return newState;
 }
 
 function SubmitPoints({ shows }: { shows: Array<Show> }) {
@@ -193,8 +197,6 @@ function SubmitPoints({ shows }: { shows: Array<Show> }) {
       }
     });
   }
-
-  console.log(form.formState);
 
   return (
     <>

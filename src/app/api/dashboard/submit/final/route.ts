@@ -2,13 +2,14 @@ import { findUnique, update, upsert } from '@/server/prisma/queries/shared';
 import { EntrySubmissionSchema } from '@/utils/zodschemas';
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidateTag } from 'next/cache';
+import { checkAuth } from '@/auth';
 
 const currentDate = new Date();
 const capDate = new Date();
 capDate.setMonth(10);
 capDate.setDate(30);
 
-export async function POST(req: NextRequest) {
+export const POST = checkAuth(async (req: NextRequest) => {
   const showUID = req.nextUrl.searchParams.get('showUID');
   const body = req.json();
 
@@ -126,4 +127,4 @@ export async function POST(req: NextRequest) {
     { success: true, message: 'Successfully updated points.' },
     { status: 200 },
   );
-}
+});

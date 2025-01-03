@@ -1,3 +1,4 @@
+import { checkAuth } from '@/auth';
 import { findMany } from '@/server/prisma/queries/shared';
 import { unstable_cache } from 'next/cache';
 import { NextResponse } from 'next/server';
@@ -8,6 +9,6 @@ const getMembers = unstable_cache(
   { revalidate: 3600, tags: ['Members'] },
 );
 
-export async function GET() {
-  return NextResponse.json(await getMembers(), { status: 200 });
-}
+export const GET = checkAuth(async () =>
+  NextResponse.json(await getMembers(), { status: 200 }),
+);
