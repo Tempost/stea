@@ -31,7 +31,11 @@ export async function checkForExistingMember(
       };
     }
 
-    if (existingMember.membershipEnd && formData.membershipEnd) {
+    if (
+      existingMember.membershipEnd &&
+      formData.membershipEnd &&
+      formData.memberStatus != 'Life'
+    ) {
       if (
         existingMember.membershipEnd.getFullYear() >=
         formData.membershipEnd.getFullYear()

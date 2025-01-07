@@ -6,7 +6,7 @@ const CURR_MONTH = new Date();
 const MONTH_FROM_CURR = new Date(
   CURR_MONTH.getFullYear(),
   CURR_MONTH.getMonth() + 1,
-  CURR_MONTH.getDate()
+  CURR_MONTH.getDate(),
 );
 
 function UpcomingEvents() {
@@ -27,7 +27,7 @@ function UpcomingEvents() {
         showName: true,
         showType: true,
       },
-    })
+    }),
   );
 
   return (

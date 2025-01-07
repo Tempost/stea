@@ -3,6 +3,7 @@ import { EntrySubmissionSchema } from '@/utils/zodschemas';
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidateTag } from 'next/cache';
 import { checkAuth } from '@/auth';
+import { prisma } from '@/server/prisma';
 
 const currentDate = new Date();
 const capDate = new Date();
@@ -44,82 +45,87 @@ export const POST = checkAuth(async (req: NextRequest) => {
 
   const entries = EntrySubmissionSchema.parse(await body);
 
-  const dbActions = [];
+  const dbActions: Array<ReturnType<typeof upsert>> = [];
   let year = existingShow.showDate.getFullYear();
 
   if (year == currentDate.getFullYear() && existingShow.showDate > capDate) {
     year += 1;
   }
 
-  for (const entry of entries) {
-    const relations = {
-      member: {
-        connect: {
-          fullName: entry.fullName,
+  prisma.$transaction(async tx => {
+    for (const entry of entries) {
+      const relations = {
+        member: {
+          connect: {
+            fullName: entry.fullName,
+          },
         },
-      },
-      horse: {
-        connect: {
-          horseRN: entry.horseRN,
+        horse: {
+          connect: {
+            horseRN: entry.horseRN,
+          },
         },
-      },
-      shows: {
-        connect: {
-          uid: existingShow.uid,
+        shows: {
+          connect: {
+            uid: existingShow.uid,
+          },
         },
-      },
-      points: {
-        create: {
-          points: entry.points,
-          place: entry.placing,
-          show: {
-            connect: {
-              uid: existingShow.uid,
+        points: {
+          create: {
+            points: entry.points,
+            place: entry.placing,
+            show: {
+              connect: {
+                uid: existingShow.uid,
+              },
             },
           },
         },
-      },
-    };
+      };
 
-    dbActions.push(
-      upsert('RiderCombo', {
-        where: {
-          memberName_horseName_division_showYear: {
-            memberName: entry.fullName,
-            horseName: entry.horseRN,
-            division: entry.division,
-            showYear: existingShow.showDate.getFullYear(),
+      dbActions.push(
+        upsert(
+          'RiderCombo',
+          {
+            where: {
+              memberName_horseName_division_showYear: {
+                memberName: entry.fullName,
+                horseName: entry.horseRN,
+                division: entry.division,
+                showYear: existingShow.showDate.getFullYear(),
+              },
+            },
+            update: {
+              division: entry.division,
+              totalPoints: { increment: entry.points },
+              totalShows: { increment: 1 },
+              completedHT: entry.rideType === 'HT',
+              ...relations,
+            },
+            create: {
+              division: entry.division,
+              totalPoints: entry.points,
+              totalShows: 1,
+              showYear: year,
+              ...relations,
+            },
           },
-        },
-        update: {
-          division: entry.division,
-          totalPoints: { increment: entry.points },
-          totalShows: { increment: 1 },
-          completedHT: entry.rideType === 'HT',
-          ...relations,
-        },
-        create: {
-          division: entry.division,
-          totalPoints: entry.points,
-          totalShows: 1,
-          showYear: year,
-          ...relations,
-        },
-      }).catch(e => {
-        console.log(e);
-        console.log(entry.fullName, entry.horseRN);
-      }),
-    );
-  }
+          tx,
+        ),
+      );
+    }
 
-  // TODO(Cody): Needs to be done in a transaction show it can rollback if any errors
-  // Will submit everyone and then skip the errored records
-  await Promise.all(dbActions).then(() =>
-    update('Show', {
-      where: { uid: existingShow.uid },
-      data: { reviewed: true },
-    }),
-  );
+    await Promise.all(dbActions).then(() =>
+      update(
+        'Show',
+        {
+          where: { uid: existingShow.uid },
+          data: { reviewed: true },
+        },
+        tx,
+      ),
+    );
+  });
 
   revalidateTag('Shows');
   revalidateTag('RiderCombos');

@@ -13,9 +13,7 @@ export interface ActionState {
 }
 
 export async function remove(uids: Array<string>) {
-  const test = await removeMany('Show', { where: { uid: { in: uids } } });
-  console.log(test);
-
+  await removeMany('Show', { where: { uid: { in: uids } } });
   revalidateTag('Shows');
   return {
     message: 'Success',

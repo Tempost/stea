@@ -89,7 +89,7 @@ function Payment({
     }
 
     if (horses) {
-      const test = horses.map(horse => {
+      const horsePU = horses.map(horse => {
         return {
           description: `${horse.regType} registration for ${horse.horseRN}`,
           amount: {
@@ -98,7 +98,7 @@ function Payment({
           },
         };
       });
-      purchase_units.push(...test);
+      purchase_units.push(...horsePU);
     }
 
     return purchase_units;

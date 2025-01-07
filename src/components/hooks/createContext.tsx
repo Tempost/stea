@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext } from 'react';
 
 export function createContextFactory<ContextData>(options?: {
   defaultValue?: ContextData | null;

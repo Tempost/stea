@@ -138,7 +138,6 @@ function SubmitPoints({ shows }: { shows: Array<Show> }) {
         const error = await res.json().then(data => data);
         dispatch({ type: 'RESET' });
         if (isZodFieldError<CSVEntry>(error.data)) {
-          console.log(error.data);
           dispatch({
             type: 'ERROR',
             data: {
@@ -158,7 +157,6 @@ function SubmitPoints({ shows }: { shows: Array<Show> }) {
             errors: error,
           },
         });
-        console.log(error);
         return;
       }
 
@@ -173,7 +171,6 @@ function SubmitPoints({ shows }: { shows: Array<Show> }) {
   }
 
   function handleFinalSubmit() {
-    console.log('Final submit');
     const headers = new Headers();
     headers.set('Accept', '*/*');
     headers.set('Content-Type', 'application/json');

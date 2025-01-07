@@ -69,10 +69,7 @@ export const ResponsiveHeader = ({ children }: PropsWithChildren) => {
 };
 
 export const ResponsiveDashboardHeader = () => (
-  <div
-    className='navbar bg-gradient-to-b from-blue-700 to-blue-800
-    font-semibold text-gray-300 shadow-sm'
-  >
+  <div className='navbar bg-gradient-to-b from-blue-700 to-blue-800 font-semibold text-gray-300 shadow-sm'>
     <div>
       <div className='dropdown'>
         <label

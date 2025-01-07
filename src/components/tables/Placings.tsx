@@ -81,7 +81,7 @@ function PlacingsTable({ title, riders, ...props }: PlacingsTableProps) {
         ],
       },
     ],
-    [title]
+    [title],
   );
 
   return (

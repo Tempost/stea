@@ -74,7 +74,7 @@ async function count<T extends Prisma.ModelName>(
 async function upsert<T extends Prisma.ModelName>(
   table: T,
   upsertArgs?: UpsertArgs<T>,
-  prismaClient: MyPrismaClient = prisma,
+  prismaClient: MyPrismaClient | Prisma.TransactionClient = prisma,
 ): Promise<PrismaModelPayload<T>['scalars']> {
   return (prismaClient[getPrismaModelProp(table)] as any).upsert(upsertArgs);
 }
@@ -82,7 +82,7 @@ async function upsert<T extends Prisma.ModelName>(
 async function update<T extends Prisma.ModelName>(
   table: T,
   updateArgs?: UpdateArgs<T>,
-  prismaClient: MyPrismaClient = prisma,
+  prismaClient: MyPrismaClient | Prisma.TransactionClient = prisma,
 ): Promise<PrismaModelPayload<T>['scalars']> {
   return (prismaClient[getPrismaModelProp(table)] as any).update(updateArgs);
 }
