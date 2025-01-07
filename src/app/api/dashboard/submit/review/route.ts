@@ -55,7 +55,8 @@ export const POST = checkAuth(async (req: NextRequest) => {
       return NextResponse.json({ message: err.message }, { status: 500 });
     }
   }
-});
+  // WARN: REMOVE THIS WHEN https://github.com/nextauthjs/next-auth/issues/12224 is fixed
+}) as any;
 
 interface EntryParseResults {
   successful: Array<CSVEntry>;

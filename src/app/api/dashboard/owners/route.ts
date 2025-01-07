@@ -10,6 +10,7 @@ const getOwners = unstable_cache(
   { revalidate: 3600, tags: ['Owners'] },
 );
 
-export const GET = checkAuth(async () =>
-  NextResponse.json(await getOwners(), { status: 200 }),
-);
+export const GET = checkAuth(
+  async () => NextResponse.json(await getOwners(), { status: 200 }),
+  // WARN: REMOVE THIS WHEN https://github.com/nextauthjs/next-auth/issues/12224 is fixed
+) as any;

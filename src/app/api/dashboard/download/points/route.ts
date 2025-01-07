@@ -28,7 +28,8 @@ export const GET = checkAuth(async (req: NextRequest) => {
     console.error(e);
     return new NextResponse(null, { status: 500 });
   }
-});
+  // WARN: REMOVE THIS WHEN https://github.com/nextauthjs/next-auth/issues/12224 is fixed
+}) as any;
 
 async function getPointsForYear(showYear: number) {
   const CSV = stringify({
