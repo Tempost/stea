@@ -89,7 +89,7 @@ function Home() {
                   </h3>
                   <a
                     className='btn btn-primary btn-sm w-fit gap-2 place-self-center md:btn-xs'
-                    href='/stea_rule_book.pdf'
+                    href='/stea_rule_book_2025.pdf'
                     rel='noopener noreferrer'
                     target='_blank'
                   >
@@ -122,7 +122,7 @@ function Home() {
         <section className='container card card-compact mx-auto w-fit border shadow-xl md:shadow-2xl'>
           <div className='card-body'>
             <h2 className='mg:text-2xl text-center text-xl font-bold lg:text-3xl'>
-              Recognized vendors
+              Recognized Vendors
             </h2>
             <div className='divider mb-0 mt-0'></div>
             <div className='flex flex-row flex-wrap justify-center'>
@@ -131,7 +131,7 @@ function Home() {
                 width={300}
                 height={300}
                 sizes='100vw, 50vw'
-                alt='Logo for riding warehouse, two horses jumping towards a horseshoe.'
+                alt='Logo for riding warehouse, two horses cantering towards a horseshoe'
               />
 
               <Image
@@ -139,23 +139,69 @@ function Home() {
                 width={300}
                 height={300}
                 sizes='100vw, 50vw'
-                alt='Logo for dover tack, white logo "Dover Saddlery".'
+                alt='Logo for dover tack, white logo "Dover Saddlery"'
               />
-
+            </div>
+          </div>
+        </section>
+        <section className='container card card-compact mx-auto w-fit border shadow-xl md:shadow-2xl'>
+          <div className='card-body'>
+            <h2 className='mg:text-2xl text-center text-xl font-bold lg:text-3xl'>
+              Recognized Venues
+            </h2>
+            <div className='divider mb-0 mt-0'></div>
+            <div className='flex flex-row flex-wrap justify-center'>
+              <Image
+                src='/texas_rose_horse_park.jpg'
+                width={300}
+                height={300}
+                sizes='100vw, 50vw'
+                alt='Logo for Texas Rose Horse Park, horse head with texas outline in the background'
+              />
+              <Image
+                src='/new_horizon_stables.png'
+                width={300}
+                height={300}
+                sizes='100vw, 50vw'
+                alt='Logo for New Horizon Stables, outline of rider jumping on horse'
+              />
+              <Image
+                src='/pinehill.jpg'
+                width={300}
+                height={300}
+                sizes='100vw, 50vw'
+                alt='Logo for pinehill. three riders two jumping, one doing dressage.'
+              />
+              <Image
+                src='/meadow_creek.jpg'
+                width={300}
+                height={300}
+                sizes='100vw, 50vw'
+                alt='Logo for Meadow Creek, horse jumping with text "Meadow Creek Equestrian Event Center"'
+              />
+            </div>
+          </div>
+        </section>
+        <section className='container card card-compact mx-auto w-fit border shadow-xl md:shadow-2xl'>
+          <div className='card-body'>
+            <h2 className='mg:text-2xl text-center text-xl font-bold lg:text-3xl'>
+              Business Members
+            </h2>
+            <div className='divider mb-0 mt-0'></div>
+            <div className='flex flex-row flex-wrap justify-center'>
               <Image
                 src='/sneak_away_home_page.png'
                 width={300}
                 height={300}
                 sizes='100vw, 50vw'
-                alt='Logo for riding warehouse, outline of horse head with "Sneak Away Riding Club".'
+                alt='Logo for riding warehouse, outline of horse head with "Sneak Away Riding Club"'
               />
-
               <Image
                 src='/diamond_riding.png'
                 width={300}
                 height={300}
                 sizes='100vw, 50vw'
-                alt='Logo for riding warehouse, outline of horse head with "Sneak Away Riding Club".'
+                alt='Logo for diamond riding, diamond logo with horse shoe and horse head'
               />
             </div>
           </div>
