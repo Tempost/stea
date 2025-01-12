@@ -12,6 +12,7 @@ declare global {
       GOOGLE_CLIENT_ID: string;
       NEXTAUTH_URL: string;
       SENDGRID_API_KEY: string;
+      USERS: string;
     }
   }
 }

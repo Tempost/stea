@@ -32,6 +32,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     authorized({ auth }) {
       return !!auth;
     },
+    signIn({ profile }) {
+      if (!profile || !profile.email) return false;
+      return process.env.USERS.split(' ').includes(profile.email.toLowerCase());
+    },
   },
   providers: [
     Google({
