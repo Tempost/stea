@@ -89,7 +89,7 @@ function Home() {
                   </h3>
                   <a
                     className='btn btn-primary btn-sm w-fit gap-2 place-self-center md:btn-xs'
-                    href='/stea_rule_book_2025.pdf'
+                    href='/stea_rule_book_2025.docx'
                     rel='noopener noreferrer'
                     target='_blank'
                   >
