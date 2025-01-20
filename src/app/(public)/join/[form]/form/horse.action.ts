@@ -1,6 +1,7 @@
 'use server';
 
 import {
+  findFirst,
   findMany,
   findUnique,
   update,
@@ -111,9 +112,18 @@ export async function addOwner({
     });
   } else {
     console.info(`Adding new owner ${fullName}...`);
+    const existingOwner = await findFirst('NonMemberHorseOwner', {
+      where: {
+        fullName: {
+          equals: fullName,
+          mode: 'insensitive',
+        },
+      },
+    });
+
     try {
       await upsert('NonMemberHorseOwner', {
-        where: { fullName },
+        where: { fullName: existingOwner ? existingOwner.fullName : fullName },
         create: {
           fullName,
           ...owner,
