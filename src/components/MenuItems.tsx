@@ -27,26 +27,7 @@ export const publicMenuItems: Array<Menu> = [
   },
   {
     name: 'Join',
-    render: ({ name, drawer }) => (
-      <NavLinkSubMenu
-        name={name}
-        drawer={drawer}
-        subLinks={[
-          {
-            href: '/join',
-            text: 'Apply for STEA Membership',
-          },
-          {
-            href: '/benefits',
-            text: 'Member Benefits',
-          },
-          {
-            href: '/scholarship',
-            text: 'STEA Scholarship',
-          },
-        ]}
-      />
-    ),
+    href: '/join',
   },
   {
     href: '/contactus',

@@ -35,11 +35,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 3,
     },
     {
-      url: url + '/benefits',
-      changeFrequency: 'never',
-      priority: 6,
-    },
-    {
       url: url + '/contactus',
       changeFrequency: 'never',
       priority: 7,
