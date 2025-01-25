@@ -52,80 +52,91 @@ export const POST = checkAuth(async (req: NextRequest) => {
     year += 1;
   }
 
-  prisma.$transaction(async tx => {
-    for (const entry of entries) {
-      const relations = {
-        member: {
-          connect: {
-            fullName: entry.fullName,
-          },
-        },
-        horse: {
-          connect: {
-            horseRN: entry.horseRN,
-          },
-        },
-        shows: {
-          connect: {
-            uid: existingShow.uid,
-          },
-        },
-        points: {
-          create: {
-            points: entry.points,
-            place: entry.placing,
-            show: {
-              connect: {
-                uid: existingShow.uid,
-              },
+  await prisma.$transaction(
+    async tx => {
+      for (const entry of entries) {
+        const relations = {
+          member: {
+            connect: {
+              fullName: entry.fullName,
             },
           },
-        },
-      };
-
-      dbActions.push(
-        upsert(
-          'RiderCombo',
-          {
-            where: {
-              memberName_horseName_division_showYear: {
-                memberName: entry.fullName,
-                horseName: entry.horseRN,
-                division: entry.division,
-                showYear: existingShow.showDate.getFullYear(),
-              },
+          horse: {
+            connect: {
+              horseRN: entry.horseRN,
             },
-            update: {
-              division: entry.division,
-              totalPoints: { increment: entry.points },
-              totalShows: { increment: 1 },
-              completedHT: entry.rideType === 'HT',
-              ...relations,
+          },
+          shows: {
+            connect: {
+              uid: existingShow.uid,
             },
+          },
+          points: {
             create: {
-              division: entry.division,
-              totalPoints: entry.points,
-              totalShows: 1,
-              showYear: year,
-              ...relations,
+              points: entry.points,
+              place: entry.placing,
+              show: {
+                connect: {
+                  uid: existingShow.uid,
+                },
+              },
             },
           },
-          tx,
-        ),
-      );
-    }
+        };
 
-    await Promise.all(dbActions).then(() =>
-      update(
-        'Show',
-        {
-          where: { uid: existingShow.uid },
-          data: { reviewed: true },
-        },
-        tx,
-      ),
-    );
-  });
+        dbActions.push(
+          upsert(
+            'RiderCombo',
+            {
+              where: {
+                memberName_horseName_division_showYear: {
+                  memberName: entry.fullName,
+                  horseName: entry.horseRN,
+                  division: entry.division,
+                  showYear: existingShow.showDate.getFullYear(),
+                },
+              },
+              update: {
+                division: entry.division,
+                totalPoints: { increment: entry.points },
+                totalShows: { increment: 1 },
+                completedHT: entry.rideType === 'HT',
+                ...relations,
+              },
+              create: {
+                division: entry.division,
+                totalPoints: entry.points,
+                totalShows: 1,
+                showYear: year,
+                ...relations,
+              },
+            },
+            tx,
+          ),
+        );
+      }
+
+      await Promise.all(dbActions)
+        .then(() =>
+          update(
+            'Show',
+            {
+              where: { uid: existingShow.uid },
+              data: { reviewed: true },
+            },
+            tx,
+          ),
+        )
+        .then(() =>
+          console.log(
+            'Successfully uploaded points for show: ',
+            showUID,
+            existingShow.showName,
+          ),
+        );
+    },
+    { timeout: 20000 },
+  );
 
   revalidateTag('Shows');
   revalidateTag('RiderCombos');
