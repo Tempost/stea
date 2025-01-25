@@ -1,3 +1,4 @@
+import fs from 'fs';
 import { z } from 'zod';
 import { ShowTypeSchema } from '@/server/prisma/zod-generated/inputTypeSchemas/ShowTypeSchema';
 import { DivisionSchema } from '@/server/prisma/zod-generated/inputTypeSchemas/DivisionSchema';
@@ -67,4 +68,38 @@ export function groupByFunc<
     },
     {} as Record<RetType, Array<TObj>>,
   );
+}
+
+/**
+ * Took this syntax from https://github.com/MattMorgis/async-stream-generator
+ * Didn't find proper documentation: how come you can iterate on a Node.js ReadableStream via "of" operator?
+ * What's "for await"?
+ */
+export async function* nodeStreamToIterator(stream: fs.ReadStream) {
+  for await (const chunk of stream) {
+    yield chunk;
+  }
+}
+
+/**
+ * Taken from Next.js doc
+ * https://nextjs.org/docs/app/building-your-application/routing/router-handlers#streaming
+ * Itself taken from mozilla doc
+ * https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream#convert_async_iterator_to_stream
+ */
+// @ts-expect-error acceptable use of any
+export function iteratorToStream(iterator): ReadableStream {
+  return new ReadableStream({
+    async pull(controller) {
+      const { value, done } = await iterator.next();
+
+      if (done) {
+        controller.close();
+      } else {
+        // conversion to Uint8Array is important here otherwise the stream is not readable
+        // @see https://github.com/vercel/next.js/issues/38736
+        controller.enqueue(new Uint8Array(value));
+      }
+    },
+  });
 }

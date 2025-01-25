@@ -127,19 +127,19 @@ export const POST = checkAuth(async (req: NextRequest) => {
             tx,
           ),
         )
-        .then(() =>
+        .then(() => {
+          revalidateTag('Shows');
+          revalidateTag('RiderCombos');
           console.log(
             'Successfully uploaded points for show: ',
             showUID,
             existingShow.showName,
-          ),
-        );
+          );
+        });
     },
     { timeout: 20000 },
   );
 
-  revalidateTag('Shows');
-  revalidateTag('RiderCombos');
   return NextResponse.json(
     { success: true, message: 'Successfully updated points.' },
     { status: 200 },

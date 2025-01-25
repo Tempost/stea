@@ -5,6 +5,7 @@ import { stringify } from 'csv';
 import { NextRequest, NextResponse } from 'next/server';
 import { ReadableOptions } from 'stream';
 import { checkAuth } from '@/auth';
+import { iteratorToStream, nodeStreamToIterator } from '@/server/utils';
 
 export const GET = checkAuth(async (req: NextRequest) => {
   const year = req.nextUrl.searchParams.get('year');
@@ -78,21 +79,20 @@ async function getPointsForYear(showYear: number) {
   }
 
   const filename = `Points_For_${showYear}.csv`;
-  const path = `/tmp/${filename}`;
+  const filePath = `/tmp/${filename}`;
 
-  await new Promise(resolve => {
-    riderEndofYear.forEach(row => CSV.write(row));
-
-    const writeStream = fs.createWriteStream(path);
-    CSV.pipe(writeStream).on('close', resolve);
+  await new Promise(res => {
+    const writeStream = fs.createWriteStream(filePath);
+    CSV.pipe(writeStream).on('close', () => res(true));
     CSV.on('end', () => {
-      writeStream.close();
+      writeStream.end();
     });
+    riderEndofYear.forEach(row => CSV.write(row));
     CSV.end();
   });
 
-  const stats = await fs.promises.stat(path);
-  const data = streamFile(path);
+  const stats = await fs.promises.stat(filePath);
+  const data = streamFile(filePath);
 
   return new NextResponse(data, {
     headers: new Headers({
@@ -103,26 +103,9 @@ async function getPointsForYear(showYear: number) {
   });
 }
 
-function streamFile(
-  path: string,
-  options?: ReadableOptions,
-): ReadableStream<Uint8Array> {
+function streamFile(path: string, options?: ReadableOptions) {
   const downloadStream = fs.createReadStream(path, options);
-
-  return new ReadableStream({
-    start(controller) {
-      downloadStream.on('data', (chunk: Buffer) =>
-        controller.enqueue(new Uint8Array(chunk)),
-      );
-      downloadStream.on('end', () => controller.close());
-      downloadStream.on('error', (error: NodeJS.ErrnoException) =>
-        controller.error(error),
-      );
-    },
-    cancel() {
-      downloadStream.destroy();
-    },
-  });
+  return iteratorToStream(nodeStreamToIterator(downloadStream));
 }
 
 async function getPointsForShow(showUid: string) {
@@ -167,21 +150,21 @@ async function getPointsForShow(showUid: string) {
 
   const showDate = points[0].show.showDate;
   const filename = `${points[0].show.showName}-${showDate.getMonth() + 1}-${showDate.getDate()}-${showDate.getFullYear()}.csv`;
-  const path = `/tmp/${filename}`;
+  const filePath = `/tmp/${filename}`;
 
-  await new Promise(resolve => {
-    points.forEach(row => CSV.write(row));
-
-    const writeStream = fs.createWriteStream(path);
-    CSV.pipe(writeStream).on('close', resolve);
+  await new Promise(res => {
+    const writeStream = fs.createWriteStream(filePath);
+    CSV.pipe(writeStream).on('close', () => res(true));
     CSV.on('end', () => {
       writeStream.close();
     });
+    points.forEach(row => CSV.write(row));
+
     CSV.end();
   });
 
-  const stats = await fs.promises.stat(path);
-  const data = streamFile(path);
+  const stats = await fs.promises.stat(filePath);
+  const data = streamFile(filePath);
 
   return new NextResponse(data, {
     headers: new Headers({

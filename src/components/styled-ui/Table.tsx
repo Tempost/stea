@@ -125,7 +125,11 @@ function Table<TData>({
             </thead>
 
             {loading ? (
-              'Loading...'
+              <tbody>
+                <tr>
+                  <td>Loading...</td>
+                </tr>
+              </tbody>
             ) : (
               <tbody>
                 {table.getRowModel().rows.map(row => (
