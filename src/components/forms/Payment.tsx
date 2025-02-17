@@ -12,13 +12,14 @@ import { FormType } from '@/types/common';
 import { costs } from '@/utils/costs';
 import { cn } from '@/utils/helpers';
 import { MemberForm, OwnerHorseForm } from '@/utils/zodschemas';
+import { Button } from '../styled-ui/Button';
+import PayPalButton from '../styled-ui/PayPalButton';
+import Alert from './Alert';
 import {
   PayPalScriptProvider,
   ReactPayPalScriptOptions,
 } from '@paypal/react-paypal-js';
-import { Button } from '../styled-ui/Button';
-import PayPalButton from '../styled-ui/PayPalButton';
-import Alert from './Alert';
+import { randomUUID } from 'crypto';
 
 interface PaymentProps extends PropsWithChildren {
   showPayment: boolean;
@@ -32,7 +33,7 @@ interface PaymentProps extends PropsWithChildren {
 }
 
 const initOptions: ReactPayPalScriptOptions = {
-  'client-id':
+  clientId:
     process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || process.env.PAYPAL_CLIENT_ID,
   currency: 'USD',
   intent: 'capture',
@@ -70,6 +71,12 @@ function Payment({
     amountOwed += annualCount * costs.Annual['horse'];
   }
 
+  function generateUUID() {
+    return location.hostname !== 'localhost'
+      ? randomUUID()
+      : window.URL.createObjectURL(new Blob([])).split('/').pop();
+  }
+
   function createPurchaseUnits(data: PaymentProps['formState']['data']) {
     const purchase_units: Array<PurchaseUnit> = [];
     if (!data) return purchase_units;
@@ -77,6 +84,7 @@ function Payment({
 
     if ('memberType' in member) {
       purchase_units.push({
+        reference_id: generateUUID(),
         description: `${member.memberStatus} membership for ${member.firstName} ${member.lastName}`,
         amount: {
           currency_code: 'USD',
@@ -91,6 +99,7 @@ function Payment({
     if (horses) {
       const horsePU = horses.map(horse => {
         return {
+          reference_id: generateUUID(),
           description: `${horse.regType} registration for ${horse.horseRN}`,
           amount: {
             currency_code: 'USD',

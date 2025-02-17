@@ -18,8 +18,8 @@
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
     "@neondatabase/serverless": "^0.9.5",
-    "@paypal/paypal-js": "^5.1.6",
-    "@paypal/react-paypal-js": "^7.8.3",
+    "@paypal/paypal-js": "^8.2.0",
+    "@paypal/react-paypal-js": "^8.8.2",
     "@prisma/adapter-neon": "^6.1.0",
     "@prisma/client": "6.1.0",
     "@sendgrid/mail": "^7.7.0",
