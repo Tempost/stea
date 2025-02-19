@@ -41,7 +41,7 @@ export const MemberSelectSchema: z.ZodType<Prisma.MemberSelect> = z.object({
 
 export const MemberUpsertArgsSchema: z.ZodType<Prisma.MemberUpsertArgs> = z.object({
   select: MemberSelectSchema.optional(),
-  include: MemberIncludeSchema.optional(),
+  include: z.lazy(() => MemberIncludeSchema).optional(),
   where: MemberWhereUniqueInputSchema,
   create: z.union([ MemberCreateInputSchema,MemberUncheckedCreateInputSchema ]),
   update: z.union([ MemberUpdateInputSchema,MemberUncheckedUpdateInputSchema ]),

@@ -30,7 +30,7 @@ export const HorseSelectSchema: z.ZodType<Prisma.HorseSelect> = z.object({
 
 export const HorseFindFirstOrThrowArgsSchema: z.ZodType<Prisma.HorseFindFirstOrThrowArgs> = z.object({
   select: HorseSelectSchema.optional(),
-  include: HorseIncludeSchema.optional(),
+  include: z.lazy(() => HorseIncludeSchema).optional(),
   where: HorseWhereInputSchema.optional(),
   orderBy: z.union([ HorseOrderByWithRelationInputSchema.array(),HorseOrderByWithRelationInputSchema ]).optional(),
   cursor: HorseWhereUniqueInputSchema.optional(),

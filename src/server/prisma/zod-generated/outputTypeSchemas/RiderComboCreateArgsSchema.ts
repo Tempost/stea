@@ -32,7 +32,7 @@ export const RiderComboSelectSchema: z.ZodType<Prisma.RiderComboSelect> = z.obje
 
 export const RiderComboCreateArgsSchema: z.ZodType<Prisma.RiderComboCreateArgs> = z.object({
   select: RiderComboSelectSchema.optional(),
-  include: RiderComboIncludeSchema.optional(),
+  include: z.lazy(() => RiderComboIncludeSchema).optional(),
   data: z.union([ RiderComboCreateInputSchema,RiderComboUncheckedCreateInputSchema ]),
 }).strict() ;
 

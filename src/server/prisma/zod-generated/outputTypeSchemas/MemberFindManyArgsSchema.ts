@@ -40,7 +40,7 @@ export const MemberSelectSchema: z.ZodType<Prisma.MemberSelect> = z.object({
 
 export const MemberFindManyArgsSchema: z.ZodType<Prisma.MemberFindManyArgs> = z.object({
   select: MemberSelectSchema.optional(),
-  include: MemberIncludeSchema.optional(),
+  include: z.lazy(() => MemberIncludeSchema).optional(),
   where: MemberWhereInputSchema.optional(),
   orderBy: z.union([ MemberOrderByWithRelationInputSchema.array(),MemberOrderByWithRelationInputSchema ]).optional(),
   cursor: MemberWhereUniqueInputSchema.optional(),

@@ -19,7 +19,7 @@ export const PointsSelectSchema: z.ZodType<Prisma.PointsSelect> = z.object({
 
 export const PointsDeleteArgsSchema: z.ZodType<Prisma.PointsDeleteArgs> = z.object({
   select: PointsSelectSchema.optional(),
-  include: PointsIncludeSchema.optional(),
+  include: z.lazy(() => PointsIncludeSchema).optional(),
   where: PointsWhereUniqueInputSchema,
 }).strict() ;
 

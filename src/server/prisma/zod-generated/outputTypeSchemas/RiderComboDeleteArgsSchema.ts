@@ -31,7 +31,7 @@ export const RiderComboSelectSchema: z.ZodType<Prisma.RiderComboSelect> = z.obje
 
 export const RiderComboDeleteArgsSchema: z.ZodType<Prisma.RiderComboDeleteArgs> = z.object({
   select: RiderComboSelectSchema.optional(),
-  include: RiderComboIncludeSchema.optional(),
+  include: z.lazy(() => RiderComboIncludeSchema).optional(),
   where: RiderComboWhereUniqueInputSchema,
 }).strict() ;
 

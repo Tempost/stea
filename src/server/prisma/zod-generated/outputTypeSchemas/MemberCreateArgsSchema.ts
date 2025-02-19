@@ -38,7 +38,7 @@ export const MemberSelectSchema: z.ZodType<Prisma.MemberSelect> = z.object({
 
 export const MemberCreateArgsSchema: z.ZodType<Prisma.MemberCreateArgs> = z.object({
   select: MemberSelectSchema.optional(),
-  include: MemberIncludeSchema.optional(),
+  include: z.lazy(() => MemberIncludeSchema).optional(),
   data: z.union([ MemberCreateInputSchema,MemberUncheckedCreateInputSchema ]),
 }).strict() ;
 

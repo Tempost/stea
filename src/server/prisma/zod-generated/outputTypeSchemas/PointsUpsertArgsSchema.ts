@@ -23,7 +23,7 @@ export const PointsSelectSchema: z.ZodType<Prisma.PointsSelect> = z.object({
 
 export const PointsUpsertArgsSchema: z.ZodType<Prisma.PointsUpsertArgs> = z.object({
   select: PointsSelectSchema.optional(),
-  include: PointsIncludeSchema.optional(),
+  include: z.lazy(() => PointsIncludeSchema).optional(),
   where: PointsWhereUniqueInputSchema,
   create: z.union([ PointsCreateInputSchema,PointsUncheckedCreateInputSchema ]),
   update: z.union([ PointsUpdateInputSchema,PointsUncheckedUpdateInputSchema ]),

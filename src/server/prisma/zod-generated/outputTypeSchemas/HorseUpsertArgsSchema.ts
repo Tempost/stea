@@ -31,7 +31,7 @@ export const HorseSelectSchema: z.ZodType<Prisma.HorseSelect> = z.object({
 
 export const HorseUpsertArgsSchema: z.ZodType<Prisma.HorseUpsertArgs> = z.object({
   select: HorseSelectSchema.optional(),
-  include: HorseIncludeSchema.optional(),
+  include: z.lazy(() => HorseIncludeSchema).optional(),
   where: HorseWhereUniqueInputSchema,
   create: z.union([ HorseCreateInputSchema,HorseUncheckedCreateInputSchema ]),
   update: z.union([ HorseUpdateInputSchema,HorseUncheckedUpdateInputSchema ]),

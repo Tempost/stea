@@ -60,7 +60,7 @@ export { NonMemberHorseOwnerCreateManyAndReturnArgsSchema } from './NonMemberHor
 export { NonMemberHorseOwnerDeleteArgsSchema } from './NonMemberHorseOwnerDeleteArgsSchema';
 export { NonMemberHorseOwnerUpdateArgsSchema } from './NonMemberHorseOwnerUpdateArgsSchema';
 export { NonMemberHorseOwnerUpdateManyArgsSchema } from './NonMemberHorseOwnerUpdateManyArgsSchema';
-export { updateManyNonMemberHorseOwnerCreateManyAndReturnArgsSchema } from './updateManyNonMemberHorseOwnerCreateManyAndReturnArgsSchema';
+export { NonMemberHorseOwnerUpdateManyAndReturnArgsSchema } from './NonMemberHorseOwnerUpdateManyAndReturnArgsSchema';
 export { NonMemberHorseOwnerDeleteManyArgsSchema } from './NonMemberHorseOwnerDeleteManyArgsSchema';
 export { MemberCreateArgsSchema } from './MemberCreateArgsSchema';
 export { MemberUpsertArgsSchema } from './MemberUpsertArgsSchema';
@@ -69,7 +69,7 @@ export { MemberCreateManyAndReturnArgsSchema } from './MemberCreateManyAndReturn
 export { MemberDeleteArgsSchema } from './MemberDeleteArgsSchema';
 export { MemberUpdateArgsSchema } from './MemberUpdateArgsSchema';
 export { MemberUpdateManyArgsSchema } from './MemberUpdateManyArgsSchema';
-export { updateManyMemberCreateManyAndReturnArgsSchema } from './updateManyMemberCreateManyAndReturnArgsSchema';
+export { MemberUpdateManyAndReturnArgsSchema } from './MemberUpdateManyAndReturnArgsSchema';
 export { MemberDeleteManyArgsSchema } from './MemberDeleteManyArgsSchema';
 export { BoardmemberCreateArgsSchema } from './BoardmemberCreateArgsSchema';
 export { BoardmemberUpsertArgsSchema } from './BoardmemberUpsertArgsSchema';
@@ -78,7 +78,7 @@ export { BoardmemberCreateManyAndReturnArgsSchema } from './BoardmemberCreateMan
 export { BoardmemberDeleteArgsSchema } from './BoardmemberDeleteArgsSchema';
 export { BoardmemberUpdateArgsSchema } from './BoardmemberUpdateArgsSchema';
 export { BoardmemberUpdateManyArgsSchema } from './BoardmemberUpdateManyArgsSchema';
-export { updateManyBoardmemberCreateManyAndReturnArgsSchema } from './updateManyBoardmemberCreateManyAndReturnArgsSchema';
+export { BoardmemberUpdateManyAndReturnArgsSchema } from './BoardmemberUpdateManyAndReturnArgsSchema';
 export { BoardmemberDeleteManyArgsSchema } from './BoardmemberDeleteManyArgsSchema';
 export { HorseCreateArgsSchema } from './HorseCreateArgsSchema';
 export { HorseUpsertArgsSchema } from './HorseUpsertArgsSchema';
@@ -87,7 +87,7 @@ export { HorseCreateManyAndReturnArgsSchema } from './HorseCreateManyAndReturnAr
 export { HorseDeleteArgsSchema } from './HorseDeleteArgsSchema';
 export { HorseUpdateArgsSchema } from './HorseUpdateArgsSchema';
 export { HorseUpdateManyArgsSchema } from './HorseUpdateManyArgsSchema';
-export { updateManyHorseCreateManyAndReturnArgsSchema } from './updateManyHorseCreateManyAndReturnArgsSchema';
+export { HorseUpdateManyAndReturnArgsSchema } from './HorseUpdateManyAndReturnArgsSchema';
 export { HorseDeleteManyArgsSchema } from './HorseDeleteManyArgsSchema';
 export { RiderComboCreateArgsSchema } from './RiderComboCreateArgsSchema';
 export { RiderComboUpsertArgsSchema } from './RiderComboUpsertArgsSchema';
@@ -96,7 +96,7 @@ export { RiderComboCreateManyAndReturnArgsSchema } from './RiderComboCreateManyA
 export { RiderComboDeleteArgsSchema } from './RiderComboDeleteArgsSchema';
 export { RiderComboUpdateArgsSchema } from './RiderComboUpdateArgsSchema';
 export { RiderComboUpdateManyArgsSchema } from './RiderComboUpdateManyArgsSchema';
-export { updateManyRiderComboCreateManyAndReturnArgsSchema } from './updateManyRiderComboCreateManyAndReturnArgsSchema';
+export { RiderComboUpdateManyAndReturnArgsSchema } from './RiderComboUpdateManyAndReturnArgsSchema';
 export { RiderComboDeleteManyArgsSchema } from './RiderComboDeleteManyArgsSchema';
 export { PointsCreateArgsSchema } from './PointsCreateArgsSchema';
 export { PointsUpsertArgsSchema } from './PointsUpsertArgsSchema';
@@ -105,7 +105,7 @@ export { PointsCreateManyAndReturnArgsSchema } from './PointsCreateManyAndReturn
 export { PointsDeleteArgsSchema } from './PointsDeleteArgsSchema';
 export { PointsUpdateArgsSchema } from './PointsUpdateArgsSchema';
 export { PointsUpdateManyArgsSchema } from './PointsUpdateManyArgsSchema';
-export { updateManyPointsCreateManyAndReturnArgsSchema } from './updateManyPointsCreateManyAndReturnArgsSchema';
+export { PointsUpdateManyAndReturnArgsSchema } from './PointsUpdateManyAndReturnArgsSchema';
 export { PointsDeleteManyArgsSchema } from './PointsDeleteManyArgsSchema';
 export { ShowCreateArgsSchema } from './ShowCreateArgsSchema';
 export { ShowUpsertArgsSchema } from './ShowUpsertArgsSchema';
@@ -114,5 +114,5 @@ export { ShowCreateManyAndReturnArgsSchema } from './ShowCreateManyAndReturnArgs
 export { ShowDeleteArgsSchema } from './ShowDeleteArgsSchema';
 export { ShowUpdateArgsSchema } from './ShowUpdateArgsSchema';
 export { ShowUpdateManyArgsSchema } from './ShowUpdateManyArgsSchema';
-export { updateManyShowCreateManyAndReturnArgsSchema } from './updateManyShowCreateManyAndReturnArgsSchema';
+export { ShowUpdateManyAndReturnArgsSchema } from './ShowUpdateManyAndReturnArgsSchema';
 export { ShowDeleteManyArgsSchema } from './ShowDeleteManyArgsSchema';

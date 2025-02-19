@@ -22,7 +22,7 @@ export const NonMemberHorseOwnerSelectSchema: z.ZodType<Prisma.NonMemberHorseOwn
 
 export const NonMemberHorseOwnerFindUniqueArgsSchema: z.ZodType<Prisma.NonMemberHorseOwnerFindUniqueArgs> = z.object({
   select: NonMemberHorseOwnerSelectSchema.optional(),
-  include: NonMemberHorseOwnerIncludeSchema.optional(),
+  include: z.lazy(() => NonMemberHorseOwnerIncludeSchema).optional(),
   where: NonMemberHorseOwnerWhereUniqueInputSchema,
 }).strict() ;
 

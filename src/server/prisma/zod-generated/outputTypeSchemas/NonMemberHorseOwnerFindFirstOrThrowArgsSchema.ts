@@ -25,7 +25,7 @@ export const NonMemberHorseOwnerSelectSchema: z.ZodType<Prisma.NonMemberHorseOwn
 
 export const NonMemberHorseOwnerFindFirstOrThrowArgsSchema: z.ZodType<Prisma.NonMemberHorseOwnerFindFirstOrThrowArgs> = z.object({
   select: NonMemberHorseOwnerSelectSchema.optional(),
-  include: NonMemberHorseOwnerIncludeSchema.optional(),
+  include: z.lazy(() => NonMemberHorseOwnerIncludeSchema).optional(),
   where: NonMemberHorseOwnerWhereInputSchema.optional(),
   orderBy: z.union([ NonMemberHorseOwnerOrderByWithRelationInputSchema.array(),NonMemberHorseOwnerOrderByWithRelationInputSchema ]).optional(),
   cursor: NonMemberHorseOwnerWhereUniqueInputSchema.optional(),

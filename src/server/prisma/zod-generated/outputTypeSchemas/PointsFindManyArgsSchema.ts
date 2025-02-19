@@ -22,7 +22,7 @@ export const PointsSelectSchema: z.ZodType<Prisma.PointsSelect> = z.object({
 
 export const PointsFindManyArgsSchema: z.ZodType<Prisma.PointsFindManyArgs> = z.object({
   select: PointsSelectSchema.optional(),
-  include: PointsIncludeSchema.optional(),
+  include: z.lazy(() => PointsIncludeSchema).optional(),
   where: PointsWhereInputSchema.optional(),
   orderBy: z.union([ PointsOrderByWithRelationInputSchema.array(),PointsOrderByWithRelationInputSchema ]).optional(),
   cursor: PointsWhereUniqueInputSchema.optional(),

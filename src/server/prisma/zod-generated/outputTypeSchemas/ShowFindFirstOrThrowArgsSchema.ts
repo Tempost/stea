@@ -28,7 +28,7 @@ export const ShowSelectSchema: z.ZodType<Prisma.ShowSelect> = z.object({
 
 export const ShowFindFirstOrThrowArgsSchema: z.ZodType<Prisma.ShowFindFirstOrThrowArgs> = z.object({
   select: ShowSelectSchema.optional(),
-  include: ShowIncludeSchema.optional(),
+  include: z.lazy(() => ShowIncludeSchema).optional(),
   where: ShowWhereInputSchema.optional(),
   orderBy: z.union([ ShowOrderByWithRelationInputSchema.array(),ShowOrderByWithRelationInputSchema ]).optional(),
   cursor: ShowWhereUniqueInputSchema.optional(),

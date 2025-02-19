@@ -4,10 +4,10 @@ import { MemberUpdateManyMutationInputSchema } from '../inputTypeSchemas/MemberU
 import { MemberUncheckedUpdateManyInputSchema } from '../inputTypeSchemas/MemberUncheckedUpdateManyInputSchema'
 import { MemberWhereInputSchema } from '../inputTypeSchemas/MemberWhereInputSchema'
 
-export const updateManyMemberCreateManyAndReturnArgsSchema: z.ZodType<Prisma.updateManyMemberCreateManyAndReturnArgs> = z.object({
+export const MemberUpdateManyAndReturnArgsSchema: z.ZodType<Prisma.MemberUpdateManyAndReturnArgs> = z.object({
   data: z.union([ MemberUpdateManyMutationInputSchema,MemberUncheckedUpdateManyInputSchema ]),
   where: MemberWhereInputSchema.optional(),
   limit: z.number().optional(),
 }).strict() ;
 
-export default updateManyMemberCreateManyAndReturnArgsSchema;
+export default MemberUpdateManyAndReturnArgsSchema;

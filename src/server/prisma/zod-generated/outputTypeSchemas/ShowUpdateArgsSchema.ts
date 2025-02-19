@@ -27,7 +27,7 @@ export const ShowSelectSchema: z.ZodType<Prisma.ShowSelect> = z.object({
 
 export const ShowUpdateArgsSchema: z.ZodType<Prisma.ShowUpdateArgs> = z.object({
   select: ShowSelectSchema.optional(),
-  include: ShowIncludeSchema.optional(),
+  include: z.lazy(() => ShowIncludeSchema).optional(),
   data: z.union([ ShowUpdateInputSchema,ShowUncheckedUpdateInputSchema ]),
   where: ShowWhereUniqueInputSchema,
 }).strict() ;

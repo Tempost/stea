@@ -35,7 +35,7 @@ export const RiderComboSelectSchema: z.ZodType<Prisma.RiderComboSelect> = z.obje
 
 export const RiderComboUpsertArgsSchema: z.ZodType<Prisma.RiderComboUpsertArgs> = z.object({
   select: RiderComboSelectSchema.optional(),
-  include: RiderComboIncludeSchema.optional(),
+  include: z.lazy(() => RiderComboIncludeSchema).optional(),
   where: RiderComboWhereUniqueInputSchema,
   create: z.union([ RiderComboCreateInputSchema,RiderComboUncheckedCreateInputSchema ]),
   update: z.union([ RiderComboUpdateInputSchema,RiderComboUncheckedUpdateInputSchema ]),

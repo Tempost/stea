@@ -4,10 +4,10 @@ import { BoardmemberUpdateManyMutationInputSchema } from '../inputTypeSchemas/Bo
 import { BoardmemberUncheckedUpdateManyInputSchema } from '../inputTypeSchemas/BoardmemberUncheckedUpdateManyInputSchema'
 import { BoardmemberWhereInputSchema } from '../inputTypeSchemas/BoardmemberWhereInputSchema'
 
-export const updateManyBoardmemberCreateManyAndReturnArgsSchema: z.ZodType<Prisma.updateManyBoardmemberCreateManyAndReturnArgs> = z.object({
+export const BoardmemberUpdateManyAndReturnArgsSchema: z.ZodType<Prisma.BoardmemberUpdateManyAndReturnArgs> = z.object({
   data: z.union([ BoardmemberUpdateManyMutationInputSchema,BoardmemberUncheckedUpdateManyInputSchema ]),
   where: BoardmemberWhereInputSchema.optional(),
   limit: z.number().optional(),
 }).strict() ;
 
-export default updateManyBoardmemberCreateManyAndReturnArgsSchema;
+export default BoardmemberUpdateManyAndReturnArgsSchema;

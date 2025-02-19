@@ -26,7 +26,7 @@ export const NonMemberHorseOwnerSelectSchema: z.ZodType<Prisma.NonMemberHorseOwn
 
 export const NonMemberHorseOwnerUpsertArgsSchema: z.ZodType<Prisma.NonMemberHorseOwnerUpsertArgs> = z.object({
   select: NonMemberHorseOwnerSelectSchema.optional(),
-  include: NonMemberHorseOwnerIncludeSchema.optional(),
+  include: z.lazy(() => NonMemberHorseOwnerIncludeSchema).optional(),
   where: NonMemberHorseOwnerWhereUniqueInputSchema,
   create: z.union([ NonMemberHorseOwnerCreateInputSchema,NonMemberHorseOwnerUncheckedCreateInputSchema ]),
   update: z.union([ NonMemberHorseOwnerUpdateInputSchema,NonMemberHorseOwnerUncheckedUpdateInputSchema ]),

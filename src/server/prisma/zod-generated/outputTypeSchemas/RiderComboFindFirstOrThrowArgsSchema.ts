@@ -34,7 +34,7 @@ export const RiderComboSelectSchema: z.ZodType<Prisma.RiderComboSelect> = z.obje
 
 export const RiderComboFindFirstOrThrowArgsSchema: z.ZodType<Prisma.RiderComboFindFirstOrThrowArgs> = z.object({
   select: RiderComboSelectSchema.optional(),
-  include: RiderComboIncludeSchema.optional(),
+  include: z.lazy(() => RiderComboIncludeSchema).optional(),
   where: RiderComboWhereInputSchema.optional(),
   orderBy: z.union([ RiderComboOrderByWithRelationInputSchema.array(),RiderComboOrderByWithRelationInputSchema ]).optional(),
   cursor: RiderComboWhereUniqueInputSchema.optional(),
