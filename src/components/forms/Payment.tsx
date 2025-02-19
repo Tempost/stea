@@ -19,7 +19,6 @@ import {
   PayPalScriptProvider,
   ReactPayPalScriptOptions,
 } from '@paypal/react-paypal-js';
-import { randomUUID } from 'crypto';
 
 interface PaymentProps extends PropsWithChildren {
   showPayment: boolean;
@@ -73,7 +72,7 @@ function Payment({
 
   function generateUUID() {
     return location.hostname !== 'localhost'
-      ? randomUUID()
+      ? window.crypto.randomUUID()
       : window.URL.createObjectURL(new Blob([])).split('/').pop();
   }
 
