@@ -4,6 +4,7 @@ import { RiderComboWhereInputSchema } from '../inputTypeSchemas/RiderComboWhereI
 
 export const RiderComboDeleteManyArgsSchema: z.ZodType<Prisma.RiderComboDeleteManyArgs> = z.object({
   where: RiderComboWhereInputSchema.optional(),
+  limit: z.number().optional(),
 }).strict() ;
 
 export default RiderComboDeleteManyArgsSchema;

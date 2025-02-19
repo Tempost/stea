@@ -4,10 +4,10 @@ import { ShowUpdateManyMutationInputSchema } from '../inputTypeSchemas/ShowUpdat
 import { ShowUncheckedUpdateManyInputSchema } from '../inputTypeSchemas/ShowUncheckedUpdateManyInputSchema'
 import { ShowWhereInputSchema } from '../inputTypeSchemas/ShowWhereInputSchema'
 
-export const ShowUpdateManyArgsSchema: z.ZodType<Prisma.ShowUpdateManyArgs> = z.object({
+export const updateManyShowCreateManyAndReturnArgsSchema: z.ZodType<Prisma.updateManyShowCreateManyAndReturnArgs> = z.object({
   data: z.union([ ShowUpdateManyMutationInputSchema,ShowUncheckedUpdateManyInputSchema ]),
   where: ShowWhereInputSchema.optional(),
   limit: z.number().optional(),
 }).strict() ;
 
-export default ShowUpdateManyArgsSchema;
+export default updateManyShowCreateManyAndReturnArgsSchema;

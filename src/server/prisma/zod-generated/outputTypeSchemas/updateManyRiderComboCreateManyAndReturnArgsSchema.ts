@@ -4,10 +4,10 @@ import { RiderComboUpdateManyMutationInputSchema } from '../inputTypeSchemas/Rid
 import { RiderComboUncheckedUpdateManyInputSchema } from '../inputTypeSchemas/RiderComboUncheckedUpdateManyInputSchema'
 import { RiderComboWhereInputSchema } from '../inputTypeSchemas/RiderComboWhereInputSchema'
 
-export const RiderComboUpdateManyArgsSchema: z.ZodType<Prisma.RiderComboUpdateManyArgs> = z.object({
+export const updateManyRiderComboCreateManyAndReturnArgsSchema: z.ZodType<Prisma.updateManyRiderComboCreateManyAndReturnArgs> = z.object({
   data: z.union([ RiderComboUpdateManyMutationInputSchema,RiderComboUncheckedUpdateManyInputSchema ]),
   where: RiderComboWhereInputSchema.optional(),
   limit: z.number().optional(),
 }).strict() ;
 
-export default RiderComboUpdateManyArgsSchema;
+export default updateManyRiderComboCreateManyAndReturnArgsSchema;

@@ -4,10 +4,10 @@ import { PointsUpdateManyMutationInputSchema } from '../inputTypeSchemas/PointsU
 import { PointsUncheckedUpdateManyInputSchema } from '../inputTypeSchemas/PointsUncheckedUpdateManyInputSchema'
 import { PointsWhereInputSchema } from '../inputTypeSchemas/PointsWhereInputSchema'
 
-export const PointsUpdateManyArgsSchema: z.ZodType<Prisma.PointsUpdateManyArgs> = z.object({
+export const updateManyPointsCreateManyAndReturnArgsSchema: z.ZodType<Prisma.updateManyPointsCreateManyAndReturnArgs> = z.object({
   data: z.union([ PointsUpdateManyMutationInputSchema,PointsUncheckedUpdateManyInputSchema ]),
   where: PointsWhereInputSchema.optional(),
   limit: z.number().optional(),
 }).strict() ;
 
-export default PointsUpdateManyArgsSchema;
+export default updateManyPointsCreateManyAndReturnArgsSchema;

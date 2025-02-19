@@ -4,10 +4,10 @@ import { HorseUpdateManyMutationInputSchema } from '../inputTypeSchemas/HorseUpd
 import { HorseUncheckedUpdateManyInputSchema } from '../inputTypeSchemas/HorseUncheckedUpdateManyInputSchema'
 import { HorseWhereInputSchema } from '../inputTypeSchemas/HorseWhereInputSchema'
 
-export const HorseUpdateManyArgsSchema: z.ZodType<Prisma.HorseUpdateManyArgs> = z.object({
+export const updateManyHorseCreateManyAndReturnArgsSchema: z.ZodType<Prisma.updateManyHorseCreateManyAndReturnArgs> = z.object({
   data: z.union([ HorseUpdateManyMutationInputSchema,HorseUncheckedUpdateManyInputSchema ]),
   where: HorseWhereInputSchema.optional(),
   limit: z.number().optional(),
 }).strict() ;
 
-export default HorseUpdateManyArgsSchema;
+export default updateManyHorseCreateManyAndReturnArgsSchema;

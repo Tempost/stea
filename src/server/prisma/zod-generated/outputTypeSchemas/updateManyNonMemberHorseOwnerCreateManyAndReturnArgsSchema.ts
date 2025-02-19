@@ -4,10 +4,10 @@ import { NonMemberHorseOwnerUpdateManyMutationInputSchema } from '../inputTypeSc
 import { NonMemberHorseOwnerUncheckedUpdateManyInputSchema } from '../inputTypeSchemas/NonMemberHorseOwnerUncheckedUpdateManyInputSchema'
 import { NonMemberHorseOwnerWhereInputSchema } from '../inputTypeSchemas/NonMemberHorseOwnerWhereInputSchema'
 
-export const NonMemberHorseOwnerUpdateManyArgsSchema: z.ZodType<Prisma.NonMemberHorseOwnerUpdateManyArgs> = z.object({
+export const updateManyNonMemberHorseOwnerCreateManyAndReturnArgsSchema: z.ZodType<Prisma.updateManyNonMemberHorseOwnerCreateManyAndReturnArgs> = z.object({
   data: z.union([ NonMemberHorseOwnerUpdateManyMutationInputSchema,NonMemberHorseOwnerUncheckedUpdateManyInputSchema ]),
   where: NonMemberHorseOwnerWhereInputSchema.optional(),
   limit: z.number().optional(),
 }).strict() ;
 
-export default NonMemberHorseOwnerUpdateManyArgsSchema;
+export default updateManyNonMemberHorseOwnerCreateManyAndReturnArgsSchema;

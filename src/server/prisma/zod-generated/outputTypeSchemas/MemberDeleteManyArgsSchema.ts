@@ -4,6 +4,7 @@ import { MemberWhereInputSchema } from '../inputTypeSchemas/MemberWhereInputSche
 
 export const MemberDeleteManyArgsSchema: z.ZodType<Prisma.MemberDeleteManyArgs> = z.object({
   where: MemberWhereInputSchema.optional(),
+  limit: z.number().optional(),
 }).strict() ;
 
 export default MemberDeleteManyArgsSchema;

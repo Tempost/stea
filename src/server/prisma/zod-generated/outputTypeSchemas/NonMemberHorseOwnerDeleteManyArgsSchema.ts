@@ -4,6 +4,7 @@ import { NonMemberHorseOwnerWhereInputSchema } from '../inputTypeSchemas/NonMemb
 
 export const NonMemberHorseOwnerDeleteManyArgsSchema: z.ZodType<Prisma.NonMemberHorseOwnerDeleteManyArgs> = z.object({
   where: NonMemberHorseOwnerWhereInputSchema.optional(),
+  limit: z.number().optional(),
 }).strict() ;
 
 export default NonMemberHorseOwnerDeleteManyArgsSchema;

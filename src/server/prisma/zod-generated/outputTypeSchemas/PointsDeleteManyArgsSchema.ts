@@ -4,6 +4,7 @@ import { PointsWhereInputSchema } from '../inputTypeSchemas/PointsWhereInputSche
 
 export const PointsDeleteManyArgsSchema: z.ZodType<Prisma.PointsDeleteManyArgs> = z.object({
   where: PointsWhereInputSchema.optional(),
+  limit: z.number().optional(),
 }).strict() ;
 
 export default PointsDeleteManyArgsSchema;
