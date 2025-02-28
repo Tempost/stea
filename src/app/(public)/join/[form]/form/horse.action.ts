@@ -3,7 +3,6 @@
 import {
   findFirst,
   findMany,
-  findUnique,
   update,
   upsert,
 } from '@/server/prisma/queries/shared';
@@ -33,6 +32,7 @@ export async function checkForExistingHorses(
     where: {
       horseRN: {
         in: horses.map(horse => horse.horseRN),
+        mode: 'insensitive',
       },
     },
   });
@@ -90,7 +90,9 @@ export async function addOwner({
   // then we should update/add the horses for them (currently registered or not)
   // otherwise we can just upsert via the newHorseOwnerMember table
 
-  const existingMember = await findUnique('Member', { where: { fullName } });
+  const existingMember = await findFirst('Member', {
+    where: { fullName: { equals: fullName, mode: 'insensitive' } },
+  });
   if (existingMember) {
     console.info(
       `Updating current member ${fullName} with horses ${horseNames(horses)}`,

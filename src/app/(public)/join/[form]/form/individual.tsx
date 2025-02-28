@@ -18,7 +18,7 @@ import HorseFieldArray from '@/components/forms/HorseFieldArray';
 import RegistrationYearSelect from '@/components/forms/RegistrationYearSelect';
 import {
   ActionState,
-  addNewMember,
+  upsertMember,
   checkForExistingMember,
 } from '@/app/(public)/join/[form]/form/member.action';
 import { Label } from '@/components/styled-ui/Label';
@@ -63,7 +63,7 @@ function IndividualRegistration() {
   const onPaymentSuccess = () =>
     startTransition(async () => {
       if (actionState.data) {
-        const res = await addNewMember(actionState.data);
+        const res = await upsertMember(actionState.data);
         setActionState(res);
       }
     });

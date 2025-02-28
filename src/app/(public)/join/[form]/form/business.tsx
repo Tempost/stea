@@ -16,7 +16,7 @@ import HorseFieldArray from '@/components/forms/HorseFieldArray';
 import RegistrationYearSelect from '@/components/forms/RegistrationYearSelect';
 import {
   ActionState,
-  addNewMember,
+  upsertMember,
   checkForExistingMember,
 } from './member.action';
 import { setMembershipYear } from '@/utils/setmembershipyear';
@@ -60,7 +60,7 @@ function BusinessRegistration() {
   const onPaymentSuccess = () =>
     startTransition(async () => {
       if (actionState.data) {
-        const res = await addNewMember(actionState.data);
+        const res = await upsertMember(actionState.data);
         setActionState(res);
       }
     });

@@ -1,7 +1,7 @@
 'use server';
 import { MemberForm } from '@/utils/zodschemas';
 import { checkForExistingHorses } from './horse.action';
-import { findUnique, upsert } from '@/server/prisma/queries/shared';
+import { findFirst, upsert } from '@/server/prisma/queries/shared';
 import { revalidateTag } from 'next/cache';
 
 export interface ActionState {
@@ -20,7 +20,9 @@ export async function checkForExistingMember(
     `Checking if ${fullName} has registered for the ${formData.membershipEnd?.getFullYear()} show year.`,
   );
 
-  const existingMember = await findUnique('Member', { where: { fullName } });
+  const existingMember = await findFirst('Member', {
+    where: { fullName: { equals: fullName, mode: 'insensitive' } },
+  });
   if (existingMember) {
     if (existingMember.memberStatus === 'Life') {
       // TODO: Create an error class for this instead
@@ -63,7 +65,14 @@ export async function checkForExistingMember(
   };
 }
 
-export async function addNewMember({
+/**
+ * Add a new member with or without any horses to the database.
+ * If an existing user/horses are found then it will update. Otherwise
+ * we just create the records and assosiate them together.
+ *
+ * @param {MemberForm} form
+ */
+export async function upsertMember({
   horses,
   ...member
 }: MemberForm): Promise<ActionState> {
