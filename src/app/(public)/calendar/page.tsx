@@ -30,7 +30,7 @@ function CalendarPage() {
   return (
     <section className='flex h-full flex-col items-center justify-center'>
       <div className='flex min-h-[45vmax] w-full flex-col rounded-lg border p-10 shadow-xl sm:w-96'>
-        <Suspense>
+        <Suspense fallback={<span className='loading loading-dots'></span>}>
           <Calendar shows={shows} />
         </Suspense>
       </div>

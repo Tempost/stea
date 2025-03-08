@@ -1,16 +1,16 @@
-import { cn } from '@/utils/helpers';
 import {
   HTMLAttributes,
   MouseEventHandler,
   PropsWithChildren,
   ReactNode,
 } from 'react';
+import { Button } from './Button';
 
 interface ModalProps<T> extends PropsWithChildren {
   buttonLabel?: ReactNode;
   onClick?: () => void;
   ok?: ReactNode;
-  onClose?: MouseEventHandler<HTMLLabelElement>;
+  onClose?: MouseEventHandler<HTMLButtonElement>;
   id: string;
   buttonClassName?: HTMLAttributes<T>['className'];
 }
@@ -26,35 +26,46 @@ function Modal<T>({
 }: ModalProps<T>) {
   return (
     <>
-      <label
-        htmlFor={id}
-        className={cn('btn btn-primary btn-sm', buttonClassName)}
+      <Button
+        variant='primary'
+        size='sm'
+        className={buttonClassName}
+        onClick={() => {
+          const dialog = document.getElementById(id) as HTMLDialogElement;
+          dialog.showModal();
+          if (onClick) onClick();
+        }}
       >
         {buttonLabel ?? 'Open'}
-      </label>
-      <input
+      </Button>
+      <dialog
         id={id}
-        type='checkbox'
-        className='modal-toggle'
-        onClick={onClick}
-      />
-
-      <div className='modal modal-bottom transition-all delay-75 sm:modal-middle'>
+        className='modal modal-bottom transition-all delay-75 sm:modal-middle'
+      >
         <div className='modal-box overflow-visible'>
           {children}
           <div className='modal-action'>
-            {ok ?? <button className='btn btn-sm'>Ok</button>}
+            {ok}
 
-            <label
-              htmlFor={id}
-              className='btn btn-sm'
-              onClick={onClose}
+            <Button
+              size='sm'
+              onClick={event => {
+                const dialog = document.getElementById(id) as HTMLDialogElement;
+                dialog.close();
+                if (onClose) onClose(event);
+              }}
             >
               Close
-            </label>
+            </Button>
           </div>
         </div>
-      </div>
+        <form
+          method='dialog'
+          className='modal-backdrop'
+        >
+          <button></button>
+        </form>
+      </dialog>
     </>
   );
 }

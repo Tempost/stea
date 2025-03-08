@@ -1,11 +1,10 @@
 'use client';
-import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-
-import Radio from '@/components/styled-ui/Radio';
-import { FORMTYPE } from '@/types/common';
 import { Button } from '@/components/styled-ui/Button';
 import { Label } from '@/components/styled-ui/Label';
+import Radio from '@/components/styled-ui/Radio';
+import { FORMTYPE } from '@/types/common';
+import { usePathname, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 function FormSelector() {
   const router = useRouter();

@@ -1,5 +1,4 @@
 import { use } from 'react';
-
 import MemberTable from '@/components/tables/Members';
 import { findMany } from '@/server/prisma/queries/shared';
 import HorseTable from '@/components/tables/Horses';

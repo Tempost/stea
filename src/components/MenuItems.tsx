@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import NavLinkSubMenu from './NavLinkMenu';
 
 interface Menu {
   href?: string;
@@ -32,38 +31,5 @@ export const publicMenuItems: Array<Menu> = [
   {
     href: '/contactus',
     name: 'Contact Us',
-  },
-];
-
-export const dashMenuItems: Array<Menu> = [
-  {
-    name: 'Applications',
-    href: '/dashboard/applications',
-  },
-  {
-    href: '/dashboard/tables/members',
-    name: 'Tables',
-  },
-  {
-    href: '/dashboard/submit',
-    name: 'Submit Points',
-  },
-  {
-    name: 'Documents',
-    render: ({ name }) => (
-      <NavLinkSubMenu
-        name={name}
-        subLinks={[
-          {
-            href: '/STEA_Show_Results_Form_A.xlsx',
-            text: 'Point submission form',
-          },
-          {
-            href: '/stea_org_packet.pdf',
-            text: 'Organizer Pack',
-          },
-        ]}
-      />
-    ),
   },
 ];

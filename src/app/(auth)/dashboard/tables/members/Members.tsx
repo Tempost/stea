@@ -1,32 +1,32 @@
 'use client';
 import NewMemberForm from '@/app/(auth)/dashboard/tables/members/NewMemberForm';
+import { Button } from '@/components/styled-ui/Button';
 import TableWithData from '@/components/tables/BaseTable';
 import { readableDateTime } from '@/utils/helpers';
 import { Member } from '@prisma/client';
 import { ColumnDef } from '@tanstack/react-table';
-import { ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
+import { useCallback } from 'react';
 
-interface EmailListProps
-  extends DetailedHTMLProps<
-    ButtonHTMLAttributes<HTMLButtonElement>,
-    HTMLButtonElement
-  > {
+interface EmailListProps {
   emails: Array<string>;
 }
 
-function EmailList({ emails, className, ...props }: EmailListProps) {
-  const noDupes = emails.filter(
-    (item, idx, self) => idx === self.indexOf(item),
+function EmailList({ emails }: EmailListProps) {
+  const deDupe = useCallback(
+    () => emails.filter((item, idx, self) => idx === self.indexOf(item)),
+    [emails],
   );
 
   return (
-    <button
-      {...props}
-      className={`btn btn-primary btn-sm ${className ? className : ''}`}
-      onClick={() => navigator.clipboard.writeText(noDupes.join('\n'))}
+    <Button
+      variant='primary'
+      size='sm'
+      className='tooltip tooltip-primary'
+      data-tip='Copied!'
+      onClick={() => navigator.clipboard.writeText(deDupe().join('\n'))}
     >
       Email List
-    </button>
+    </Button>
   );
 }
 
@@ -105,11 +105,7 @@ function DashboardMembers({ members }: { members: Array<Member> }) {
   return (
     <div>
       <div>
-        <EmailList
-          className='tooltip'
-          data-tip='Copied!'
-          emails={members.map(member => member.email)}
-        />
+        <EmailList emails={members.map(member => member.email)} />
         <NewMemberForm />
       </div>
       <TableWithData

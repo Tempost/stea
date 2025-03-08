@@ -12,6 +12,8 @@ import {
 } from '@tanstack/react-table';
 import { ReactElement, ReactNode, useState } from 'react';
 import DebouncedInput from '../data-entry/DebouncedInput';
+import { Button } from './Button';
+import Select from './Select';
 
 interface RowRenderProps<TData> {
   row: Row<TData>;
@@ -68,7 +70,7 @@ function Table<TData>({
     }
 
     return (
-      <tr className='border-b bg-white transition duration-300 ease-in-out hover:bg-primary/10'>
+      <tr className='hover:bg-base-200'>
         {rowProps.row.getVisibleCells().map(cell => {
           return (
             <td
@@ -88,10 +90,10 @@ function Table<TData>({
   const table = useReactTable(defaultOptions);
 
   return (
-    <div className='-mx-2 overflow-x-auto md:-mx-6 lg:-mx-8'>
+    <div className='overflow-x-auto'>
       <div className='inline-block min-w-full py-2 md:px-6 lg:px-8'>
         <div className='overflow-hidden'>
-          <table className='min-w-full'>
+          <table className='table'>
             <thead className='border-b bg-white'>
               {table.getHeaderGroups().map(headerGroup => (
                 <tr key={headerGroup.id}>
@@ -110,8 +112,8 @@ function Table<TData>({
                         {extras && headerGroup.depth === 0 && extras}
                         {headerGroup.depth === 0 && search && (
                           <DebouncedInput
-                            className='input input-primary input-sm ml-auto w-36'
-                            type='text'
+                            className='ml-auto w-36'
+                            size='sm'
                             placeholder='Search'
                             value={globalFilter ?? ''}
                             onChange={value => setGlobalFilter(String(value))}
@@ -127,7 +129,9 @@ function Table<TData>({
             {loading ? (
               <tbody>
                 <tr>
-                  <td>Loading...</td>
+                  <td>
+                    <span className='loading loading-dots'></span>
+                  </td>
                 </tr>
               </tbody>
             ) : (
@@ -145,25 +149,26 @@ function Table<TData>({
           <div className='m-2'>
             <div className='flex w-full items-center justify-between gap-2'>
               <div className='flex gap-2'>
-                <button
-                  className='btn btn-secondary btn-xs'
+                <Button
+                  size='xs'
+                  variant='secondary'
                   onClick={() => table.previousPage()}
                   disabled={!table.getCanPreviousPage()}
                 >
                   previous
-                </button>
-
-                <button
-                  className='btn btn-primary btn-xs'
+                </Button>
+                <Button
+                  size='xs'
+                  variant='primary'
                   onClick={() => table.nextPage()}
                   disabled={!table.getCanNextPage()}
                 >
-                  Next
-                </button>
+                  next
+                </Button>
               </div>
 
               <div className='flex flex-col items-center'>
-                <select
+                <Select
                   className='select select-secondary select-xs lg:select-sm'
                   value={table.getState().pagination.pageSize}
                   onChange={e => {
@@ -178,9 +183,9 @@ function Table<TData>({
                       Show {pageSize}
                     </option>
                   ))}
-                </select>
+                </Select>
                 <span className='text-2xs flex items-center gap-1 lg:text-sm'>
-                  <div>Page</div>
+                  <div>page</div>
                   <strong>
                     {`${table.getState().pagination.pageIndex + 1} of
                         ${table.getPageCount()}`}

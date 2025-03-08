@@ -31,7 +31,7 @@ const Home = () => (
             href={'/join'}
             prefetch={false}
           >
-            <button className='btn btn-primary btn-lg text-xl md:btn-xl md:text-2xl'>
+            <button className='md:btn-xl btn btn-primary btn-lg text-xl md:text-2xl'>
               Join Today!
             </button>
           </NextLink>
@@ -188,13 +188,6 @@ const Home = () => (
           </h2>
           <div className='divider mb-0 mt-0'></div>
           <div className='flex flex-row flex-wrap justify-center'>
-            <Image
-              src='/sneak_away_home_page.png'
-              width={300}
-              height={300}
-              sizes='100vw, 50vw'
-              alt='Logo for riding warehouse, outline of horse head with "Sneak Away Riding Club"'
-            />
             <Image
               src='/diamond_riding.png'
               width={300}

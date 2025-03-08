@@ -1,5 +1,4 @@
 'use client';
-
 import { Button } from '@/components/styled-ui/Button';
 import { cn } from '@/utils/helpers';
 import { usePathname, useRouter } from 'next/navigation';
@@ -18,13 +17,13 @@ function TableSelect() {
   return (
     <div className='flex w-full flex-col gap-10'>
       <div
-        className='btn-group mx-auto'
+        className='join mx-auto'
         //@ts-expect-error wtf does this even mean
         onClick={e => router.push(`/dashboard/tables/${e.target.value}`)}
       >
         <Button
-          className={cn('p-1 lg:btn-md', {
-            'btn-active': memberSelected && !boardmembersSelected,
+          className={cn('join-item lg:btn-md', {
+            'btn-primary': memberSelected && !boardmembersSelected,
           })}
           size='sm'
           value='members'
@@ -32,32 +31,40 @@ function TableSelect() {
           Members
         </Button>
         <Button
-          className={cn('p-1 lg:btn-md', { 'btn-active': horseSelected })}
+          className={cn('join-item lg:btn-md', {
+            'btn-primary': horseSelected,
+          })}
           value='horses'
         >
           Horses
         </Button>
         <Button
-          className={cn('p-1 lg:btn-md', { 'btn-active': ownersSelected })}
+          className={cn('join-item lg:btn-md', {
+            'btn-primary': ownersSelected,
+          })}
           value='owners'
         >
           Owners
         </Button>
         <Button
-          className={cn('p-1 lg:btn-md', { 'btn-active': ridersSelected })}
+          className={cn('join-item lg:btn-md', {
+            'btn-primary': ridersSelected,
+          })}
           value='riders'
         >
           Riders
         </Button>
         <Button
-          className={cn('p-1 lg:btn-md', { 'btn-active': showsSelected })}
+          className={cn('join-item lg:btn-md', {
+            'btn-primary': showsSelected,
+          })}
           value='shows'
         >
           Shows
         </Button>
         <Button
-          className={cn('p-1 lg:btn-md', {
-            'btn-active': boardmembersSelected,
+          className={cn('join-item lg:btn-md', {
+            'btn-primary': boardmembersSelected,
           })}
           value='boardmembers'
         >

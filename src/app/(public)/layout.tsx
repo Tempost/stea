@@ -5,10 +5,9 @@ import { LayoutProps } from '@/types/common';
 export default function Public({ children }: LayoutProps) {
   return (
     <div className='flex h-screen flex-col'>
-      <ResponsiveHeader>
-        <main className={`flex-grow bg-base-100`}>{children}</main>
-        <Footer />
-      </ResponsiveHeader>
+      <ResponsiveHeader />
+      <main className='flex-grow'>{children}</main>
+      <Footer />
     </div>
   );
 }

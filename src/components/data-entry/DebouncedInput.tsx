@@ -1,4 +1,5 @@
-import { InputHTMLAttributes, useEffect, useState } from 'react';
+import { ComponentProps, useEffect, useState } from 'react';
+import Input from '../styled-ui/Input';
 
 interface DebounceArgs {
   value: string | number;
@@ -12,7 +13,7 @@ function DebouncedInput({
   onChange,
   debounce = 100,
   ...props
-}: DebounceArgs & Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'>) {
+}: DebounceArgs & ComponentProps<typeof Input>) {
   const [value, setValue] = useState(initialValue);
 
   useEffect(() => {
@@ -28,11 +29,17 @@ function DebouncedInput({
   }, [value]); // eslint-disable-line
 
   return (
-    <input
+    <Input
       {...props}
+      type='text'
       value={value}
       onChange={e => setValue(e.target.value)}
     />
+    // <input
+    //   {...props}
+    //   value={value}
+    //   onChange={e => setValue(e.target.value)}
+    // />
   );
 }
 

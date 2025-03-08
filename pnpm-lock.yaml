@@ -133,8 +133,8 @@ importers:
         specifier: ^4.0.8
         version: 4.0.9
       daisyui:
-        specifier: ^2.52.0
-        version: 2.52.0(autoprefixer@10.4.20(postcss@8.5.1))(postcss@8.5.1)(ts-node@10.9.2(@types/node@22.10.10)(typescript@5.7.3))
+        specifier: ^3.9.4
+        version: 3.9.4(ts-node@10.9.2(@types/node@22.10.10)(typescript@5.7.3))
       dotenv-cli:
         specifier: ^7.4.4
         version: 7.4.4
@@ -1513,6 +1513,9 @@ packages:
     resolution: {integrity: sha512-1rXeuUUiGGrykh+CeBdu5Ie7OJwinCgQY0bc7GCRxy5xVHy+moaqkpL/jqQq0MtQOeYcrqEz4abc5f0KtU7W4A==}
     engines: {node: '>=12.5.0'}
 
+  colord@2.9.3:
+    resolution: {integrity: sha512-jeC1axXpnb0/2nn/Y1LPuLdgXBLH7aDcHu4KEKfqw3CUhX7ZpfBSlPKyqXE6btIgEzfWtrX3/tyBCaCvXvMkOw==}
+
   colorette@2.0.20:
     resolution: {integrity: sha512-IfEDxwoWIjkeXL1eXcDiow4UbKjhLdq6/EuSVR9GMN7KVH3r9gQ83e73hsz1Nd1T3ijd5xv1wcWRYO+D6kCI2w==}
 
@@ -1578,11 +1581,9 @@ packages:
     resolution: {integrity: sha512-a8bhT76Q546jOElHcTrkzWY7Py925mfLO/jqquseH61ThOebYwOjLbWHBqdRB4K1VpU36sTyIei6Jwj7QdEZ7g==}
     engines: {node: '>= 0.1.90'}
 
-  daisyui@2.52.0:
-    resolution: {integrity: sha512-LQTA5/IVXAJHBMFoeaEMfd7/akAFPPcdQPR3O9fzzcFiczneJFM73CFPnScmW2sOgn/D83cvkP854ep2T9OfTg==}
-    peerDependencies:
-      autoprefixer: ^10.0.2
-      postcss: ^8.1.6
+  daisyui@3.9.4:
+    resolution: {integrity: sha512-fvi2RGH4YV617/6DntOVGcOugOPym9jTGWW2XySb5ZpvdWO4L7bEG77VHirrnbRUEWvIEVXkBpxUz2KFj0rVnA==}
+    engines: {node: '>=16.9.0'}
 
   damerau-levenshtein@1.0.8:
     resolution: {integrity: sha512-sdQSFB7+llfUcQHUQO3+B8ERRj0Oa4w9POWMI/puGtuf7gFywGmkaLCElnudfTiKZV+NvHqL0ifzdrI8Ro7ESA==}
@@ -5118,11 +5119,15 @@ snapshots:
     dependencies:
       color-name: 1.1.4
       simple-swizzle: 0.2.2
+    optional: true
 
   color@4.2.3:
     dependencies:
       color-convert: 2.0.1
       color-string: 1.9.1
+    optional: true
+
+  colord@2.9.3: {}
 
   colorette@2.0.20: {}
 
@@ -5187,10 +5192,9 @@ snapshots:
       csv-stringify: 6.5.2
       stream-transform: 3.3.3
 
-  daisyui@2.52.0(autoprefixer@10.4.20(postcss@8.5.1))(postcss@8.5.1)(ts-node@10.9.2(@types/node@22.10.10)(typescript@5.7.3)):
+  daisyui@3.9.4(ts-node@10.9.2(@types/node@22.10.10)(typescript@5.7.3)):
     dependencies:
-      autoprefixer: 10.4.20(postcss@8.5.1)
-      color: 4.2.3
+      colord: 2.9.3
       css-selector-tokenizer: 0.8.0
       postcss: 8.5.1
       postcss-js: 4.0.1(postcss@8.5.1)
@@ -5944,7 +5948,8 @@ snapshots:
 
   is-arrayish@0.2.1: {}
 
-  is-arrayish@0.3.2: {}
+  is-arrayish@0.3.2:
+    optional: true
 
   is-async-function@2.1.1:
     dependencies:
@@ -7184,6 +7189,7 @@ snapshots:
   simple-swizzle@0.2.2:
     dependencies:
       is-arrayish: 0.3.2
+    optional: true
 
   sirv@2.0.4:
     dependencies:

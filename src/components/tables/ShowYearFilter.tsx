@@ -1,5 +1,6 @@
 'use client';
 import { Column } from '@tanstack/react-table';
+import Select from '../styled-ui/Select';
 
 interface ShowYearFilterProps<TData> {
   column?: Column<TData>;
@@ -9,10 +10,11 @@ const years = Array.from({ length: 10 }, (_, i) => i + 2023);
 
 function ShowYearFilter<TData>({ column }: ShowYearFilterProps<TData>) {
   return (
-    <select
-      name='show-year'
+    <Select
       id='show-year'
-      className='select select-bordered select-primary select-xs ml-2 w-fit'
+      name='show-year'
+      size='xs'
+      className='ml-2 w-fit'
       value={column?.getFilterValue() as number}
       onChange={e => {
         e.preventDefault();
@@ -27,7 +29,7 @@ function ShowYearFilter<TData>({ column }: ShowYearFilterProps<TData>) {
           {year}
         </option>
       ))}
-    </select>
+    </Select>
   );
 }
 export default ShowYearFilter;
