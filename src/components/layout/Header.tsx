@@ -82,7 +82,9 @@ export const ResponsiveDashboardHeader = () => (
           <LinkWrapper href='/dashboard/applications'>Applications</LinkWrapper>
         </li>
         <li>
-          <LinkWrapper href='/dashboard/tables/members'>Tables</LinkWrapper>
+          <LinkWrapper href='/dashboard/directory/members'>
+            Directory
+          </LinkWrapper>
         </li>
         <li>
           <LinkWrapper href='/dashboard/submit'>Submit Points</LinkWrapper>
@@ -127,7 +129,9 @@ export const ResponsiveDashboardHeader = () => (
           <LinkWrapper href='/dashboard/applications'>Applications</LinkWrapper>
         </li>
         <li>
-          <LinkWrapper href='/dashboard/tables/members'>Tables</LinkWrapper>
+          <LinkWrapper href='/dashboard/directory/members'>
+            Directory
+          </LinkWrapper>
         </li>
         <li>
           <LinkWrapper href='/dashboard/submit'>Submit Points</LinkWrapper>

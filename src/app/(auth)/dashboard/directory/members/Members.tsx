@@ -1,11 +1,11 @@
 'use client';
-import NewMemberForm from '@/app/(auth)/dashboard/tables/members/NewMemberForm';
 import { Button } from '@/components/styled-ui/Button';
 import TableWithData from '@/components/tables/BaseTable';
 import { readableDateTime } from '@/utils/helpers';
 import { Member } from '@prisma/client';
 import { ColumnDef } from '@tanstack/react-table';
 import { useCallback } from 'react';
+import NewMemberForm from './NewMemberForm';
 
 interface EmailListProps {
   emails: Array<string>;
