@@ -10,7 +10,6 @@ import { PropsWithChildren } from 'react';
 
 import { FormType } from '@/types/common';
 import { costs } from '@/utils/costs';
-import { cn } from '@/utils/helpers';
 import { MemberForm, OwnerHorseForm } from '@/utils/zodschemas';
 import { Button } from '../styled-ui/Button';
 import PayPalButton from '../styled-ui/PayPalButton';
@@ -19,6 +18,7 @@ import {
   PayPalScriptProvider,
   ReactPayPalScriptOptions,
 } from '@paypal/react-paypal-js';
+import Loading from '../styled-ui/Loading';
 
 interface PaymentProps extends PropsWithChildren {
   showPayment: boolean;
@@ -154,10 +154,10 @@ function Payment({
             <Button
               type='submit'
               variant='primary'
-              className={cn('w-full', { loading: pending })}
+              className='w-full'
               disabled={pending}
             >
-              {pending ? '' : 'Move to payment'}
+              {pending ? <Loading /> : 'Move to payment'}
             </Button>
           </>
         )}

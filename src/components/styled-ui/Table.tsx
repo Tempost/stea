@@ -14,6 +14,7 @@ import { ReactElement, ReactNode, useState } from 'react';
 import DebouncedInput from '../data-entry/DebouncedInput';
 import { Button } from './Button';
 import Select from './Select';
+import Loading from './Loading';
 
 interface RowRenderProps<TData> {
   row: Row<TData>;
@@ -130,7 +131,7 @@ function Table<TData>({
               <tbody>
                 <tr>
                   <td>
-                    <span className='loading loading-dots'></span>
+                    <Loading />
                   </td>
                 </tr>
               </tbody>

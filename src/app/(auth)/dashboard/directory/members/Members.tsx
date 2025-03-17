@@ -1,29 +1,26 @@
 'use client';
+import Checkbox from '@/components/data-entry/Checkbox';
 import { Button } from '@/components/styled-ui/Button';
 import TableWithData from '@/components/tables/BaseTable';
 import { readableDateTime } from '@/utils/helpers';
 import { Member } from '@prisma/client';
-import { ColumnDef } from '@tanstack/react-table';
-import { useCallback } from 'react';
+import { ColumnDef, RowSelectionState } from '@tanstack/react-table';
+import { useCallback, useState } from 'react';
 import NewMemberForm from './NewMemberForm';
+import UpdateMember from './UpdateMember';
 
 interface EmailListProps {
-  emails: Array<string>;
+  emails: string;
 }
 
 function EmailList({ emails }: EmailListProps) {
-  const deDupe = useCallback(
-    () => emails.filter((item, idx, self) => idx === self.indexOf(item)),
-    [emails],
-  );
-
   return (
     <Button
       variant='primary'
       size='sm'
-      className='tooltip tooltip-primary'
+      className='tooltip tooltip-bottom tooltip-primary'
       data-tip='Copied!'
-      onClick={() => navigator.clipboard.writeText(deDupe().join('\n'))}
+      onClick={() => navigator.clipboard.writeText(emails)}
     >
       Email List
     </Button>
@@ -32,8 +29,18 @@ function EmailList({ emails }: EmailListProps) {
 
 const columns: Array<ColumnDef<Member>> = [
   {
-    header: 'Members',
+    id: 'header',
     columns: [
+      {
+        id: 'select',
+        cell: ({ row }) => (
+          <Checkbox
+            id={row.id}
+            checked={row.getIsSelected()}
+            onChange={row.getToggleSelectedHandler()}
+          />
+        ),
+      },
       {
         accessorKey: 'membershipDate',
         id: 'membershipDate',
@@ -91,27 +98,42 @@ const columns: Array<ColumnDef<Member>> = [
         cell: info => info.getValue(),
         header: () => <span> Phone </span>,
       },
-      {
-        accessorKey: 'firstName',
-        id: 'firstName',
-        cell: info => info.getValue(),
-        header: () => <span> Contact </span>,
-      },
     ],
   },
 ];
 
 function DashboardMembers({ members }: { members: Array<Member> }) {
+  const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+
+  const emails = useCallback(
+    () =>
+      members
+        .map(member => member.email)
+        .filter((item, idx, self) => idx === self.indexOf(item))
+        .join('\n'),
+    [members],
+  );
+
   return (
     <div>
-      <div>
-        <EmailList emails={members.map(member => member.email)} />
-        <NewMemberForm />
-      </div>
       <TableWithData
         extraTableOpts={{
           columns,
+          enableRowSelection: true,
+          enableMultiRowSelection: false,
+          onRowSelectionChange: setRowSelection,
+          getRowId: row => row.fullName,
+          state: {
+            rowSelection,
+          },
         }}
+        extras={
+          <div className='flex space-x-1'>
+            <EmailList emails={emails()} />
+            <NewMemberForm />
+            <UpdateMember rowSelection={rowSelection} />
+          </div>
+        }
         data={members}
         paginate
         search

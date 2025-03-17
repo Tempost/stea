@@ -17,7 +17,9 @@ import useZodForm from '@/utils/usezodform';
 import { useState, useTransition } from 'react';
 import { z } from 'zod';
 import Form from '../../../../../components/forms/Form';
-import add, { ActionState } from './action';
+import { ActionState, add } from './action';
+import { Button } from '@/components/styled-ui/Button';
+import Loading from '@/components/styled-ui/Loading';
 
 export const NewMemberSchema = MemberOptionalDefaultsSchema.omit({
   fullName: true,
@@ -67,16 +69,16 @@ function NewMemberForm() {
         form.reset();
       }}
       ok={
-        <button
+        <Button
           form='member-form'
           type='submit'
-          className={cn('btn btn-sm', {
-            loading: pending,
+          size='sm'
+          className={cn({
             'btn-success': state.message === 'Success',
           })}
         >
-          Add
-        </button>
+          {pending ? <Loading /> : 'Add'}
+        </Button>
       }
     >
       <Form
