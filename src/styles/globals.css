@@ -11,7 +11,7 @@
 }
 
 .drawer-side > ul {
-  @apply bg-gradient-to-r from-blue-700 to-blue-800;
+  @apply bg-gradient-to-r from-primary to-[color-mix(in_oklab,oklch(var(--p)),black_10%)];
   @apply text-gray-300;
 }
 
