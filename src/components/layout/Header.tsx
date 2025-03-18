@@ -12,7 +12,7 @@ export const ResponsiveHeader = ({ children }: PropsWithChildren) => {
         className='drawer-toggle'
       />
       <div className='drawer-content flex flex-col'>
-        <div className='navbar w-full bg-gradient-to-b from-blue-700 to-blue-800 font-semibold text-gray-300 shadow-sm'>
+        <div className='navbar w-full bg-gradient-to-b from-primary to-[color-mix(in_oklab,oklch(var(--p)),black_10%)] font-semibold text-gray-300 shadow-sm'>
           <div className='flex-none lg:hidden'>
             <label
               htmlFor='my-drawer-3'
@@ -70,7 +70,7 @@ export const ResponsiveHeader = ({ children }: PropsWithChildren) => {
 };
 
 export const ResponsiveDashboardHeader = () => (
-  <div className='navbar bg-gradient-to-b from-blue-700 to-blue-800 font-semibold text-gray-300 shadow-sm'>
+  <div className='navbar bg-gradient-to-b from-primary to-[color-mix(in_oklab,oklch(var(--p)),black_10%)] font-semibold text-gray-300 shadow-sm'>
     {/* Desktop Navbar */}
     <div className='navbar-start hidden lg:flex'>
       <ul className='menu menu-horizontal px-1'>
@@ -119,7 +119,7 @@ export const ResponsiveDashboardHeader = () => (
       </label>
       <ul
         tabIndex={0}
-        className='menu dropdown-content rounded-box menu-sm z-[1] mt-3 w-52 bg-primary p-2 shadow'
+        className='menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-primary p-2 shadow'
       >
         <li>
           <LinkWrapper href='/'>Home</LinkWrapper>
