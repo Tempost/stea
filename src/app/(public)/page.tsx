@@ -1,7 +1,6 @@
 import NextLink from 'next/link';
 
 import UpcomingEvents from '@/components/styled-ui/Events';
-import NavCard from '@/components/styled-ui/NavCard';
 import { BookIcon, CalendarIcon } from '@/components/icons';
 import Image from 'next/image';
 import Card from '@/components/card/Card';
@@ -43,27 +42,80 @@ const Home = () => (
 
     <div className='flex flex-col gap-5 p-5 md:gap-10 md:p-10'>
       <div className='mx-auto flex flex-col justify-around gap-5 md:flex-row md:flex-wrap'>
-        <NavCard
-          bodyText='Membership'
-          href='/members-horses'
-          img='/membership_landing.jpeg'
-        />
-        <NavCard
-          bodyText='Shows'
-          href='/calendar'
-          img='/home_show_card.jpg'
-        />
-        <NavCard
-          bodyText='Points'
-          href='/scores'
-          img='/points_landing.png'
-        />
+        <NextLink href='/members-horses'>
+          <Card
+            imageFull
+            border={false}
+            className='container h-[15em] w-[20em] shadow-lg transition-all delay-75 duration-300 ease-in-out hover:scale-[1.05] hover:cursor-pointer hover:shadow-xl'
+          >
+            <Card.Image
+              src='/membership_landing.jpeg'
+              alt='Background image for card'
+              fill
+              sizes='100vw, 75vw, 50vw, 25vw'
+            />
+            <Card.Body className='group grid place-items-center transition-all delay-75 duration-300 ease-in-out'>
+              <Card.Title
+                tag='h3'
+                className='text-2xl transition-all delay-75 duration-400 ease-in-out group-hover:text-3xl group-hover:font-bold md:text-3xl group-hover:md:text-4xl'
+              >
+                Membership
+              </Card.Title>
+            </Card.Body>
+          </Card>
+        </NextLink>
+
+        <NextLink href='/calender'>
+          <Card
+            imageFull
+            border={false}
+            className='container h-[15em] w-[20em] shadow-lg transition-all delay-75 duration-300 ease-in-out hover:scale-[1.05] hover:cursor-pointer hover:shadow-xl'
+          >
+            <Card.Image
+              src='/home_show_card.jpg'
+              alt='Background image for card'
+              fill
+              sizes='100vw, 75vw, 50vw, 25vw'
+            />
+            <Card.Body className='group grid place-items-center transition-all delay-75 duration-300 ease-in-out'>
+              <Card.Title
+                tag='h3'
+                className='text-2xl transition-all delay-75 duration-400 ease-in-out group-hover:text-3xl group-hover:font-bold md:text-3xl group-hover:md:text-4xl'
+              >
+                Shows
+              </Card.Title>
+            </Card.Body>
+          </Card>
+        </NextLink>
+
+        <NextLink href='/scores'>
+          <Card
+            imageFull
+            border={false}
+            className='container h-[15em] w-[20em] shadow-lg transition-all delay-75 duration-300 ease-in-out hover:scale-[1.05] hover:cursor-pointer hover:shadow-xl'
+          >
+            <Card.Image
+              src='/points_landing.png'
+              alt='Background image for card'
+              fill
+              sizes='100vw, 75vw, 50vw, 25vw'
+            />
+            <Card.Body className='group grid place-items-center transition-all delay-75 duration-300 ease-in-out'>
+              <Card.Title
+                tag='h3'
+                className='text-2xl transition-all delay-75 duration-400 ease-in-out group-hover:text-3xl group-hover:font-bold md:text-3xl group-hover:md:text-4xl'
+              >
+                Points
+              </Card.Title>
+            </Card.Body>
+          </Card>
+        </NextLink>
       </div>
 
       <div className='flex flex-col gap-5 md:flex-row md:gap-10'>
         <Card
           size='sm'
-          className='mx-auto shadow-xl md:shadow-2xl'
+          className='mx-auto shadow-lg'
         >
           <Card.Body>
             <Card.Title
@@ -118,7 +170,7 @@ const Home = () => (
 
         <Card
           size='sm'
-          className='mx-auto shadow-xl md:shadow-2xl'
+          className='mx-auto shadow-lg'
         >
           <Card.Body>
             <Card.Title
@@ -145,7 +197,7 @@ const Home = () => (
 
       <Card
         size='sm'
-        className='mx-auto shadow-xl md:shadow-2xl'
+        className='mx-auto shadow-lg'
       >
         <Card.Body>
           <Card.Title
@@ -177,7 +229,7 @@ const Home = () => (
 
       <Card
         size='sm'
-        className='mx-auto shadow-xl md:shadow-2xl'
+        className='mx-auto shadow-lg'
       >
         <Card.Body>
           <Card.Title
@@ -221,7 +273,7 @@ const Home = () => (
       </Card>
       <Card
         size='sm'
-        className='mx-auto shadow-xl md:shadow-2xl'
+        className='mx-auto shadow-lg'
       >
         <Card.Body>
           <Card.Title
