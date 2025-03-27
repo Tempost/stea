@@ -1,6 +1,7 @@
 import CalendarEvents from '../events/CalendarEvent';
 import { findMany } from '@/server/prisma/queries/shared';
 import { use } from 'react';
+import List from '../list/List';
 
 const CURR_MONTH = new Date();
 const MONTH_FROM_CURR = new Date(
@@ -31,14 +32,14 @@ function UpcomingEvents() {
   );
 
   return (
-    <>
+    <List>
       {shows.map(show => (
         <CalendarEvents
           key={`${show.showName}-${show.showDate}`}
           show={show}
         />
       ))}
-    </>
+    </List>
   );
 }
 

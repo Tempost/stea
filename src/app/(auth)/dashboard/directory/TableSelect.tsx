@@ -33,6 +33,7 @@ function TableSelect() {
             className={cn('join-item lg:btn-md', {
               'btn-primary': horseSelected,
             })}
+            size='sm'
           >
             Horses
           </Button>
@@ -42,6 +43,7 @@ function TableSelect() {
             className={cn('join-item lg:btn-md', {
               'btn-primary': ownersSelected,
             })}
+            size='sm'
           >
             Owners
           </Button>
@@ -51,6 +53,7 @@ function TableSelect() {
             className={cn('join-item lg:btn-md', {
               'btn-primary': ridersSelected,
             })}
+            size='sm'
           >
             Riders
           </Button>
@@ -60,6 +63,7 @@ function TableSelect() {
             className={cn('join-item lg:btn-md', {
               'btn-primary': showsSelected,
             })}
+            size='sm'
           >
             Shows
           </Button>
@@ -69,6 +73,7 @@ function TableSelect() {
             className={cn('join-item lg:btn-md', {
               'btn-primary': boardmembersSelected,
             })}
+            size='sm'
           >
             Board Members
           </Button>

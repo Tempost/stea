@@ -1,8 +1,6 @@
-import ControlledDatePicker from '@/components/data-entry/Date';
-import Input from '@/components/data-entry/Input';
-import Select from '@/components/data-entry/Select';
-import Alert from '@/components/forms/Alert';
-import Form from '@/components/forms/Form';
+import Form from '@/components/form/Form';
+import { optionsFromObject } from '@/components/helpers';
+import Alert from '@/components/styled-ui/Alert';
 import { Button } from '@/components/styled-ui/Button';
 import Modal from '@/components/styled-ui/Modal';
 import { ShowTypeSchema } from '@/server/prisma/zod-generated/inputTypeSchemas/ShowTypeSchema';
@@ -13,7 +11,7 @@ import {
 import { cn } from '@/utils/helpers';
 import useZodForm from '@/utils/usezodform';
 import { useState, useTransition } from 'react';
-import { add, ActionState } from './action';
+import { ActionState, add } from './action';
 
 const initalState: ActionState = {
   message: '',
@@ -67,58 +65,64 @@ function AddNewShow() {
         </Button>
       }
     >
-      <h3 className='text-lg font-bold'>Enter Show Information</h3>
-
       <Form
         form={form}
         onSubmit={submitForm}
         id='show-form'
       >
-        <div className='flex w-full gap-5'>
-          <Input
-            className='input input-bordered input-primary w-full md:input-sm'
-            placeholder='Enter show name'
+        <legend className='fieldset-legend text-lg font-bold'>
+          Enter Show Information
+        </legend>
+
+        <fieldset className='fieldset flex w-full gap-2'>
+          <Form.Input
             label='Show Name*'
             {...register('showName')}
           />
 
-          <Select
-            className='w-fit'
+          <Form.Select
+            className='w-full'
             label='Show Type*'
+            defaultValue=''
             {...register('showType')}
           >
-            {Object.keys(ShowTypeSchema.enum).map(type => (
-              <option
-                key={type}
-                value={type}
-              >
-                {type}
-              </option>
-            ))}
-          </Select>
-        </div>
+            <option
+              disabled
+              value=''
+            >
+              Select
+            </option>
+            {optionsFromObject(ShowTypeSchema.enum)}
+          </Form.Select>
+        </fieldset>
 
-        <div className='mt-2 grid grid-flow-col'>
-          <ControlledDatePicker
-            name='showDate'
-            placeholderText='Start Date'
+        <fieldset className='flex w-full gap-2'>
+          <Form.Input
+            label='Start Date'
+            type='date'
+            className='w-fit'
+            {...register('showDate')}
           />
 
-          <ControlledDatePicker
-            name='showEndDate'
-            placeholderText='End Date'
+          <Form.Input
+            label='End Date'
+            type='date'
+            className='w-fit'
+            {...register('showEndDate')}
           />
-        </div>
+        </fieldset>
 
-        <Input
+        <Form.Input
           placeholder='Registration Link'
           label='Registration Link'
+          type='url'
           {...register('url')}
         />
 
         <Alert
+          icon='error'
           message={state.message}
-          visible={state.error}
+          hidden={state.error}
         />
       </Form>
     </Modal>

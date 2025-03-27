@@ -2,12 +2,14 @@ import { cn } from '@/utils/helpers';
 import { cva, VariantProps } from 'class-variance-authority';
 import { forwardRef } from 'react';
 
-const inputVariants = cva('input input-bordered w-full md:input-sm', {
+const inputVariants = cva('input w-full', {
   variants: {
-    variant: {
-      default: 'input-primary',
+    intent: {
+      primary: 'input-primary',
       secondary: 'input-secondary',
-      disabled: 'input-disabled',
+      ghost: 'input-ghost',
+      accent: 'input-accent',
+      error: 'input-error',
     },
     size: {
       xs: 'input-xs',
@@ -18,7 +20,7 @@ const inputVariants = cva('input input-bordered w-full md:input-sm', {
     },
   },
   defaultVariants: {
-    variant: 'default',
+    intent: 'primary',
     size: 'md',
   },
 });
@@ -28,11 +30,11 @@ export interface Props
     VariantProps<typeof inputVariants> {}
 
 const Input = forwardRef<HTMLInputElement, Props>(
-  ({ id, className, variant, size, ...props }, ref) => (
+  ({ id, className, intent, size, ...props }, ref) => (
     <input
       className={cn(
         inputVariants({
-          variant,
+          intent,
           size,
           className,
         }),

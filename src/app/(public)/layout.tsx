@@ -1,12 +1,12 @@
 import Footer from '@/components/layout/Footer';
-import { ResponsiveHeader } from '@/components/layout/Header';
+import { Header } from '@/components/layout/Header';
 import { LayoutProps } from '@/types/common';
 
 export default function Public({ children }: LayoutProps) {
   return (
     <div className='flex h-screen flex-col'>
-      <ResponsiveHeader />
-      <main className='flex-grow'>{children}</main>
+      <Header />
+      <main className='grow'>{children}</main>
       <Footer />
     </div>
   );

@@ -1,10 +1,11 @@
-import Image from 'next/image';
 import { use } from 'react';
 
 import PlacingsTable from '@/components/tables/Placings';
 import { findMany } from '@/server/prisma/queries/shared';
 import { Button } from '@/components/styled-ui/Button';
 import { unstable_cache } from 'next/cache';
+import Card from '@/components/card/Card';
+import LinkWrapper from '@/components/LinkWrapper';
 
 const getRiders = unstable_cache(
   async () =>
@@ -57,38 +58,36 @@ function SteaPoints() {
         riders={riders}
       />
 
-      <div className='card w-[20em] shadow-2xl sm:w-[30em] md:w-[40em] lg:w-[45em]'>
-        <figure className='relative h-[15em] sm:h-[25em] md:h-[30em] lg:h-[35em]'>
-          <Image
-            src='/points.jpg'
-            alt='Displaying show rewards inside of arena'
-            placeholder='blur'
-            blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mO8f+lAPQAH+wLyQ96hbgAAAABJRU5ErkJggg=='
-            fill
-            sizes='100vw'
-          />
-        </figure>
-
-        <div className='p-2'>
-          <h2 className='text-center text-lg md:text-2xl'>
-            Click here for more information on show points!
-          </h2>
-          <div className='card-actions justify-center'>
-            <a
-              href='/stea_points.pdf'
-              rel='noopener noreferrer'
-              target='_blank'
-            >
+      <Card className='w-[20em] shadow-xl sm:w-[30em] md:w-[40em] lg:w-[45em]'>
+        <Card.Image
+          src='/points.jpg'
+          alt='Displaying show rewards inside of arena'
+          placeholder='blur'
+          blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mO8f+lAPQAH+wLyQ96hbgAAAABJRU5ErkJggg=='
+          width={1920}
+          height={1080}
+          sizes='100vw'
+        />
+        <Card.Body>
+          <Card.Title
+            tag='h2'
+            className='text-center text-lg md:text-2xl'
+          >
+            Click below for more information on show points!
+          </Card.Title>
+          <Card.Actions className='justify-center'>
+            <LinkWrapper href='/stea_points.pdf'>
               <Button
                 variant='primary'
-                className='sm md:btn-md'
+                size='sm'
+                className='md:btn-md'
               >
                 Download Guidelines
               </Button>
-            </a>
-          </div>
-        </div>
-      </div>
+            </LinkWrapper>
+          </Card.Actions>
+        </Card.Body>
+      </Card>
     </div>
   );
 }

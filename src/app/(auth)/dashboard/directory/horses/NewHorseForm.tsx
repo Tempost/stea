@@ -2,10 +2,7 @@
 import { ChangeEvent, useState, useTransition } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import Input from '@/components/data-entry/Input';
-import Radio from '@/components/data-entry/Radio';
-import Select from '@/components/data-entry/Select';
-import Form from '@/components/forms/Form';
+import Form from '@/components/form/Form';
 import { Button } from '@/components/styled-ui/Button';
 import Modal from '@/components/styled-ui/Modal';
 import {
@@ -17,7 +14,8 @@ import useZodForm from '@/utils/usezodform';
 import { Member, NonMemberHorseOwner } from '@prisma/client';
 import useSWR, { Fetcher } from 'swr';
 import add, { ActionState } from './action';
-import Alert from '@/components/forms/Alert';
+import Alert from '@/components/styled-ui/Alert';
+import RegistrationSelect from '@/components/forms/RegType';
 
 const memberFetcher: Fetcher<Array<Member>, string> = (...args) =>
   fetch(...args).then(res => res.json());
@@ -25,14 +23,14 @@ const memberFetcher: Fetcher<Array<Member>, string> = (...args) =>
 const ownerFetcher: Fetcher<Array<NonMemberHorseOwner>, string> = (...args) =>
   fetch(...args).then(res => res.json());
 
-function MemberSelection() {
+function MemberSelect() {
   const { data, error } = useSWR('/api/dashboard/members', memberFetcher, {
     revalidateOnFocus: false,
   });
   const { register } = useFormContext();
 
   return (
-    <Select
+    <Form.Select
       label='Members'
       defaultValue=''
       {...register('memberName')}
@@ -57,18 +55,18 @@ function MemberSelection() {
           </option>
         ))
       )}
-    </Select>
+    </Form.Select>
   );
 }
 
-function OwnerSelection() {
+function OwnerSelect() {
   const { data, error } = useSWR('/api/dashboard/owners', ownerFetcher, {
     revalidateOnFocus: false,
   });
   const { register } = useFormContext();
 
   return (
-    <Select
+    <Form.Select
       label='Non-Members'
       defaultValue=''
       {...register('owner')}
@@ -93,7 +91,7 @@ function OwnerSelection() {
           </option>
         ))
       )}
-    </Select>
+    </Form.Select>
   );
 }
 
@@ -166,55 +164,51 @@ function NewHorseForm() {
         onSubmit={onSubmit}
         id='horse-form'
       >
-        <h3 className='text-lg font-bold'>Enter Member Information</h3>
+        <legend className='fieldset-legend text-lg font-bold'>
+          Enter Member Information
+        </legend>
         <div className='flex flex-col gap-2'>
-          <span className='flex space-x-5'>
-            <Input
+          <fieldset
+            id='horse-name'
+            className='fieldset flex gap-2'
+          >
+            <Form.Input
               type='text'
               label='Horse RN'
               {...register('horseRN')}
             />
 
-            <Input
+            <Form.Input
               type='text'
               label='Horse Barn Name'
               {...register('horseAKA')}
             />
-          </span>
+          </fieldset>
 
-          <Select
+          <Form.Select
             label='Type of Member'
             name='owner-type'
+            defaultValue=''
             onChange={handleSelection}
           >
-            <option value='none'>None</option>
+            <option value=''>Select</option>
             <option value='member'>Member</option>
             <option value='non-member'>Non-Member</option>
-          </Select>
+          </Form.Select>
 
           <span className={cn({ hidden: memberType === 'none' })}>
             {memberType === 'member' ? (
-              <MemberSelection />
+              <MemberSelect />
             ) : memberType == 'non-member' ? (
-              <OwnerSelection />
+              <OwnerSelect />
             ) : null}
           </span>
 
-          <h3>Registration Type*</h3>
-          <Radio
-            label='Annual'
-            value='Annual'
-            {...register('regType')}
-          />
-
-          <Radio
-            label='Life'
-            value='Life'
-            {...register('regType')}
-          />
+          <RegistrationSelect register={register('regType')} />
         </div>
         <Alert
-          visible={state.error}
+          icon='error'
+          hidden={state.error}
           message={state.message}
         />
       </Form>

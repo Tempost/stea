@@ -1,3 +1,6 @@
+import NextLink from 'next/link';
+import Card from './card/Card';
+
 interface ContactCardProps {
   name: string | null;
   position: string;
@@ -6,16 +9,19 @@ interface ContactCardProps {
 
 export function ContactCard({ name, position, email }: ContactCardProps) {
   return (
-    <span className='w-fit rounded-md p-5 shadow-[0_20px_40px_-20px_rgba(0,0,0,0.3)]'>
-      <p className='text-lg font-semibold'>{position}</p>
-      <span className='divider my-1 w-full' />
-      <p>{name ? name : 'Open Position'}</p>
-      <a
-        className='link underline'
-        href={`mailto:${email}`}
-      >
-        {email}
-      </a>
-    </span>
+    <Card className='shadow-md'>
+      <Card.Body>
+        <Card.Title tag='h3'>{position}</Card.Title>
+        <p>{name ? name : 'Open Position'}</p>
+        <Card.Actions>
+          <NextLink
+            className='link underline'
+            href={`mailto:${email}`}
+          >
+            {email}
+          </NextLink>
+        </Card.Actions>
+      </Card.Body>
+    </Card>
   );
 }

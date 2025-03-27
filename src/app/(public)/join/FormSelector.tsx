@@ -22,7 +22,7 @@ function FormSelector() {
         {FORMTYPE.map(selection => (
           <div
             key={selection}
-            className='form-control flex-row'
+            className='flex-row'
           >
             <Label
               htmlFor={`${selection}-id`}
@@ -42,6 +42,7 @@ function FormSelector() {
           </div>
         ))}
       </div>
+
       <Button
         variant='primary'
         className='w-full'

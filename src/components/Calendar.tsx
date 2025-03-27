@@ -56,12 +56,13 @@ export default function Calendar({ shows }: CalendarProps) {
 
   return (
     <>
-      <div className='grid grid-flow-col place-content-between border-b-2 pb-2'>
+      <div className='join place-content-center space-x-1 border-b-2 border-gray-200 pb-2'>
         <Button
           variant='secondary'
           size='sm'
           id='left'
           onClick={handleMonthChange}
+          join={true}
         >
           {ChevLeft}
         </Button>
@@ -71,6 +72,7 @@ export default function Calendar({ shows }: CalendarProps) {
           variant='secondary'
           size='sm'
           id='middle'
+          join={true}
         >
           {MONTHS.at(month)}
         </Button>
@@ -80,6 +82,7 @@ export default function Calendar({ shows }: CalendarProps) {
           size='sm'
           id='right'
           onClick={handleMonthChange}
+          join={true}
         >
           {ChevRight}
         </Button>

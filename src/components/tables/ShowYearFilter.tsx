@@ -14,7 +14,7 @@ function ShowYearFilter<TData>({ column }: ShowYearFilterProps<TData>) {
       id='show-year'
       name='show-year'
       size='xs'
-      className='ml-2 w-fit'
+      className='w-fit'
       value={column?.getFilterValue() as number}
       onChange={e => {
         e.preventDefault();

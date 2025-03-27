@@ -36,6 +36,7 @@ function RemoveSelectedShows({
             'btn-success': state.message === 'Success',
           })}
           size='sm'
+          variant='primary'
           onClick={() => {
             startTransition(async () => {
               const res = await remove(Object.keys(showSelection));
@@ -51,9 +52,7 @@ function RemoveSelectedShows({
         </Button>
       }
     >
-      <h3 className='text-lg font-bold'>
-        Are you sure you wish to remove the selected show(s)?
-      </h3>
+      <p>Are you sure you wish to remove the selected show(s)?</p>
     </Modal>
   );
 }

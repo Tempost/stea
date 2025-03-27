@@ -1,6 +1,7 @@
 {
   "git": {
     "deploymentEnabled": {
+      "daisy-v5": false
     }
   }
 }

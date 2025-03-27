@@ -1,76 +1,48 @@
 import { Hamburger, MobileMenu } from '@/components/icons';
 import LinkWrapper from '@/components/LinkWrapper';
-import { publicMenuItems } from '@/components/MenuItems';
-import { Fragment, PropsWithChildren } from 'react';
+import { publicMenuItems, Menu } from '@/components/MenuItems';
+import { memo } from 'react';
 
-export const ResponsiveHeader = ({ children }: PropsWithChildren) => {
-  return (
-    <div className='drawer'>
-      <input
-        id='my-drawer-3'
-        type='checkbox'
-        className='drawer-toggle'
-      />
-      <div className='drawer-content flex flex-col'>
-        <div className='navbar w-full bg-gradient-to-b from-primary to-[color-mix(in_oklab,oklch(var(--p)),black_10%)] font-semibold text-gray-300 shadow-sm'>
-          <div className='flex-none lg:hidden'>
-            <label
-              htmlFor='my-drawer-3'
-              aria-label='open sidebar'
-              className='btn btn-square btn-ghost'
-            >
-              {Hamburger}
-            </label>
-          </div>
+const MenuItems = memo(({ items }: { items: Array<Menu> }) =>
+  items.map(({ href, name }) => (
+    <li key={name}>
+      <LinkWrapper href={href}>{name}</LinkWrapper>
+    </li>
+  )),
+);
 
-          <h3 className='mx-2 flex-1 px-2 text-xl md:text-2xl'>
-            South Texas Eventing
-          </h3>
-          <span className='hidden flex-none lg:block'>
-            <ul className='menu join menu-horizontal p-0 text-lg'>
-              {publicMenuItems.map(({ href, name, render }) => (
-                <Fragment key={name}>
-                  {render ? (
-                    render({ href, name })
-                  ) : (
-                    <li>
-                      <LinkWrapper href={href}>{name}</LinkWrapper>
-                    </li>
-                  )}
-                </Fragment>
-              ))}
-            </ul>
-          </span>
+MenuItems.displayName = 'MenuItems';
+
+export const Header = () => (
+  <div className='navbar from-primary to-primary-dark bg-gradient-to-b text-gray-300 shadow-sm'>
+    <div className='navbar-start'>
+      <div className='dropdown'>
+        <div
+          tabIndex={0}
+          role='button'
+          className='btn btn-ghost lg:hidden'
+        >
+          {Hamburger}
         </div>
-        {children}
-      </div>
-
-      <div className='drawer-side z-50'>
-        <label
-          htmlFor='my-drawer-3'
-          aria-label='close sidebar'
-          className='drawer-overlay'
-        />
-        <ul className='menu min-h-full w-fit p-4 text-sm font-semibold'>
-          {publicMenuItems.map(({ href, name, render }) => (
-            <Fragment key={name}>
-              {render ? (
-                render({ href, name, drawer: true })
-              ) : (
-                <li key={name}>
-                  <LinkWrapper href={href}>{name}</LinkWrapper>
-                </li>
-              )}
-            </Fragment>
-          ))}
+        <ul className='menu menu-sm dropdown-content bg-primary rounded-box z-1 mt-3 w-52 p-2 shadow'>
+          <MenuItems items={publicMenuItems} />
         </ul>
       </div>
+      <h1 className='mx-2 flex-1 px-2 text-xs sm:text-sm md:text-lg lg:text-xl'>
+        South Texas Eventing
+      </h1>
     </div>
-  );
-};
+
+    <div className='navbar-center hidden lg:flex'>
+      <ul className='menu menu-lg menu-horizontal px-1'>
+        <MenuItems items={publicMenuItems} />
+      </ul>
+    </div>
+  </div>
+);
 
 export const ResponsiveDashboardHeader = () => (
-  <div className='navbar bg-gradient-to-b from-primary to-[color-mix(in_oklab,oklch(var(--p)),black_10%)] font-semibold text-gray-300 shadow-sm'>
+  <div className='navbar from-primary to-primary-dark bg-gradient-to-b font-semibold text-gray-300'>
     {/* Desktop Navbar */}
     <div className='navbar-start hidden lg:flex'>
       <ul className='menu menu-horizontal px-1'>
@@ -90,7 +62,7 @@ export const ResponsiveDashboardHeader = () => (
           <LinkWrapper href='/dashboard/submit'>Submit Points</LinkWrapper>
         </li>
         <li tabIndex={0}>
-          <details>
+          <details className='z-50'>
             <summary>Documents</summary>
             <ul className='bg-primary text-xs shadow-2xl lg:text-sm'>
               <li>
@@ -99,7 +71,10 @@ export const ResponsiveDashboardHeader = () => (
                 </LinkWrapper>
               </li>
               <li>
-                <LinkWrapper href='/stea_org_packet.pdf'>
+                <LinkWrapper
+                  href='/stea_org_packet.pdf'
+                  target='_blank'
+                >
                   Organizer Pack
                 </LinkWrapper>
               </li>
@@ -119,7 +94,7 @@ export const ResponsiveDashboardHeader = () => (
       </label>
       <ul
         tabIndex={0}
-        className='menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-primary p-2 shadow'
+        className='menu dropdown-content menu-sm rounded-box bg-primary z-[1] mt-3 w-52 p-2 shadow-sm'
       >
         <li>
           <LinkWrapper href='/'>Home</LinkWrapper>

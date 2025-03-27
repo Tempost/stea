@@ -3,7 +3,7 @@ export const CalendarIcon = (
     xmlns='http://www.w3.org/2000/svg'
     viewBox='0 0 24 24'
     fill='currentColor'
-    className='h-6 w-6 hover:text-primary'
+    className='h-6 w-6'
   >
     <path d='M12.75 12.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM7.5 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM8.25 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM9.75 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM10.5 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM12.75 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM14.25 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM15 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM16.5 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM15 12.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM16.5 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z' />
     <path
@@ -160,6 +160,109 @@ export const Edit = (
       strokeLinecap='round'
       strokeLinejoin='round'
       d='M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125'
+    />
+  </svg>
+);
+
+export const Search = (
+  <svg
+    className='h-[1em] opacity-50'
+    xmlns='http://www.w3.org/2000/svg'
+    viewBox='0 0 24 24'
+  >
+    <g
+      strokeLinejoin='round'
+      strokeLinecap='round'
+      strokeWidth='2.5'
+      fill='none'
+      stroke='currentColor'
+    >
+      <circle
+        cx='11'
+        cy='11'
+        r='8'
+      ></circle>
+      <path d='m21 21-4.3-4.3'></path>
+    </g>
+  </svg>
+);
+
+export const Info = (
+  <svg
+    xmlns='http://www.w3.org/2000/svg'
+    fill='none'
+    viewBox='0 0 24 24'
+    className='h-6 w-6 shrink-0 stroke-current'
+  >
+    <path
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      strokeWidth='2'
+      d='M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
+    ></path>
+  </svg>
+);
+
+export const InfoColor = (
+  <svg
+    xmlns='http://www.w3.org/2000/svg'
+    fill='none'
+    viewBox='0 0 24 24'
+    className='stroke-info h-6 w-6 shrink-0'
+  >
+    <path
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      strokeWidth='2'
+      d='M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
+    ></path>
+  </svg>
+);
+
+export const Error = (
+  <svg
+    xmlns='http://www.w3.org/2000/svg'
+    className='h-6 w-6 shrink-0 stroke-current'
+    fill='none'
+    viewBox='0 0 24 24'
+  >
+    <path
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      strokeWidth='2'
+      d='M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z'
+    />
+  </svg>
+);
+
+export const Warning = (
+  <svg
+    xmlns='http://www.w3.org/2000/svg'
+    className='h-6 w-6 shrink-0 stroke-current'
+    fill='none'
+    viewBox='0 0 24 24'
+  >
+    <path
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      strokeWidth='2'
+      d='M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z'
+    />
+  </svg>
+);
+
+export const Success = (
+  <svg
+    xmlns='http://www.w3.org/2000/svg'
+    className='h-6 w-6 shrink-0 stroke-current'
+    fill='none'
+    viewBox='0 0 24 24'
+  >
+    <path
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      strokeWidth='2'
+      d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'
     />
   </svg>
 );

@@ -31,15 +31,10 @@ function DebouncedInput({
   return (
     <Input
       {...props}
-      type='text'
+      type='search'
       value={value}
       onChange={e => setValue(e.target.value)}
     />
-    // <input
-    //   {...props}
-    //   value={value}
-    //   onChange={e => setValue(e.target.value)}
-    // />
   );
 }
 

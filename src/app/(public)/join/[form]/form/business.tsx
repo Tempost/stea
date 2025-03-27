@@ -5,13 +5,10 @@ import { MemberForm, MemberFormSchema } from '@/utils/zodschemas';
 import { capitalize } from '@/utils/helpers';
 import states from '@/utils/states.json';
 import useZodForm from '@/utils/usezodform';
-import Form from '@/components/forms/Form';
+import Form from '@/components/form/Form';
 import { PhoneTypeSchema } from '@/server/prisma/zod-generated/inputTypeSchemas/PhoneTypeSchema';
 import Payment from '@/components/forms/Payment';
-import Input from '@/components/data-entry/Input';
-import Select from '@/components/data-entry/Select';
 import RegistrationSelect from '@/components/forms/RegType';
-import Checkbox from '@/components/data-entry/Checkbox';
 import HorseFieldArray from '@/components/forms/HorseFieldArray';
 import RegistrationYearSelect from '@/components/forms/RegistrationYearSelect';
 import {
@@ -20,6 +17,7 @@ import {
   checkForExistingMember,
 } from './member.action';
 import { setMembershipYear } from '@/utils/setmembershipyear';
+import { optionsFromObject } from '@/components/helpers';
 
 const initialState: ActionState = {
   message: undefined,
@@ -36,6 +34,7 @@ function BusinessRegistration() {
 
   const form = useZodForm({
     reValidateMode: 'onSubmit',
+    mode: 'onSubmit',
     shouldFocusError: true,
     schema: MemberFormSchema,
     defaultValues: {
@@ -78,126 +77,134 @@ function BusinessRegistration() {
       >
         <h2 className='divider'>Business Registration</h2>
 
-        <h3 className='mb-2 text-wrap rounded-2xl border border-solid border-gray-400 bg-gray-100 p-4 text-center'>
-          As part of the membership you can submit
+        <h3 className='mx-auto mb-3 w-fit rounded-2xl border border-solid border-gray-400 bg-gray-200 p-2 text-center'>
+          As part of membership you can submit
           <br />
-          your company logo for our home page!
+          your company logo to display our home page.
           <br />
-          Submit to stea@stevening.net
+          Please send to stea@stevening.net
         </h3>
 
-        <div className='flex flex-col gap-2'>
-          <h3 className='text-sm'>Name of Business*</h3>
-          <Input
+        <Form.Input
+          type='text'
+          label='Business Name*'
+          {...register('businessName')}
+        />
+
+        <fieldset
+          id='address-group'
+          className='fieldset flex flex-col gap-2'
+        >
+          <legend className='fieldset-legend'>Business Address*</legend>
+          <Form.Input
             type='text'
-            {...register('businessName')}
+            placeholder='Address Line 1'
+            {...register('address')}
           />
 
-          <h3 className='text-sm'>Business Address*</h3>
-          <div className='flex flex-col gap-2'>
-            <Input
+          <Form.Input
+            type='text'
+            placeholder='Address Line 2'
+            name='temp'
+          />
+
+          <div className='flex flex-col gap-2 md:flex-row'>
+            <Form.Input
               type='text'
-              placeholder='Address Line 1'
-              {...register('address')}
+              placeholder='City'
+              {...register('city')}
             />
 
-            <Input
+            <Form.Select {...register('state')}>
+              {states.map(state => (
+                <option
+                  key={state.value}
+                  value={state.value}
+                >
+                  {capitalize(state.label)}
+                </option>
+              ))}
+            </Form.Select>
+
+            <Form.Input
+              type='numeric'
+              placeholder='Zip Code'
+              {...register('zip', { valueAsNumber: true })}
+            />
+          </div>
+        </fieldset>
+
+        <fieldset
+          id='contact-info'
+          className='fieldset flex flex-col gap-2'
+        >
+          <legend className='fieldset-legend'>Point of Contact</legend>
+          <div className='flex gap-2'>
+            <Form.Input
               type='text'
-              placeholder='Address Line 2'
-              name='temp'
+              label='First Name*'
+              {...register('firstName')}
             />
 
-            <div className='flex gap-1'>
-              <Input
-                type='text'
-                placeholder='City'
-                {...register('city')}
-              />
-
-              <Select {...register('state')}>
-                {states.map(state => (
-                  <option
-                    key={state.value}
-                    value={state.value}
-                  >
-                    {capitalize(state.label)}
-                  </option>
-                ))}
-              </Select>
-
-              <Input
-                type='numeric'
-                placeholder='Zip Code'
-                {...register('zip', { valueAsNumber: true })}
-              />
-            </div>
+            <Form.Input
+              type='text'
+              label='Last Name*'
+              {...register('lastName')}
+            />
           </div>
 
-          <h3 className='mt-3 font-semibold'>Point of Contact</h3>
-          <div>
-            <div className='flex gap-5'>
-              <Input
-                type='text'
-                label='First Name*'
-                {...register('firstName')}
-              />
-
-              <Input
-                type='text'
-                label='Last Name*'
-                {...register('lastName')}
-              />
-            </div>
-            <div className='flex gap-2'>
-              <Select
-                label='Phone Type*'
-                {...register('phoneType')}
+          <div className='mt-1 flex gap-2'>
+            <Form.Select
+              {...register('phoneType')}
+              label='Phone Type*'
+              defaultValue=''
+            >
+              <option
+                disabled
+                value=''
               >
-                {Object.keys(PhoneTypeSchema.enum).map(type => (
-                  <option
-                    key={type}
-                    value={type}
-                  >
-                    {type}
-                  </option>
-                ))}
-              </Select>
+                Select
+              </option>
+              {optionsFromObject(PhoneTypeSchema.enum)}
+            </Form.Select>
 
-              <Input
-                label='Phone Number*'
-                type='tel'
-                {...register('phone')}
-              />
-            </div>
-
-            <Input
-              label='Email*'
-              type='text'
-              altLabel={'This will be the primary method of contact.'}
-              {...register('email')}
-            />
-
-            <RegistrationSelect
-              register={register('memberStatus')}
-              formType='business'
-            />
-
-            <RegistrationYearSelect
-              heading='Which year are you registering for?'
-              watchFieldName='memberStatus'
-              control={control}
-              register={register('membershipEnd')}
+            <Form.Input
+              label='Phone Number*'
+              type='tel'
+              {...register('phone')}
             />
           </div>
 
-          <Checkbox
-            label='Do you plan to register your horse(s)?'
-            checked={isRegHorse}
-            onChange={() => toggleRegHorse(curr => !curr)}
+          <Form.Input
+            label='Email*'
+            type='email'
+            {...register('email')}
+          />
+        </fieldset>
+
+        <div className='flex flex-col'>
+          <RegistrationSelect
+            register={register('memberStatus')}
+            formType='business'
+            price
           />
 
-          {isRegHorse && <HorseFieldArray />}
+          <RegistrationYearSelect
+            heading='Which year are you registering for?'
+            watchFieldName='memberStatus'
+            control={control}
+            register={register('membershipEnd')}
+          />
         </div>
+
+        <Form.Checkbox
+          label='Do you plan to register your horse(s)?'
+          checked={isRegHorse}
+          className='md:checkbox-sm'
+          onChange={() => toggleRegHorse(curr => !curr)}
+        />
+
+        {isRegHorse && <HorseFieldArray />}
       </Payment>
     </Form>
   );

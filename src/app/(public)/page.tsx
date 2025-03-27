@@ -1,16 +1,18 @@
 import NextLink from 'next/link';
 
-import UpcomingEvents from '@/components/home/Events';
-import NavCard from '@/components/home/NavCard';
+import UpcomingEvents from '@/components/styled-ui/Events';
+import NavCard from '@/components/styled-ui/NavCard';
 import { BookIcon, CalendarIcon } from '@/components/icons';
 import Image from 'next/image';
+import Card from '@/components/card/Card';
+import { Button } from '@/components/styled-ui/Button';
 
 const Home = () => (
   <>
-    <div className='hero min-h-screen bg-home-hero bg-fixed'>
-      <div className='hero-overlay bg-opacity-50'></div>
+    <div className='hero bg-home-hero min-h-screen bg-fixed'>
+      <div className='hero-overlay'></div>
 
-      <div className='hero-content text-center text-neutral-content'>
+      <div className='hero-content text-neutral-content text-center'>
         <div className='flex min-w-full flex-col items-center gap-5'>
           <Image
             width={450}
@@ -59,73 +61,102 @@ const Home = () => (
       </div>
 
       <div className='flex flex-col gap-5 md:flex-row md:gap-10'>
-        <div className='container card card-compact mx-auto w-fit border shadow-xl md:shadow-2xl'>
-          <div className='card-body'>
-            <h2 className='text-center text-xl font-bold md:text-2xl lg:text-3xl'>
+        <Card
+          size='sm'
+          className='mx-auto shadow-xl md:shadow-2xl'
+        >
+          <Card.Body>
+            <Card.Title
+              tag='h2'
+              className='place-content-center text-xl md:text-2xl lg:text-3xl'
+            >
               Announcements
-            </h2>
+            </Card.Title>
 
-            <div className='divider mb-0 mt-0'></div>
-
-            <div className='inline-grid place-content-center text-center text-xl md:text-2xl [&_h3]:mb-2'>
+            <div className='flex flex-col place-content-center text-center text-xl md:text-2xl [&_h3]:mb-2'>
+              <div className='divider mt-0 mb-0'></div>
               <div>
                 <h3 className='text-lg md:text-xl lg:text-xl'>
                   2024 STEA Final Year End Scores
                 </h3>
                 <a
-                  className='btn btn-primary btn-sm w-fit place-self-center md:btn-xs'
                   href='/final_stea_points_2024.pdf'
+                  rel='noopener noreferrer'
+                  target='_blank'
                 >
-                  Download
+                  <Button
+                    variant='primary'
+                    size='sm'
+                    className='md:btn-xs'
+                  >
+                    Download
+                  </Button>
                 </a>
               </div>
-
-              <div className='divider'></div>
-
+              <div className='divider mt-0 mb-0'></div>
               <div>
                 <h3 className='text-lg md:text-xl lg:text-xl'>
                   Keep up to date on STEA rules
                 </h3>
                 <a
-                  className='btn btn-primary btn-sm w-fit gap-2 place-self-center md:btn-xs'
                   href='/stea_rule_book_2025.docx'
                   rel='noopener noreferrer'
                   target='_blank'
                 >
-                  {BookIcon}RuleBook
+                  <Button
+                    variant='primary'
+                    size='sm'
+                    className='md:btn-xs'
+                  >
+                    {BookIcon}RuleBook
+                  </Button>
                 </a>
               </div>
             </div>
-          </div>
-        </div>
+          </Card.Body>
+        </Card>
 
-        <div className='container card card-compact mx-auto w-fit border shadow-xl md:shadow-2xl'>
-          <div className='card-body'>
-            <h2 className='text-center text-xl font-bold md:text-2xl lg:text-3xl'>
-              Upcoming Events
-            </h2>
-            <div className='divider mb-0 mt-0'></div>
-            <UpcomingEvents />
-            <NextLink
-              href='/calendar'
-              className='self-center'
+        <Card
+          size='sm'
+          className='mx-auto shadow-xl md:shadow-2xl'
+        >
+          <Card.Body>
+            <Card.Title
+              tag='h2'
+              className='place-content-center text-xl md:text-2xl lg:text-3xl'
             >
-              <button className='btn btn-primary btn-sm grid grid-flow-col place-content-center gap-2'>
-                {CalendarIcon} View Full Calendar
-              </button>
-            </NextLink>
-          </div>
-        </div>
+              Upcoming Events
+            </Card.Title>
+            <div className='divider mt-0 mb-0'></div>
+            <UpcomingEvents />
+            <Card.Actions className='self-center'>
+              <NextLink href='/calendar'>
+                <Button
+                  variant='primary'
+                  size='sm'
+                >
+                  {CalendarIcon} View Full Calendar
+                </Button>
+              </NextLink>
+            </Card.Actions>
+          </Card.Body>
+        </Card>
       </div>
 
-      <div className='container card card-compact mx-auto w-fit border shadow-xl md:shadow-2xl'>
-        <div className='card-body'>
-          <h2 className='mg:text-2xl text-center text-xl font-bold lg:text-3xl'>
+      <Card
+        size='sm'
+        className='mx-auto shadow-xl md:shadow-2xl'
+      >
+        <Card.Body>
+          <Card.Title
+            tag='h2'
+            className='place-content-center text-xl md:text-2xl lg:text-3xl'
+          >
             Recognized Vendors
-          </h2>
-          <div className='divider mb-0 mt-0'></div>
+          </Card.Title>
+          <div className='divider mt-0 mb-0'></div>
           <div className='flex flex-row flex-wrap justify-center'>
-            <Image
+            <Card.Image
               src='/riding_warehouse.jpg'
               width={300}
               height={300}
@@ -133,7 +164,7 @@ const Home = () => (
               alt='Logo for riding warehouse, two horses cantering towards a horseshoe'
             />
 
-            <Image
+            <Card.Image
               src='/dover_home_page.jpg'
               width={300}
               height={300}
@@ -141,37 +172,44 @@ const Home = () => (
               alt='Logo for dover tack, white logo "Dover Saddlery"'
             />
           </div>
-        </div>
-      </div>
-      <div className='container card card-compact mx-auto w-fit border shadow-xl md:shadow-2xl'>
-        <div className='card-body'>
-          <h2 className='mg:text-2xl text-center text-xl font-bold lg:text-3xl'>
+        </Card.Body>
+      </Card>
+
+      <Card
+        size='sm'
+        className='mx-auto shadow-xl md:shadow-2xl'
+      >
+        <Card.Body>
+          <Card.Title
+            tag='h2'
+            className='place-content-center text-xl md:text-2xl lg:text-3xl'
+          >
             Recognized Venues
-          </h2>
-          <div className='divider mb-0 mt-0'></div>
+          </Card.Title>
+          <div className='divider mt-0 mb-0'></div>
           <div className='flex flex-row flex-wrap justify-center'>
-            <Image
+            <Card.Image
               src='/texas_rose_horse_park.jpg'
               width={300}
               height={300}
               sizes='100vw, 50vw'
               alt='Logo for Texas Rose Horse Park, horse head with texas outline in the background'
             />
-            <Image
+            <Card.Image
               src='/new_horizon_stables.png'
               width={300}
               height={300}
               sizes='100vw, 50vw'
               alt='Logo for New Horizon Stables, outline of rider jumping on horse'
             />
-            <Image
+            <Card.Image
               src='/pinehill.jpg'
               width={300}
               height={300}
               sizes='100vw, 50vw'
               alt='Logo for pinehill. three riders two jumping, one doing dressage.'
             />
-            <Image
+            <Card.Image
               src='/meadow_creek.jpg'
               width={300}
               height={300}
@@ -179,16 +217,22 @@ const Home = () => (
               alt='Logo for Meadow Creek, horse jumping with text "Meadow Creek Equestrian Event Center"'
             />
           </div>
-        </div>
-      </div>
-      <div className='container card card-compact mx-auto w-fit border shadow-xl md:shadow-2xl'>
-        <div className='card-body'>
-          <h2 className='mg:text-2xl text-center text-xl font-bold lg:text-3xl'>
+        </Card.Body>
+      </Card>
+      <Card
+        size='sm'
+        className='mx-auto shadow-xl md:shadow-2xl'
+      >
+        <Card.Body>
+          <Card.Title
+            tag='h2'
+            className='place-content-center text-xl md:text-2xl lg:text-3xl'
+          >
             Business Members
-          </h2>
-          <div className='divider mb-0 mt-0'></div>
+          </Card.Title>
+          <div className='divider mt-0 mb-0'></div>
           <div className='flex flex-row flex-wrap justify-center'>
-            <Image
+            <Card.Image
               src='/diamond_riding.png'
               width={300}
               height={300}
@@ -196,8 +240,8 @@ const Home = () => (
               alt='Logo for diamond riding, diamond logo with horse shoe and horse head'
             />
           </div>
-        </div>
-      </div>
+        </Card.Body>
+      </Card>
     </div>
   </>
 );

@@ -10,6 +10,8 @@ const buttonVariants = cva('btn', {
       secondary: 'btn-secondary',
       disabled: 'btn-disabled',
       ghost: 'btn-ghost',
+      success: 'btn-succes',
+      error: 'btn-error',
       link: 'btn-link',
     },
     size: {
@@ -19,10 +21,15 @@ const buttonVariants = cva('btn', {
       lg: 'btn-lg',
       xl: 'btn-xl',
     },
+    join: {
+      true: 'join-item',
+      false: null,
+    },
   },
   defaultVariants: {
     variant: 'default',
     size: 'default',
+    join: false,
   },
 });
 
@@ -31,10 +38,11 @@ export interface Props
     VariantProps<typeof buttonVariants> {}
 
 const Button = forwardRef<HTMLButtonElement, Props>(
-  ({ className, variant, size, ...props }, ref) => (
+  ({ className, variant, size, join, type, ...props }, ref) => (
     <button
       ref={ref}
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={cn(buttonVariants({ variant, size, join, className }))}
+      type={type ?? 'button'}
       {...props}
     />
   ),

@@ -1,5 +1,5 @@
 'use client';
-import Checkbox from '@/components/data-entry/Checkbox';
+import Checkbox from '@/components/styled-ui/Checkbox';
 import { Button } from '@/components/styled-ui/Button';
 import TableWithData from '@/components/tables/BaseTable';
 import { readableDateTime } from '@/utils/helpers';
@@ -19,7 +19,7 @@ function EmailList({ emails }: EmailListProps) {
       variant='primary'
       size='sm'
       className='tooltip tooltip-bottom tooltip-primary'
-      data-tip='Copied!'
+      data-tip='Click to Copy!'
       onClick={() => navigator.clipboard.writeText(emails)}
     >
       Email List
@@ -38,6 +38,7 @@ const columns: Array<ColumnDef<Member>> = [
             id={row.id}
             checked={row.getIsSelected()}
             onChange={row.getToggleSelectedHandler()}
+            size='sm'
           />
         ),
       },
@@ -105,6 +106,7 @@ const columns: Array<ColumnDef<Member>> = [
 function DashboardMembers({ members }: { members: Array<Member> }) {
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
 
+  // TODO: Filter out members who are no longer active
   const emails = useCallback(
     () =>
       members
@@ -115,30 +117,28 @@ function DashboardMembers({ members }: { members: Array<Member> }) {
   );
 
   return (
-    <div>
-      <TableWithData
-        extraTableOpts={{
-          columns,
-          enableRowSelection: true,
-          enableMultiRowSelection: false,
-          onRowSelectionChange: setRowSelection,
-          getRowId: row => row.fullName,
-          state: {
-            rowSelection,
-          },
-        }}
-        extras={
-          <div className='flex space-x-1'>
-            <EmailList emails={emails()} />
-            <NewMemberForm />
-            <UpdateMember rowSelection={rowSelection} />
-          </div>
-        }
-        data={members}
-        paginate
-        search
-      />
-    </div>
+    <TableWithData
+      extraTableOpts={{
+        columns,
+        enableRowSelection: true,
+        enableMultiRowSelection: false,
+        onRowSelectionChange: setRowSelection,
+        getRowId: row => row.fullName,
+        state: {
+          rowSelection,
+        },
+      }}
+      extras={
+        <div className='space-x-1'>
+          <EmailList emails={emails()} />
+          <NewMemberForm />
+          <UpdateMember rowSelection={rowSelection} />
+        </div>
+      }
+      data={members}
+      paginate
+      search
+    />
   );
 }
 

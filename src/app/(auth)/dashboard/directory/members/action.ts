@@ -98,5 +98,5 @@ export async function get(fullName: string) {
     { revalidate: 3600, tags: ['Members', fullName] },
   );
 
-  return getMember(fullName);
+  return await getMember(fullName);
 }

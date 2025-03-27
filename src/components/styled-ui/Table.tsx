@@ -11,10 +11,11 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { ReactElement, ReactNode, useState } from 'react';
-import DebouncedInput from '../data-entry/DebouncedInput';
+import DebouncedInput from '../styled-ui/DebouncedInput';
 import { Button } from './Button';
 import Select from './Select';
 import Loading from './Loading';
+import { ChevLeft, ChevRight } from '../icons';
 
 interface RowRenderProps<TData> {
   row: Row<TData>;
@@ -77,7 +78,7 @@ function Table<TData>({
             <td
               key={cell.id}
               className={
-                'whitespace-nowrap px-2 py-2 text-xs font-normal text-gray-900 md:px-2 md:py-2 lg:text-sm'
+                'text-base-content px-2 py-2 text-xs font-normal whitespace-nowrap md:px-2 md:py-2 lg:text-sm'
               }
             >
               {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -92,111 +93,109 @@ function Table<TData>({
 
   return (
     <div className='overflow-x-auto'>
-      <div className='inline-block min-w-full py-2 md:px-6 lg:px-8'>
-        <div className='overflow-hidden'>
-          <table className='table'>
-            <thead className='border-b bg-white'>
-              {table.getHeaderGroups().map(headerGroup => (
-                <tr key={headerGroup.id}>
-                  {headerGroup.headers.map(header => (
-                    <th
-                      key={header.id}
-                      colSpan={header.colSpan}
-                      className='select-none px-2 py-2 text-center text-xs font-medium text-gray-900 lg:text-sm'
-                    >
-                      <div className='flex flex-row'>
-                        {!header.isPlaceholder &&
-                          flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
-                        {extras && headerGroup.depth === 0 && extras}
-                        {headerGroup.depth === 0 && search && (
-                          <DebouncedInput
-                            className='ml-auto w-36'
-                            size='sm'
-                            placeholder='Search'
-                            value={globalFilter ?? ''}
-                            onChange={value => setGlobalFilter(String(value))}
-                          />
-                        )}
-                      </div>
-                    </th>
-                  ))}
-                </tr>
+      <table className='table'>
+        <thead>
+          {table.getHeaderGroups().map(headerGroup => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map(header => (
+                <th
+                  key={header.id}
+                  colSpan={header.colSpan}
+                  className='text-base-content px-2 py-2 text-center text-xs font-medium lg:text-sm'
+                >
+                  <div className='flex flex-row'>
+                    {!header.isPlaceholder &&
+                      flexRender(
+                        header.column.columnDef.header,
+                        header.getContext(),
+                      )}
+                    {extras && headerGroup.depth === 0 && extras}
+                    {headerGroup.depth === 0 && search && (
+                      <DebouncedInput
+                        className='ml-auto w-36 self-center'
+                        size='sm'
+                        placeholder='Search'
+                        value={globalFilter ?? ''}
+                        onChange={value => setGlobalFilter(String(value))}
+                      />
+                    )}
+                  </div>
+                </th>
               ))}
-            </thead>
+            </tr>
+          ))}
+        </thead>
 
-            {loading ? (
-              <tbody>
-                <tr>
-                  <td>
-                    <Loading />
-                  </td>
-                </tr>
-              </tbody>
-            ) : (
-              <tbody>
-                {table.getRowModel().rows.map(row => (
-                  <RowRender
-                    key={row.id}
-                    row={row}
-                  />
-                ))}
-              </tbody>
-            )}
-          </table>
+        {loading ? (
+          <tbody>
+            <tr>
+              <td>
+                <Loading />
+              </td>
+            </tr>
+          </tbody>
+        ) : (
+          <tbody>
+            {table.getRowModel().rows.map(row => (
+              <RowRender
+                key={row.id}
+                row={row}
+              />
+            ))}
+          </tbody>
+        )}
+      </table>
 
-          <div className='m-2'>
-            <div className='flex w-full items-center justify-between gap-2'>
-              <div className='flex gap-2'>
-                <Button
-                  size='xs'
-                  variant='secondary'
-                  onClick={() => table.previousPage()}
-                  disabled={!table.getCanPreviousPage()}
-                >
-                  previous
-                </Button>
-                <Button
-                  size='xs'
-                  variant='primary'
-                  onClick={() => table.nextPage()}
-                  disabled={!table.getCanNextPage()}
-                >
-                  next
-                </Button>
-              </div>
-
-              <div className='flex flex-col items-center'>
-                <Select
-                  className='select select-secondary select-xs lg:select-sm'
-                  value={table.getState().pagination.pageSize}
-                  onChange={e => {
-                    table.setPageSize(Number(e.target.value));
-                  }}
-                >
-                  {[10, 20, 30, 40, 50].map(pageSize => (
-                    <option
-                      key={pageSize}
-                      value={pageSize}
-                    >
-                      Show {pageSize}
-                    </option>
-                  ))}
-                </Select>
-                <span className='text-2xs flex items-center gap-1 lg:text-sm'>
-                  <div>page</div>
-                  <strong>
-                    {`${table.getState().pagination.pageIndex + 1} of
-                        ${table.getPageCount()}`}
-                  </strong>
-                </span>
-              </div>
-            </div>
+      {table.getPageCount() > 1 ? (
+        <div className='flex w-full justify-between p-2'>
+          <div className='join'>
+            <Button
+              size='xs'
+              variant='secondary'
+              join={true}
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              {ChevLeft}
+            </Button>
+            <Button
+              size='xs'
+              join={true}
+              className='cursor-default'
+            >
+              Page {table.getState().pagination.pageIndex + 1}/
+              {table.getPageCount()}
+            </Button>
+            <Button
+              size='xs'
+              variant='primary'
+              join={true}
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+            >
+              {ChevRight}
+            </Button>
           </div>
+
+          <Select
+            size='xs'
+            value={table.getState().pagination.pageSize}
+            onChange={e => {
+              table.setPageSize(Number(e.target.value));
+            }}
+            className='w-fit'
+          >
+            {[10, 20, 30, 40, 50].map(pageSize => (
+              <option
+                key={pageSize}
+                value={pageSize}
+              >
+                Show {pageSize}
+              </option>
+            ))}
+          </Select>
         </div>
-      </div>
+      ) : null}
     </div>
   );
 }

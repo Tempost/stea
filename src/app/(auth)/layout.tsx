@@ -5,7 +5,7 @@ export default function DashboardLayout({ children }: LayoutProps) {
   return (
     <div className='flex h-screen flex-col'>
       <ResponsiveDashboardHeader />
-      <main className='flex-grow p-4 sm:p-8 md:p-10 lg:p-16'>{children}</main>
+      <main className='p-4 sm:p-8 md:p-10 lg:p-16'>{children}</main>
     </div>
   );
 }

@@ -7,12 +7,13 @@ interface WrapperProps extends Omit<ComponentProps<typeof NextLink>, 'href'> {
   children: ReactNode | string | number;
 }
 
-function LinkWrapper({ href, children, className }: WrapperProps) {
+function LinkWrapper({ href, children, className, ...props }: WrapperProps) {
   return (
     <NextLink
       href={href ? href : ''}
       rel='noopener noreferrer'
-      className={cn('join-item', className)}
+      className={cn(className)}
+      {...props}
     >
       {children}
     </NextLink>

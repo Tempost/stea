@@ -1,9 +1,11 @@
 import { UseFormRegisterReturn } from 'react-hook-form';
 
-import Radio from '@/components/data-entry/Radio';
 import { costs } from '@/utils/costs';
 import { DetailedHTMLProps, InputHTMLAttributes } from 'react';
 import { FormType } from '@/types/common';
+import Form from '../form/Form';
+
+const { Radio } = Form;
 
 interface Props
   extends DetailedHTMLProps<
@@ -11,15 +13,25 @@ interface Props
     HTMLInputElement
   > {
   register: UseFormRegisterReturn;
-  formType: FormType;
+  formType?: FormType;
+  price?: boolean;
 }
 
-const RegistrationSelect = ({ register, onClick, formType }: Props) => (
-  <section>
-    <h3>Registration Type*</h3>
+// TODO: Add error state here
+const RegistrationSelect = ({
+  register,
+  onClick,
+  formType = 'individual',
+  price = false,
+}: Props) => (
+  <fieldset
+    id='registration-type'
+    className='fieldset'
+  >
+    <legend className='fieldset-legend'>Registration Type*</legend>
     <Radio
       id={`${register.name}-life`}
-      label={`Annual ($${costs.Annual[formType]})`}
+      label={`Annual ${price ? `$${costs.Annual[formType]}` : ''}`}
       value='Annual'
       className='md:radio-sm'
       onClick={onClick}
@@ -28,13 +40,13 @@ const RegistrationSelect = ({ register, onClick, formType }: Props) => (
 
     <Radio
       id={`${register.name}-annual`}
-      label={`Life ($${costs.Life[formType]})`}
+      label={`Life ${price ? `$${costs.Life[formType]}` : ''}`}
       value='Life'
       className='md:radio-sm'
       onClick={onClick}
       {...register}
     />
-  </section>
+  </fieldset>
 );
 RegistrationSelect.displayName = 'RegistrationSelection';
 

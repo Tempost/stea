@@ -1,11 +1,9 @@
 'use client';
 import { useState, useTransition } from 'react';
 
-import Input from '@/components/data-entry/Input';
-import Select from '@/components/data-entry/Select';
 import { OwnerHorseFormSchema, OwnerHorseForm } from '@/utils/zodschemas';
 import useZodForm from '@/utils/usezodform';
-import Form from '@/components/forms/Form';
+import Form from '@/components/form/Form';
 import { PhoneTypeSchema } from '@/server/prisma/zod-generated/inputTypeSchemas/PhoneTypeSchema';
 import Payment from '@/components/forms/Payment';
 import HorseFieldArray from '@/components/forms/HorseFieldArray';
@@ -28,6 +26,7 @@ function HorseRegistration() {
 
   const form = useZodForm({
     reValidateMode: 'onSubmit',
+    mode: 'onSubmit',
     shouldFocusError: true,
     schema: OwnerHorseFormSchema,
   });
@@ -66,36 +65,47 @@ function HorseRegistration() {
         onPayment={onPaymentSuccess}
       >
         <h2 className='divider'>Horse Registration</h2>
-        <section className='flex flex-col gap-2'>
-          <h3>Owner Information</h3>
-
-          <div className='flex gap-5'>
-            <Input
+        <fieldset
+          id='owner'
+          className='fieldset gap-2'
+        >
+          <legend className='fieldset-legend'>Owner Information</legend>
+          <div className='flex gap-2'>
+            <Form.Input
               type='text'
               label='First Name*'
               {...register('firstName')}
             />
 
-            <Input
+            <Form.Input
               type='text'
               label='Last Name*'
               {...register('lastName')}
             />
           </div>
 
-          <div className='flex flex-col gap-2'>
-            <Input
+          <fieldset
+            id='contact-info'
+            className='fieldset flex flex-col gap-2'
+          >
+            <Form.Input
               label='Email'
-              type='text'
-              altLabel='This will be the primary method of contact.'
+              type='email'
               {...register('email')}
             />
 
-            <span className='flex gap-2'>
-              <Select
+            <div className='flex gap-2'>
+              <Form.Select
                 label='Phone Type*'
+                defaultValue=''
                 {...register('phoneType')}
               >
+                <option
+                  disabled
+                  value=''
+                >
+                  Select
+                </option>
                 {Object.keys(PhoneTypeSchema.enum).map(type => (
                   <option
                     key={type}
@@ -104,20 +114,18 @@ function HorseRegistration() {
                     {type}
                   </option>
                 ))}
-              </Select>
+              </Form.Select>
 
-              <Input
+              <Form.Input
                 label='Phone Number*'
                 type='tel'
                 {...register('phone')}
               />
-            </span>
-          </div>
-        </section>
+            </div>
+          </fieldset>
+        </fieldset>
 
-        <section className='mt-10 grid gap-5'>
-          <HorseFieldArray />
-        </section>
+        <HorseFieldArray />
       </Payment>
     </Form>
   );

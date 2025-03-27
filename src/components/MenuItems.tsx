@@ -1,10 +1,6 @@
-import { ReactNode } from 'react';
-
-interface Menu {
+export interface Menu {
   href?: string;
   name: string;
-  drawer?: true;
-  render?(menu: Menu): ReactNode;
 }
 
 export const publicMenuItems: Array<Menu> = [

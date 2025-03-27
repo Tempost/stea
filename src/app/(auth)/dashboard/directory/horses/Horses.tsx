@@ -8,7 +8,7 @@ import { Horse } from '@prisma/client';
 
 const columns: Array<ColumnDef<Horse>> = [
   {
-    header: 'Horses',
+    id: 'horses',
     columns: [
       {
         accessorKey: 'registrationDate',
@@ -49,17 +49,15 @@ const columns: Array<ColumnDef<Horse>> = [
 
 function DashboardHorses({ horses }: { horses: Array<Horse> }) {
   return (
-    <div>
-      <NewHorseForm />
-      <TableWithData
-        extraTableOpts={{
-          columns,
-        }}
-        data={horses}
-        paginate
-        search
-      />
-    </div>
+    <TableWithData
+      extraTableOpts={{
+        columns,
+      }}
+      data={horses}
+      extras={<NewHorseForm />}
+      paginate
+      search
+    />
   );
 }
 

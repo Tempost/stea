@@ -5,13 +5,11 @@ import { isZodFieldError, ZodFieldErrors } from '@/types/common';
 import { cn, readableDateTime } from '@/utils/helpers';
 import useZodForm from '@/utils/usezodform';
 import { z } from 'zod';
-import Alert from '@/components/forms/Alert';
+import Alert from '@/components/styled-ui/Alert';
 import { EntryReviewType, isEntrySubmissionType } from '@/utils/zodschemas';
 import { Button } from '@/components/styled-ui/Button';
 import { Show } from '@prisma/client';
-import Form from '@/components/forms/Form';
-import Select from '@/components/data-entry/Select';
-import FileInput from '@/components/data-entry/FileInput';
+import Form from '@/components/form/Form';
 import EntryReview from './EntryReview';
 
 const ShowSubmitFormValue = z.object({
@@ -198,46 +196,53 @@ function SubmitPoints({ shows }: { shows: Array<Show> }) {
   return (
     <>
       <Alert
-        visible={!!state.error?.message}
+        icon='error'
+        hidden={!!state.error?.message}
         message={state.error?.message}
       />
+
       <Form
         id='review-form'
         form={form}
         onSubmit={handleReviewSubmit}
+        className='w-fit place-self-center'
       >
-        <div className='mx-auto flex flex-col items-center'>
-          <div className='form-control'>
-            {shows && (
-              <Select
-                id='show-select'
-                label='Select Show'
-                aria-label='Select Show'
-                labelStyle='font-bold'
-                {...form.register('showUID', { required: true })}
-              >
-                {shows.map(show => (
-                  <option
-                    key={show.uid}
-                    value={show.uid}
-                  >
-                    {show.showName + ' ' + readableDateTime(show.showDate)}
-                  </option>
-                ))}
-              </Select>
-            )}
-            <FileInput
-              type='file'
-              accept='text/csv'
-              id='file-input'
-              className='file-input-primary file-input-xs lg:file-input-md'
-              label='Upload Points sheet'
-              aria-label='Upload Points sheet'
-              labelStyle='font-bold'
-              {...form.register('file', { required: true })}
-            />
-          </div>
-        </div>
+        <fieldset
+          id='show-submit'
+          className='space-y-2'
+        >
+          {shows && (
+            <Form.Select
+              id='show-select'
+              label='Select Show'
+              aria-label='Select Show'
+              defaultValue=''
+              {...form.register('showUID', { required: true })}
+            >
+              <option
+                value=''
+                disabled
+              ></option>
+              {shows.map(show => (
+                <option
+                  key={show.uid}
+                  value={show.uid}
+                >
+                  {show.showName + ' ' + readableDateTime(show.showDate)}
+                </option>
+              ))}
+            </Form.Select>
+          )}
+          <Form.FileInput
+            type='file'
+            accept='text/csv'
+            id='file-input'
+            label='Upload Points sheet'
+            aria-label='Upload Points sheet'
+            size='md'
+            {...form.register('file', { required: true })}
+          />
+        </fieldset>
       </Form>
 
       {state.entries && <EntryReview entries={state.entries} />}
@@ -251,7 +256,7 @@ function SubmitPoints({ shows }: { shows: Array<Show> }) {
         <Button
           type='reset'
           form='review-form'
-          className={cn('w-fit self-end normal-case', {
+          className={cn({
             hidden: state.entries === undefined,
           })}
           variant='secondary'
@@ -266,7 +271,6 @@ function SubmitPoints({ shows }: { shows: Array<Show> }) {
         {state.entries ? (
           <Button
             variant='primary'
-            className={cn('w-fit self-end normal-case')}
             onClick={() => handleFinalSubmit()}
           >
             Submit
@@ -276,7 +280,7 @@ function SubmitPoints({ shows }: { shows: Array<Show> }) {
             type='submit'
             form='review-form'
             variant='primary'
-            className={cn('w-fit self-end normal-case', {
+            className={cn({
               'btn-error': state.entries !== undefined,
             })}
           >

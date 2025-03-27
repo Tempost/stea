@@ -23,10 +23,10 @@ function PlacingsTable({ title, riders, ...props }: PlacingsTableProps) {
         id: 'header',
         header: ({ table }) => {
           return (
-            <>
-              <div>{title ?? 'Riders'}</div>
+            <div className='flex space-x-1'>
+              <span>{title ?? 'Riders'}</span>
               <ShowYearFilter column={table.getColumn('showYear')} />
-            </>
+            </div>
           );
         },
         columns: [

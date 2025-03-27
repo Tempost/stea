@@ -1,4 +1,6 @@
+import { Button } from '@/components/styled-ui/Button';
 import { RowSelectionState } from '@tanstack/react-table';
+import NextLink from 'next/link';
 
 interface DownloadPointsProps {
   year: number;
@@ -21,11 +23,14 @@ export default function DownloadPoints({
   }
 
   return (
-    <button
-      className='btn btn-primary btn-sm'
-      disabled={disabled}
-    >
-      <a href={'/api/dashboard/download/points?' + searchParams}>{label}</a>
-    </button>
+    <NextLink href={'/api/dashboard/download/points?' + searchParams}>
+      <Button
+        size='sm'
+        variant='primary'
+        disabled={disabled}
+      >
+        {label}
+      </Button>
+    </NextLink>
   );
 }

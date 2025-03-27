@@ -1,24 +1,9 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer utilities {
-  input[type='number']::-webkit-inner-spin-button,
-  input[type='number']::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
+@import 'tailwindcss';
+@plugin 'daisyui' {
+  themes: light --default;
 }
 
-.drawer-side > ul {
-  @apply bg-gradient-to-r from-primary to-[color-mix(in_oklab,oklch(var(--p)),black_10%)];
-  @apply text-gray-300;
-}
-
-.navbar > h3 {
-  @apply text-gray-300;
-}
-
-.card.image-full:before {
-  @apply bg-neutral/80;
+@theme inline {
+  --background-image-home-hero: url('/hero_train_jump.avif');
+  --color-primary-dark: color-mix(in oklab, var(--color-primary), black 10%);
 }

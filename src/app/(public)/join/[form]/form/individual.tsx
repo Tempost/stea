@@ -1,28 +1,25 @@
 'use client';
 import { useState, useTransition } from 'react';
 
-import { MemberForm, MemberFormSchema } from '@/utils/zodschemas';
-import { capitalize } from '@/utils/helpers';
-import states from '@/utils/states.json';
-import useZodForm from '@/utils/usezodform';
-import Form from '@/components/forms/Form';
-import { PhoneTypeSchema } from '@/server/prisma/zod-generated/inputTypeSchemas/PhoneTypeSchema';
-import Payment from '@/components/forms/Payment';
-import Input from '@/components/data-entry/Input';
-import Select from '@/components/data-entry/Select';
-import RegistrationSelect from '@/components/forms/RegType';
-import MemberType from '@/components/forms/MemberType';
-import Under18 from '@/components/forms/Under18';
-import Checkbox from '@/components/data-entry/Checkbox';
-import HorseFieldArray from '@/components/forms/HorseFieldArray';
-import RegistrationYearSelect from '@/components/forms/RegistrationYearSelect';
 import {
   ActionState,
-  upsertMember,
   checkForExistingMember,
+  upsertMember,
 } from '@/app/(public)/join/[form]/form/member.action';
-import { Label } from '@/components/styled-ui/Label';
+import Form from '@/components/form/Form';
+import HorseFieldArray from '@/components/forms/HorseFieldArray';
+import MemberType from '@/components/forms/MemberType';
+import Payment from '@/components/forms/Payment';
+import RegistrationYearSelect from '@/components/forms/RegistrationYearSelect';
+import RegistrationSelect from '@/components/forms/RegType';
+import Under18 from '@/components/forms/Under18';
+import { PhoneTypeSchema } from '@/server/prisma/zod-generated/inputTypeSchemas/PhoneTypeSchema';
+import { capitalize } from '@/utils/helpers';
 import { setMembershipYear } from '@/utils/setmembershipyear';
+import states from '@/utils/states.json';
+import useZodForm from '@/utils/usezodform';
+import { MemberForm, MemberFormSchema } from '@/utils/zodschemas';
+import { optionsFromObject } from '@/components/helpers';
 
 const initialState: ActionState = {
   message: undefined,
@@ -41,6 +38,7 @@ function IndividualRegistration() {
     reValidateMode: 'onSubmit',
     shouldFocusError: true,
     schema: MemberFormSchema,
+    mode: 'onSubmit',
     defaultValues: {
       dateOfBirth: null,
       memberType: 'Individual',
@@ -81,119 +79,130 @@ function IndividualRegistration() {
       >
         <h2 className='divider'>Individual Membership</h2>
 
-        <div className='flex gap-1 md:gap-5'>
-          <Input
+        <fieldset
+          id='name'
+          className='fieldset flex gap-2'
+        >
+          <Form.Input
             type='text'
             label='First Name*'
             {...register('firstName')}
           />
 
-          <Input
+          <Form.Input
             type='text'
             label='Last Name*'
             {...register('lastName')}
           />
-        </div>
+        </fieldset>
 
-        <Label htmlFor='address-group'>Address*</Label>
-        <div
-          id='address-group'
-          className='flex flex-col gap-2'
+        <fieldset
+          id='address'
+          className='fieldset flex flex-col gap-2'
         >
-          <Input
+          <legend className='fieldset-legend'>Address*</legend>
+          <Form.Input
             type='text'
             placeholder='Address Line 1'
             {...register('address')}
           />
 
-          <Input
+          <Form.Input
             type='text'
             placeholder='Address Line 2'
             name='temp'
           />
 
-          <div className='flex flex-col gap-1 md:flex-row'>
-            <Input
+          <div className='flex flex-col gap-2 md:flex-row'>
+            <Form.Input
               type='text'
               placeholder='City'
               {...register('city')}
             />
 
-            <Select {...register('state')}>
+            <Form.Select
+              defaultValue=''
+              {...register('state')}
+            >
               {states.map(state => (
                 <option
                   key={state.value}
                   value={state.value}
+                  disabled={state.value == ''}
                 >
                   {capitalize(state.label)}
                 </option>
               ))}
-            </Select>
+            </Form.Select>
 
-            <Input
+            <Form.Input
               type='numeric'
               placeholder='Zip Code'
               {...register('zip', { valueAsNumber: true })}
             />
           </div>
+        </fieldset>
 
-          <div className='flex flex-col gap-2'>
-            <div className='flex gap-2'>
-              <Select
-                label='Phone Type*'
-                {...register('phoneType')}
+        <fieldset
+          id='contact-info'
+          className='fieldset flex flex-col gap-2'
+        >
+          <div className='flex gap-2'>
+            <Form.Select
+              label='Phone Type*'
+              defaultValue=''
+              {...register('phoneType')}
+            >
+              <option
+                disabled
+                value=''
               >
-                {Object.keys(PhoneTypeSchema.enum).map(type => (
-                  <option
-                    key={type}
-                    value={type}
-                  >
-                    {type}
-                  </option>
-                ))}
-              </Select>
+                Select
+              </option>
+              {optionsFromObject(PhoneTypeSchema.enum)}
+            </Form.Select>
 
-              <Input
-                label='Phone Number*'
-                type='tel'
-                {...register('phone')}
-              />
-            </div>
-
-            <Input
-              label='Email*'
-              type='text'
-              altLabel={'This will be the primary method of contact.'}
-              {...register('email')}
+            <Form.Input
+              label='Phone Number*'
+              type='tel'
+              {...register('phone')}
             />
           </div>
 
-          <div className='flex-col'>
-            <RegistrationSelect
-              register={register('memberStatus')}
-              formType='individual'
-            />
+          <Form.Input
+            label='Email*'
+            type='email'
+            {...register('email')}
+          />
+        </fieldset>
 
-            <RegistrationYearSelect
-              heading='Which year are you registering for?'
-              watchFieldName='memberStatus'
-              control={control}
-              register={register('membershipEnd')}
-            />
-
-            <MemberType register={register('memberStatusType')} />
-
-            <Under18 dateName='dateOfBirth' />
-          </div>
-
-          <Checkbox
-            label='Do you plan to register your horse(s)?'
-            checked={isRegHorse}
-            onChange={() => toggleRegHorse(curr => !curr)}
+        <div className='flex flex-col'>
+          <RegistrationSelect
+            register={register('memberStatus')}
+            formType='individual'
+            price
           />
 
-          {isRegHorse && <HorseFieldArray />}
+          <RegistrationYearSelect
+            heading='Which year are you registering for?'
+            watchFieldName='memberStatus'
+            control={control}
+            register={register('membershipEnd')}
+          />
+
+          <MemberType register={register('memberStatusType')} />
         </div>
+
+        <Under18 dateName='dateOfBirth' />
+
+        <Form.Checkbox
+          label='Do you plan to register your horse(s)?'
+          checked={isRegHorse}
+          className='md:checkbox-sm'
+          onChange={() => toggleRegHorse(curr => !curr)}
+        />
+
+        {isRegHorse && <HorseFieldArray />}
       </Payment>
     </Form>
   );

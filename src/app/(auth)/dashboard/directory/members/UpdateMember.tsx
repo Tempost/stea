@@ -1,8 +1,5 @@
 'use client';
-import ControlledDatePicker from '@/components/data-entry/Date';
-import Input from '@/components/data-entry/Input';
-import Select from '@/components/data-entry/Select';
-import Form from '@/components/forms/Form';
+import Form from '@/components/form/Form';
 import { optionsFromObject } from '@/components/helpers';
 import { Button } from '@/components/styled-ui/Button';
 import Loading from '@/components/styled-ui/Loading';
@@ -41,7 +38,7 @@ const initialState = {
   data: undefined,
 };
 
-function DumbForm({
+function MemberUpdateForm({
   member,
   setFormState,
   startTransition,
@@ -72,36 +69,45 @@ function DumbForm({
       id='update-member-form'
       onSubmit={onSubmit}
     >
-      <h3 className='text-lg font-bold'>Updating {member['fullName']}</h3>
-      <div className='flex flex-col gap-1'>
-        <span className='flex space-x-5'>
-          <Input
-            type='text'
-            label='First Name'
-            {...register('firstName', { disabled: true })}
-          />
+      <legend className='fieldset-legend text-lg font-bold'>
+        Updating {member['fullName']}
+      </legend>
 
-          <Input
-            type='text'
-            label='Last Name'
-            {...register('lastName', { disabled: true })}
-          />
-        </span>
+      <fieldset
+        id='name'
+        className='flex flex-col gap-2 md:flex-row'
+      >
+        <Form.Input
+          type='text'
+          label='First Name'
+          {...register('firstName', { disabled: true })}
+        />
 
-        <Input
+        <Form.Input
+          type='text'
+          label='Last Name'
+          {...register('lastName', { disabled: true })}
+        />
+      </fieldset>
+
+      <fieldset
+        id='address-group'
+        className='fieldset'
+      >
+        <Form.Input
           type='text'
           placeholder='Address Line 1'
           {...register('address')}
         />
 
-        <span className='flex space-x-5'>
-          <Input
+        <div className='flex flex-col gap-2 md:flex-row'>
+          <Form.Input
             type='text'
             placeholder='City'
             {...register('city')}
           />
 
-          <Select {...register('state')}>
+          <Form.Select {...register('state')}>
             {states.map(state => (
               <option
                 key={state.value}
@@ -110,63 +116,74 @@ function DumbForm({
                 {capitalize(state.label)}
               </option>
             ))}
-          </Select>
+          </Form.Select>
 
-          <Input
+          <Form.Input
             type='numeric'
             placeholder='Zip Code'
             {...register('zip', { valueAsNumber: true })}
           />
-        </span>
+        </div>
+      </fieldset>
 
-        <span className='flex space-x-5'>
-          <Select
+      <fieldset
+        id='contact-info'
+        className='fieldset'
+      >
+        <div className='flex flex-col gap-2 md:flex-row'>
+          <Form.Select
             label='Phone Type*'
+            defaultValue=''
             {...register('phoneType')}
           >
+            <option
+              disabled
+              value=''
+            />
             {optionsFromObject(PhoneTypeSchema.enum)}
-          </Select>
+          </Form.Select>
 
-          <Input
+          <Form.Input
             type='text'
             label='Phone Number'
             {...register('phone')}
           />
-        </span>
+        </div>
 
-        <Input
+        <Form.Input
           type='text'
           label='Email'
           {...register('email')}
         />
+      </fieldset>
 
-        <ControlledDatePicker
-          name='dateOfBirth'
-          label='Date of Birth (If under 18)'
+      <div className='grid grid-cols-1 grid-rows-2 gap-2 sm:grid-cols-2 md:grid-cols-3'>
+        <Form.Input
+          label='Date of Birth'
+          type='date'
+          {...register('dateOfBirth')}
         />
 
-        <span className='flex space-x-1'>
-          <Select
-            label='Membership Level'
-            {...register('memberStatus')}
-          >
-            {optionsFromObject(StatusSchema.enum)}
-          </Select>
+        <Form.Select
+          label='Membership Level'
+          {...register('memberStatus')}
+        >
+          {optionsFromObject(StatusSchema.enum)}
+        </Form.Select>
 
-          <Select
-            label='Member Type'
-            {...register('memberType')}
-          >
-            {optionsFromObject(TypeSchema.enum)}
-          </Select>
+        <Form.Select
+          label='Member Type'
+          {...register('memberType')}
+        >
+          {optionsFromObject(TypeSchema.enum)}
+        </Form.Select>
 
-          <Select
-            label='Rider Level'
-            {...register('memberStatusType')}
-          >
-            {optionsFromObject(StatusTypeSchema.enum)}
-          </Select>
-        </span>
+        <Form.Select
+          label='Rider Level'
+          {...register('memberStatusType')}
+        >
+          {optionsFromObject(StatusTypeSchema.enum)}
+        </Form.Select>
       </div>
     </Form>
   );
@@ -220,14 +237,14 @@ const UpdateMember = memo(function UpdateMember({
           form='update-member-form'
           size='sm'
           type='submit'
-          className={cn({ 'btn-success': formState.message === 'Success' })}
+          variant={formState.message === 'Success' ? 'success' : null}
         >
           {pending ? <Loading /> : 'Confirm'}
         </Button>
       }
     >
       {!selectionState.loading && selectionState.member ? (
-        <DumbForm
+        <MemberUpdateForm
           member={selectionState.member}
           setFormState={setFormState}
           startTransition={startTransition}

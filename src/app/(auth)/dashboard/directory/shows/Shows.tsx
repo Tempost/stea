@@ -1,5 +1,5 @@
 'use client';
-import Checkbox from '@/components/data-entry/Checkbox';
+import Checkbox from '@/components/styled-ui/Checkbox';
 import TableWithData from '@/components/tables/BaseTable';
 import { readableDateTime } from '@/utils/helpers';
 import type { ColumnDef, RowSelectionState } from '@tanstack/react-table';
@@ -30,7 +30,7 @@ function ShowsTable({ data }: { data: Array<Show> }) {
             header: ({ table }) => {
               const selectionLen =
                 table.getFilteredSelectedRowModel().rows.length;
-              if (selectionLen === 0) return <></>;
+              if (selectionLen === 0) return null;
 
               return <span>{selectionLen}</span>;
             },
@@ -39,6 +39,7 @@ function ShowsTable({ data }: { data: Array<Show> }) {
                 id={row.id}
                 checked={row.getIsSelected()}
                 onChange={row.getToggleSelectedHandler()}
+                size='sm'
               />
             ),
           },
@@ -46,7 +47,7 @@ function ShowsTable({ data }: { data: Array<Show> }) {
             accessorKey: 'showDate',
             id: 'showDate',
             cell: info => {
-              const date: Date | undefined = info.getValue();
+              const date: Date | null = info.getValue();
 
               return date ? readableDateTime(date) : '';
             },
@@ -56,7 +57,7 @@ function ShowsTable({ data }: { data: Array<Show> }) {
             accessorKey: 'showEndDate',
             id: 'showEndDate',
             cell: info => {
-              const date: Date | undefined = info.getValue();
+              const date: Date | null = info.getValue();
 
               return date ? readableDateTime(date) : '';
             },
@@ -94,19 +95,18 @@ function ShowsTable({ data }: { data: Array<Show> }) {
           },
         }}
         extras={
-          <div className='flex space-x-1'>
+          <div className='space-x-1'>
             <Select
               name='show-year'
               id='show-year'
-              className='w-fit'
               value={year}
+              size='sm'
+              className='w-fit'
               onChange={e => {
                 e.preventDefault();
                 setYear(Number.parseInt(e.target.value));
                 startTransition(async () => {
-                  const newShows = await getShowsByYear(
-                    Number.parseInt(e.target.value),
-                  );
+                  const newShows = await getShowsByYear(e.target.value);
                   setShows(newShows);
                 });
               }}

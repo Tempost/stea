@@ -4,7 +4,7 @@ import { ShowOptionalDefaults } from '@/server/prisma/zod-generated';
 import { readableDateTime } from '@/utils/helpers';
 import { Show } from '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
-import { revalidateTag } from 'next/cache';
+import { revalidateTag, unstable_cache } from 'next/cache';
 
 export interface ActionState {
   message: string;
@@ -21,22 +21,30 @@ export async function remove(uids: Array<string>) {
   };
 }
 
-export async function getShowsByYear(year: number) {
-  return await findMany('Show', {
-    where: {
-      showDate: {
-        lte: new Date(year, 11, 31),
-        gte: new Date(year, 0, 1),
-      },
-    },
-    orderBy: {
-      showDate: 'asc',
-    },
-    include: {
-      riders: true,
-      points: true,
-    },
-  });
+// NOTE: These types of caches not working? the getMember(fullName) func doesn't cache as well
+export async function getShowsByYear(year: string) {
+  const getShowsByYear = unstable_cache(
+    async (year: string) =>
+      findMany('Show', {
+        where: {
+          showDate: {
+            lte: new Date(Number.parseInt(year), 11, 31),
+            gte: new Date(Number.parseInt(year), 0, 1),
+          },
+        },
+        orderBy: {
+          showDate: 'asc',
+        },
+        include: {
+          riders: true,
+          points: true,
+        },
+      }),
+    ['Shows'],
+    { revalidate: 3600, tags: ['Shows'] },
+  );
+
+  return await getShowsByYear(year);
 }
 
 export async function add(show: ShowOptionalDefaults): Promise<ActionState> {

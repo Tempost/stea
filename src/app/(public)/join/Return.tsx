@@ -11,7 +11,7 @@ function ReturnButton() {
   return (
     <Button
       variant='link'
-      className='btn-sm self-end'
+      className='btn-sm self-end capitalize'
       onClick={() => router.back()}
     >
       return

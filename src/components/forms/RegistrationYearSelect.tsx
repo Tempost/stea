@@ -1,6 +1,8 @@
 import { DetailedHTMLProps, InputHTMLAttributes } from 'react';
 import { UseFormRegisterReturn, useWatch } from 'react-hook-form';
-import Radio from '../data-entry/Radio';
+import Form from '../form/Form';
+
+const { Radio } = Form;
 
 interface Props
   extends DetailedHTMLProps<
@@ -33,13 +35,15 @@ function RegistrationYearSelect({
 
   if (annual === 'Annual' && showComponent) {
     return (
-      <section>
-        <h3>{heading} (New year starts Novemeber 30th)</h3>
+      <fieldset className='fieldset'>
+        <legend className='fieldset-legend'>
+          {heading} (New year starts Novemeber 30th)
+        </legend>
         <Radio
           id={`${register.name}-${curr.getFullYear()}`}
           label={`Current Year (${curr.getFullYear()})`}
           value={curr.toString()}
-          className='align-middle md:radio-sm'
+          className='md:radio-sm align-middle'
           onClick={onClick}
           {...register}
         />
@@ -47,14 +51,14 @@ function RegistrationYearSelect({
           id={`${register.name}-${next.getFullYear()}`}
           label={`Coming Year (${next.getFullYear()})`}
           value={next.toString()}
-          className='align-middle md:radio-sm'
+          className='md:radio-sm align-middle'
           onClick={onClick}
           {...register}
         />
-      </section>
+      </fieldset>
     );
   } else {
-    return <></>;
+    return null;
   }
 }
 

@@ -13,7 +13,7 @@ import { costs } from '@/utils/costs';
 import { MemberForm, OwnerHorseForm } from '@/utils/zodschemas';
 import { Button } from '../styled-ui/Button';
 import PayPalButton from '../styled-ui/PayPalButton';
-import Alert from './Alert';
+import Alert from '@/components/styled-ui/Alert';
 import {
   PayPalScriptProvider,
   ReactPayPalScriptOptions,
@@ -135,7 +135,7 @@ function Payment({
     <>
       <PayPalScriptProvider options={initOptions}>
         {showPayment ? (
-          <div className='grid place-content-center gap-5 rounded-2xl border border-solid border-gray-400 bg-gray-100 p-5'>
+          <div className='grid place-content-center gap-5 rounded-2xl border border-solid border-gray-200 p-5'>
             <h4 className='text-lg font-bold'>
               Your sign-up costs ${amountOwed} USD
             </h4>
@@ -149,12 +149,11 @@ function Payment({
             {children}
             <Alert
               message={formState.message ?? ''}
-              visible={formState.error}
+              hidden={formState.error}
             />
             <Button
               type='submit'
               variant='primary'
-              className='w-full'
               disabled={pending}
             >
               {pending ? <Loading /> : 'Move to payment'}

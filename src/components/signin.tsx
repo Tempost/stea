@@ -19,7 +19,7 @@ export default function Signin({ children }: PropsWithChildren) {
       variant='link'
       onClick={onClick}
       size='sm'
-      className='font-normal capitalize text-neutral-content no-underline'
+      className='text-neutral-content font-normal no-underline'
     >
       {children}
     </Button>

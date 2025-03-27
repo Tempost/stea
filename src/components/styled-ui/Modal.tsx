@@ -40,9 +40,9 @@ function Modal<T>({
       </Button>
       <dialog
         id={id}
-        className='modal modal-bottom transition-all delay-75 sm:modal-middle'
+        className='modal modal-bottom sm:modal-middle max-w-screen overflow-y-auto'
       >
-        <div className='modal-box overflow-visible'>
+        <div className='modal-box overflow-auto'>
           {children}
           <div className='modal-action'>
             {ok}
