@@ -1,4 +1,4 @@
-import { ComponentProps, useEffect, useState } from 'react';
+import { ComponentProps, useEffect, useRef, useState } from 'react';
 import Input from '../styled-ui/Input';
 
 interface DebounceArgs {
@@ -15,18 +15,26 @@ function DebouncedInput({
   ...props
 }: DebounceArgs & ComponentProps<typeof Input>) {
   const [value, setValue] = useState(initialValue);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     setValue(initialValue);
   }, [initialValue]);
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    timeoutRef.current = setTimeout(() => {
       onChange(value);
     }, debounce);
 
-    return () => clearTimeout(timeout);
-  }, [value]); // eslint-disable-line
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [value, onChange, debounce]);
 
   return (
     <Input
