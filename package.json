@@ -13,7 +13,8 @@
     "lint": "next lint",
     "fmt-all": "pnpm prettier -w . --plugin=prettier-plugin-tailwindcss",
     "generate": "pnpm prisma generate --no-engine",
-    "prepare": "husky"
+    "prepare": "husky",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
