@@ -1,10 +1,12 @@
 'use client';
+import Form from '@/components/form/Form';
 import { Button } from '@/components/styled-ui/Button';
-import { Label } from '@/components/styled-ui/Label';
-import Radio from '@/components/styled-ui/Radio';
 import { FORMTYPE } from '@/types/common';
+import { capitalize } from '@/utils/helpers';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+
+const { Radio } = Form;
 
 function FormSelector() {
   const router = useRouter();
@@ -17,29 +19,19 @@ function FormSelector() {
   }, [router, path, type]);
 
   return (
-    <>
-      <div>
+    <fieldset className='fieldset place-items-center gap-2'>
+      <legend className='fieldset-legend'>Membership Application type:</legend>
+      <div className='flex flex-col gap-1'>
         {FORMTYPE.map(selection => (
-          <div
+          <Radio
+            id={`${selection}-id`}
             key={selection}
-            className='flex-row'
-          >
-            <Label
-              htmlFor={`${selection}-id`}
-              aria-label={selection}
-              innerClassName='capitalize space-x-5'
-              key={selection}
-            >
-              <Radio
-                id={`${selection}-id`}
-                name='form-select'
-                className='radio-md md:radio-sm'
-                value={selection}
-                onClick={() => setType(selection)}
-              />
-              <span className='label-text'>{selection}</span>
-            </Label>
-          </div>
+            name='form-select'
+            value={selection}
+            label={capitalize(selection)}
+            size='sm'
+            onClick={() => setType(selection)}
+          />
         ))}
       </div>
 
@@ -54,7 +46,7 @@ function FormSelector() {
       >
         Next
       </Button>
-    </>
+    </fieldset>
   );
 }
 

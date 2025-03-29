@@ -60,10 +60,10 @@ export function groupByFunc<
   return arr.reduce(
     (accumulator, val) => {
       const groupedKey = mapper(val);
-      if (!accumulator[groupedKey]) {
-        accumulator[groupedKey] = [];
-      }
-      accumulator[groupedKey].push(val);
+
+      if (groupedKey == null) return accumulator;
+
+      (accumulator[groupedKey] ||= []).push(val);
       return accumulator;
     },
     {} as Record<RetType, Array<TObj>>,
