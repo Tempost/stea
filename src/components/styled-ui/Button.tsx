@@ -10,7 +10,7 @@ const buttonVariants = cva('btn', {
       secondary: 'btn-secondary',
       disabled: 'btn-disabled',
       ghost: 'btn-ghost',
-      success: 'btn-succes',
+      success: 'btn-success',
       error: 'btn-error',
       link: 'btn-link',
     },

@@ -42,7 +42,7 @@ const columns: Array<ColumnDef<RiderCombo>> = [
         accessorKey: 'division',
         id: 'division',
         cell: info => info.getValue(),
-        header: () => <span> Divison </span>,
+        header: () => <span> Division </span>,
       },
     ],
   },

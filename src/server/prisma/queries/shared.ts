@@ -65,10 +65,10 @@ async function findUniqueOrThrow<T extends Prisma.ModelName>(
 
 async function count<T extends Prisma.ModelName>(
   table: T,
-  coundArgs?: CountArgs<T>,
+  countArgs?: CountArgs<T>,
   prismaClient: MyPrismaClient = prisma,
 ): Promise<PrismaModelPayload<T>['scalars']> {
-  return (prismaClient[getPrismaModelProp(table)] as any).count(coundArgs);
+  return (prismaClient[getPrismaModelProp(table)] as any).count(countArgs);
 }
 
 async function upsert<T extends Prisma.ModelName>(

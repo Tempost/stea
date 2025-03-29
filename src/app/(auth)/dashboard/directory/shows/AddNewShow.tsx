@@ -13,13 +13,13 @@ import useZodForm from '@/utils/usezodform';
 import { useState, useTransition } from 'react';
 import { ActionState, add } from './action';
 
-const initalState: ActionState = {
+const initialState: ActionState = {
   message: '',
   error: false,
 };
 
 function AddNewShow() {
-  const [state, setState] = useState(initalState);
+  const [state, setState] = useState(initialState);
   const [pending, startTransition] = useTransition();
   const form = useZodForm({
     reValidateMode: 'onSubmit',

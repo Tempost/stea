@@ -14,7 +14,7 @@ export function isZodFieldError<T>(
 }
 
 export type EntriesRideType = Record<CSVEntry['rideType'], Array<CSVEntry>>;
-export type EntriesRideTypeDivison = Record<
+export type EntriesRideTypeDivision = Record<
   CSVEntry['rideType'],
   Partial<Record<CSVEntry['division'], Array<CSVEntry>>>
 >;

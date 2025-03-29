@@ -37,7 +37,7 @@ function RegistrationYearSelect({
     return (
       <fieldset className='fieldset'>
         <legend className='fieldset-legend'>
-          {heading} (New year starts Novemeber 30th)
+          {heading} (New year starts November 30th)
         </legend>
         <Radio
           id={`${register.name}-${curr.getFullYear()}`}

@@ -68,7 +68,7 @@ export async function checkForExistingMember(
 /**
  * Add a new member with or without any horses to the database.
  * If an existing user/horses are found then it will update. Otherwise
- * we just create the records and assosiate them together.
+ * we just create the records and associate them together.
  *
  * @param {MemberForm} form
  */

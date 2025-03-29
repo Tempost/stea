@@ -25,7 +25,7 @@ export const MemberFormSchema = z
 export const OwnerHorseFormSchema = z
   .object({
     horses: z.lazy(() =>
-      HorseFormSchema.min(1, 'Atleast one horse is required'),
+      HorseFormSchema.min(1, 'At least one horse is required'),
     ),
   })
   .merge(NonMemberHorseOwnerOptionalDefaultsSchema.omit({ fullName: true }));

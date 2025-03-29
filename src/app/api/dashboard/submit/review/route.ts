@@ -3,7 +3,7 @@ import { findFirst } from '@/server/prisma/queries/shared';
 import { CSVEntry, CSVEntrySchema, getKeys, groupByFunc } from '@/server/utils';
 import {
   EntriesRideType,
-  EntriesRideTypeDivison,
+  EntriesRideTypeDivision,
   GroupedEntries,
   PointsMap,
 } from '@/types/common';
@@ -109,7 +109,7 @@ function groupEntries(entries: Array<CSVEntry>) {
   const rideTypes: EntriesRideType = groupByFunc(entries, e => e.rideType);
 
   // Group each of the above further into divisions
-  const divisionGrouping: EntriesRideTypeDivison = {
+  const divisionGrouping: EntriesRideTypeDivision = {
     CT: {},
     HT: {},
     Derby: {},
@@ -185,9 +185,9 @@ const POINTS: PointsMap = {
 function calculatePoints(
   placing: CSVEntry['placing'],
   showType: ShowType,
-  countInDivison: number,
+  countInDivision: number,
 ): number {
-  if (countInDivison >= 5) {
+  if (countInDivision >= 5) {
     return POINTS[showType][placing] * 2;
   } else {
     return POINTS[showType][placing];
