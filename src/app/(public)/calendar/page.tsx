@@ -30,7 +30,7 @@ function CalendarPage() {
 
   return (
     <section className='flex h-full flex-col items-center justify-center gap-2'>
-      <h1 className='text-xl'>Show Calender</h1>
+      <h1 className='text-xl'>Show Calendar</h1>
       <div className='flex min-h-[45vmax] w-full flex-col sm:w-96'>
         <Suspense fallback={<Loading />}>
           <Calendar shows={shows} />

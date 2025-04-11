@@ -65,7 +65,7 @@ const Home = () => (
           </Card>
         </NextLink>
 
-        <NextLink href='/calender'>
+        <NextLink href='/calendar'>
           <Card
             imageFull
             border={false}
