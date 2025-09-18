@@ -261,13 +261,6 @@ const Home = () => (
               sizes='100vw, 50vw'
               alt='Logo for pinehill. three riders two jumping, one doing dressage.'
             />
-            <Card.Image
-              src='/meadow_creek.jpg'
-              width={300}
-              height={300}
-              sizes='100vw, 50vw'
-              alt='Logo for Meadow Creek, horse jumping with text "Meadow Creek Equestrian Event Center"'
-            />
           </div>
         </Card.Body>
       </Card>
