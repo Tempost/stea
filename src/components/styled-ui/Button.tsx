@@ -20,6 +20,7 @@ const buttonVariants = cva('btn', {
       sm: 'btn-sm',
       lg: 'btn-lg',
       xl: 'btn-xl',
+      block: 'btn-block',
     },
     join: {
       true: 'join-item',

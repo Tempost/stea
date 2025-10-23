@@ -5,7 +5,6 @@ import {
   OnApproveData,
   PurchaseUnit,
 } from '@paypal/paypal-js';
-import { useRouter } from 'next/navigation';
 import { PropsWithChildren } from 'react';
 
 import { FormType } from '@/types/common';
@@ -19,6 +18,7 @@ import {
   ReactPayPalScriptOptions,
 } from '@paypal/react-paypal-js';
 import Loading from '../styled-ui/Loading';
+import { Link } from '@tanstack/react-router';
 
 interface PaymentProps extends PropsWithChildren {
   showPayment: boolean;
@@ -46,8 +46,6 @@ function Payment({
   onPayment,
   pending,
 }: PaymentProps) {
-  const history = useRouter();
-
   let amountOwed = 0;
   if (formState.data && 'memberStatus' in formState.data) {
     const memberCost =
@@ -127,7 +125,6 @@ function Payment({
   async function onApprove(_data: OnApproveData, actions: OnApproveActions) {
     return actions.order!.capture().then(() => {
       onPayment();
-      history.push('/');
     });
   }
 
@@ -151,13 +148,26 @@ function Payment({
               message={formState.message ?? ''}
               hidden={formState.error}
             />
-            <Button
-              type='submit'
-              variant='primary'
-              disabled={pending}
-            >
-              {pending ? <Loading /> : 'Move to payment'}
-            </Button>
+            {
+              // TODO: Elements are slightly not centered and not spread evenly
+            }
+            <div className='grid grid-cols-2 space-x-1'>
+              <Link to='..'>
+                <Button
+                  variant='secondary'
+                  size='block'
+                >
+                  Return
+                </Button>
+              </Link>
+              <Button
+                type='submit'
+                variant='primary'
+                disabled={pending}
+              >
+                {pending ? <Loading /> : 'Move to payment'}
+              </Button>
+            </div>
           </>
         )}
       </PayPalScriptProvider>

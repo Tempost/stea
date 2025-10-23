@@ -1,8 +1,8 @@
 import { readableDateTime } from '@/utils/helpers';
 import { Show } from '@prisma/client';
-import NextLink from 'next/link';
 import List from '../list/List';
 import { Button } from '../styled-ui/Button';
+import { Link } from '@tanstack/react-router';
 
 interface CalendarEventsProps {
   show: Show;
@@ -25,14 +25,14 @@ function CalendarEvents({ show }: CalendarEventsProps) {
         <p className='m-2'>{date}</p>
 
         {show.url && (
-          <NextLink href={show.url}>
+          <Link to={show.url}>
             <Button
               variant='primary'
               size='sm'
             >
               Register
             </Button>
-          </NextLink>
+          </Link>
         )}
       </div>
     </List.Row>

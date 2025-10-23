@@ -1,6 +1,5 @@
 import { CSVEntry } from '@/server/utils';
 import { ShowType } from '@prisma/client';
-import { PropsWithChildren } from 'react';
 import { typeToFlattenedError } from 'zod';
 
 export const FORMTYPE = ['individual', 'business', 'horse'] as const;
@@ -29,5 +28,3 @@ export type GroupedEntries = Record<
   >
 >;
 export type PointsMap = Record<ShowType, Record<CSVEntry['placing'], number>>;
-
-export type LayoutProps = PropsWithChildren;

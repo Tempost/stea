@@ -3,7 +3,6 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import js from '@eslint/js';
 import { FlatCompat } from '@eslint/eslintrc';
-import next from '@next/eslint-plugin-next';
 import react from 'eslint-plugin-react';
 import hooks from 'eslint-plugin-react-hooks';
 import ts from '@typescript-eslint/eslint-plugin';
@@ -65,15 +64,6 @@ const config = [
           readonly: 'generic',
         },
       ],
-    },
-  },
-  {
-    plugins: {
-      '@next/next': next,
-    },
-    rules: {
-      ...next.configs.recommended.rules,
-      ...next.configs['core-web-vitals'].rules,
     },
   },
   ...compat.extends('eslint:recommended'),

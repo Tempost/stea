@@ -1,27 +1,17 @@
-import { auth, signIn } from '@/auth';
-import { redirect } from 'next/navigation';
 import { PropsWithChildren } from 'react';
 import { Button } from './styled-ui/Button';
+import { Link } from '@tanstack/react-router';
 
 export default function Signin({ children }: PropsWithChildren) {
-  const onClick = async () => {
-    'use server';
-    const session = await auth();
-    if (!session) {
-      await signIn('google', { redirectTo: '/dashboard' });
-    } else {
-      redirect('/dashboard');
-    }
-  };
-
   return (
-    <Button
-      variant='link'
-      onClick={onClick}
-      size='sm'
-      className='text-neutral-content font-normal no-underline'
-    >
-      {children}
-    </Button>
+    <Link to='/dashboard'>
+      <Button
+        variant='link'
+        size='sm'
+        className='text-neutral-content font-normal no-underline'
+      >
+        {children}
+      </Button>
+    </Link>
   );
 }

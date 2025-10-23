@@ -1,22 +1,21 @@
 import { cn } from '@/utils/helpers';
-import NextLink from 'next/link';
+import { Link } from '@tanstack/react-router';
 import { ComponentProps, ReactNode } from 'react';
 
-interface WrapperProps extends Omit<ComponentProps<typeof NextLink>, 'href'> {
-  href?: string;
+interface WrapperProps extends ComponentProps<typeof Link> {
   children: ReactNode | string | number;
 }
 
-function LinkWrapper({ href, children, className, ...props }: WrapperProps) {
+function LinkWrapper({ to, children, className, ...props }: WrapperProps) {
   return (
-    <NextLink
-      href={href ? href : ''}
+    <Link
+      to={to}
       rel='noopener noreferrer'
       className={cn(className)}
       {...props}
     >
       {children}
-    </NextLink>
+    </Link>
   );
 }
 

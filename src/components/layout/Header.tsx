@@ -6,7 +6,7 @@ import { memo } from 'react';
 const MenuItems = memo(({ items }: { items: Array<Menu> }) =>
   items.map(({ href, name }) => (
     <li key={name}>
-      <LinkWrapper href={href}>{name}</LinkWrapper>
+      <LinkWrapper to={href}>{name}</LinkWrapper>
     </li>
   )),
 );
@@ -47,32 +47,30 @@ export const ResponsiveDashboardHeader = () => (
     <div className='navbar-start hidden lg:flex'>
       <ul className='menu menu-horizontal px-1'>
         <li>
-          <LinkWrapper href='/'>Home</LinkWrapper>
+          <LinkWrapper to='/'>Home</LinkWrapper>
         </li>
 
         <li>
-          <LinkWrapper href='/dashboard/applications'>Applications</LinkWrapper>
+          <LinkWrapper to='/dashboard/applications'>Applications</LinkWrapper>
         </li>
         <li>
-          <LinkWrapper href='/dashboard/directory/members'>
-            Directory
-          </LinkWrapper>
+          <LinkWrapper to='/dashboard/directory/members'>Directory</LinkWrapper>
         </li>
         <li>
-          <LinkWrapper href='/dashboard/submit'>Submit Points</LinkWrapper>
+          <LinkWrapper to='/dashboard/submit'>Submit Points</LinkWrapper>
         </li>
         <li tabIndex={0}>
           <details className='z-50'>
             <summary>Documents</summary>
             <ul className='bg-primary text-xs shadow-2xl lg:text-sm'>
               <li>
-                <LinkWrapper href='/STEA_Show_Results_Form_A.xlsx'>
+                <LinkWrapper to='/STEA_Show_Results_Form_A.xlsx'>
                   Point Submission Form
                 </LinkWrapper>
               </li>
               <li>
                 <LinkWrapper
-                  href='/stea_org_packet.pdf'
+                  to='/stea_org_packet.pdf'
                   target='_blank'
                 >
                   Organizer Pack
@@ -97,30 +95,28 @@ export const ResponsiveDashboardHeader = () => (
         className='menu dropdown-content menu-sm rounded-box bg-primary z-[1] mt-3 w-52 p-2 shadow-sm'
       >
         <li>
-          <LinkWrapper href='/'>Home</LinkWrapper>
+          <LinkWrapper to='/'>Home</LinkWrapper>
         </li>
 
         <li>
-          <LinkWrapper href='/dashboard/applications'>Applications</LinkWrapper>
+          <LinkWrapper to='/dashboard/applications'>Applications</LinkWrapper>
         </li>
         <li>
-          <LinkWrapper href='/dashboard/directory/members'>
-            Directory
-          </LinkWrapper>
+          <LinkWrapper to='/dashboard/directory/members'>Directory</LinkWrapper>
         </li>
         <li>
-          <LinkWrapper href='/dashboard/submit'>Submit Points</LinkWrapper>
+          <LinkWrapper to='/dashboard/submit'>Submit Points</LinkWrapper>
         </li>
         <li>
           <a>Documents</a>
           <ul className='p-2'>
             <li>
-              <LinkWrapper href='/STEA_Show_Results_Form_A.xlsx'>
+              <LinkWrapper to='/STEA_Show_Results_Form_A.xlsx'>
                 Point Submission Form
               </LinkWrapper>
             </li>
             <li>
-              <LinkWrapper href='/stea_org_packet.pdf'>
+              <LinkWrapper to='/stea_org_packet.pdf'>
                 Organizer Pack
               </LinkWrapper>
             </li>

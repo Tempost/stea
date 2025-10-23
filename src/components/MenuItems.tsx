@@ -13,7 +13,7 @@ export const publicMenuItems: Array<Menu> = [
     name: 'Members & Horses',
   },
   {
-    href: '/scores',
+    href: '/points',
     name: 'Points',
   },
   {

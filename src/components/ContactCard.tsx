@@ -1,4 +1,3 @@
-import NextLink from 'next/link';
 import Card from './card/Card';
 
 interface ContactCardProps {
@@ -14,12 +13,12 @@ export function ContactCard({ name, position, email }: ContactCardProps) {
         <Card.Title tag='h3'>{position}</Card.Title>
         <p>{name ? name : 'Open Position'}</p>
         <Card.Actions>
-          <NextLink
+          <a
             className='link underline'
             href={`mailto:${email}`}
           >
             {email}
-          </NextLink>
+          </a>
         </Card.Actions>
       </Card.Body>
     </Card>
