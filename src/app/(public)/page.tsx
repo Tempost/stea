@@ -129,10 +129,10 @@ const Home = () => (
               <div className='divider mt-0 mb-0'></div>
               <div>
                 <h3 className='text-lg md:text-xl lg:text-xl'>
-                  2024 STEA Final Year End Scores
+                  2025 STEA Final Year End Scores
                 </h3>
                 <a
-                  href='/final_stea_points_2024.pdf'
+                  href='/2025_stea_show_winners.xlsx'
                   rel='noopener noreferrer'
                   target='_blank'
                 >
