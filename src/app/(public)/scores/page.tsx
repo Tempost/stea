@@ -76,7 +76,10 @@ function SteaPoints() {
             Click below for more information on show points!
           </Card.Title>
           <Card.Actions className='justify-center'>
-            <LinkWrapper href='/stea_points.pdf'>
+            <LinkWrapper
+              href='/stea_points_2026.pdf'
+              target='_blank'
+            >
               <Button
                 variant='primary'
                 size='sm'

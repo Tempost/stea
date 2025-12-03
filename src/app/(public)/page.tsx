@@ -129,10 +129,10 @@ const Home = () => (
               <div className='divider mt-0 mb-0'></div>
               <div>
                 <h3 className='text-lg md:text-xl lg:text-xl'>
-                  2024 STEA Final Year End Scores
+                  2025 STEA Final Year End Scores
                 </h3>
                 <a
-                  href='/final_stea_points_2024.pdf'
+                  href='/2025_stea_show_winners.xlsx'
                   rel='noopener noreferrer'
                   target='_blank'
                 >
@@ -151,7 +151,7 @@ const Home = () => (
                   Keep up to date on STEA rules
                 </h3>
                 <a
-                  href='/stea_rule_book_2025.docx'
+                  href='/stea_rule_book_2026.pdf'
                   rel='noopener noreferrer'
                   target='_blank'
                 >
@@ -256,6 +256,13 @@ const Home = () => (
             />
             <Card.Image
               src='/pinehill.jpg'
+              width={300}
+              height={300}
+              sizes='100vw, 50vw'
+              alt='Logo for pinehill. three riders two jumping, one doing dressage.'
+            />
+            <Card.Image
+              src='/snowdonia.svg'
               width={300}
               height={300}
               sizes='100vw, 50vw'
