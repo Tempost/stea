@@ -151,7 +151,7 @@ const Home = () => (
                   Keep up to date on STEA rules
                 </h3>
                 <a
-                  href='/stea_rule_book_2025.docx'
+                  href='/stea_rule_book_2026.pdf'
                   rel='noopener noreferrer'
                   target='_blank'
                 >
