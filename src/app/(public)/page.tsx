@@ -261,6 +261,13 @@ const Home = () => (
               sizes='100vw, 50vw'
               alt='Logo for pinehill. three riders two jumping, one doing dressage.'
             />
+            <Card.Image
+              src='/snowdonia.svg'
+              width={300}
+              height={300}
+              sizes='100vw, 50vw'
+              alt='Logo for pinehill. three riders two jumping, one doing dressage.'
+            />
           </div>
         </Card.Body>
       </Card>
