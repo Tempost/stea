@@ -14,7 +14,7 @@ export function readableDateTime(date: string | Date | null) {
     date = new Date(date);
   }
 
-  return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+  return `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getUTCFullYear()}`;
 }
 
 export function capitalize(s: string) {
