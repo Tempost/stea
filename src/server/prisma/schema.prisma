@@ -206,8 +206,8 @@ model Show {
   showType    ShowType
   /// Submitted points have yet to be review by board member
   reviewed    Boolean      @default(false)
-  showDate    DateTime
-  showEndDate DateTime?
+  showDate    DateTime     @db.Date
+  showEndDate DateTime?    @db.Date
   riders      RiderCombo[]
   /// @zod.string.trim().url({ message: "Must be a valid URL" })
   url         String?

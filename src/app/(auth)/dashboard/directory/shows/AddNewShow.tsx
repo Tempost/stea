@@ -108,7 +108,7 @@ function AddNewShow() {
             label='End Date'
             type='date'
             className='w-fit'
-            {...register('showEndDate')}
+            {...register('showEndDate', { required: false })}
           />
         </fieldset>
 
