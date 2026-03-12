@@ -1,21 +1,8 @@
 import tsParser from '@typescript-eslint/parser';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-import js from '@eslint/js';
-import { FlatCompat } from '@eslint/eslintrc';
 import next from '@next/eslint-plugin-next';
 import react from 'eslint-plugin-react';
-import hooks from 'eslint-plugin-react-hooks';
 import ts from '@typescript-eslint/eslint-plugin';
 import globals from 'globals';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all,
-});
 
 const config = [
   {
@@ -24,6 +11,8 @@ const config = [
       '**/src/utils/seed',
       '**/tailwind.config.js',
       '**/tests',
+      '**/.next/',
+      'zodGenConfig.js',
     ],
   },
   {
@@ -43,12 +32,6 @@ const config = [
         version: 'detect',
       },
     },
-  },
-  {
-    plugins: {
-      'react-hooks': hooks,
-    },
-    rules: hooks.configs.recommended.rules,
   },
   {
     plugins: {
@@ -76,7 +59,6 @@ const config = [
       ...next.configs['core-web-vitals'].rules,
     },
   },
-  ...compat.extends('eslint:recommended'),
   {
     files: ['**/*.ts', '**/*.tsx'],
     languageOptions: {

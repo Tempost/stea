@@ -4,7 +4,7 @@ import { ShowOptionalDefaults } from '@/server/prisma/zod-generated';
 import { readableDateTime } from '@/utils/helpers';
 import { Show } from '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
-import { revalidateTag, unstable_cache } from 'next/cache';
+import { updateTag, unstable_cache } from 'next/cache';
 
 export interface ActionState {
   message: string;
@@ -14,7 +14,7 @@ export interface ActionState {
 
 export async function remove(uids: Array<string>) {
   await removeMany('Show', { where: { uid: { in: uids } } });
-  revalidateTag('Shows');
+  updateTag('Shows');
   return {
     message: 'Success',
     error: false,
@@ -55,7 +55,7 @@ export async function add(show: ShowOptionalDefaults): Promise<ActionState> {
       },
     });
 
-    revalidateTag('Shows');
+    updateTag('Shows');
     return {
       message: 'Success',
       error: false,

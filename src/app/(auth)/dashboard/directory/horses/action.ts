@@ -4,7 +4,7 @@ import { HorseOptionalDefaults } from '@/server/prisma/zod-generated/modelSchema
 import { setMembershipYear } from '@/utils/setmembershipyear';
 import { Horse } from '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
-import { revalidateTag } from 'next/cache';
+import { updateTag } from 'next/cache';
 
 export interface ActionState {
   message: string;
@@ -33,7 +33,7 @@ export default async function add(horse: HorseOptionalDefaults) {
         },
       });
 
-      revalidateTag('Horses');
+      updateTag('Horses');
       return {
         message: 'Success',
         error: false,
@@ -56,7 +56,7 @@ export default async function add(horse: HorseOptionalDefaults) {
         },
       });
 
-      revalidateTag('Horses');
+      updateTag('Horses');
       return {
         message: 'Success',
         error: false,

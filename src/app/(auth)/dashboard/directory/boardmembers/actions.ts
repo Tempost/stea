@@ -1,6 +1,6 @@
 'use server';
 import { Boardmember } from '@prisma/client';
-import { revalidateTag } from 'next/cache';
+import { updateTag } from 'next/cache';
 import { update as updateBM } from '@/server/prisma/queries/shared';
 
 export interface ActionState {
@@ -15,7 +15,7 @@ export async function update(boardmember: Boardmember) {
     data: { ...boardmember },
   });
 
-  revalidateTag('BoardMembers');
+  updateTag('BoardMembers');
   return {
     message: 'Success',
     error: false,
