@@ -1,7 +1,7 @@
 import { findUnique, update, upsert } from '@/server/prisma/queries/shared';
 import { EntrySubmissionSchema } from '@/utils/zodschemas';
 import { NextRequest, NextResponse } from 'next/server';
-import { revalidateTag } from 'next/cache';
+import { updateTag } from 'next/cache';
 import { checkAuth } from '@/auth';
 import { prisma } from '@/server/prisma';
 
@@ -128,8 +128,8 @@ export const POST = checkAuth(async (req: NextRequest) => {
           ),
         )
         .then(() => {
-          revalidateTag('Shows');
-          revalidateTag('RiderCombos');
+          updateTag('Shows');
+          updateTag('RiderCombos');
           console.log(
             'Successfully uploaded points for show: ',
             showUID,
@@ -144,5 +144,4 @@ export const POST = checkAuth(async (req: NextRequest) => {
     { success: true, message: 'Successfully updated points.' },
     { status: 200 },
   );
-  // WARN: REMOVE THIS WHEN https://github.com/nextauthjs/next-auth/issues/12224 is fixed
-}) as any;
+});

@@ -2,7 +2,7 @@
 import { MemberForm } from '@/utils/zodschemas';
 import { checkForExistingHorses } from './horse.action';
 import { findFirst, upsert } from '@/server/prisma/queries/shared';
-import { revalidateTag } from 'next/cache';
+import { updateTag } from 'next/cache';
 
 export interface ActionState {
   message: string | undefined;
@@ -120,8 +120,8 @@ export async function upsertMember({
     },
   });
 
-  revalidateTag('Members');
-  revalidateTag('Horses');
+  updateTag('Members');
+  updateTag('Horses');
   return {
     message: `Welcome ${fullName} to stea!`,
     error: false,

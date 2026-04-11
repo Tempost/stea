@@ -6,7 +6,7 @@ import {
   findFirst,
   update as prismaUpdate,
 } from '@/server/prisma/queries/shared';
-import { revalidateTag } from 'next/cache';
+import { updateTag } from 'next/cache';
 import { Member } from '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { unstable_cache } from 'next/cache';
@@ -24,7 +24,7 @@ export async function add(member: z.infer<typeof NewMemberSchema>) {
       data: { fullName: `${member.firstName} ${member.lastName}`, ...member },
     });
 
-    revalidateTag('Members');
+    updateTag('Members');
 
     return {
       message: 'Success',
@@ -67,8 +67,8 @@ export async function update(
       where: { fullName: member.fullName },
       data: member,
     });
-    revalidateTag('Members');
-    revalidateTag(member.fullName);
+    updateTag('Members');
+    updateTag(member.fullName);
     return { message: 'Success', error: false, data: updated };
   } catch (error) {
     // FIX: Fix as any later...

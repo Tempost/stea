@@ -5,7 +5,6 @@ import {
   EntriesRideType,
   EntriesRideTypeDivision,
   GroupedEntries,
-  PointsMap,
 } from '@/types/common';
 import { EntryReviewType } from '@/utils/zodschemas';
 import { ShowType } from '@prisma/client';
@@ -55,8 +54,7 @@ export const POST = checkAuth(async (req: NextRequest) => {
       return NextResponse.json({ message: err.message }, { status: 500 });
     }
   }
-  // WARN: REMOVE THIS WHEN https://github.com/nextauthjs/next-auth/issues/12224 is fixed
-}) as any;
+});
 
 interface EntryParseResults {
   successful: Array<CSVEntry>;
@@ -134,51 +132,32 @@ function groupEntries(entries: Array<CSVEntry>) {
   return finalGrouping;
 }
 
+type PointsMap = {
+  [k in ShowType]: {
+    [count: string]: {
+      [k in CSVEntry['placing']]?: number;
+    };
+  };
+};
+// prettier-ignore
 const POINTS: PointsMap = {
   CT: {
-    '1': 3,
-    '2': 2.5,
-    '3': 2,
-    '4': 1.5,
-    '5': 1,
-    '6': 0.5,
-    C: 0,
-    HC: 0,
-    R: 0,
-    E: 0,
-    W: 0,
-    RF: 0,
-    TE: 0,
+   '2': { '1': 2, '2': 1},
+   '3': { '1': 4, '2': 3, '3': 2, '4': 1},
+   '4': { '1': 4, '2': 3, '3': 2, '4': 1},
+   '5': { '1': 6, '2': 5, '3': 4, '4': 3, '5': 2, '6': 1},
   },
   Derby: {
-    '1': 4.5,
-    '2': 3.75,
-    '3': 3,
-    '4': 2.75,
-    '5': 1.5,
-    '6': 0.75,
-    C: 0,
-    HC: 0,
-    R: 0,
-    E: 0,
-    W: 0,
-    RF: 0,
-    TE: 0,
+   '2': { '1': 3, '2': 2},
+   '3': { '1': 5, '2': 4, '3': 3, '4': 2},
+   '4': { '1': 5, '2': 4, '3': 3, '4': 2},
+   '5': { '1': 8, '2': 7, '3': 6, '4': 5, '5': 4, '6': 2},
   },
   HT: {
-    '1': 6,
-    '2': 5,
-    '3': 4,
-    '4': 3,
-    '5': 2,
-    '6': 1,
-    C: 0,
-    HC: 0,
-    R: 0,
-    E: 0,
-    W: 0,
-    RF: 0,
-    TE: 0,
+   '2': { '1': 5, '2': 3},
+   '3': { '1': 7, '2': 6, '3': 5, '4': 4},
+   '4': { '1': 7, '2': 6, '3': 5, '4': 4},
+   '5': { '1': 10, '2': 9, '3': 8, '4': 7, '5': 6, '6': 4},
   },
 };
 
@@ -187,11 +166,21 @@ function calculatePoints(
   showType: ShowType,
   countInDivision: number,
 ): number {
-  if (countInDivision >= 5) {
-    return POINTS[showType][placing] * 2;
-  } else {
-    return POINTS[showType][placing];
+  if (countInDivision > 5) {
+    countInDivision = 5;
   }
+
+  const bracket = POINTS[showType][countInDivision.toString()];
+  if (bracket == undefined) {
+    return 0;
+  }
+
+  const points = bracket[placing];
+  if (points == undefined) {
+    return 0;
+  }
+
+  return points;
 }
 
 async function riderExists(fullName: string, horseRN: string, endDate: Date) {
