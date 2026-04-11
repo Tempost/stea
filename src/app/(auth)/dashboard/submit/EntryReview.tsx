@@ -46,6 +46,11 @@ const columnDef = [
         cell: info => info.getValue(),
         header: () => <span> Points </span>,
       }),
+      columnHelper.accessor('countInDivision', {
+        id: 'countInDivision',
+        cell: info => info.getValue(),
+        header: () => <span> Total Riders </span>,
+      }),
     ],
   }),
 ];

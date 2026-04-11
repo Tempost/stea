@@ -1,5 +1,4 @@
 import { CSVEntry } from '@/server/utils';
-import { ShowType } from '@prisma/client';
 import { PropsWithChildren } from 'react';
 import { typeToFlattenedError } from 'zod';
 
@@ -28,6 +27,5 @@ export type GroupedEntries = Record<
     >
   >
 >;
-export type PointsMap = Record<ShowType, Record<CSVEntry['placing'], number>>;
 
 export type LayoutProps = PropsWithChildren;
