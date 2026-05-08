@@ -6,6 +6,7 @@ import { Button } from '@/components/styled-ui/Button';
 import { unstable_cache } from 'next/cache';
 import Card from '@/components/card/Card';
 import LinkWrapper from '@/components/LinkWrapper';
+import Alert from '@/components/styled-ui/Alert';
 
 const getRiders = unstable_cache(
   async () =>
@@ -51,6 +52,10 @@ function SteaPoints() {
 
   return (
     <div className='grid w-full place-items-center gap-20'>
+      <Alert
+        icon='info'
+        message='Points for the 2026 show year have been updated to reflect changes made to the rulebook.'
+      />
       <PlacingsTable
         title='Current Points'
         search
