@@ -1,7 +1,7 @@
 import { findUnique, update, upsert } from '@/server/prisma/queries/shared';
 import { EntrySubmissionSchema } from '@/utils/zodschemas';
 import { NextRequest, NextResponse } from 'next/server';
-import { updateTag } from 'next/cache';
+import { revalidateTag } from 'next/cache';
 import { checkAuth } from '@/auth';
 import { prisma } from '@/server/prisma';
 
@@ -128,8 +128,8 @@ export const POST = checkAuth(async (req: NextRequest) => {
           ),
         )
         .then(() => {
-          updateTag('Shows');
-          updateTag('RiderCombos');
+          revalidateTag('Shows', 'max');
+          revalidateTag('RiderCombos', 'max');
           console.log(
             'Successfully uploaded points for show: ',
             showUID,
