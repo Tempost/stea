@@ -7,3 +7,5 @@ allowBuilds:
   prisma: true
   sharp: true
   utf-8-validate: true
+packages:
+  - .
