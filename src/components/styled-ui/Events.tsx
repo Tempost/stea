@@ -27,6 +27,7 @@ function UpcomingEvents() {
         showEndDate: true,
         showName: true,
         showType: true,
+        url: true,
       },
     }),
   );
