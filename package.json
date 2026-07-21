@@ -87,11 +87,5 @@
       "eslint --cache",
       "prettier -w --plugin=prettier-plugin-tailwindcss"
     ]
-  },
-  "pnpm": {
-    "overrides": {
-      "@types/react": "19.2.14",
-      "@types/react-dom": "19.2.3"
-    }
   }
 }

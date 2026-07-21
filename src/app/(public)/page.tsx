@@ -291,6 +291,13 @@ const Home = () => (
               sizes='100vw, 50vw'
               alt='Logo for diamond riding, diamond logo with horse shoe and horse head'
             />
+            <Card.Image
+              src='/sandhill_crane_riding.png'
+              width={300}
+              height={300}
+              sizes='100vw, 50vw'
+              alt='Logo for Sandhill Crane riding center, stylistic horse head with a Crane head'
+            />
           </div>
         </Card.Body>
       </Card>
