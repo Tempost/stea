@@ -18,6 +18,7 @@ const getShows = unstable_cache(
         showEndDate: true,
         showName: true,
         showType: true,
+        url: true,
       },
     });
   },

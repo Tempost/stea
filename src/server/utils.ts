@@ -38,7 +38,7 @@ export const mapping = {
   President: 'President',
   Secretary: 'Secretary',
   Treasurer: 'Treasurer',
-  AwardsCoordinator: 'Awards Coordinator',
+  BanquetCoordinator: 'Banquet Coordinator',
   Points: 'Points',
   AdultMemberAtLarge: 'Adult Member At Large',
   JuniorMemberAtLarge: 'Junior Member At Large',
