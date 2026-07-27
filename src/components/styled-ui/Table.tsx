@@ -6,27 +6,24 @@ import {
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
-  Row,
   TableOptions,
   useReactTable,
+  type Row as RowType,
 } from '@tanstack/react-table';
 import { ReactElement, ReactNode, useState } from 'react';
+import { ChevLeft, ChevRight } from '../icons';
 import DebouncedInput from '../styled-ui/DebouncedInput';
 import { Button } from './Button';
-import Select from './Select';
 import Loading from './Loading';
-import { ChevLeft, ChevRight } from '../icons';
-
-interface RowRenderProps<TData> {
-  row: Row<TData>;
-}
+import Select from './Select';
+import Row from './table/Row';
 
 export interface TableProps<TData> {
   paginate?: boolean;
   search?: boolean;
   tableOptions: Omit<TableOptions<TData>, 'getCoreRowModel'>;
   extras?: ReactElement;
-  rowRender?: (props: RowRenderProps<TData>) => ReactNode;
+  rowRender?: (row: RowType<TData>) => ReactNode;
   loading?: boolean;
 }
 
@@ -65,29 +62,6 @@ function Table<TData>({
     },
     onGlobalFilterChange: setGlobalFilter,
   };
-
-  function RowRender(rowProps: RowRenderProps<TData>) {
-    if (props.rowRender) {
-      return <>{props.rowRender(rowProps)}</>;
-    }
-
-    return (
-      <tr className='hover:bg-base-200'>
-        {rowProps.row.getVisibleCells().map(cell => {
-          return (
-            <td
-              key={cell.id}
-              className={
-                'text-base-content px-2 py-2 text-xs font-normal whitespace-nowrap md:px-2 md:py-2 lg:text-sm'
-              }
-            >
-              {flexRender(cell.column.columnDef.cell, cell.getContext())}
-            </td>
-          );
-        })}
-      </tr>
-    );
-  }
 
   const table = useReactTable(defaultOptions);
 
@@ -136,12 +110,18 @@ function Table<TData>({
           </tbody>
         ) : (
           <tbody>
-            {table.getRowModel().rows.map(row => (
-              <RowRender
-                key={row.id}
-                row={row}
-              />
-            ))}
+            {table.getRowModel().rows.map(row => {
+              if (props.rowRender) {
+                return props.rowRender(row);
+              } else {
+                return (
+                  <Row
+                    key={row.id}
+                    row={row}
+                  />
+                );
+              }
+            })}
           </tbody>
         )}
       </table>

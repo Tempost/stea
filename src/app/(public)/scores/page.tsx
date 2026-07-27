@@ -7,42 +7,10 @@ import { unstable_cache } from 'next/cache';
 import Card from '@/components/card/Card';
 import LinkWrapper from '@/components/LinkWrapper';
 import Alert from '@/components/styled-ui/Alert';
+import { riderComboPlacingsArgs } from '@/server/prisma/queries/riders';
 
 const getRiders = unstable_cache(
-  async () =>
-    findMany('RiderCombo', {
-      orderBy: [
-        {
-          division: 'desc',
-        },
-        {
-          member: {
-            memberStatusType: 'asc',
-          },
-        },
-        {
-          totalPoints: 'desc',
-        },
-      ],
-      select: {
-        member: {
-          select: {
-            fullName: true,
-            memberStatusType: true,
-          },
-        },
-        horse: {
-          select: {
-            horseRN: true,
-          },
-        },
-        shows: true,
-        totalPoints: true,
-        totalShows: true,
-        division: true,
-        showYear: true,
-      },
-    }),
+  async () => findMany('RiderCombo', riderComboPlacingsArgs),
   ['RiderCombos'],
   { revalidate: 3600, tags: ['RiderCombos'] },
 );

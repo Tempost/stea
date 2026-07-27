@@ -2,22 +2,27 @@
 
 import TableWithData from './BaseTable';
 
-import { getFilteredRowModel, ColumnDef } from '@tanstack/react-table';
-import { useMemo } from 'react';
-import { RiderCombo } from '@prisma/client';
 import ShowYearFilter from '@/components/tables/ShowYearFilter';
+import { RiderComboPlacings } from '@/server/prisma/queries/riders';
+import {
+  ColumnDef,
+  flexRender,
+  getExpandedRowModel,
+  getFilteredRowModel,
+} from '@tanstack/react-table';
+import { Fragment, useMemo } from 'react';
 
 interface PlacingsTableProps {
   title?: string;
   search?: boolean;
   paginate?: boolean;
-  riders: Array<RiderCombo>;
+  riders: Array<RiderComboPlacings>;
 }
 
 const currYear = new Date().getFullYear();
 
 function PlacingsTable({ title, riders, ...props }: PlacingsTableProps) {
-  const columns: Array<ColumnDef<RiderCombo>> = useMemo(
+  const columns: Array<ColumnDef<RiderComboPlacings>> = useMemo(
     () => [
       {
         id: 'header',
@@ -83,12 +88,14 @@ function PlacingsTable({ title, riders, ...props }: PlacingsTableProps) {
     ],
     [title],
   );
+  console.dir(riders, { depth: 400 });
 
   return (
     <TableWithData
       extraTableOpts={{
         columns,
         getFilteredRowModel: getFilteredRowModel(),
+        getExpandedRowModel: getExpandedRowModel(),
         initialState: {
           columnVisibility: {
             showYear: false,
@@ -96,6 +103,24 @@ function PlacingsTable({ title, riders, ...props }: PlacingsTableProps) {
           columnFilters: [{ id: 'showYear', value: currYear }],
         },
       }}
+      rowRender={row => (
+        <Fragment key={row.id}>
+          <tr className='hover:bg-base-200'>
+            {row.getVisibleCells().map(cell => {
+              return (
+                <td
+                  key={cell.id}
+                  className={
+                    'text-base-content px-2 py-2 text-xs font-normal whitespace-nowrap md:px-2 md:py-2 lg:text-sm'
+                  }
+                >
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
+              );
+            })}
+          </tr>
+        </Fragment>
+      )}
       data={riders}
       {...props}
     />
