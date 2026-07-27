@@ -11,6 +11,7 @@ import {
   getFilteredRowModel,
 } from '@tanstack/react-table';
 import { Fragment, useMemo } from 'react';
+import { ChevDown, ChevRight } from '../icons';
 
 interface PlacingsTableProps {
   title?: string;
@@ -35,6 +36,10 @@ function PlacingsTable({ title, riders, ...props }: PlacingsTableProps) {
           );
         },
         columns: [
+          {
+            id: 'expand',
+            cell: ({ row }) => (row.getIsExpanded() ? ChevDown : ChevRight),
+          },
           {
             accessorKey: 'division',
             id: 'division',
@@ -88,7 +93,6 @@ function PlacingsTable({ title, riders, ...props }: PlacingsTableProps) {
     ],
     [title],
   );
-  console.dir(riders, { depth: 400 });
 
   return (
     <TableWithData
@@ -96,6 +100,7 @@ function PlacingsTable({ title, riders, ...props }: PlacingsTableProps) {
         columns,
         getFilteredRowModel: getFilteredRowModel(),
         getExpandedRowModel: getExpandedRowModel(),
+        getRowCanExpand: () => true,
         initialState: {
           columnVisibility: {
             showYear: false,
@@ -105,7 +110,10 @@ function PlacingsTable({ title, riders, ...props }: PlacingsTableProps) {
       }}
       rowRender={row => (
         <Fragment key={row.id}>
-          <tr className='hover:bg-base-200'>
+          <tr
+            className='hover:bg-base-200'
+            onClick={row.getToggleExpandedHandler()}
+          >
             {row.getVisibleCells().map(cell => {
               return (
                 <td
@@ -119,6 +127,56 @@ function PlacingsTable({ title, riders, ...props }: PlacingsTableProps) {
               );
             })}
           </tr>
+          {row.getIsExpanded() && (
+            <tr>
+              <td
+                colSpan={row.getVisibleCells().length}
+                className='m-0 p-0 pl-20'
+              >
+                <div className='bg-base-200'>
+                  <table className='table-xs table'>
+                    <thead>
+                      <tr>
+                        <th className='text-base-content px-2 py-2 text-xs font-medium'>
+                          Show Name
+                        </th>
+                        <th className='text-base-content px-2 py-2 text-xs font-medium'>
+                          Type
+                        </th>
+                        <th className='text-base-content px-2 py-2 text-xs font-medium'>
+                          Place
+                        </th>
+                        <th className='text-base-content px-2 py-2 text-xs font-medium'>
+                          Points
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {row.original.points.map(p => (
+                        <tr
+                          key={p.uid}
+                          className=''
+                        >
+                          <td className='text-base-content px-2 py-2 text-xs font-normal whitespace-nowrap md:px-2 md:py-2'>
+                            {p.show.showName}
+                          </td>
+                          <td className='text-base-content px-2 py-2 text-xs font-normal whitespace-nowrap md:px-2 md:py-2'>
+                            {p.show.showType}
+                          </td>
+                          <td className='text-base-content px-2 py-2 text-xs font-normal whitespace-nowrap md:px-2 md:py-2'>
+                            {p.place}
+                          </td>
+                          <td className='text-base-content px-2 py-2 text-xs font-normal whitespace-nowrap md:px-2 md:py-2'>
+                            {p.points}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </td>
+            </tr>
+          )}
         </Fragment>
       )}
       data={riders}

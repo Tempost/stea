@@ -15,6 +15,7 @@ export const riderComboPlacingsArgs = {
     },
   ],
   select: {
+    uid: true,
     member: {
       select: {
         fullName: true,
