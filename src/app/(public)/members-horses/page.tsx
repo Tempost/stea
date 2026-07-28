@@ -3,45 +3,16 @@ import MemberTable from '@/components/tables/Members';
 import { findMany } from '@/server/prisma/queries/shared';
 import HorseTable from '@/components/tables/Horses';
 import { unstable_cache } from 'next/cache';
-import { setMembershipYear } from '@/utils/setmembershipyear';
+import { horseTableArgs, memberTableArgs } from '@/server/prisma/queries/args';
 
 const getMembers = unstable_cache(
-  async () =>
-    await findMany('Member', {
-      where: {
-        OR: [{ memberStatus: 'Life' }, { membershipEnd: setMembershipYear() }],
-      },
-      select: {
-        fullName: true,
-        memberStatusType: true,
-        memberStatus: true,
-      },
-      orderBy: [
-        {
-          memberStatusType: 'asc',
-        },
-        { memberStatus: 'asc' },
-      ],
-    }),
+  async () => await findMany('Member', memberTableArgs),
   ['Members'],
   { revalidate: 3600, tags: ['Members'] },
 );
 
 const getHorses = unstable_cache(
-  async () =>
-    findMany('Horse', {
-      where: {
-        OR: [{ regType: 'Life' }, { registrationEnd: setMembershipYear() }],
-      },
-      select: {
-        horseRN: true,
-        regType: true,
-        owner: true,
-      },
-      orderBy: {
-        regType: 'asc',
-      },
-    }),
+  async () => findMany('Horse', horseTableArgs),
   ['Horses'],
   { revalidate: 3600, tags: ['Horses'] },
 );

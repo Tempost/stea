@@ -2,22 +2,10 @@ import { findMany } from '@/server/prisma/queries/shared';
 import { unstable_cache } from 'next/cache';
 import { Suspense, use } from 'react';
 import DashboardHorses from './Horses';
+import { horseDashboardArgs } from '@/server/prisma/queries/args';
 
 const getHorses = unstable_cache(
-  async () =>
-    await findMany('Horse', {
-      orderBy: {
-        registrationEnd: { sort: 'desc', nulls: 'last' },
-      },
-      select: {
-        registrationDate: true,
-        registrationEnd: true,
-        horseRN: true,
-        regType: true,
-        memberName: true,
-        owner: true,
-      },
-    }),
+  async () => await findMany('Horse', horseDashboardArgs),
   ['Horses'],
   { revalidate: 3600, tags: ['Horses'] },
 );

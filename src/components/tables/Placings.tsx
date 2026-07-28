@@ -3,7 +3,7 @@
 import TableWithData from './BaseTable';
 
 import ShowYearFilter from '@/components/tables/ShowYearFilter';
-import { RiderComboPlacings } from '@/server/prisma/queries/riders';
+import { RiderComboPlacings } from '@/server/prisma/queries/args';
 import {
   ColumnDef,
   flexRender,

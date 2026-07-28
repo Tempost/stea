@@ -3,24 +3,11 @@ import { findMany } from '@/server/prisma/queries/shared';
 import Calendar from '@/components/Calendar';
 import { unstable_cache } from 'next/cache';
 import Loading from '@/components/styled-ui/Loading';
+import { calendarArgs } from '@/server/prisma/queries/args';
 
 const getShows = unstable_cache(
   async () => {
-    return await findMany('Show', {
-      orderBy: {
-        showDate: 'asc',
-      },
-      where: {
-        reviewed: false,
-      },
-      select: {
-        showDate: true,
-        showEndDate: true,
-        showName: true,
-        showType: true,
-        url: true,
-      },
-    });
+    return await findMany('Show', calendarArgs);
   },
   ['Shows'],
   { revalidate: 3600, tags: ['Shows'] },

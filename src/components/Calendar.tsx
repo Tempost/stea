@@ -1,14 +1,13 @@
 'use client';
 import { MouseEvent, useReducer } from 'react';
 
-import { filterByMonths } from '@/utils/filterByMonths';
 import CalendarEvents from '@/components/events/CalendarEvent';
-import { Show } from '@prisma/client';
 import { ChevLeft, ChevRight } from '@/components/icons';
+import { ShowCalendar } from '@/server/prisma/queries/args';
 import { Button } from './styled-ui/Button';
 
 interface CalendarProps {
-  shows: Array<Show>;
+  shows: Array<ShowCalendar>;
 }
 
 interface MonthAction {
@@ -42,6 +41,20 @@ const changeMonth = (month: number, action: MonthAction) => {
       throw new Error(`Unsupported action :: action:${action.dir}`);
   }
 };
+
+function filterByMonths(
+  shows: Array<ShowCalendar>,
+  currMonth: number,
+): Array<ShowCalendar> | undefined {
+  if (!shows) return;
+
+  return shows.filter(show => {
+    if (new Date(show.showDate).getMonth() === currMonth) {
+      return true;
+    }
+    return false;
+  });
+}
 
 export default function Calendar({ shows }: CalendarProps) {
   const [month, dispatch] = useReducer(changeMonth, currMonth);

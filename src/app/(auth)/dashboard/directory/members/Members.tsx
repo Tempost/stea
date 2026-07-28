@@ -1,9 +1,9 @@
 'use client';
-import Checkbox from '@/components/styled-ui/Checkbox';
 import { Button } from '@/components/styled-ui/Button';
+import Checkbox from '@/components/styled-ui/Checkbox';
 import TableWithData from '@/components/tables/BaseTable';
+import { MemberDirectory } from '@/server/prisma/queries/args';
 import { readableDateTime } from '@/utils/helpers';
-import { Member } from '@prisma/client';
 import { ColumnDef, RowSelectionState } from '@tanstack/react-table';
 import { useCallback, useState } from 'react';
 import NewMemberForm from './NewMemberForm';
@@ -27,7 +27,7 @@ function EmailList({ emails }: EmailListProps) {
   );
 }
 
-const columns: Array<ColumnDef<Member>> = [
+const columns: Array<ColumnDef<MemberDirectory>> = [
   {
     id: 'header',
     columns: [
@@ -103,7 +103,7 @@ const columns: Array<ColumnDef<Member>> = [
   },
 ];
 
-function DashboardMembers({ members }: { members: Array<Member> }) {
+function DashboardMembers({ members }: { members: Array<MemberDirectory> }) {
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
 
   // TODO: Filter out members who are no longer active

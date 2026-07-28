@@ -146,7 +146,7 @@ function BoardMembers({ boardmembers }: { boardmembers: Array<Boardmember> }) {
             enableRowSelection: true,
           }}
           data={boardmembers}
-          rowRender={({ row }) => (
+          rowRender={row => (
             <tr
               className='hover:bg-base-200'
               onClick={e => {

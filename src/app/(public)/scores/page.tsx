@@ -7,7 +7,7 @@ import { unstable_cache } from 'next/cache';
 import Card from '@/components/card/Card';
 import LinkWrapper from '@/components/LinkWrapper';
 import Alert from '@/components/styled-ui/Alert';
-import { riderComboPlacingsArgs } from '@/server/prisma/queries/riders';
+import { riderComboPlacingsArgs } from '@/server/prisma/queries/args';
 
 const getRiders = unstable_cache(
   async () => findMany('RiderCombo', riderComboPlacingsArgs),
