@@ -15,6 +15,7 @@ import {
   UpdateArgs,
   UpsertArgs,
 } from '@/server/prisma/utils/types';
+import { GetResult } from '@prisma/client/runtime/library';
 
 const getPrismaModelProp = <N extends Prisma.ModelName>(name: N) =>
   `${name.charAt(0).toLowerCase()}${name.slice(1)}` as PrismaModelProp<N>;
@@ -33,11 +34,11 @@ async function findFirst<T extends Prisma.ModelName>(
   );
 }
 
-async function findMany<T extends Prisma.ModelName>(
+async function findMany<T extends Prisma.ModelName, A extends FindManyArgs<T>>(
   table: T,
-  findManyArgs?: FindManyArgs<T>,
+  findManyArgs?: A,
   prismaClient: MyPrismaClient = prisma,
-): Promise<Array<PrismaModelPayload<T>['scalars']>> {
+): Promise<GetResult<PrismaModelPayload<T>, A, 'findMany'>> {
   return (prismaClient[getPrismaModelProp(table)] as any).findMany(
     findManyArgs,
   );

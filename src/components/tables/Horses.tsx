@@ -1,8 +1,9 @@
+// TODO: No longer shared. Can be moved to member-horse page dir
 'use client';
+import { Horse } from '@/server/prisma/queries/args';
 import TableWithData from './BaseTable';
 
 import type { ColumnDef } from '@tanstack/react-table';
-import { Horse } from '@prisma/client';
 
 interface HorseTableProps {
   overRideDefaultCols?: Array<ColumnDef<Horse>>;

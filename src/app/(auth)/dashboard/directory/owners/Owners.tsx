@@ -1,10 +1,10 @@
 'use client';
+import TableWithData from '@/components/tables/BaseTable';
+import { NonMemberHorseOwnerDirectory } from '@/server/prisma/queries/args';
 import { readableDateTime } from '@/utils/helpers';
 import type { ColumnDef } from '@tanstack/react-table';
-import TableWithData from '@/components/tables/BaseTable';
-import { NonMemberHorseOwner } from '@prisma/client';
 
-const columns: Array<ColumnDef<NonMemberHorseOwner>> = [
+const columns: Array<ColumnDef<NonMemberHorseOwnerDirectory>> = [
   {
     header: 'Horse Owners',
     columns: [
@@ -40,7 +40,11 @@ const columns: Array<ColumnDef<NonMemberHorseOwner>> = [
   },
 ];
 
-function DashboardOwners({ owners }: { owners: Array<NonMemberHorseOwner> }) {
+function DashboardOwners({
+  owners,
+}: {
+  owners: Array<NonMemberHorseOwnerDirectory>;
+}) {
   return (
     <TableWithData
       extraTableOpts={{

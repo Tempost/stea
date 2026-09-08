@@ -2,11 +2,11 @@
 import TableWithData from '@/components/tables/BaseTable';
 import { readableDateTime } from '@/utils/helpers';
 
+import { HorseDirectory } from '@/server/prisma/queries/args';
 import type { ColumnDef } from '@tanstack/react-table';
 import NewHorseForm from './NewHorseForm';
-import { Horse } from '@prisma/client';
 
-const columns: Array<ColumnDef<Horse>> = [
+const columns: Array<ColumnDef<HorseDirectory>> = [
   {
     id: 'horses',
     columns: [
@@ -47,7 +47,7 @@ const columns: Array<ColumnDef<Horse>> = [
   },
 ];
 
-function DashboardHorses({ horses }: { horses: Array<Horse> }) {
+function DashboardHorses({ horses }: { horses: Array<HorseDirectory> }) {
   return (
     <TableWithData
       extraTableOpts={{

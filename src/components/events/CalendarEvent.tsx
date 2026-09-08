@@ -3,12 +3,15 @@ import { Show } from '@prisma/client';
 import NextLink from 'next/link';
 import List from '../list/List';
 import { Button } from '../styled-ui/Button';
+import { ShowCalendar } from '@/server/prisma/queries/args';
 
-interface CalendarEventsProps {
-  show: Show;
+interface CalendarEventsProps<T extends Show | ShowCalendar> {
+  show: T;
 }
 
-function CalendarEvents({ show }: CalendarEventsProps) {
+function CalendarEvents<T extends Show | ShowCalendar>({
+  show,
+}: CalendarEventsProps<T>) {
   const date = show.showEndDate
     ? `${readableDateTime(show.showDate)} - ${readableDateTime(
         show.showEndDate,

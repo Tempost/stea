@@ -2,22 +2,28 @@
 
 import TableWithData from './BaseTable';
 
-import { getFilteredRowModel, ColumnDef } from '@tanstack/react-table';
-import { useMemo } from 'react';
-import { RiderCombo } from '@prisma/client';
 import ShowYearFilter from '@/components/tables/ShowYearFilter';
+import { RiderComboPlacings } from '@/server/prisma/queries/args';
+import {
+  ColumnDef,
+  flexRender,
+  getExpandedRowModel,
+  getFilteredRowModel,
+} from '@tanstack/react-table';
+import { Fragment, useMemo } from 'react';
+import { ChevDown, ChevRight } from '../icons';
 
 interface PlacingsTableProps {
   title?: string;
   search?: boolean;
   paginate?: boolean;
-  riders: Array<RiderCombo>;
+  riders: Array<RiderComboPlacings>;
 }
 
 const currYear = new Date().getFullYear();
 
 function PlacingsTable({ title, riders, ...props }: PlacingsTableProps) {
-  const columns: Array<ColumnDef<RiderCombo>> = useMemo(
+  const columns: Array<ColumnDef<RiderComboPlacings>> = useMemo(
     () => [
       {
         id: 'header',
@@ -30,6 +36,10 @@ function PlacingsTable({ title, riders, ...props }: PlacingsTableProps) {
           );
         },
         columns: [
+          {
+            id: 'expand',
+            cell: ({ row }) => (row.getIsExpanded() ? ChevDown : ChevRight),
+          },
           {
             accessorKey: 'division',
             id: 'division',
@@ -89,6 +99,8 @@ function PlacingsTable({ title, riders, ...props }: PlacingsTableProps) {
       extraTableOpts={{
         columns,
         getFilteredRowModel: getFilteredRowModel(),
+        getExpandedRowModel: getExpandedRowModel(),
+        getRowCanExpand: () => true,
         initialState: {
           columnVisibility: {
             showYear: false,
@@ -96,6 +108,77 @@ function PlacingsTable({ title, riders, ...props }: PlacingsTableProps) {
           columnFilters: [{ id: 'showYear', value: currYear }],
         },
       }}
+      rowRender={row => (
+        <Fragment key={row.id}>
+          <tr
+            className='hover:bg-base-200'
+            onClick={row.getToggleExpandedHandler()}
+          >
+            {row.getVisibleCells().map(cell => {
+              return (
+                <td
+                  key={cell.id}
+                  className={
+                    'text-base-content px-2 py-2 text-xs font-normal whitespace-nowrap md:px-2 md:py-2 lg:text-sm'
+                  }
+                >
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
+              );
+            })}
+          </tr>
+          {row.getIsExpanded() && (
+            <tr>
+              <td
+                colSpan={row.getVisibleCells().length}
+                className='m-0 p-0 pl-20'
+              >
+                <div className='bg-base-200'>
+                  <table className='table-xs table'>
+                    <thead>
+                      <tr>
+                        <th className='text-base-content px-2 py-2 text-xs font-medium'>
+                          Show Name
+                        </th>
+                        <th className='text-base-content px-2 py-2 text-xs font-medium'>
+                          Type
+                        </th>
+                        <th className='text-base-content px-2 py-2 text-xs font-medium'>
+                          Place
+                        </th>
+                        <th className='text-base-content px-2 py-2 text-xs font-medium'>
+                          Points
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {row.original.points.map(p => (
+                        <tr
+                          key={p.uid}
+                          className=''
+                        >
+                          <td className='text-base-content px-2 py-2 text-xs font-normal whitespace-nowrap md:px-2 md:py-2'>
+                            {p.show.showName}
+                          </td>
+                          <td className='text-base-content px-2 py-2 text-xs font-normal whitespace-nowrap md:px-2 md:py-2'>
+                            {p.show.showType}
+                          </td>
+                          <td className='text-base-content px-2 py-2 text-xs font-normal whitespace-nowrap md:px-2 md:py-2'>
+                            {p.place}
+                          </td>
+                          <td className='text-base-content px-2 py-2 text-xs font-normal whitespace-nowrap md:px-2 md:py-2'>
+                            {p.points}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </td>
+            </tr>
+          )}
+        </Fragment>
+      )}
       data={riders}
       {...props}
     />

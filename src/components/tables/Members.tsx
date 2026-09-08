@@ -1,8 +1,9 @@
+// TODO: No longer shared. Can be moved to member-horse page dir
 'use client';
+import { Member } from '@/server/prisma/queries/args';
 import TableWithData from './BaseTable';
 
 import type { ColumnDef } from '@tanstack/react-table';
-import { Member } from '@prisma/client';
 
 interface MemberTableProps {
   overRideDefaultCols?: Array<ColumnDef<Member>>;
