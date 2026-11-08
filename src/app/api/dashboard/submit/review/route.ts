@@ -190,7 +190,7 @@ async function riderExists(fullName: string, horseRN: string, endDate: Date) {
         equals: fullName,
         mode: 'insensitive',
       },
-      OR: [{ membershipEnd: endDate }, { memberStatus: 'Life' }],
+      OR: [{ membershipEnd: { gte: endDate } }, { memberStatus: 'Life' }],
     },
   });
 
