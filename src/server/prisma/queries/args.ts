@@ -42,6 +42,7 @@ export const riderComboPlacingsArgs = {
             uid: true,
             showName: true,
             showType: true,
+            showDate: true,
           },
         },
       },

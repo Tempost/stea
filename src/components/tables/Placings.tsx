@@ -10,8 +10,9 @@ import {
   getExpandedRowModel,
   getFilteredRowModel,
 } from '@tanstack/react-table';
-import { Fragment, useMemo } from 'react';
+import { Fragment, PropsWithChildren, useMemo } from 'react';
 import { ChevDown, ChevRight } from '../icons';
+import { readableDateTime } from '@/utils/helpers';
 
 interface PlacingsTableProps {
   title?: string;
@@ -94,6 +95,22 @@ function PlacingsTable({ title, riders, ...props }: PlacingsTableProps) {
     [title],
   );
 
+  function TableHeaderCell({ children }: PropsWithChildren) {
+    return (
+      <th className='text-base-content px-2 py-2 text-xs font-medium'>
+        {children}
+      </th>
+    );
+  }
+
+  function TableDataCell({ children }: PropsWithChildren) {
+    return (
+      <td className='text-base-content px-2 py-2 text-xs font-normal whitespace-nowrap md:px-2 md:py-2'>
+        {children}
+      </td>
+    );
+  }
+
   return (
     <TableWithData
       extraTableOpts={{
@@ -137,38 +154,23 @@ function PlacingsTable({ title, riders, ...props }: PlacingsTableProps) {
                   <table className='table-xs table'>
                     <thead>
                       <tr>
-                        <th className='text-base-content px-2 py-2 text-xs font-medium'>
-                          Show Name
-                        </th>
-                        <th className='text-base-content px-2 py-2 text-xs font-medium'>
-                          Type
-                        </th>
-                        <th className='text-base-content px-2 py-2 text-xs font-medium'>
-                          Place
-                        </th>
-                        <th className='text-base-content px-2 py-2 text-xs font-medium'>
-                          Points
-                        </th>
+                        <TableHeaderCell>Show Name</TableHeaderCell>
+                        <TableHeaderCell>Date</TableHeaderCell>
+                        <TableHeaderCell>Type</TableHeaderCell>
+                        <TableHeaderCell>Place</TableHeaderCell>
+                        <TableHeaderCell>Points</TableHeaderCell>
                       </tr>
                     </thead>
                     <tbody>
                       {row.original.points.map(p => (
-                        <tr
-                          key={p.uid}
-                          className=''
-                        >
-                          <td className='text-base-content px-2 py-2 text-xs font-normal whitespace-nowrap md:px-2 md:py-2'>
-                            {p.show.showName}
-                          </td>
-                          <td className='text-base-content px-2 py-2 text-xs font-normal whitespace-nowrap md:px-2 md:py-2'>
-                            {p.show.showType}
-                          </td>
-                          <td className='text-base-content px-2 py-2 text-xs font-normal whitespace-nowrap md:px-2 md:py-2'>
-                            {p.place}
-                          </td>
-                          <td className='text-base-content px-2 py-2 text-xs font-normal whitespace-nowrap md:px-2 md:py-2'>
-                            {p.points}
-                          </td>
+                        <tr key={p.uid}>
+                          <TableDataCell>{p.show.showName}</TableDataCell>
+                          <TableDataCell>
+                            {readableDateTime(p.show.showDate)}
+                          </TableDataCell>
+                          <TableDataCell>{p.show.showType}</TableDataCell>
+                          <TableDataCell>{p.place}</TableDataCell>
+                          <TableDataCell>{p.points}</TableDataCell>
                         </tr>
                       ))}
                     </tbody>
