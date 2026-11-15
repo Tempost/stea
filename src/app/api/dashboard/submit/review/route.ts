@@ -204,7 +204,7 @@ async function riderExists(fullName: string, horseRN: string, endDate: Date) {
         equals: horseRN,
         mode: 'insensitive',
       },
-      OR: [{ registrationEnd: endDate }, { regType: 'Life' }],
+      OR: [{ registrationEnd: { gte: endDate } }, { regType: 'Life' }],
     },
   });
   if (horse === null) {
