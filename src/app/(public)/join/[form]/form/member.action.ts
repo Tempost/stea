@@ -2,6 +2,7 @@
 import { MemberForm } from '@/utils/zodschemas';
 import { checkForExistingHorses } from './horse.action';
 import { findFirst, upsert } from '@/server/prisma/queries/shared';
+import { prisma } from '@/server/prisma';
 import { updateTag } from 'next/cache';
 
 export interface ActionState {
@@ -85,39 +86,32 @@ export async function upsertMember({
     member.businessName ??
     `${member.firstName.trim()} ${member.lastName.trim()}`;
 
-  const horseUpsert = horses?.map(horse => {
-    return {
-      where: { horseRN: horse.horseRN },
-      update: {
-        ...horse,
+  // Upsert horses by id, not nested: nested upsert is scoped to the member
+  // relation and re-creates (P2002) horses linked via `owner`. New horses
+  // link to this member; existing horses renew in place without touching
+  // owner/memberName, so leased horses stay linked to their owner.
+  await prisma.$transaction(async tx => {
+    await upsert(
+      'Member',
+      {
+        where: { fullName },
+        create: { fullName, ...member },
+        update: { ...member, membershipDate: new Date() },
       },
-      create: {
-        ...horse,
-      },
-    };
-  });
+      tx,
+    );
 
-  await upsert('Member', {
-    where: {
-      fullName,
-    },
-    create: {
-      fullName,
-      Horse: {
-        createMany: {
-          data: horses ? horses : [],
+    for (const horse of horses ?? []) {
+      await upsert(
+        'Horse',
+        {
+          where: { horseRN: horse.horseRN },
+          create: { ...horse, memberName: fullName },
+          update: { ...horse },
         },
-      },
-      ...member,
-    },
-    update: {
-      fullName,
-      Horse: {
-        upsert: horses ? horseUpsert : [],
-      },
-      ...member,
-      membershipDate: new Date(),
-    },
+        tx,
+      );
+    }
   });
 
   updateTag('Members');
